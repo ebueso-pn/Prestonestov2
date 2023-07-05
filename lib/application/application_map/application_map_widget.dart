@@ -142,52 +142,39 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
               Expanded(
                 child: Stack(
                   children: [
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onDoubleTap: () async {
-                        await currentUserReference!
-                            .update(createUsersRecordData(
-                          latLong: _model.googleMapsCenter,
-                        ));
-                      },
-                      child: Container(
-                        height: double.infinity,
-                        decoration: BoxDecoration(),
-                        child: AuthUserStreamWidget(
-                          builder: (context) => Builder(builder: (context) {
-                            final _googleMapMarker =
-                                currentUserDocument?.latLong;
-                            return FlutterFlowGoogleMap(
-                              controller: _model.googleMapsController,
-                              onCameraIdle: (latLng) =>
-                                  _model.googleMapsCenter = latLng,
-                              initialLocation: _model.googleMapsCenter ??=
-                                  currentUserLocationValue!,
-                              markers: [
-                                if (_googleMapMarker != null)
-                                  FlutterFlowMarker(
-                                    _googleMapMarker.serialize(),
-                                    _googleMapMarker,
-                                  ),
-                              ],
-                              markerColor: GoogleMarkerColor.red,
-                              mapType: MapType.normal,
-                              style: GoogleMapStyle.standard,
-                              initialZoom: 15.0,
-                              allowInteraction: true,
-                              allowZoom: true,
-                              showZoomControls: true,
-                              showLocation: true,
-                              showCompass: false,
-                              showMapToolbar: true,
-                              showTraffic: false,
-                              centerMapOnMarkerTap: true,
-                            );
-                          }),
-                        ),
+                    Container(
+                      height: double.infinity,
+                      decoration: BoxDecoration(),
+                      child: AuthUserStreamWidget(
+                        builder: (context) => Builder(builder: (context) {
+                          final _googleMapMarker = currentUserDocument?.latLong;
+                          return FlutterFlowGoogleMap(
+                            controller: _model.googleMapsController,
+                            onCameraIdle: (latLng) =>
+                                _model.googleMapsCenter = latLng,
+                            initialLocation: _model.googleMapsCenter ??=
+                                currentUserLocationValue!,
+                            markers: [
+                              if (_googleMapMarker != null)
+                                FlutterFlowMarker(
+                                  _googleMapMarker.serialize(),
+                                  _googleMapMarker,
+                                ),
+                            ],
+                            markerColor: GoogleMarkerColor.red,
+                            mapType: MapType.normal,
+                            style: GoogleMapStyle.standard,
+                            initialZoom: 15.0,
+                            allowInteraction: true,
+                            allowZoom: true,
+                            showZoomControls: true,
+                            showLocation: true,
+                            showCompass: false,
+                            showMapToolbar: true,
+                            showTraffic: false,
+                            centerMapOnMarkerTap: true,
+                          );
+                        }),
                       ),
                     ),
                     Container(
@@ -229,29 +216,10 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                     ),
                     FFButtonWidget(
                       onPressed: () async {
-                        var confirmDialogResponse = await showDialog<bool>(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: Text('¿Todo bien?'),
-                                  content:
-                                      Text('¿Esta es tu direccion exacta?'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          alertDialogContext, false),
-                                      child: Text('No'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          alertDialogContext, true),
-                                      child: Text('Sí'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ) ??
-                            false;
+                        await currentUserReference!
+                            .update(createUsersRecordData(
+                          latLong: _model.googleMapsCenter,
+                        ));
 
                         context.pushNamed(
                           'Application_Review',
