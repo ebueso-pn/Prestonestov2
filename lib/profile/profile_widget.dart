@@ -275,7 +275,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 24.0),
                     child: Container(
                       width: double.infinity,
-                      height: 200.0,
+                      height: 400.0,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                         borderRadius: BorderRadius.circular(40.0),
