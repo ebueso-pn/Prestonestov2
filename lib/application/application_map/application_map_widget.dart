@@ -204,15 +204,11 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'Haz doble toque para fijar el pin',
+                      'Coloca el pin en la dirección exacta',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Urbanist',
                             fontWeight: FontWeight.bold,
                           ),
-                    ),
-                    Text(
-                      'Coloca el pin en la dirección exacta',
-                      style: FlutterFlowTheme.of(context).bodySmall,
                     ),
                     FFButtonWidget(
                       onPressed: () async {
