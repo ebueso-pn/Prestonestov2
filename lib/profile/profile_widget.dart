@@ -162,17 +162,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 16.0, 16.0, 16.0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(40.0),
-                                    child: Image.network(
-                                      'https://picsum.photos/seed/613/600',
-                                      width: 70.0,
-                                      height: 70.0,
-                                      fit: BoxFit.cover,
-                                    ),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(40.0),
+                                  child: Image.network(
+                                    'https://picsum.photos/seed/613/600',
+                                    width: 70.0,
+                                    height: 70.0,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                                 Align(
@@ -280,68 +276,92 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       height: 200.0,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
+                        borderRadius: BorderRadius.circular(40.0),
                       ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Aplicaciones',
-                                style: FlutterFlowTheme.of(context)
-                                    .labelLarge
-                                    .override(
-                                      fontFamily: 'Urbanist',
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                              ),
-                            ],
-                          ),
-                          StreamBuilder<List<ApplicationRecord>>(
-                            stream: queryApplicationRecord(
-                              parent: currentUserReference,
-                              queryBuilder: (applicationRecord) =>
-                                  applicationRecord.orderBy('date_applied',
-                                      descending: true),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 16.0, 16.0, 16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Aplicaciones',
+                                  style: FlutterFlowTheme.of(context)
+                                      .labelLarge
+                                      .override(
+                                        fontFamily: 'Urbanist',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                              ],
                             ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      color: Color(0xFF2AAF7A),
+                            StreamBuilder<List<ApplicationRecord>>(
+                              stream: queryApplicationRecord(
+                                parent: currentUserReference,
+                                queryBuilder: (applicationRecord) =>
+                                    applicationRecord.orderBy('date_applied',
+                                        descending: true),
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xFF2AAF7A),
+                                      ),
                                     ),
-                                  ),
-                                );
-                              }
-                              List<ApplicationRecord>
-                                  listViewApplicationRecordList =
-                                  snapshot.data!;
-                              return ListView.builder(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: listViewApplicationRecordList.length,
-                                itemBuilder: (context, listViewIndex) {
-                                  final listViewApplicationRecord =
-                                      listViewApplicationRecordList[
-                                          listViewIndex];
-                                  return Text(
-                                    listViewApplicationRecord.applicationId
-                                        .toString(),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
                                   );
-                                },
-                              );
-                            },
-                          ),
-                        ],
+                                }
+                                List<ApplicationRecord>
+                                    listViewApplicationRecordList =
+                                    snapshot.data!;
+                                return ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount:
+                                      listViewApplicationRecordList.length,
+                                  itemBuilder: (context, listViewIndex) {
+                                    final listViewApplicationRecord =
+                                        listViewApplicationRecordList[
+                                            listViewIndex];
+                                    return Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Text(
+                                          listViewApplicationRecord
+                                              .applicationId
+                                              .toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium,
+                                        ),
+                                        Text(
+                                          listViewApplicationRecord.monto
+                                              .toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium,
+                                        ),
+                                        Text(
+                                          listViewApplicationRecord.plazoMeses
+                                              .toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
