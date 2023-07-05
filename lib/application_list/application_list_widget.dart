@@ -166,35 +166,99 @@ class _ApplicationListWidgetState extends State<ApplicationListWidget> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    Text(
-                                      dateTimeFormat(
-                                          'd/M/y',
-                                          listViewApplicationRecord
-                                              .dateApplied!),
-                                      style: FlutterFlowTheme.of(context)
-                                          .labelLarge,
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          'Fecha',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyLarge
+                                              .override(
+                                                fontFamily: 'Urbanist',
+                                                fontSize: 17.0,
+                                              ),
+                                        ),
+                                        Text(
+                                          dateTimeFormat(
+                                              'd/M/y',
+                                              listViewApplicationRecord
+                                                  .dateApplied!),
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelLarge,
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      formatNumber(
-                                        listViewApplicationRecord.monto,
-                                        formatType: FormatType.decimal,
-                                        decimalType: DecimalType.automatic,
-                                        currency: 'L. ',
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .labelLarge,
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          'Monto',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Urbanist',
+                                                fontSize: 17.0,
+                                              ),
+                                        ),
+                                        Text(
+                                          formatNumber(
+                                            listViewApplicationRecord.monto,
+                                            formatType: FormatType.decimal,
+                                            decimalType: DecimalType.automatic,
+                                            currency: 'L. ',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelLarge,
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      listViewApplicationRecord.plazoMeses
-                                          .toString(),
-                                      style: FlutterFlowTheme.of(context)
-                                          .labelLarge,
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          'Plazo',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Urbanist',
+                                                fontSize: 17.0,
+                                              ),
+                                        ),
+                                        Text(
+                                          listViewApplicationRecord.plazoMeses
+                                              .toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelLarge,
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      listViewApplicationRecord.status
-                                          .toString(),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium,
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          'Estatus',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Urbanist',
+                                                fontSize: 17.0,
+                                              ),
+                                        ),
+                                        Text(
+                                          listViewApplicationRecord.status
+                                              .toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelLarge,
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
