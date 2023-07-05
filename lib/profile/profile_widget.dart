@@ -372,13 +372,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                             MainAxisAlignment.spaceAround,
                                         children: [
                                           Text(
-                                            valueOrDefault<String>(
-                                              dateTimeFormat(
-                                                  'relative',
-                                                  listViewApplicationRecord
-                                                      .dateApplied),
-                                              '?',
-                                            ),
+                                            dateTimeFormat(
+                                                'relative',
+                                                listViewApplicationRecord
+                                                    .dateApplied!),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium,
                                           ),
