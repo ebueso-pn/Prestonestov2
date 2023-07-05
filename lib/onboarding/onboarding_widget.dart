@@ -445,7 +445,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                               10.0, 0.0, 10.0, 10.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              context.pushNamed('phone_SignIn');
+                              context.pushNamed('Email_Login');
                             },
                             text: 'Iniciar Sesión',
                             options: FFButtonOptions(
@@ -482,7 +482,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                           child: FFButtonWidget(
                             onPressed: () async {
                               context.pushNamed(
-                                'SMS_signup',
+                                'Email_CreateAccount',
                                 extra: <String, dynamic>{
                                   kTransitionInfoKey: TransitionInfo(
                                     hasTransition: true,
