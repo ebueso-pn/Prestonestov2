@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>984117236759-472fnctf6aiik8m0h168bn5sg86hfbi1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.984117236759-472fnctf6aiik8m0h168bn5sg86hfbi1</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>984117236759-67g7j72lgmgfk2ktftb4tktr4gja2p1q.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA4VM7gXdo-R2NSbjYe2O_s1N84hdsEdxs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>984117236759</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Prestonesto.V01</string>
+	<key>PROJECT_ID</key>
+	<string>prestonesto-af804</string>
+	<key>STORAGE_BUCKET</key>
+	<string>prestonesto-af804.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:984117236759:ios:821126cdd7fcbe6e223852</string>
+</dict>
+</plist>
