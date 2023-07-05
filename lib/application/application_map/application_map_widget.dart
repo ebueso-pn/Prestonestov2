@@ -190,6 +190,19 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                         ),
                       ),
                     ),
+                    Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(),
+                      child: Align(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: Icon(
+                          Icons.location_pin,
+                          color: Color(0xFFFF0412),
+                          size: 40.0,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
