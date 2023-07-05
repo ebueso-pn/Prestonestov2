@@ -145,49 +145,49 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                     Container(
                       height: double.infinity,
                       decoration: BoxDecoration(),
-                      child: AuthUserStreamWidget(
-                        builder: (context) => Builder(builder: (context) {
-                          final _googleMapMarker = currentUserDocument?.latLong;
-                          return FlutterFlowGoogleMap(
-                            controller: _model.googleMapsController,
-                            onCameraIdle: (latLng) =>
-                                _model.googleMapsCenter = latLng,
-                            initialLocation: _model.googleMapsCenter ??=
-                                currentUserLocationValue!,
-                            markers: [
-                              if (_googleMapMarker != null)
-                                FlutterFlowMarker(
-                                  _googleMapMarker.serialize(),
-                                  _googleMapMarker,
-                                ),
-                            ],
-                            markerColor: GoogleMarkerColor.red,
-                            mapType: MapType.normal,
-                            style: GoogleMapStyle.standard,
-                            initialZoom: 15.0,
-                            allowInteraction: true,
-                            allowZoom: true,
-                            showZoomControls: true,
-                            showLocation: true,
-                            showCompass: false,
-                            showMapToolbar: true,
-                            showTraffic: false,
-                            centerMapOnMarkerTap: true,
-                          );
-                        }),
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(),
-                      child: Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
-                        child: Icon(
-                          Icons.location_pin,
-                          color: Color(0xFFFF0412),
-                          size: 40.0,
-                        ),
+                      child: Stack(
+                        children: [
+                          AuthUserStreamWidget(
+                            builder: (context) => Builder(builder: (context) {
+                              final _googleMapMarker =
+                                  currentUserDocument?.latLong;
+                              return FlutterFlowGoogleMap(
+                                controller: _model.googleMapsController,
+                                onCameraIdle: (latLng) =>
+                                    _model.googleMapsCenter = latLng,
+                                initialLocation: _model.googleMapsCenter ??=
+                                    currentUserLocationValue!,
+                                markers: [
+                                  if (_googleMapMarker != null)
+                                    FlutterFlowMarker(
+                                      _googleMapMarker.serialize(),
+                                      _googleMapMarker,
+                                    ),
+                                ],
+                                markerColor: GoogleMarkerColor.red,
+                                mapType: MapType.normal,
+                                style: GoogleMapStyle.standard,
+                                initialZoom: 15.0,
+                                allowInteraction: true,
+                                allowZoom: true,
+                                showZoomControls: true,
+                                showLocation: true,
+                                showCompass: false,
+                                showMapToolbar: true,
+                                showTraffic: false,
+                                centerMapOnMarkerTap: true,
+                              );
+                            }),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(0.0, 0.0),
+                            child: Icon(
+                              Icons.location_pin,
+                              color: Color(0xFFFF0412),
+                              size: 40.0,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
