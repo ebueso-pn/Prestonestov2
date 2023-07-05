@@ -288,14 +288,43 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Align(
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8.0, 8.0, 8.0, 8.0),
+                                    child: Text(
+                                      'Aplicaciones',
+                                      style: FlutterFlowTheme.of(context)
+                                          .labelLarge
+                                          .override(
+                                            fontFamily: 'Urbanist',
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
                                 Text(
-                                  'Aplicaciones',
-                                  style: FlutterFlowTheme.of(context)
-                                      .labelLarge
-                                      .override(
-                                        fontFamily: 'Urbanist',
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                  'Fecha',
+                                  style:
+                                      FlutterFlowTheme.of(context).labelMedium,
+                                ),
+                                Text(
+                                  'Fecha',
+                                  style:
+                                      FlutterFlowTheme.of(context).labelMedium,
+                                ),
+                                Text(
+                                  'Fecha',
+                                  style:
+                                      FlutterFlowTheme.of(context).labelMedium,
                                 ),
                               ],
                             ),
@@ -334,11 +363,16 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                             listViewIndex];
                                     return Row(
                                       mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
                                       children: [
                                         Text(
-                                          listViewApplicationRecord
-                                              .applicationId
-                                              .toString(),
+                                          valueOrDefault<String>(
+                                            listViewApplicationRecord
+                                                .dateApplied
+                                                ?.toString(),
+                                            '?',
+                                          ),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium,
                                         ),
