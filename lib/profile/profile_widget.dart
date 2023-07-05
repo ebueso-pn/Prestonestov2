@@ -1,5 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -135,97 +134,24 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                          borderRadius: BorderRadius.circular(12.0),
-                          border: Border.all(
-                            color: FlutterFlowTheme.of(context).alternate,
-                            width: 2.0,
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              currentUserEmail,
-                              style: FlutterFlowTheme.of(context).bodyMedium,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+              Container(
+                width: 100.0,
+                height: 200.0,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
                 ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  StreamBuilder<List<ApplicationRecord>>(
-                    stream: queryApplicationRecord(
-                      parent: currentUserReference,
-                      queryBuilder: (applicationRecord) => applicationRecord
-                          .orderBy('decision_date', descending: true),
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CircularProgressIndicator(
-                              color: Color(0xFF2AAF7A),
-                            ),
-                          ),
-                        );
-                      }
-                      List<ApplicationRecord> listViewApplicationRecordList =
-                          snapshot.data!;
-                      return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: listViewApplicationRecordList.length,
-                        itemBuilder: (context, listViewIndex) {
-                          final listViewApplicationRecord =
-                              listViewApplicationRecordList[listViewIndex];
-                          return Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                valueOrDefault<String>(
-                                  listViewApplicationRecord.dateApplied
-                                      ?.toString(),
-                                  'Fecha',
-                                ),
-                                style: FlutterFlowTheme.of(context).bodyMedium,
-                              ),
-                              Text(
-                                listViewApplicationRecord.monto.toString(),
-                                style: FlutterFlowTheme.of(context).bodyMedium,
-                              ),
-                              Text(
-                                listViewApplicationRecord.plazoMeses.toString(),
-                                style: FlutterFlowTheme.of(context).bodyMedium,
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [],
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ],
           ),

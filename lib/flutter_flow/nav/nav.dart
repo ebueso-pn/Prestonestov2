@@ -229,6 +229,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                     false,
                     ['users', 'application']),
               ),
+            ),
+            FFRoute(
+              name: 'Profile_Edit',
+              path: 'profileEdit',
+              requireAuth: true,
+              builder: (context, params) => ProfileEditWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),

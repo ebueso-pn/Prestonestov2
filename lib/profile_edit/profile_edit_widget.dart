@@ -1,63 +1,29 @@
-import '/flutter_flow/flutter_flow_animations.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'application_d_n_i_validation_model.dart';
-export 'application_d_n_i_validation_model.dart';
+import 'profile_edit_model.dart';
+export 'profile_edit_model.dart';
 
-class ApplicationDNIValidationWidget extends StatefulWidget {
-  const ApplicationDNIValidationWidget({
-    Key? key,
-    required this.applicationRecieve,
-  }) : super(key: key);
-
-  final DocumentReference? applicationRecieve;
+class ProfileEditWidget extends StatefulWidget {
+  const ProfileEditWidget({Key? key}) : super(key: key);
 
   @override
-  _ApplicationDNIValidationWidgetState createState() =>
-      _ApplicationDNIValidationWidgetState();
+  _ProfileEditWidgetState createState() => _ProfileEditWidgetState();
 }
 
-class _ApplicationDNIValidationWidgetState
-    extends State<ApplicationDNIValidationWidget>
-    with TickerProviderStateMixin {
-  late ApplicationDNIValidationModel _model;
+class _ProfileEditWidgetState extends State<ProfileEditWidget> {
+  late ProfileEditModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final animationsMap = {
-    'buttonOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(0.0, 100.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-  };
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ApplicationDNIValidationModel());
+    _model = createModel(context, () => ProfileEditModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -96,6 +62,7 @@ class _ApplicationDNIValidationWidgetState
                       children: [
                         Row(
                           mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -115,19 +82,40 @@ class _ApplicationDNIValidationWidgetState
                                 },
                               ),
                             ),
+                            Align(
+                              alignment: AlignmentDirectional(1.0, 0.0),
+                              child: FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30.0,
+                                borderWidth: 1.0,
+                                buttonSize: 50.0,
+                                icon: Icon(
+                                  Icons.logout,
+                                  color: Colors.white,
+                                  size: 30.0,
+                                ),
+                                onPressed: () async {
+                                  GoRouter.of(context).prepareAuthEvent();
+                                  await authManager.signOut();
+                                  GoRouter.of(context).clearRedirectLocation();
+
+                                  context.goNamedAuth(
+                                      'Onboarding', context.mounted);
+                                },
+                              ),
+                            ),
                           ],
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 0.0, 0.0, 0.0),
                           child: Text(
-                            'Shufti Pro',
+                            'Perfil',
                             style: FlutterFlowTheme.of(context)
-                                .headlineLarge
+                                .headlineMedium
                                 .override(
                                   fontFamily: 'Urbanist',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
+                                  color: Colors.white,
                                   fontSize: 22.0,
                                 ),
                           ),
@@ -145,52 +133,38 @@ class _ApplicationDNIValidationWidgetState
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  'https://picsum.photos/seed/990/600',
-                  width: 379.0,
-                  height: 310.0,
-                  fit: BoxFit.cover,
-                ),
-              ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    context.pushNamed(
-                      'Application_Address',
-                      queryParameters: {
-                        'applicationRecieve': serializeParam(
-                          widget.applicationRecieve,
-                          ParamType.DocumentReference,
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBtnText,
+                          borderRadius: BorderRadius.circular(12.0),
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).alternate,
+                            width: 2.0,
+                          ),
                         ),
-                      }.withoutNulls,
-                    );
-                  },
-                  text: 'Continuar',
-                  options: FFButtonOptions(
-                    width: 230.0,
-                    height: 50.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Urbanist',
-                          color: Colors.white,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              currentUserEmail,
+                              style: FlutterFlowTheme.of(context).bodyMedium,
+                            ),
+                          ],
                         ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(48.0),
-                  ),
-                ).animateOnPageLoad(
-                    animationsMap['buttonOnPageLoadAnimation']!),
+                  ],
+                ),
               ),
             ],
           ),
