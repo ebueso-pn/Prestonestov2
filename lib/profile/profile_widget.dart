@@ -383,6 +383,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                             formatNumber(
                                               listViewApplicationRecord.monto,
                                               formatType: FormatType.decimal,
+                                              decimalType:
+                                                  DecimalType.automatic,
                                               currency: 'L. ',
                                             ),
                                             style: FlutterFlowTheme.of(context)
