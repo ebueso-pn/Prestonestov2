@@ -61,6 +61,11 @@ class ApplicationRecord extends FirestoreRecord {
   LatLng? get latLongApp => _latLongApp;
   bool hasLatLongApp() => _latLongApp != null;
 
+  // "status" field.
+  int? _status;
+  int get status => _status ?? 0;
+  bool hasStatus() => _status != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -73,6 +78,7 @@ class ApplicationRecord extends FirestoreRecord {
     _monto = castToType<double>(snapshotData['monto']);
     _plazoMeses = castToType<double>(snapshotData['plazo_meses']);
     _latLongApp = snapshotData['lat_long_app'] as LatLng?;
+    _status = castToType<int>(snapshotData['status']);
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -124,6 +130,7 @@ Map<String, dynamic> createApplicationRecordData({
   double? monto,
   double? plazoMeses,
   LatLng? latLongApp,
+  int? status,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -136,6 +143,7 @@ Map<String, dynamic> createApplicationRecordData({
       'monto': monto,
       'plazo_meses': plazoMeses,
       'lat_long_app': latLongApp,
+      'status': status,
     }.withoutNulls,
   );
 
@@ -155,7 +163,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e1?.decisionDate == e2?.decisionDate &&
         e1?.monto == e2?.monto &&
         e1?.plazoMeses == e2?.plazoMeses &&
-        e1?.latLongApp == e2?.latLongApp;
+        e1?.latLongApp == e2?.latLongApp &&
+        e1?.status == e2?.status;
   }
 
   @override
@@ -168,7 +177,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.decisionDate,
         e?.monto,
         e?.plazoMeses,
-        e?.latLongApp
+        e?.latLongApp,
+        e?.status
       ]);
 
   @override

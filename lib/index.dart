@@ -29,3 +29,5 @@ export '/application/application_map/application_map_widget.dart'
 export '/application/application_d_n_i_validation/application_d_n_i_validation_widget.dart'
     show ApplicationDNIValidationWidget;
 export '/profile_edit/profile_edit_widget.dart' show ProfileEditWidget;
+export '/application_list/application_list_widget.dart'
+    show ApplicationListWidget;
