@@ -1,9 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_static_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/lat_lng.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mapbox_search/mapbox_search.dart';
 import 'package:provider/provider.dart';
 
 class ProfileModel extends FlutterFlowModel {

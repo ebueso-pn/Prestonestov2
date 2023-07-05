@@ -153,14 +153,6 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondary,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 10.0,
-                                          color: Color(0x33000000),
-                                          offset: Offset(0.0, 10.0),
-                                          spreadRadius: 10.0,
-                                        )
-                                      ],
                                       borderRadius: BorderRadius.circular(32.0),
                                       shape: BoxShape.rectangle,
                                     ),
