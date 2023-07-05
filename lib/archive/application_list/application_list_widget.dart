@@ -253,8 +253,7 @@ class _ApplicationListWidgetState extends State<ApplicationListWidget> {
                                               ),
                                         ),
                                         Text(
-                                          listViewApplicationRecord.status
-                                              .toString(),
+                                          listViewApplicationRecord.status,
                                           style: FlutterFlowTheme.of(context)
                                               .labelLarge,
                                         ),

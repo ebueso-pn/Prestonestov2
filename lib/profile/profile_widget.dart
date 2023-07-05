@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_static_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -137,13 +138,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 24.0),
+                        EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 12.0),
                     child: Container(
                       width: double.infinity,
                       height: 300.0,
@@ -166,15 +168,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(40.0),
-                                    child: Image.network(
-                                      'https://picsum.photos/seed/613/600',
-                                      width: 70.0,
-                                      height: 70.0,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
                                   Align(
                                     alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Column(
@@ -271,43 +264,153 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 24.0),
-                    child: Container(
-                      width: double.infinity,
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        borderRadius: BorderRadius.circular(40.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 8.0),
+                    child: StreamBuilder<List<ApplicationRecord>>(
+                      stream: queryApplicationRecord(
+                        parent: currentUserReference,
+                        queryBuilder: (applicationRecord) => applicationRecord
+                            .where('status', isEqualTo: 'Enviada')
+                            .orderBy('decision_date', descending: true),
+                        singleRecord: true,
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            'Mis Solicitudes',
-                            style:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Urbanist',
-                                      fontSize: 20.0,
-                                    ),
-                          ),
-                          FlutterFlowIconButton(
-                            borderColor: FlutterFlowTheme.of(context).secondary,
-                            borderRadius: 20.0,
-                            borderWidth: 1.0,
-                            buttonSize: 40.0,
-                            fillColor: FlutterFlowTheme.of(context).primary,
-                            icon: Icon(
-                              Icons.navigate_next,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 24.0,
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: CircularProgressIndicator(
+                                color: Color(0xFF2AAF7A),
+                              ),
                             ),
-                            onPressed: () async {
-                              context.pushNamed('Application_List');
-                            },
+                          );
+                        }
+                        List<ApplicationRecord> containerApplicationRecordList =
+                            snapshot.data!;
+                        // Return an empty Container when the item does not exist.
+                        if (snapshot.data!.isEmpty) {
+                          return Container();
+                        }
+                        final containerApplicationRecord =
+                            containerApplicationRecordList.isNotEmpty
+                                ? containerApplicationRecordList.first
+                                : null;
+                        return Container(
+                          width: double.infinity,
+                          height: 100.0,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            borderRadius: BorderRadius.circular(40.0),
                           ),
-                        ],
-                      ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                8.0, 8.0, 8.0, 8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      'Fecha',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .override(
+                                            fontFamily: 'Urbanist',
+                                            fontSize: 17.0,
+                                          ),
+                                    ),
+                                    Text(
+                                      dateTimeFormat(
+                                          'd/M/y',
+                                          containerApplicationRecord!
+                                              .dateApplied!),
+                                      style: FlutterFlowTheme.of(context)
+                                          .labelLarge,
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      'Monto',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Urbanist',
+                                            fontSize: 17.0,
+                                          ),
+                                    ),
+                                    Text(
+                                      formatNumber(
+                                        containerApplicationRecord!.monto,
+                                        formatType: FormatType.custom,
+                                        currency: 'L. ',
+                                        format: '',
+                                        locale: '',
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .labelLarge,
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      'Plazo',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Urbanist',
+                                            fontSize: 17.0,
+                                          ),
+                                    ),
+                                    Text(
+                                      containerApplicationRecord!.plazoMeses
+                                          .toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .labelLarge,
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      'Estatus',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Urbanist',
+                                            fontSize: 17.0,
+                                          ),
+                                    ),
+                                    Text(
+                                      containerApplicationRecord!.status,
+                                      style: FlutterFlowTheme.of(context)
+                                          .labelLarge,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],

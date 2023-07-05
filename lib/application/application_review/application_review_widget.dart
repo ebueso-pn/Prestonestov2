@@ -504,6 +504,13 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                           EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
+                          await widget.applicationRecieve!
+                              .update(createApplicationRecordData(
+                            dateApplied: dateTimeFromSecondsSinceEpoch(
+                                getCurrentTimestamp.secondsSinceEpoch),
+                            status: 'Enviada',
+                          ));
+
                           context.pushNamed(
                             'Applicaiton_Success',
                             queryParameters: {

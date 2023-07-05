@@ -62,8 +62,8 @@ class ApplicationRecord extends FirestoreRecord {
   bool hasLatLongApp() => _latLongApp != null;
 
   // "status" field.
-  int? _status;
-  int get status => _status ?? 0;
+  String? _status;
+  String get status => _status ?? '';
   bool hasStatus() => _status != null;
 
   DocumentReference get parentReference => reference.parent.parent!;
@@ -78,7 +78,7 @@ class ApplicationRecord extends FirestoreRecord {
     _monto = castToType<double>(snapshotData['monto']);
     _plazoMeses = castToType<double>(snapshotData['plazo_meses']);
     _latLongApp = snapshotData['lat_long_app'] as LatLng?;
-    _status = castToType<int>(snapshotData['status']);
+    _status = snapshotData['status'] as String?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -130,7 +130,7 @@ Map<String, dynamic> createApplicationRecordData({
   double? monto,
   double? plazoMeses,
   LatLng? latLongApp,
-  int? status,
+  String? status,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
