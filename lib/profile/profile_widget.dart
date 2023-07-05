@@ -158,71 +158,73 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  child: Image.network(
-                                    'https://picsum.photos/seed/613/600',
-                                    width: 70.0,
-                                    height: 70.0,
-                                    fit: BoxFit.cover,
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 16.0, 0.0, 0.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(40.0),
+                                    child: Image.network(
+                                      'https://picsum.photos/seed/613/600',
+                                      width: 70.0,
+                                      height: 70.0,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      AuthUserStreamWidget(
-                                        builder: (context) => Text(
-                                          '${valueOrDefault(currentUserDocument?.nombres, '')}${valueOrDefault(currentUserDocument?.apellidos, '')}',
+                                  Align(
+                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            '${valueOrDefault(currentUserDocument?.nombres, '')}${valueOrDefault(currentUserDocument?.apellidos, '')}',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge
+                                                .override(
+                                                  fontFamily: 'Urbanist',
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                          ),
+                                        ),
+                                        AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            valueOrDefault(
+                                                currentUserDocument?.dni, ''),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge,
+                                          ),
+                                        ),
+                                        Text(
+                                          currentUserEmail,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyLarge
                                               .override(
                                                 fontFamily: 'Urbanist',
-                                                fontWeight: FontWeight.w500,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .accent1,
                                               ),
                                         ),
-                                      ),
-                                      AuthUserStreamWidget(
-                                        builder: (context) => Text(
-                                          valueOrDefault(
-                                              currentUserDocument?.dni, ''),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge,
+                                        AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            currentPhoneNumber,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        currentUserEmail,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyLarge
-                                            .override(
-                                              fontFamily: 'Urbanist',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .accent1,
-                                            ),
-                                      ),
-                                      AuthUserStreamWidget(
-                                        builder: (context) => Text(
-                                          currentPhoneNumber,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge,
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(1.0, -1.0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 50.0),
+                                  Align(
+                                    alignment: AlignmentDirectional(1.0, -1.0),
                                     child: InkWell(
                                       splashColor: Colors.transparent,
                                       focusColor: Colors.transparent,
@@ -239,8 +241,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Align(
                               alignment: AlignmentDirectional(1.0, 0.0),
@@ -317,12 +319,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),
                                 Text(
-                                  'Fecha',
+                                  'Monto',
                                   style:
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),
                                 Text(
-                                  'Fecha',
+                                  'Plazo',
                                   style:
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),
@@ -368,17 +370,21 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                       children: [
                                         Text(
                                           valueOrDefault<String>(
-                                            listViewApplicationRecord
-                                                .dateApplied
-                                                ?.toString(),
+                                            dateTimeFormat(
+                                                'relative',
+                                                listViewApplicationRecord
+                                                    .dateApplied),
                                             '?',
                                           ),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium,
                                         ),
                                         Text(
-                                          listViewApplicationRecord.monto
-                                              .toString(),
+                                          formatNumber(
+                                            listViewApplicationRecord.monto,
+                                            formatType: FormatType.decimal,
+                                            currency: 'L. ',
+                                          ),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium,
                                         ),
