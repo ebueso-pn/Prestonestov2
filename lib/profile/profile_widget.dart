@@ -455,9 +455,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: AuthUserStreamWidget(
                                   builder: (context) => FlutterFlowMediaDisplay(
-                                    path: valueOrDefault(
-                                        currentUserDocument?.incomeVerification,
-                                        ''),
+                                    path: valueOrDefault<String>(
+                                      valueOrDefault(
+                                          currentUserDocument
+                                              ?.incomeVerification,
+                                          ''),
+                                      'https://picsum.photos/seed/313/600',
+                                    ),
                                     imageBuilder: (path) => ClipRRect(
                                       borderRadius: BorderRadius.circular(40.0),
                                       child: Image.network(
