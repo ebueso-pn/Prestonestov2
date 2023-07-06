@@ -177,21 +177,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                       children: [
                                         AuthUserStreamWidget(
                                           builder: (context) => Text(
-                                            '${valueOrDefault(currentUserDocument?.nombres, '')}${valueOrDefault(currentUserDocument?.apellidos, '')}',
+                                            '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyLarge
                                                 .override(
                                                   fontFamily: 'Urbanist',
                                                   fontWeight: FontWeight.w500,
                                                 ),
-                                          ),
-                                        ),
-                                        AuthUserStreamWidget(
-                                          builder: (context) => Text(
-                                            valueOrDefault(
-                                                currentUserDocument?.dni, ''),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge,
                                           ),
                                         ),
                                         Text(
@@ -204,6 +196,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .accent1,
                                               ),
+                                        ),
+                                        AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            valueOrDefault(
+                                                currentUserDocument?.dni, ''),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge,
+                                          ),
                                         ),
                                         AuthUserStreamWidget(
                                           builder: (context) => Text(
@@ -269,7 +269,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       stream: queryApplicationRecord(
                         parent: currentUserReference,
                         queryBuilder: (applicationRecord) => applicationRecord
-                            .where('status', isEqualTo: 'Enviada')
                             .orderBy('decision_date', descending: true),
                         singleRecord: true,
                       ),

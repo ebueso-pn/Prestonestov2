@@ -278,20 +278,16 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                               ),
                                             ],
                                           ),
-                                          AuthUserStreamWidget(
-                                            builder: (context) => Text(
-                                              currentPhoneNumber,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Urbanist',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .accent1,
-                                                      ),
-                                            ),
+                                          Text(
+                                            currentUserEmail,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Urbanist',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .accent1,
+                                                ),
                                           ),
                                           AuthUserStreamWidget(
                                             builder: (context) => Text(
