@@ -91,6 +91,11 @@ class UsersRecord extends FirestoreRecord {
   LatLng? get latLong => _latLong;
   bool hasLatLong() => _latLong != null;
 
+  // "income_verification" field.
+  String? _incomeVerification;
+  String get incomeVerification => _incomeVerification ?? '';
+  bool hasIncomeVerification() => _incomeVerification != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -107,6 +112,7 @@ class UsersRecord extends FirestoreRecord {
     _descripcionDireccion = snapshotData['descripcion_direccion'] as String?;
     _ciudad = snapshotData['ciudad'] as String?;
     _latLong = snapshotData['lat_long'] as LatLng?;
+    _incomeVerification = snapshotData['income_verification'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -158,6 +164,7 @@ Map<String, dynamic> createUsersRecordData({
   String? descripcionDireccion,
   String? ciudad,
   LatLng? latLong,
+  String? incomeVerification,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -176,6 +183,7 @@ Map<String, dynamic> createUsersRecordData({
       'descripcion_direccion': descripcionDireccion,
       'ciudad': ciudad,
       'lat_long': latLong,
+      'income_verification': incomeVerification,
     }.withoutNulls,
   );
 
@@ -201,7 +209,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.colonia == e2?.colonia &&
         e1?.descripcionDireccion == e2?.descripcionDireccion &&
         e1?.ciudad == e2?.ciudad &&
-        e1?.latLong == e2?.latLong;
+        e1?.latLong == e2?.latLong &&
+        e1?.incomeVerification == e2?.incomeVerification;
   }
 
   @override
@@ -220,7 +229,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.colonia,
         e?.descripcionDireccion,
         e?.ciudad,
-        e?.latLong
+        e?.latLong,
+        e?.incomeVerification
       ]);
 
   @override
