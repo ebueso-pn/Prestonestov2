@@ -269,7 +269,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       stream: queryApplicationRecord(
                         parent: currentUserReference,
                         queryBuilder: (applicationRecord) => applicationRecord
-                            .orderBy('decision_date', descending: true),
+                            .orderBy('date_applied', descending: true),
                         singleRecord: true,
                       ),
                       builder: (context, snapshot) {
