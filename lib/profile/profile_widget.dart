@@ -468,13 +468,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   child: AuthUserStreamWidget(
                                     builder: (context) =>
                                         FlutterFlowMediaDisplay(
-                                      path: valueOrDefault<String>(
-                                        valueOrDefault(
-                                            currentUserDocument
-                                                ?.incomeVerification,
-                                            ''),
-                                        'https://picsum.photos/seed/313/600',
-                                      ),
+                                      path: valueOrDefault(
+                                          currentUserDocument
+                                              ?.incomeVerification,
+                                          ''),
                                       imageBuilder: (path) => ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(40.0),
