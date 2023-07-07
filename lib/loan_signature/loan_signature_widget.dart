@@ -305,7 +305,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           'signURL': serializeParam(
                             getJsonField(
                               (_model.zapSignAPIresponse?.jsonBody ?? ''),
-                              r'''$''',
+                              r'''$.signers[:].sign_url''',
                             ).toString(),
                             ParamType.String,
                           ),

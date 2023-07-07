@@ -383,7 +383,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                       decimalType: DecimalType.automatic,
                                       currency: 'L. ',
                                     ),
-                                    ' ####.##',
+                                    ' ####.#',
                                   ),
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
