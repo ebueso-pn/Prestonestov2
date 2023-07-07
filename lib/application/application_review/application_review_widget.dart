@@ -379,12 +379,11 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                   valueOrDefault<String>(
                                     formatNumber(
                                       contentApplicationRecord.cuota,
-                                      formatType: FormatType.custom,
+                                      formatType: FormatType.decimal,
+                                      decimalType: DecimalType.automatic,
                                       currency: 'L. ',
-                                      format: '',
-                                      locale: '',
                                     ),
-                                    ' #,###.##',
+                                    ' ####.##',
                                   ),
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
