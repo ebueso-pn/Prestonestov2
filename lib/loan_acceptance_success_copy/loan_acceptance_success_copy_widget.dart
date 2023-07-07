@@ -157,6 +157,35 @@ class _LoanAcceptanceSuccessCopyWidgetState
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                child: Container(
+                  width: 200.0,
+                  height: 30.0,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).primary,
+                  ),
+                  child: Align(
+                    alignment: AlignmentDirectional(0.0, 0.0),
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        context.pushNamed('Home');
+                      },
+                      child: Text(
+                        'Despues lo firmo',
+                        style: FlutterFlowTheme.of(context).titleSmall.override(
+                              fontFamily: 'Urbanist',
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                            ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
