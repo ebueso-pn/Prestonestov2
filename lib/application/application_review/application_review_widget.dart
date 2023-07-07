@@ -384,7 +384,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                       format: '',
                                       locale: '',
                                     ),
-                                    ' ####.##',
+                                    ' #,###.##',
                                   ),
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
