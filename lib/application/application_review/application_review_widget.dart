@@ -299,8 +299,10 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                         snapshot.data!;
                                     return Text(
                                       valueOrDefault<String>(
-                                        contentApplicationRecord.dateApplied
-                                            ?.toString(),
+                                        dateTimeFormat(
+                                            'd/M/y',
+                                            contentApplicationRecord
+                                                .dateApplied),
                                         'Hoy',
                                       ),
                                       style: FlutterFlowTheme.of(context)
