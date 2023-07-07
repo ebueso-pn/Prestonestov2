@@ -260,8 +260,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),
                                 Text(
-                                  contentApplicationRecord.applicationId
-                                      .toString(),
+                                  contentApplicationRecord.reference.id,
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
                                 ),
@@ -350,8 +349,12 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),
                                 Text(
-                                  contentApplicationRecord.plazoMeses
-                                      .toString(),
+                                  formatNumber(
+                                    contentApplicationRecord.plazoMeses,
+                                    formatType: FormatType.custom,
+                                    format: '#',
+                                    locale: '',
+                                  ),
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
                                 ),
@@ -371,11 +374,15 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),
                                 Text(
-                                  formatNumber(
-                                    contentApplicationRecord.cuota,
-                                    formatType: FormatType.decimal,
-                                    decimalType: DecimalType.automatic,
-                                    currency: 'L. ',
+                                  valueOrDefault<String>(
+                                    formatNumber(
+                                      contentApplicationRecord.cuota,
+                                      formatType: FormatType.custom,
+                                      currency: 'L. ',
+                                      format: '',
+                                      locale: '',
+                                    ),
+                                    ' ####.##',
                                   ),
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
