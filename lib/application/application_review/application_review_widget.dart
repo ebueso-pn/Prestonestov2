@@ -211,29 +211,10 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                             children: [
                                               AuthUserStreamWidget(
                                                 builder: (context) => Text(
-                                                  valueOrDefault(
-                                                      currentUserDocument
-                                                          ?.nombres,
-                                                      ''),
+                                                  '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        2.0, 0.0, 0.0, 0.0),
-                                                child: AuthUserStreamWidget(
-                                                  builder: (context) => Text(
-                                                    valueOrDefault(
-                                                        currentUserDocument
-                                                            ?.apellidos,
-                                                        ''),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium,
-                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -279,7 +260,8 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),
                                 Text(
-                                  contentApplicationRecord.reference.id,
+                                  contentApplicationRecord.applicationId
+                                      .toString(),
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
                                 ),
@@ -317,8 +299,11 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                     final textApplicationRecord =
                                         snapshot.data!;
                                     return Text(
-                                      dateTimeFormat('d/M/y',
-                                          textApplicationRecord.dateApplied!),
+                                      valueOrDefault<String>(
+                                        contentApplicationRecord.dateApplied
+                                            ?.toString(),
+                                        'Hoy',
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium,
                                     );
@@ -343,6 +328,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                   formatNumber(
                                     contentApplicationRecord.monto,
                                     formatType: FormatType.decimal,
+                                    decimalType: DecimalType.automatic,
                                     currency: 'L. ',
                                   ),
                                   style:
