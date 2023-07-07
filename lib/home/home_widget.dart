@@ -710,7 +710,15 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              context.pushNamed('Loan_Signature');
+                              context.pushNamed(
+                                'Loan_Signature',
+                                queryParameters: {
+                                  'signURL': serializeParam(
+                                    0,
+                                    ParamType.int,
+                                  ),
+                                }.withoutNulls,
+                              );
                             },
                             child: Container(
                               width: double.infinity,

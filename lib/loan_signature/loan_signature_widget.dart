@@ -12,7 +12,12 @@ import 'loan_signature_model.dart';
 export 'loan_signature_model.dart';
 
 class LoanSignatureWidget extends StatefulWidget {
-  const LoanSignatureWidget({Key? key}) : super(key: key);
+  const LoanSignatureWidget({
+    Key? key,
+    required this.signURL,
+  }) : super(key: key);
+
+  final int? signURL;
 
   @override
   _LoanSignatureWidgetState createState() => _LoanSignatureWidgetState();
@@ -58,71 +63,63 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                   automaticallyImplyLeading: false,
                   actions: [],
                   flexibleSpace: FlexibleSpaceBar(
-                    title: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 8.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 0.0, 0.0, 0.0),
-                                  child: FlutterFlowIconButton(
-                                    borderColor: Colors.transparent,
-                                    borderRadius: 30.0,
-                                    borderWidth: 1.0,
-                                    buttonSize: 50.0,
-                                    icon: Icon(
-                                      Icons.arrow_back_rounded,
+                    title: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 0.0, 0.0, 0.0),
+                              child: FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30.0,
+                                borderWidth: 1.0,
+                                buttonSize: 50.0,
+                                icon: Icon(
+                                  Icons.arrow_back_rounded,
+                                  color: Colors.white,
+                                  size: 30.0,
+                                ),
+                                onPressed: () async {
+                                  context.pop();
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  4.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                'Back',
+                                style: FlutterFlowTheme.of(context)
+                                    .headlineMedium
+                                    .override(
+                                      fontFamily: 'Urbanist',
                                       color: Colors.white,
-                                      size: 30.0,
+                                      fontSize: 16.0,
                                     ),
-                                    onPressed: () async {
-                                      context.pop();
-                                    },
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      4.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    'Back',
-                                    style: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .override(
-                                          fontFamily: 'Urbanist',
-                                          color: Colors.white,
-                                          fontSize: 16.0,
-                                        ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 0.0, 0.0),
+                          child: Text(
+                            'Terminos de tu PrestoNesto',
+                            style: FlutterFlowTheme.of(context)
+                                .headlineMedium
+                                .override(
+                                  fontFamily: 'Urbanist',
+                                  color: Colors.white,
+                                  fontSize: 22.0,
+                                ),
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'Terminos de tu PrestoNesto',
-                              style: FlutterFlowTheme.of(context)
-                                  .headlineMedium
-                                  .override(
-                                    fontFamily: 'Urbanist',
-                                    color: Colors.white,
-                                    fontSize: 22.0,
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     centerTitle: true,
                     expandedTitleScale: 1.0,
@@ -293,17 +290,27 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                     var _shouldSetState = false;
                     _model.zapSignAPIresponse =
                         await ZapSIgnCreateDocumentFromTemplateCall.call(
-                      signerName:
-                          '${valueOrDefault(currentUserDocument?.nombres, '')}${valueOrDefault(currentUserDocument?.apellidos, '')}',
-                      signerEmail: currentUserEmail,
-                      signerPhoneNumber: currentPhoneNumber,
+                      phone: currentPhoneNumber,
                       externalId: currentUserReference?.id,
-                      templateId:
-                          'https://sandbox.app.zapsign.com.br/verificar/doc/6084055f-618a-43f1-9428-2ed699b8f01b',
+                      name:
+                          '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
+                      email: currentUserEmail,
+                      dni: valueOrDefault(currentUserDocument?.dni, ''),
                     );
                     _shouldSetState = true;
                     if ((_model.zapSignAPIresponse?.succeeded ?? true)) {
-                      context.pushNamed('LoanAcceptance_SuccessCopy');
+                      context.pushNamed(
+                        'LoanAcceptance_SuccessCopy',
+                        queryParameters: {
+                          'signURL': serializeParam(
+                            getJsonField(
+                              (_model.zapSignAPIresponse?.jsonBody ?? ''),
+                              r'''$''',
+                            ).toString(),
+                            ParamType.String,
+                          ),
+                        }.withoutNulls,
+                      );
                     } else {
                       if (_shouldSetState) setState(() {});
                       return;

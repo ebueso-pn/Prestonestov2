@@ -51,106 +51,104 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return StreamBuilder<ApplicationRecord>(
-      stream: ApplicationRecord.getDocument(widget.applicationRecieve!),
-      builder: (context, snapshot) {
-        // Customize what your widget looks like when it's loading.
-        if (!snapshot.hasData) {
-          return Scaffold(
-            backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
-            body: Center(
-              child: SizedBox(
-                width: 50.0,
-                height: 50.0,
-                child: CircularProgressIndicator(
-                  color: Color(0xFF2AAF7A),
-                ),
-              ),
-            ),
-          );
-        }
-        final applicationReviewApplicationRecord = snapshot.data!;
-        return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
-          child: Scaffold(
-            key: scaffoldKey,
-            backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
-            appBar: responsiveVisibility(
-              context: context,
-              desktop: false,
-            )
-                ? PreferredSize(
-                    preferredSize: Size.fromHeight(100.0),
-                    child: AppBar(
-                      backgroundColor: FlutterFlowTheme.of(context).primary,
-                      automaticallyImplyLeading: false,
-                      actions: [],
-                      flexibleSpace: FlexibleSpaceBar(
-                        title: Column(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
+        appBar: responsiveVisibility(
+          context: context,
+          desktop: false,
+        )
+            ? PreferredSize(
+                preferredSize: Size.fromHeight(100.0),
+                child: AppBar(
+                  backgroundColor: FlutterFlowTheme.of(context).primary,
+                  automaticallyImplyLeading: false,
+                  actions: [],
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 0.0, 0.0, 0.0),
-                                  child: FlutterFlowIconButton(
-                                    borderColor: Colors.transparent,
-                                    borderRadius: 30.0,
-                                    borderWidth: 1.0,
-                                    buttonSize: 50.0,
-                                    icon: Icon(
-                                      Icons.arrow_back_rounded,
-                                      color: Colors.white,
-                                      size: 30.0,
-                                    ),
-                                    onPressed: () async {
-                                      context.pop();
-                                    },
-                                  ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 0.0, 0.0, 0.0),
+                              child: FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30.0,
+                                borderWidth: 1.0,
+                                buttonSize: 50.0,
+                                icon: Icon(
+                                  Icons.arrow_back_rounded,
+                                  color: Colors.white,
+                                  size: 30.0,
                                 ),
-                              ],
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(-0.9, 0.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  'Revisemos tu Solicitud',
-                                  style: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .override(
-                                        fontFamily: 'Urbanist',
-                                        color: Colors.white,
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
+                                onPressed: () async {
+                                  context.pop();
+                                },
                               ),
                             ),
                           ],
                         ),
-                        centerTitle: true,
-                        expandedTitleScale: 1.0,
-                      ),
-                      elevation: 2.0,
+                        Align(
+                          alignment: AlignmentDirectional(-0.9, 0.0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              'Revisemos tu Solicitud',
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    fontFamily: 'Urbanist',
+                                    color: Colors.white,
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  )
-                : null,
-            body: SafeArea(
-              top: true,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 16.0),
-                      child: Column(
+                    centerTitle: true,
+                    expandedTitleScale: 1.0,
+                  ),
+                  elevation: 2.0,
+                ),
+              )
+            : null,
+        body: SafeArea(
+          top: true,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 16.0),
+                  child: StreamBuilder<ApplicationRecord>(
+                    stream: ApplicationRecord.getDocument(
+                        widget.applicationRecieve!),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              color: Color(0xFF2AAF7A),
+                            ),
+                          ),
+                        );
+                      }
+                      final contentApplicationRecord = snapshot.data!;
+                      return Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Align(
@@ -212,52 +210,14 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               AuthUserStreamWidget(
-                                                builder: (context) =>
-                                                    StreamBuilder<
-                                                        List<UsersRecord>>(
-                                                  stream: queryUsersRecord(
-                                                    singleRecord: true,
-                                                  ),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 50.0,
-                                                          height: 50.0,
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            color: Color(
-                                                                0xFF2AAF7A),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-                                                    List<UsersRecord>
-                                                        textUsersRecordList =
-                                                        snapshot.data!;
-                                                    // Return an empty Container when the item does not exist.
-                                                    if (snapshot
-                                                        .data!.isEmpty) {
-                                                      return Container();
-                                                    }
-                                                    final textUsersRecord =
-                                                        textUsersRecordList
-                                                                .isNotEmpty
-                                                            ? textUsersRecordList
-                                                                .first
-                                                            : null;
-                                                    return Text(
-                                                      valueOrDefault(
-                                                          currentUserDocument
-                                                              ?.nombres,
-                                                          ''),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium,
-                                                    );
-                                                  },
+                                                builder: (context) => Text(
+                                                  valueOrDefault(
+                                                      currentUserDocument
+                                                          ?.nombres,
+                                                      ''),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium,
                                                 ),
                                               ),
                                               Padding(
@@ -319,8 +279,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),
                                 Text(
-                                  applicationReviewApplicationRecord
-                                      .reference.id,
+                                  contentApplicationRecord.reference.id,
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
                                 ),
@@ -382,9 +341,8 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                 ),
                                 Text(
                                   formatNumber(
-                                    applicationReviewApplicationRecord.monto,
+                                    contentApplicationRecord.monto,
                                     formatType: FormatType.decimal,
-                                    decimalType: DecimalType.automatic,
                                     currency: 'L. ',
                                   ),
                                   style:
@@ -406,7 +364,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),
                                 Text(
-                                  applicationReviewApplicationRecord.plazoMeses
+                                  contentApplicationRecord.plazoMeses
                                       .toString(),
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
@@ -428,11 +386,10 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                 ),
                                 Text(
                                   formatNumber(
-                                    applicationReviewApplicationRecord.cuota,
-                                    formatType: FormatType.custom,
+                                    contentApplicationRecord.cuota,
+                                    formatType: FormatType.decimal,
+                                    decimalType: DecimalType.automatic,
                                     currency: 'L. ',
-                                    format: '###.##',
-                                    locale: '',
                                   ),
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
@@ -493,60 +450,59 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          await widget.applicationRecieve!
-                              .update(createApplicationRecordData(
-                            dateApplied: dateTimeFromSecondsSinceEpoch(
-                                getCurrentTimestamp.secondsSinceEpoch),
-                            status: 'Enviada',
-                          ));
-
-                          context.pushNamed(
-                            'Applicaiton_Success',
-                            queryParameters: {
-                              'nameAppRecieve': serializeParam(
-                                applicationReviewApplicationRecord.reference.id,
-                                ParamType.String,
-                              ),
-                            }.withoutNulls,
-                          );
-                        },
-                        text: 'Enviar Solicitud',
-                        options: FFButtonOptions(
-                          width: 230.0,
-                          height: 50.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primary,
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Urbanist',
-                                    color: Colors.white,
-                                  ),
-                          elevation: 3.0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(48.0),
-                        ),
-                      ),
-                    ),
-                  ],
+                      );
+                    },
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      await widget.applicationRecieve!
+                          .update(createApplicationRecordData(
+                        dateApplied: dateTimeFromSecondsSinceEpoch(
+                            getCurrentTimestamp.secondsSinceEpoch),
+                        status: 'Enviada',
+                      ));
+
+                      context.pushNamed(
+                        'Applicaiton_Success',
+                        queryParameters: {
+                          'nameAppRecieve': serializeParam(
+                            valueOrDefault(currentUserDocument?.nombres, ''),
+                            ParamType.String,
+                          ),
+                        }.withoutNulls,
+                      );
+                    },
+                    text: 'Enviar Solicitud',
+                    options: FFButtonOptions(
+                      width: 230.0,
+                      height: 50.0,
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      iconPadding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Urbanist',
+                                color: Colors.white,
+                              ),
+                      elevation: 3.0,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(48.0),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

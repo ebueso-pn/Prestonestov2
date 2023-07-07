@@ -11,32 +11,50 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
 class ZapSIgnCreateDocumentFromTemplateCall {
   static Future<ApiCallResponse> call({
-    String? templateId = 'Test Pagare',
-    String? signerName = '',
-    String? signerEmail = '',
-    String? signerPhoneNumber = '',
+    String? name = '',
+    String? email = '',
     String? externalId = '',
+    String? phone = '',
+    String? dni = '',
+    String? signUrl = '',
   }) {
     final body = '''
 {
-"brand_name": "PrestoNesto",
-"send_automatic_email": true,
-"lang": "es",
-"template_id":"${templateId}",
-"signer_name":"${signerName}",
-"signer_email": "${signerEmail}",
-"signer_phone_number":"${signerPhoneNumber}",
-"external_id": "${externalId}",
-"reminder_every_n_days": "1"
-}
-''';
+  "template_id": "667bb389-b888-4aed-a3d0-cfef75fc86d6",
+  "signer_name": "${name}",
+  "signer_email": "${email}",
+  "signer_phone_number": "${phone}",
+  "send_automatic_email": true,
+  "send_automatic_whatsapp": false,
+  "lang": "es",
+  "external_id": "${externalId}",
+  "data": [
+    {
+      "de": "{{NOMBRE COMPLETO}}",
+      "para": "${name}"
+    },
+    {
+      "de": "{{DNI}",
+      "para": "${dni}"
+    },
+    {
+      "de": "{{PHONE}}",
+      "para": "${phone}"
+    },
+    {
+      "de": "{{EMAIL}}",
+      "para": "${email}"
+    }
+  ]
+}''';
     return ApiManager.instance.makeApiCall(
       callName: 'ZapSIgn Create Document from Template',
       apiUrl: 'https://api.zapsign.com.br/api/v1/models/create-doc/',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': '73d79ffa-832a-4afb-8917-6ddfe6254101',
+        'Authorization':
+            'Bearer 0c004cad-963b-48be-a373-52968dca04864f6e7f46-0316-4c77-8af6-5275e9905625',
       },
       params: {},
       body: body,

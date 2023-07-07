@@ -10,7 +10,12 @@ import 'loan_acceptance_success_copy_model.dart';
 export 'loan_acceptance_success_copy_model.dart';
 
 class LoanAcceptanceSuccessCopyWidget extends StatefulWidget {
-  const LoanAcceptanceSuccessCopyWidget({Key? key}) : super(key: key);
+  const LoanAcceptanceSuccessCopyWidget({
+    Key? key,
+    required this.signURL,
+  }) : super(key: key);
+
+  final String? signURL;
 
   @override
   _LoanAcceptanceSuccessCopyWidgetState createState() =>
@@ -129,17 +134,9 @@ class _LoanAcceptanceSuccessCopyWidgetState
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    context.pushNamed(
-                      'Home',
-                      extra: <String, dynamic>{
-                        kTransitionInfoKey: TransitionInfo(
-                          hasTransition: true,
-                          transitionType: PageTransitionType.leftToRight,
-                        ),
-                      },
-                    );
+                    await launchURL(widget.signURL!);
                   },
-                  text: 'Continuar',
+                  text: '¡Firmar Ahora!',
                   options: FFButtonOptions(
                     width: 200.0,
                     height: 50.0,

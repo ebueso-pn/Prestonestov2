@@ -245,12 +245,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'Loan_Signature',
               path: 'loanSignature',
-              builder: (context, params) => LoanSignatureWidget(),
+              builder: (context, params) => LoanSignatureWidget(
+                signURL: params.getParam('signURL', ParamType.int),
+              ),
             ),
             FFRoute(
               name: 'LoanAcceptance_SuccessCopy',
               path: 'loanAcceptanceSuccessCopy',
-              builder: (context, params) => LoanAcceptanceSuccessCopyWidget(),
+              builder: (context, params) => LoanAcceptanceSuccessCopyWidget(
+                signURL: params.getParam('signURL', ParamType.String),
+              ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
