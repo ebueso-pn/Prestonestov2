@@ -32,6 +32,7 @@ dependencies:
   cloud_firestore_platform_interface: 5.15.0
   cloud_firestore_web: 3.6.0
   easy_debounce: 2.0.1
+  equatable: 2.0.5
   file_picker: 5.2.6
   firebase_app_check: 0.1.4+2
   firebase_app_check_platform_interface: 0.0.8+2
