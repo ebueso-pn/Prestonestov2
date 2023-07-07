@@ -354,7 +354,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                   formatNumber(
                                     contentApplicationRecord.plazoMeses,
                                     formatType: FormatType.custom,
-                                    format: '#. meses',
+                                    format: '# meses',
                                     locale: '',
                                   ),
                                   style:
