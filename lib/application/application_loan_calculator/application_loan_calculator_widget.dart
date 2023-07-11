@@ -411,7 +411,7 @@ class _ApplicationLoanCalculatorWidgetState
                                 max: 25000.0,
                                 value: _model.loanAmtValue ??= 0.0,
                                 label: _model.loanAmtValue.toString(),
-                                divisions: 50,
+                                divisions: 25,
                                 onChanged: (newValue) {
                                   newValue =
                                       double.parse(newValue.toStringAsFixed(0));
