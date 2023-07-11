@@ -576,7 +576,7 @@ class _ApplicationLoanCalculatorWidgetState
                                   title: Text(
                                       'Has aplicado en los últimos 3 meses!'),
                                   content: Text(
-                                      'Recuerda que debes esperar 3 meses antes de volver a aplicar a un crédito con nosotros. Contactanos si crees que esto es un error'),
+                                      'Recuerda que debes esperar 3 meses antes de volver a aplicar a un crédito con nosotros.'),
                                   actions: [
                                     TextButton(
                                       onPressed: () =>
