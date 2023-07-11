@@ -26,12 +26,12 @@ double loanCalculator(
 }
 
 bool appIneligible(DateTime dateApplied) {
-  // compare if the date happned greater than three months ago, return false, else true
+  // if a date happened greater than three months ago return true, else false
   DateTime currentDate = DateTime.now();
   Duration difference = currentDate.difference(dateApplied);
   if (difference.inDays > 90) {
-    return 'false';
+    return true;
   } else {
-    return 'true';
+    return false;
   }
 }
