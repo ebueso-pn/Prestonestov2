@@ -568,7 +568,7 @@ class _ApplicationLoanCalculatorWidgetState
                               (functions.appIneligible(
                                       applicationLoanCalculatorApplicationRecord!
                                           .dateApplied!) ==
-                                  'True')) {
+                                  true)) {
                             await showDialog(
                               context: context,
                               builder: (alertDialogContext) {

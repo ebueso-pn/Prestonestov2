@@ -25,7 +25,7 @@ double loanCalculator(
   return monthlyPayment;
 }
 
-String appIneligible(DateTime dateApplied) {
+bool appIneligible(DateTime dateApplied) {
   // compare if the date happned greater than three months ago, return false, else true
   DateTime currentDate = DateTime.now();
   Duration difference = currentDate.difference(dateApplied);
