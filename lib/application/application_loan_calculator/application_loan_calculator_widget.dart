@@ -569,6 +569,24 @@ class _ApplicationLoanCalculatorWidgetState
                                       applicationLoanCalculatorApplicationRecord!
                                           .dateApplied!) ==
                                   'True')) {
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: Text(
+                                      'Has aplicado en los últimos 3 meses!'),
+                                  content: Text(
+                                      'Recuerda que debes esperar 3 meses antes de volver a aplicar a un crédito con nosotros. Contactanos si crees que esto es un error'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                             if (_shouldSetState) setState(() {});
                             return;
                           }
