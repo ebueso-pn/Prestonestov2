@@ -29,7 +29,7 @@ bool appIneligible(DateTime dateApplied) {
   // if a date happened greater than three months ago return true, else false
   DateTime currentDate = DateTime.now();
   Duration difference = currentDate.difference(dateApplied);
-  if (difference.inDays > 90) {
+  if (difference.inDays < 90) {
     return true;
   } else {
     return false;
