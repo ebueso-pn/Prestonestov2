@@ -24,3 +24,14 @@ double loanCalculator(
       (1 - math.pow(1 + monthlyInterestRate, -termInMonths));
   return monthlyPayment;
 }
+
+String appIneligible(DateTime dateApplied) {
+  // compare if the date happned greater than three months ago, return false, else true
+  DateTime currentDate = DateTime.now();
+  Duration difference = currentDate.difference(dateApplied);
+  if (difference.inDays > 90) {
+    return 'false';
+  } else {
+    return 'true';
+  }
+}
