@@ -101,3 +101,130 @@ String montoEnLetras(double numero) {
 
   return result;
 }
+
+String tasaEnLetras(double numero) {
+  Map<double, String> numberTable = {
+    0.02: 'dos',
+    0.021: 'dos punto uno',
+    0.022: 'dos punto dos',
+    0.023: 'dos punto tres',
+    0.024: 'dos punto cuatro',
+    0.025: 'dos punto cinco',
+    0.026: 'dos punto seis',
+    0.027: 'dos punto siete',
+    0.028: 'dos punto ocho',
+    0.029: 'dos punto nueve',
+    0.03: 'tres',
+    0.031: 'tres punto uno',
+    0.032: 'tres punto dos',
+    0.033: 'tres punto tres',
+    0.034: 'tres punto cuatro',
+    0.035: 'tres punto cinco',
+    0.036: 'tres punto seis',
+    0.037: 'tres punto siete',
+    0.038: 'tres punto ocho',
+    0.039: 'tres punto nueve',
+    0.04: 'cuatro',
+    0.041: 'cuatro punto uno',
+    0.042: 'cuatro punto dos',
+    0.043: 'cuatro punto tres',
+    0.044: 'cuatro punto cuatro',
+    0.045: 'cuatro punto cinco',
+    0.046: 'cuatro punto seis',
+    0.047: 'cuatro punto siete',
+    0.048: 'cuatro punto ocho',
+    0.049: 'cuatro punto nueve',
+    0.05: 'cinco',
+    0.051: 'cinco punto uno',
+    0.052: 'cinco punto dos',
+    0.053: 'cinco punto tres',
+    0.054: 'cinco punto cuatro',
+    0.055: 'cinco punto cinco',
+    // Add more number-text mappings as needed
+  };
+  String result = numberTable[numero] ?? 'Número desconocido';
+
+  return result;
+}
+
+String diaEnLetras(DateTime fecha) {
+  Map<int, String> numberTable = {
+    1: 'primero',
+    2: 'dos',
+    3: 'tres',
+    4: 'cuatro',
+    5: 'cinco',
+    6: 'seis',
+    7: 'siete',
+    8: 'ocho',
+    9: 'nueve',
+    10: 'diez',
+    11: 'once',
+    12: 'doce',
+    13: 'trece',
+    14: 'catorce',
+    15: 'quince',
+    16: 'dieciséis',
+    17: 'diecisiete',
+    18: 'dieciocho',
+    19: 'diecinueve',
+    20: 'veinte',
+    21: 'veintiun',
+    22: 'veintidós',
+    23: 'veintitrés',
+    24: 'veinticuatro',
+    25: 'veinticinco',
+    26: 'veintiseis',
+    27: 'veintisiete',
+    28: 'veintiocho',
+    29: 'veintinueve',
+    30: 'treinta',
+    31: 'treinta y uno',
+    // Add more day-number mappings as needed
+  };
+
+  int day = fecha.day;
+  String result = numberTable[day] ?? 'Día desconocido';
+
+  return result;
+}
+
+String mesEnLetras(DateTime fecha) {
+  Map<int, String> numberTable = {
+    1: 'enero',
+    2: 'febrero',
+    3: 'marzo',
+    4: 'abril',
+    5: 'mayo',
+    6: 'junio',
+    7: 'julio',
+    8: 'agosto',
+    9: 'septiembre',
+    10: 'octubre',
+    11: 'noviembre',
+    12: 'diciembre',
+  };
+
+  int month = fecha.month;
+  String result = numberTable[month] ?? 'Mes desconocido';
+
+  return result;
+}
+
+String anoEnLetras(DateTime fecha) {
+  Map<int, String> numberTable = {
+    2023: 'dos mil veintitrés',
+    2024: 'dos mil veinticuatro',
+    2025: 'dos mil veinticinco',
+    2026: 'dos mil veintiséis',
+    2027: 'dos mil veintisiete',
+    2028: 'dos mil veintiocho',
+    2029: 'dos mil veintinueve',
+    2030: 'dos mil treinta',
+  };
+
+  int year = fecha.year;
+  String result = numberTable[year] ?? 'Año desconocido';
+
+  return result;
+}

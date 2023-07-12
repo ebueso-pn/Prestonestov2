@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +53,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
       onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
         appBar: responsiveVisibility(
           context: context,
           desktop: false,
@@ -136,7 +137,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(36.0, 36.0, 36.0, 36.0),
+                padding: EdgeInsetsDirectional.fromSTEB(36.0, 24.0, 36.0, 24.0),
                 child: StreamBuilder<List<ApplicationRecord>>(
                   stream: queryApplicationRecord(
                     parent: currentUserReference,
@@ -361,58 +362,178 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    var _shouldSetState = false;
-                    _model.zapSignAPIresponse =
-                        await ZapSIgnCreateDocumentFromTemplateCall.call(
-                      phone: currentPhoneNumber,
-                      externalId: currentUserReference?.id,
-                      name:
-                          '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
-                      email: currentUserEmail,
-                      dni: valueOrDefault(currentUserDocument?.dni, ''),
-                    );
-                    _shouldSetState = true;
-                    if ((_model.zapSignAPIresponse?.succeeded ?? true)) {
-                      context.pushNamed(
-                        'LoanAcceptance_SuccessCopy',
-                        queryParameters: {
-                          'signURL': serializeParam(
-                            getJsonField(
-                              (_model.zapSignAPIresponse?.jsonBody ?? ''),
-                              r'''$.signers[:].sign_url''',
-                            ).toString(),
-                            ParamType.String,
-                          ),
-                        }.withoutNulls,
-                      );
-                    } else {
-                      if (_shouldSetState) setState(() {});
-                      return;
-                    }
-
-                    if (_shouldSetState) setState(() {});
-                  },
-                  text: 'Aceptar',
-                  options: FFButtonOptions(
-                    width: 230.0,
-                    height: 50.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Urbanist',
-                          color: Colors.white,
-                        ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(48.0),
+                child: StreamBuilder<List<ApplicationRecord>>(
+                  stream: queryApplicationRecord(
+                    parent: currentUserReference,
+                    queryBuilder: (applicationRecord) => applicationRecord
+                        .where('status', isEqualTo: 'Aprobada')
+                        .orderBy('date_applied', descending: true),
+                    singleRecord: true,
                   ),
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50.0,
+                          height: 50.0,
+                          child: CircularProgressIndicator(
+                            color: Color(0xFF2AAF7A),
+                          ),
+                        ),
+                      );
+                    }
+                    List<ApplicationRecord> buttonApplicationRecordList =
+                        snapshot.data!;
+                    // Return an empty Container when the item does not exist.
+                    if (snapshot.data!.isEmpty) {
+                      return Container();
+                    }
+                    final buttonApplicationRecord =
+                        buttonApplicationRecordList.isNotEmpty
+                            ? buttonApplicationRecordList.first
+                            : null;
+                    return FFButtonWidget(
+                      onPressed: () async {
+                        var _shouldSetState = false;
+
+                        await buttonApplicationRecord!.reference
+                            .update(createApplicationRecordData(
+                          fechaPrimerPago:
+                              functions.fechaFirmaMas15(getCurrentTimestamp),
+                          fechaUltimoPago: functions.fechaUltimoPago(
+                              getCurrentTimestamp,
+                              buttonApplicationRecord!.plazoMeses),
+                        ));
+                        _model.zapSignAPIresponse =
+                            await ZapSIgnCreateDocumentFromTemplateCall.call(
+                          phone: currentPhoneNumber,
+                          externalId: currentUserReference?.id,
+                          name:
+                              '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
+                          email: currentUserEmail,
+                          dni: valueOrDefault(currentUserDocument?.dni, ''),
+                          monto: buttonApplicationRecord!.montoAprobado,
+                          montoEnLetras: functions.montoEnLetras(
+                              buttonApplicationRecord!.montoAprobado),
+                          numCuotas: functions.numeroCuotas(
+                              buttonApplicationRecord!.plazoAprobado),
+                          fechaFirmaDia: dateTimeFormat(
+                            'd',
+                            getCurrentTimestamp,
+                            locale: FFLocalizations.of(context).languageCode,
+                          ),
+                          fechaFrimaMes: dateTimeFormat(
+                            'M',
+                            getCurrentTimestamp,
+                            locale: FFLocalizations.of(context).languageCode,
+                          ),
+                          fechaFirmaAno: dateTimeFormat(
+                            'Y',
+                            getCurrentTimestamp,
+                            locale: FFLocalizations.of(context).languageCode,
+                          ),
+                          fechaPrimerPagoDia: dateTimeFormat(
+                            'd',
+                            functions.fechaFirmaMas15(
+                                dateTimeFromSecondsSinceEpoch(
+                                    getCurrentTimestamp.secondsSinceEpoch)),
+                            locale: FFLocalizations.of(context).languageCode,
+                          ),
+                          fechaPrimerPagoMes: dateTimeFormat(
+                            'M',
+                            functions.fechaFirmaMas15(getCurrentTimestamp),
+                            locale: FFLocalizations.of(context).languageCode,
+                          ),
+                          fechaPrimerPagoAno: dateTimeFormat(
+                            'y',
+                            functions.fechaFirmaMas15(getCurrentTimestamp),
+                            locale: FFLocalizations.of(context).languageCode,
+                          ),
+                          fechaUltimoPagoDia: dateTimeFormat(
+                            'd',
+                            functions.fechaUltimoPago(getCurrentTimestamp,
+                                buttonApplicationRecord!.plazoAprobado),
+                            locale: FFLocalizations.of(context).languageCode,
+                          ),
+                          fechaUltimoPagoMes: dateTimeFormat(
+                            'M',
+                            functions.fechaUltimoPago(getCurrentTimestamp,
+                                buttonApplicationRecord!.plazoAprobado),
+                            locale: FFLocalizations.of(context).languageCode,
+                          ),
+                          fechaUltimoPagoAno: dateTimeFormat(
+                            'Y',
+                            functions.fechaUltimoPago(getCurrentTimestamp,
+                                buttonApplicationRecord!.plazoAprobado),
+                            locale: FFLocalizations.of(context).languageCode,
+                          ),
+                          cuota: buttonApplicationRecord!.cuotaAprobada,
+                          tasaEfectivaMensual:
+                              buttonApplicationRecord!.tasaMensualAprobada,
+                          tasaEfectivaMensualL:
+                              buttonApplicationRecord!.tasaMensualAprobada,
+                          fechaFirmaDiaL:
+                              functions.diaEnLetras(getCurrentTimestamp),
+                          fechaFrimaMesL: getCurrentTimestamp.toString(),
+                          fechaFirmaAnoL: getCurrentTimestamp.toString(),
+                          fechaPrimerPagoDiaL: functions.diaEnLetras(
+                              buttonApplicationRecord!.fechaPrimerPago!),
+                          fechaPrimerPagoMesL: functions.mesEnLetras(
+                              buttonApplicationRecord!.fechaPrimerPago!),
+                          fechaPrimerPagoAnoL: functions.anoEnLetras(
+                              buttonApplicationRecord!.fechaPrimerPago!),
+                          fechaUltimoPagoDiaL: functions.diaEnLetras(
+                              buttonApplicationRecord!.fechaUltimoPago!),
+                          fechaUltimoPagoMesL: functions.mesEnLetras(
+                              buttonApplicationRecord!.fechaUltimoPago!),
+                          fechaUltimoPagoAnoL: functions.anoEnLetras(
+                              buttonApplicationRecord!.fechaUltimoPago!),
+                        );
+                        _shouldSetState = true;
+                        if ((_model.zapSignAPIresponse?.succeeded ?? true)) {
+                          context.pushNamed(
+                            'LoanAcceptance_SuccessCopy',
+                            queryParameters: {
+                              'signURL': serializeParam(
+                                getJsonField(
+                                  (_model.zapSignAPIresponse?.jsonBody ?? ''),
+                                  r'''$.signers[:].sign_url''',
+                                ).toString(),
+                                ParamType.String,
+                              ),
+                            }.withoutNulls,
+                          );
+                        } else {
+                          if (_shouldSetState) setState(() {});
+                          return;
+                        }
+
+                        if (_shouldSetState) setState(() {});
+                      },
+                      text: 'Aceptar',
+                      options: FFButtonOptions(
+                        width: 230.0,
+                        height: 50.0,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primary,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Urbanist',
+                                  color: Colors.white,
+                                ),
+                        elevation: 3.0,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(48.0),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

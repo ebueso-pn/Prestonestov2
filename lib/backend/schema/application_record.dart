@@ -91,6 +91,16 @@ class ApplicationRecord extends FirestoreRecord {
   int get numeroDeCuotas => _numeroDeCuotas ?? 0;
   bool hasNumeroDeCuotas() => _numeroDeCuotas != null;
 
+  // "fecha_primer_pago" field.
+  DateTime? _fechaPrimerPago;
+  DateTime? get fechaPrimerPago => _fechaPrimerPago;
+  bool hasFechaPrimerPago() => _fechaPrimerPago != null;
+
+  // "fecha_ultimo_pago" field.
+  DateTime? _fechaUltimoPago;
+  DateTime? get fechaUltimoPago => _fechaUltimoPago;
+  bool hasFechaUltimoPago() => _fechaUltimoPago != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -110,6 +120,8 @@ class ApplicationRecord extends FirestoreRecord {
     _plazoAprobado = castToType<double>(snapshotData['plazo_aprobado']);
     _cuotaAprobada = castToType<double>(snapshotData['cuota_aprobada']);
     _numeroDeCuotas = castToType<int>(snapshotData['numero_de_cuotas']);
+    _fechaPrimerPago = snapshotData['fecha_primer_pago'] as DateTime?;
+    _fechaUltimoPago = snapshotData['fecha_ultimo_pago'] as DateTime?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -167,6 +179,8 @@ Map<String, dynamic> createApplicationRecordData({
   double? plazoAprobado,
   double? cuotaAprobada,
   int? numeroDeCuotas,
+  DateTime? fechaPrimerPago,
+  DateTime? fechaUltimoPago,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -185,6 +199,8 @@ Map<String, dynamic> createApplicationRecordData({
       'plazo_aprobado': plazoAprobado,
       'cuota_aprobada': cuotaAprobada,
       'numero_de_cuotas': numeroDeCuotas,
+      'fecha_primer_pago': fechaPrimerPago,
+      'fecha_ultimo_pago': fechaUltimoPago,
     }.withoutNulls,
   );
 
@@ -210,7 +226,9 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e1?.montoAprobado == e2?.montoAprobado &&
         e1?.plazoAprobado == e2?.plazoAprobado &&
         e1?.cuotaAprobada == e2?.cuotaAprobada &&
-        e1?.numeroDeCuotas == e2?.numeroDeCuotas;
+        e1?.numeroDeCuotas == e2?.numeroDeCuotas &&
+        e1?.fechaPrimerPago == e2?.fechaPrimerPago &&
+        e1?.fechaUltimoPago == e2?.fechaUltimoPago;
   }
 
   @override
@@ -229,7 +247,9 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.montoAprobado,
         e?.plazoAprobado,
         e?.cuotaAprobada,
-        e?.numeroDeCuotas
+        e?.numeroDeCuotas,
+        e?.fechaPrimerPago,
+        e?.fechaUltimoPago
       ]);
 
   @override

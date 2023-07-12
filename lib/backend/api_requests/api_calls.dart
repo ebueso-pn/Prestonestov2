@@ -16,7 +16,6 @@ class ZapSIgnCreateDocumentFromTemplateCall {
     String? externalId = '',
     String? phone = '',
     String? dni = '',
-    String? signUrl = '',
     double? monto,
     String? montoEnLetras = '',
     int? numCuotas,
