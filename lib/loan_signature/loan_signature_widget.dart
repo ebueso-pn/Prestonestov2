@@ -294,7 +294,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               Text(
                                 functions
                                     .numeroCuotas(
-                                        columnApplicationRecord!.plazoMeses)
+                                        columnApplicationRecord!.plazoAprobado)
                                     .toString(),
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
