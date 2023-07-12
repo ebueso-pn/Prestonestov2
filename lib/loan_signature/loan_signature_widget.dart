@@ -430,7 +430,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaFirmaAno: dateTimeFormat(
-                            'Y',
+                            'y',
                             getCurrentTimestamp,
                             locale: FFLocalizations.of(context).languageCode,
                           ),
