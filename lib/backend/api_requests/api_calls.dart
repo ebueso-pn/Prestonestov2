@@ -38,7 +38,7 @@ class ZapSIgnCreateDocumentFromTemplateCall {
     String? fechaUltimoPagoAno = '',
     String? fechaUltimoPagoAnoL = '',
     double? tasaEfectivaMensual,
-    double? tasaEfectivaMensualL,
+    String? tasaEfectivaMensualL = '',
     double? cuota,
   }) {
     final body = '''
@@ -53,115 +53,115 @@ class ZapSIgnCreateDocumentFromTemplateCall {
   "external_id": "${externalId}",
   "data": [
     {
-      "de": "{NOMBRE COMPLETO}",
+      "de": "{{name}}",
       "para": "${name}"
     },
     {
-      "de": "{DNI}",
+      "de": "{{DNI}}",
       "para": "${dni}"
     },
     {
-      "de": "{{PHONE}}",
+      "de": "{{phone}}",
       "para": "${phone}"
     },
     {
-      "de": "{{EMAIL}}",
+      "de": "{{email}}",
       "para": "${email}"
     },
     {
-      "de": "{{MONTO}}",
+      "de": "{{monto}}",
       "para": "${monto}"
     },
     {
-      "de": "{{MONTO LETRAS}}",
+      "de": "{{monto en letras}}",
       "para": "${montoEnLetras}"
     },
     {
-      "de": "{{NUM DE CUOTAS}}",
+      "de": "{{num cuotas}}",
       "para": "${numCuotas}"
     },
     {
-      "de": "{{CUOTA}}",
+      "de": "{{cuota}}",
       "para": "${cuota}"
     },
     {
-      "de": "{{TASA EFECTIVA MENSUAL}}",
+      "de": "{{tasa efectiva mensual}}",
       "para": "${tasaEfectivaMensual}"
     },
     {
-      "de": "{{TASA LETRAS}}",
+      "de": "{{tasa efectiva mensual_l}}",
       "para": "${tasaEfectivaMensualL}"
     },
     {
-      "de": "{{FECHA FIRMA DIA}}",
+      "de": "{{fecha firma dia}}",
       "para": "${fechaFirmaDia}"
     },
     {
-      "de": "{{FECHA FIRMA MES}}",
+      "de": "{{fecha frima mes}}",
       "para": "${fechaFrimaMes}"
     },
     {
-      "de": "{{FECHA FIRMA ANO}}",
+      "de": "{{fecha firma ano}}",
       "para": "${fechaFirmaAno}"
     },
     {
-      "de": "{{FECHA FIRMA DIA_L}}",
+      "de": "{{fecha frima dia_l}}",
       "para": "${fechaFirmaDiaL}"
     },
     {
-      "de": "{{FECHA FIRMA MES_L}}",
+      "de": "{{fecha firma mes_l}}",
       "para": "${fechaFrimaMesL}"
     },
     {
-      "de": "{{FECHA FIRMA ANO_L}}",
+      "de": "{{fecha firma ano_l}}",
       "para": "${fechaFirmaAnoL}"
     },
     {
-      "de": "{{FECHA PRIMER PAGO DIA}}",
+      "de": "{{fecha primer pago dia}}",
       "para": "${fechaPrimerPagoDia}"
     },
     {
-      "de": "{{FECHA PRIMER PAGO MES}}",
+      "de": "{{fecha primer pago mes}}",
       "para": "${fechaPrimerPagoMes}"
     },
     {
-      "de": "{{FECHA PRIMER PAGO ANO}}",
+      "de": "{{fecha pimer pago ano}}",
       "para": "${fechaPrimerPagoAno}"
     },
     {
-      "de": "{{FECHA PRIMER PAGO DIA_L}}",
+      "de": "{{fecha primer pago dia_l}}",
       "para": "${fechaPrimerPagoDiaL}"
     },
     {
-      "de": "{{FECHA PRIMER PAGO MES_L}}",
+      "de": "{{fecha primer pago mes_l}}",
       "para": "${fechaPrimerPagoMesL}"
     },
     {
-      "de": "{{FECHA PRIMER PAGO ANO_L}}",
+      "de": "{{fecha primer pago ano_l}}",
       "para": "${fechaPrimerPagoAnoL}"
     },
     {
-      "de": "{{FECHA ULTIMO PAGO DIA}}",
+      "de": "{{fecha ultimo pago dia}}",
       "para": "${fechaUltimoPagoDia}"
     },
     {
-      "de": "{{FECHA ULTIMO PAGO MES}}",
+      "de": "{{fecha ultimo pago mes}}",
       "para": "${fechaUltimoPagoMes}"
     },
     {
-      "de": "{{FECHA ULTIMO PAGO ANO}}",
+      "de": "{{fecha ultimo pago ano}}",
       "para": "${fechaUltimoPagoAno}"
     },
     {
-      "de": "{{FECHA ULTIMO PAGO DIA_L}}",
+      "de": "{{fecha ultimo pago dia_l}}",
       "para": "${fechaUltimoPagoDiaL}"
     },
     {
-      "de": "{{FECHA ULTIMO PAGO MES_L}}",
+      "de": "{{fecha ultimo pago mes_l}}",
       "para": "${fechaUltimoPagoMesL}"
     },
     {
-      "de": "{{FECHA ULTIMO PAGO ANO_L}}",
+      "de": "{{fecha ultimo pago ano)l}}",
       "para": "${fechaUltimoPagoAnoL}"
     }
   ]

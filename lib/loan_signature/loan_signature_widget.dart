@@ -471,8 +471,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           cuota: buttonApplicationRecord!.cuotaAprobada,
                           tasaEfectivaMensual:
                               buttonApplicationRecord!.tasaMensualAprobada,
-                          tasaEfectivaMensualL:
-                              buttonApplicationRecord!.tasaMensualAprobada,
+                          tasaEfectivaMensualL: buttonApplicationRecord!
+                              .tasaMensualAprobada
+                              .toString(),
                           fechaFirmaDiaL:
                               functions.diaEnLetras(getCurrentTimestamp),
                           fechaFrimaMesL: getCurrentTimestamp.toString(),
