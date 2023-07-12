@@ -413,7 +413,8 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
                           email: currentUserEmail,
                           dni: valueOrDefault(currentUserDocument?.dni, ''),
-                          monto: buttonApplicationRecord!.montoAprobado,
+                          monto: functions.formatNumber(
+                              buttonApplicationRecord!.montoAprobado),
                           montoEnLetras: functions.montoEnLetras(
                               buttonApplicationRecord!.montoAprobado),
                           numCuotas: functions.numeroCuotas(
@@ -446,7 +447,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaPrimerPagoAno: dateTimeFormat(
-                            'yyyy',
+                            'y',
                             functions.fechaFirmaMas15(getCurrentTimestamp),
                             locale: FFLocalizations.of(context).languageCode,
                           ),
@@ -463,17 +464,16 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaUltimoPagoAno: dateTimeFormat(
-                            'Y',
+                            'y',
                             functions.fechaUltimoPago(getCurrentTimestamp,
                                 buttonApplicationRecord!.plazoAprobado),
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           cuota: buttonApplicationRecord!.cuotaAprobada,
-                          tasaEfectivaMensual:
-                              buttonApplicationRecord!.tasaMensualAprobada,
-                          tasaEfectivaMensualL: buttonApplicationRecord!
-                              .tasaMensualAprobada
-                              .toString(),
+                          tasaEfectivaMensual: functions.decimaltoPercent(
+                              buttonApplicationRecord!.tasaMensualAprobada),
+                          tasaEfectivaMensualL: functions.tasaEnLetras(
+                              buttonApplicationRecord!.tasaMensualAprobada),
                           fechaFirmaDiaL:
                               functions.diaEnLetras(getCurrentTimestamp),
                           fechaFrimaMesL: dateTimeFormat(
@@ -494,6 +494,8 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               buttonApplicationRecord!.fechaUltimoPago!),
                           fechaUltimoPagoAnoL: functions.anoEnLetras(
                               buttonApplicationRecord!.fechaUltimoPago!),
+                          direccion:
+                              '${valueOrDefault(currentUserDocument?.calle, '')} ${valueOrDefault(currentUserDocument?.colonia, '')} ${valueOrDefault(currentUserDocument?.ciudad, '')}',
                         );
                         _shouldSetState = true;
                         if ((_model.zapSignAPIresponse?.succeeded ?? true)) {

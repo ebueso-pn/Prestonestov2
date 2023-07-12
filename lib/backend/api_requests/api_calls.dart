@@ -16,7 +16,7 @@ class ZapSIgnCreateDocumentFromTemplateCall {
     String? externalId = '',
     String? phone = '',
     String? dni = '',
-    double? monto,
+    String? monto = '',
     String? montoEnLetras = '',
     int? numCuotas,
     String? fechaFirmaDia = '',
@@ -37,9 +37,10 @@ class ZapSIgnCreateDocumentFromTemplateCall {
     String? fechaUltimoPagoMesL = '',
     String? fechaUltimoPagoAno = '',
     String? fechaUltimoPagoAnoL = '',
-    double? tasaEfectivaMensual,
+    String? tasaEfectivaMensual = '',
     String? tasaEfectivaMensualL = '',
     double? cuota,
+    String? direccion = '',
   }) {
     final body = '''
 {
@@ -161,8 +162,12 @@ class ZapSIgnCreateDocumentFromTemplateCall {
       "para": "${fechaUltimoPagoMesL}"
     },
     {
-      "de": "{{fecha ultimo pago ano)l}}",
+      "de": "{{fecha ultimo pago ano_l}}",
       "para": "${fechaUltimoPagoAnoL}"
+    },
+    {
+      "de": "{{DIRECCION}}",
+      "para": "${direccion}"
     }
   ]
 }''';

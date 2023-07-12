@@ -228,3 +228,14 @@ String anoEnLetras(DateTime fecha) {
 
   return result;
 }
+
+String decimaltoPercent(double decimal) {
+  // convet a decimal to a percent and format output as a percentage
+  return (decimal * 100).toStringAsFixed(2) + '%';
+}
+
+String formatNumber(double number) {
+  // format number with a comma and two decimals
+  final formatter = NumberFormat('#,##0.00');
+  return formatter.format(number);
+}
