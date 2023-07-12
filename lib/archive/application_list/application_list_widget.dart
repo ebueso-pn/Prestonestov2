@@ -182,9 +182,12 @@ class _ApplicationListWidgetState extends State<ApplicationListWidget> {
                                         ),
                                         Text(
                                           dateTimeFormat(
-                                              'd/M/y',
-                                              listViewApplicationRecord
-                                                  .dateApplied!),
+                                            'd/M/y',
+                                            listViewApplicationRecord
+                                                .dateApplied!,
+                                            locale: FFLocalizations.of(context)
+                                                .languageCode,
+                                          ),
                                           style: FlutterFlowTheme.of(context)
                                               .labelLarge,
                                         ),

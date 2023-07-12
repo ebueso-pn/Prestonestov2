@@ -66,6 +66,41 @@ class ApplicationRecord extends FirestoreRecord {
   String get status => _status ?? '';
   bool hasStatus() => _status != null;
 
+  // "tasa_mensual_aprobada" field.
+  double? _tasaMensualAprobada;
+  double get tasaMensualAprobada => _tasaMensualAprobada ?? 0.0;
+  bool hasTasaMensualAprobada() => _tasaMensualAprobada != null;
+
+  // "monto_aprobado" field.
+  double? _montoAprobado;
+  double get montoAprobado => _montoAprobado ?? 0.0;
+  bool hasMontoAprobado() => _montoAprobado != null;
+
+  // "plazo_aprobado" field.
+  double? _plazoAprobado;
+  double get plazoAprobado => _plazoAprobado ?? 0.0;
+  bool hasPlazoAprobado() => _plazoAprobado != null;
+
+  // "cuota_aprobada" field.
+  double? _cuotaAprobada;
+  double get cuotaAprobada => _cuotaAprobada ?? 0.0;
+  bool hasCuotaAprobada() => _cuotaAprobada != null;
+
+  // "numero_de_cuotas" field.
+  int? _numeroDeCuotas;
+  int get numeroDeCuotas => _numeroDeCuotas ?? 0;
+  bool hasNumeroDeCuotas() => _numeroDeCuotas != null;
+
+  // "fecha_primer_pago" field.
+  DateTime? _fechaPrimerPago;
+  DateTime? get fechaPrimerPago => _fechaPrimerPago;
+  bool hasFechaPrimerPago() => _fechaPrimerPago != null;
+
+  // "fecha_ultimo_pago" field.
+  DateTime? _fechaUltimoPago;
+  DateTime? get fechaUltimoPago => _fechaUltimoPago;
+  bool hasFechaUltimoPago() => _fechaUltimoPago != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -79,6 +114,14 @@ class ApplicationRecord extends FirestoreRecord {
     _plazoMeses = castToType<double>(snapshotData['plazo_meses']);
     _latLongApp = snapshotData['lat_long_app'] as LatLng?;
     _status = snapshotData['status'] as String?;
+    _tasaMensualAprobada =
+        castToType<double>(snapshotData['tasa_mensual_aprobada']);
+    _montoAprobado = castToType<double>(snapshotData['monto_aprobado']);
+    _plazoAprobado = castToType<double>(snapshotData['plazo_aprobado']);
+    _cuotaAprobada = castToType<double>(snapshotData['cuota_aprobada']);
+    _numeroDeCuotas = castToType<int>(snapshotData['numero_de_cuotas']);
+    _fechaPrimerPago = snapshotData['fecha_primer_pago'] as DateTime?;
+    _fechaUltimoPago = snapshotData['fecha_ultimo_pago'] as DateTime?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -131,6 +174,13 @@ Map<String, dynamic> createApplicationRecordData({
   double? plazoMeses,
   LatLng? latLongApp,
   String? status,
+  double? tasaMensualAprobada,
+  double? montoAprobado,
+  double? plazoAprobado,
+  double? cuotaAprobada,
+  int? numeroDeCuotas,
+  DateTime? fechaPrimerPago,
+  DateTime? fechaUltimoPago,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -144,6 +194,13 @@ Map<String, dynamic> createApplicationRecordData({
       'plazo_meses': plazoMeses,
       'lat_long_app': latLongApp,
       'status': status,
+      'tasa_mensual_aprobada': tasaMensualAprobada,
+      'monto_aprobado': montoAprobado,
+      'plazo_aprobado': plazoAprobado,
+      'cuota_aprobada': cuotaAprobada,
+      'numero_de_cuotas': numeroDeCuotas,
+      'fecha_primer_pago': fechaPrimerPago,
+      'fecha_ultimo_pago': fechaUltimoPago,
     }.withoutNulls,
   );
 
@@ -164,7 +221,14 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e1?.monto == e2?.monto &&
         e1?.plazoMeses == e2?.plazoMeses &&
         e1?.latLongApp == e2?.latLongApp &&
-        e1?.status == e2?.status;
+        e1?.status == e2?.status &&
+        e1?.tasaMensualAprobada == e2?.tasaMensualAprobada &&
+        e1?.montoAprobado == e2?.montoAprobado &&
+        e1?.plazoAprobado == e2?.plazoAprobado &&
+        e1?.cuotaAprobada == e2?.cuotaAprobada &&
+        e1?.numeroDeCuotas == e2?.numeroDeCuotas &&
+        e1?.fechaPrimerPago == e2?.fechaPrimerPago &&
+        e1?.fechaUltimoPago == e2?.fechaUltimoPago;
   }
 
   @override
@@ -178,7 +242,14 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.monto,
         e?.plazoMeses,
         e?.latLongApp,
-        e?.status
+        e?.status,
+        e?.tasaMensualAprobada,
+        e?.montoAprobado,
+        e?.plazoAprobado,
+        e?.cuotaAprobada,
+        e?.numeroDeCuotas,
+        e?.fechaPrimerPago,
+        e?.fechaUltimoPago
       ]);
 
   @override

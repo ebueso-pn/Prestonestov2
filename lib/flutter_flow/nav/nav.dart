@@ -241,6 +241,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'Application_List',
               path: 'applicationList',
               builder: (context, params) => ApplicationListWidget(),
+            ),
+            FFRoute(
+              name: 'Loan_Signature',
+              path: 'loanSignature',
+              builder: (context, params) => LoanSignatureWidget(
+                signURL: params.getParam('signURL', ParamType.int),
+              ),
+            ),
+            FFRoute(
+              name: 'LoanAcceptance_SuccessCopy',
+              path: 'loanAcceptanceSuccessCopy',
+              builder: (context, params) => LoanAcceptanceSuccessCopyWidget(
+                signURL: params.getParam('signURL', ParamType.String),
+              ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
