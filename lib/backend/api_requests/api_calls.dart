@@ -126,7 +126,7 @@ class ZapSIgnCreateDocumentFromTemplateCall {
       "para": "${fechaPrimerPagoMes}"
     },
     {
-      "de": "{{fecha pimer pago ano}}",
+      "de": "{{fecha primer pago ano}}",
       "para": "${fechaPrimerPagoAno}"
     },
     {
