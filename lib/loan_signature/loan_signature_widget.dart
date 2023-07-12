@@ -244,14 +244,14 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Numero de Cuotas',
+                                'Tasa',
                                 style: FlutterFlowTheme.of(context).labelLarge,
                               ),
                               Text(
-                                functions
-                                    .numeroCuotas(
-                                        columnApplicationRecord!.plazoMeses)
-                                    .toString(),
+                                formatNumber(
+                                  columnApplicationRecord!.tasaMensualAprobada,
+                                  formatType: FormatType.percent,
+                                ),
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
                             ],
@@ -275,6 +275,27 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                                   format: '# meses',
                                   locale: '',
                                 ),
+                                style: FlutterFlowTheme.of(context).bodyLarge,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 12.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Numero de Cuotas',
+                                style: FlutterFlowTheme.of(context).labelLarge,
+                              ),
+                              Text(
+                                functions
+                                    .numeroCuotas(
+                                        columnApplicationRecord!.plazoMeses)
+                                    .toString(),
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
                             ],
@@ -327,27 +348,6 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                                       columnApplicationRecord!.plazoAprobado),
                                   locale:
                                       FFLocalizations.of(context).languageCode,
-                                ),
-                                style: FlutterFlowTheme.of(context).bodyLarge,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 12.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Tasa',
-                                style: FlutterFlowTheme.of(context).labelLarge,
-                              ),
-                              Text(
-                                formatNumber(
-                                  columnApplicationRecord!.tasaMensualAprobada,
-                                  formatType: FormatType.percent,
                                 ),
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
