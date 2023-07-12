@@ -53,11 +53,11 @@ class ZapSIgnCreateDocumentFromTemplateCall {
   "external_id": "${externalId}",
   "data": [
     {
-      "de": "{{NOMBRE COMPLETO}}",
+      "de": "{NOMBRE COMPLETO}",
       "para": "${name}"
     },
     {
-      "de": "{{DNI}",
+      "de": "{DNI}",
       "para": "${dni}"
     },
     {
