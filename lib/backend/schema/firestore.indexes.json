@@ -9,7 +9,7 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "decision_date",
+          "fieldPath": "date_applied",
           "order": "DESCENDING"
         }
       ]

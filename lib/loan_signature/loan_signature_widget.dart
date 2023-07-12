@@ -142,7 +142,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                     parent: currentUserReference,
                     queryBuilder: (applicationRecord) => applicationRecord
                         .where('status', isEqualTo: 'Aprobada')
-                        .orderBy('decision_date', descending: true),
+                        .orderBy('date_applied', descending: true),
                     singleRecord: true,
                   ),
                   builder: (context, snapshot) {
