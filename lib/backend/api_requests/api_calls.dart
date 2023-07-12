@@ -105,7 +105,7 @@ class ZapSIgnCreateDocumentFromTemplateCall {
       "para": "${fechaFirmaAno}"
     },
     {
-      "de": "{{fecha frima dia_l}}",
+      "de": "{{fecha firma dia_l}}",
       "para": "${fechaFirmaDiaL}"
     },
     {

@@ -476,7 +476,11 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               .toString(),
                           fechaFirmaDiaL:
                               functions.diaEnLetras(getCurrentTimestamp),
-                          fechaFrimaMesL: getCurrentTimestamp.toString(),
+                          fechaFrimaMesL: dateTimeFormat(
+                            'M',
+                            getCurrentTimestamp,
+                            locale: FFLocalizations.of(context).languageCode,
+                          ),
                           fechaFirmaAnoL: getCurrentTimestamp.toString(),
                           fechaPrimerPagoDiaL: functions.diaEnLetras(
                               buttonApplicationRecord!.fechaPrimerPago!),
