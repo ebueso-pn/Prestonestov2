@@ -447,7 +447,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaPrimerPagoAno: dateTimeFormat(
-                            'yyyy',
+                            'y',
                             functions.fechaFirmaMas15(getCurrentTimestamp),
                             locale: FFLocalizations.of(context).languageCode,
                           ),
@@ -476,12 +476,10 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               buttonApplicationRecord!.tasaMensualAprobada),
                           fechaFirmaDiaL:
                               functions.diaEnLetras(getCurrentTimestamp),
-                          fechaFrimaMesL: dateTimeFormat(
-                            'M',
-                            getCurrentTimestamp,
-                            locale: FFLocalizations.of(context).languageCode,
-                          ),
-                          fechaFirmaAnoL: getCurrentTimestamp.toString(),
+                          fechaFrimaMesL:
+                              functions.mesEnLetras(getCurrentTimestamp),
+                          fechaFirmaAnoL:
+                              functions.anoEnLetras(getCurrentTimestamp),
                           fechaPrimerPagoDiaL: functions.diaEnLetras(
                               buttonApplicationRecord!.fechaPrimerPago!),
                           fechaPrimerPagoMesL: functions.mesEnLetras(
