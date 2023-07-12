@@ -453,8 +453,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           ),
                           fechaUltimoPagoDia: dateTimeFormat(
                             'd',
-                            functions.fechaUltimoPago(getCurrentTimestamp,
-                                buttonApplicationRecord!.plazoAprobado),
+                            buttonApplicationRecord!.fechaUltimoPago,
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaUltimoPagoMes: dateTimeFormat(
