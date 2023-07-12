@@ -93,7 +93,7 @@ class _HelpWidgetState extends State<HelpWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 24.0, 0.0, 0.0, 0.0),
                             child: Text(
-                              'Page Title',
+                              'Cómo podemos auyudarte?',
                               style: FlutterFlowTheme.of(context)
                                   .headlineMedium
                                   .override(
@@ -117,7 +117,22 @@ class _HelpWidgetState extends State<HelpWidget> {
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            children: [],
+            children: [
+              Container(
+                width: 443.0,
+                height: 100.0,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 0.0, 0.0),
+                  child: Text(
+                    'Escríbenos por WhatsApp',
+                    style: FlutterFlowTheme.of(context).bodyMedium,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

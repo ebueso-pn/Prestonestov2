@@ -86,6 +86,11 @@ class ApplicationRecord extends FirestoreRecord {
   double get cuotaAprobada => _cuotaAprobada ?? 0.0;
   bool hasCuotaAprobada() => _cuotaAprobada != null;
 
+  // "numero_de_cuotas" field.
+  int? _numeroDeCuotas;
+  int get numeroDeCuotas => _numeroDeCuotas ?? 0;
+  bool hasNumeroDeCuotas() => _numeroDeCuotas != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -104,6 +109,7 @@ class ApplicationRecord extends FirestoreRecord {
     _montoAprobado = castToType<double>(snapshotData['monto_aprobado']);
     _plazoAprobado = castToType<double>(snapshotData['plazo_aprobado']);
     _cuotaAprobada = castToType<double>(snapshotData['cuota_aprobada']);
+    _numeroDeCuotas = castToType<int>(snapshotData['numero_de_cuotas']);
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -160,6 +166,7 @@ Map<String, dynamic> createApplicationRecordData({
   double? montoAprobado,
   double? plazoAprobado,
   double? cuotaAprobada,
+  int? numeroDeCuotas,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -177,6 +184,7 @@ Map<String, dynamic> createApplicationRecordData({
       'monto_aprobado': montoAprobado,
       'plazo_aprobado': plazoAprobado,
       'cuota_aprobada': cuotaAprobada,
+      'numero_de_cuotas': numeroDeCuotas,
     }.withoutNulls,
   );
 
@@ -201,7 +209,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e1?.tasaMensualAprobada == e2?.tasaMensualAprobada &&
         e1?.montoAprobado == e2?.montoAprobado &&
         e1?.plazoAprobado == e2?.plazoAprobado &&
-        e1?.cuotaAprobada == e2?.cuotaAprobada;
+        e1?.cuotaAprobada == e2?.cuotaAprobada &&
+        e1?.numeroDeCuotas == e2?.numeroDeCuotas;
   }
 
   @override
@@ -219,7 +228,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.tasaMensualAprobada,
         e?.montoAprobado,
         e?.plazoAprobado,
-        e?.cuotaAprobada
+        e?.cuotaAprobada,
+        e?.numeroDeCuotas
       ]);
 
   @override

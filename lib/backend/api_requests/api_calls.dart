@@ -17,6 +17,30 @@ class ZapSIgnCreateDocumentFromTemplateCall {
     String? phone = '',
     String? dni = '',
     String? signUrl = '',
+    double? monto,
+    String? montoEnLetras = '',
+    int? numCuotas,
+    String? fechaFirmaDia = '',
+    String? fechaFirmaDiaL = '',
+    String? fechaFrimaMes = '',
+    String? fechaFrimaMesL = '',
+    String? fechaFirmaAno = '',
+    String? fechaFirmaAnoL = '',
+    String? fechaPrimerPagoDia = '',
+    String? fechaPrimerPagoDiaL = '',
+    String? fechaPrimerPagoMes = '',
+    String? fechaPrimerPagoMesL = '',
+    String? fechaPrimerPagoAno = '',
+    String? fechaPrimerPagoAnoL = '',
+    String? fechaUltimoPagoDia = '',
+    String? fechaUltimoPagoDiaL = '',
+    String? fechaUltimoPagoMes = '',
+    String? fechaUltimoPagoMesL = '',
+    String? fechaUltimoPagoAno = '',
+    String? fechaUltimoPagoAnoL = '',
+    double? tasaEfectivaMensual,
+    double? tasaEfectivaMensualL,
+    double? cuota,
   }) {
     final body = '''
 {
@@ -44,6 +68,102 @@ class ZapSIgnCreateDocumentFromTemplateCall {
     {
       "de": "{{EMAIL}}",
       "para": "${email}"
+    },
+    {
+      "de": "{{MONTO}}",
+      "para": "${monto}"
+    },
+    {
+      "de": "{{MONTO LETRAS}}",
+      "para": "${montoEnLetras}"
+    },
+    {
+      "de": "{{NUM DE CUOTAS}}",
+      "para": "${numCuotas}"
+    },
+    {
+      "de": "{{CUOTA}}",
+      "para": "${cuota}"
+    },
+    {
+      "de": "{{TASA EFECTIVA MENSUAL}}",
+      "para": "${tasaEfectivaMensual}"
+    },
+    {
+      "de": "{{TASA LETRAS}}",
+      "para": "${tasaEfectivaMensualL}"
+    },
+    {
+      "de": "{{FECHA FIRMA DIA}}",
+      "para": "${fechaFirmaDia}"
+    },
+    {
+      "de": "{{FECHA FIRMA MES}}",
+      "para": "${fechaFrimaMes}"
+    },
+    {
+      "de": "{{FECHA FIRMA ANO}}",
+      "para": "${fechaFirmaAno}"
+    },
+    {
+      "de": "{{FECHA FIRMA DIA_L}}",
+      "para": "${fechaFirmaDiaL}"
+    },
+    {
+      "de": "{{FECHA FIRMA MES_L}}",
+      "para": "${fechaFrimaMesL}"
+    },
+    {
+      "de": "{{FECHA FIRMA ANO_L}}",
+      "para": "${fechaFirmaAnoL}"
+    },
+    {
+      "de": "{{FECHA PRIMER PAGO DIA}}",
+      "para": "${fechaPrimerPagoDia}"
+    },
+    {
+      "de": "{{FECHA PRIMER PAGO MES}}",
+      "para": "${fechaPrimerPagoMes}"
+    },
+    {
+      "de": "{{FECHA PRIMER PAGO ANO}}",
+      "para": "${fechaPrimerPagoAno}"
+    },
+    {
+      "de": "{{FECHA PRIMER PAGO DIA_L}}",
+      "para": "${fechaPrimerPagoDiaL}"
+    },
+    {
+      "de": "{{FECHA PRIMER PAGO MES_L}}",
+      "para": "${fechaPrimerPagoMesL}"
+    },
+    {
+      "de": "{{FECHA PRIMER PAGO ANO_L}}",
+      "para": "${fechaPrimerPagoAnoL}"
+    },
+    {
+      "de": "{{FECHA ULTIMO PAGO DIA}}",
+      "para": "${fechaUltimoPagoDia}"
+    },
+    {
+      "de": "{{FECHA ULTIMO PAGO MES}}",
+      "para": "${fechaUltimoPagoMes}"
+    },
+    {
+      "de": "{{FECHA ULTIMO PAGO ANO}}",
+      "para": "${fechaUltimoPagoAno}"
+    },
+    {
+      "de": "{{FECHA ULTIMO PAGO DIA_L}}",
+      "para": "${fechaUltimoPagoDiaL}"
+    },
+    {
+      "de": "{{FECHA ULTIMO PAGO MES_L}}",
+      "para": "${fechaUltimoPagoMesL}"
+    },
+    {
+      "de": "{{FECHA ULTIMO PAGO ANO_L}}",
+      "para": "${fechaUltimoPagoAnoL}"
     }
   ]
 }''';

@@ -335,9 +335,11 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   ),
                                   Text(
                                     dateTimeFormat(
-                                        'd/M/y',
-                                        containerApplicationRecord!
-                                            .dateApplied!),
+                                      'd/M/y',
+                                      containerApplicationRecord!.dateApplied!,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    ),
                                     style:
                                         FlutterFlowTheme.of(context).labelLarge,
                                   ),

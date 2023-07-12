@@ -300,9 +300,11 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                     return Text(
                                       valueOrDefault<String>(
                                         dateTimeFormat(
-                                            'd/M/y',
-                                            contentApplicationRecord
-                                                .dateApplied),
+                                          'd/M/y',
+                                          contentApplicationRecord.dateApplied,
+                                          locale: FFLocalizations.of(context)
+                                              .languageCode,
+                                        ),
                                         'Hoy',
                                       ),
                                       style: FlutterFlowTheme.of(context)

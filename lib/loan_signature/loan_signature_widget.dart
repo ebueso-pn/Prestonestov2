@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -140,7 +141,8 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                   stream: queryApplicationRecord(
                     parent: currentUserReference,
                     queryBuilder: (applicationRecord) => applicationRecord
-                        .where('status', isEqualTo: 'Aprobada'),
+                        .where('status', isEqualTo: 'Aprobada')
+                        .orderBy('decision_date', descending: true),
                     singleRecord: true,
                   ),
                   builder: (context, snapshot) {
@@ -242,6 +244,27 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
+                                'Numero de Cuotas',
+                                style: FlutterFlowTheme.of(context).labelLarge,
+                              ),
+                              Text(
+                                functions
+                                    .numeroCuotas(
+                                        columnApplicationRecord!.plazoMeses)
+                                    .toString(),
+                                style: FlutterFlowTheme.of(context).bodyLarge,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 12.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
                                 'Plazo',
                                 style: FlutterFlowTheme.of(context).labelLarge,
                               ),
@@ -251,6 +274,59 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                                   formatType: FormatType.custom,
                                   format: '# meses',
                                   locale: '',
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyLarge,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 12.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Primer Pago',
+                                style: FlutterFlowTheme.of(context).labelLarge,
+                              ),
+                              Text(
+                                dateTimeFormat(
+                                  'd/M/y',
+                                  functions.fechaFirmaMas15(
+                                      dateTimeFromSecondsSinceEpoch(
+                                          getCurrentTimestamp
+                                              .secondsSinceEpoch)),
+                                  locale:
+                                      FFLocalizations.of(context).languageCode,
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyLarge,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 12.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Ultimo Pago',
+                                style: FlutterFlowTheme.of(context).labelLarge,
+                              ),
+                              Text(
+                                dateTimeFormat(
+                                  'd/M/y',
+                                  functions.fechaUltimoPago(
+                                      dateTimeFromSecondsSinceEpoch(
+                                          getCurrentTimestamp
+                                              .secondsSinceEpoch),
+                                      columnApplicationRecord!.plazoAprobado),
+                                  locale:
+                                      FFLocalizations.of(context).languageCode,
                                 ),
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
