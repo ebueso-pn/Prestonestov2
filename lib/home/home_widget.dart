@@ -407,7 +407,12 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Text(
-                                    'Ultimo Pago:  ${columnLoansRecord?.fechaUltimoPago?.toString()}',
+                                    'Ultimo Pago:  ${dateTimeFormat(
+                                      'd/M/y',
+                                      columnLoansRecord?.fechaUltimoPago,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    )}',
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                   ),
@@ -535,7 +540,12 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Text(
-                                    'Ultimo Pago:  ${columnLoansRecord?.fechaUltimoPago?.toString()}',
+                                    'Ultimo Pago:  ${dateTimeFormat(
+                                      'd/M/y',
+                                      columnLoansRecord?.fechaUltimoPago,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    )}',
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                   ),
