@@ -85,191 +85,169 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/',
           builder: (context, _) =>
               appStateNotifier.loggedIn ? NavBarPage() : OnboardingWidget(),
-          routes: [
-            FFRoute(
-              name: 'Onboarding',
-              path: 'onboarding',
-              builder: (context, params) => OnboardingWidget(),
-            ),
-            FFRoute(
-              name: 'SMS_signup',
-              path: 'sMSSignup',
-              builder: (context, params) => SMSSignupWidget(),
-            ),
-            FFRoute(
-              name: 'SMS_verify_code',
-              path: 'sMSVerifyCode',
-              builder: (context, params) => SMSVerifyCodeWidget(),
-            ),
-            FFRoute(
-              name: 'Home',
-              path: 'home',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Home')
-                  : HomeWidget(),
-            ),
-            FFRoute(
-              name: 'Profile',
-              path: 'profile',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Profile')
-                  : NavBarPage(
-                      initialPage: 'Profile',
-                      page: ProfileWidget(),
-                    ),
-            ),
-            FFRoute(
-              name: 'Application_Name',
-              path: 'applicationName',
-              requireAuth: true,
-              builder: (context, params) => ApplicationNameWidget(
-                applicationRecieve: params.getParam(
-                    'applicationRecieve',
-                    ParamType.DocumentReference,
-                    false,
-                    ['users', 'application']),
-              ),
-            ),
-            FFRoute(
-              name: 'Help',
-              path: 'help',
-              requireAuth: true,
-              builder: (context, params) => HelpWidget(),
-            ),
-            FFRoute(
-              name: 'Application_LoanCalculator',
-              path: 'applicationLoanCalculator',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Application_LoanCalculator')
-                  : ApplicationLoanCalculatorWidget(),
-            ),
-            FFRoute(
-              name: 'Application_Address',
-              path: 'applicationAddress',
-              requireAuth: true,
-              builder: (context, params) => ApplicationAddressWidget(
-                applicationRecieve: params.getParam(
-                    'applicationRecieve',
-                    ParamType.DocumentReference,
-                    false,
-                    ['users', 'application']),
-              ),
-            ),
-            FFRoute(
-              name: 'phone_SignIn',
-              path: 'SMS_SignIn',
-              builder: (context, params) => PhoneSignInWidget(),
-            ),
-            FFRoute(
-              name: 'Email_CreateAccount',
-              path: 'emailCreateAccount',
-              builder: (context, params) => EmailCreateAccountWidget(),
-            ),
-            FFRoute(
-              name: 'Email_Login',
-              path: 'emailLogin',
-              builder: (context, params) => EmailLoginWidget(),
-            ),
-            FFRoute(
-              name: 'Email_ForgotPassword',
-              path: 'emailForgotPassword',
-              builder: (context, params) => EmailForgotPasswordWidget(),
-            ),
-            FFRoute(
-              name: 'Application_Review',
-              path: 'applicationReview',
-              requireAuth: true,
-              builder: (context, params) => ApplicationReviewWidget(
-                applicationRecieve: params.getParam(
-                    'applicationRecieve',
-                    ParamType.DocumentReference,
-                    false,
-                    ['users', 'application']),
-              ),
-            ),
-            FFRoute(
-              name: 'Applicaiton_Success',
-              path: 'applicaitonSuccess',
-              builder: (context, params) => ApplicaitonSuccessWidget(
-                nameAppRecieve:
-                    params.getParam('nameAppRecieve', ParamType.String),
-              ),
-            ),
-            FFRoute(
-              name: 'Applicaiton_Summary',
-              path: 'applicaitonSummary',
-              builder: (context, params) => ApplicaitonSummaryWidget(
-                applicationRecieve: params.getParam(
-                    'applicationRecieve',
-                    ParamType.DocumentReference,
-                    false,
-                    ['users', 'application']),
-              ),
-            ),
-            FFRoute(
-              name: 'Application_Map',
-              path: 'applicationMap',
-              builder: (context, params) => ApplicationMapWidget(
-                applicationRecieve: params.getParam(
-                    'applicationRecieve',
-                    ParamType.DocumentReference,
-                    false,
-                    ['users', 'application']),
-              ),
-            ),
-            FFRoute(
-              name: 'Application_DNI_Validation',
-              path: 'Application_DNI_Validation',
-              builder: (context, params) => ApplicationDNIValidationWidget(
-                applicationRecieve: params.getParam(
-                    'applicationRecieve',
-                    ParamType.DocumentReference,
-                    false,
-                    ['users', 'application']),
-              ),
-            ),
-            FFRoute(
-              name: 'Profile_Edit',
-              path: 'profileEdit',
-              requireAuth: true,
-              builder: (context, params) => ProfileEditWidget(),
-            ),
-            FFRoute(
-              name: 'Application_List',
-              path: 'applicationList',
-              builder: (context, params) => ApplicationListWidget(),
-            ),
-            FFRoute(
-              name: 'Loan_Signature',
-              path: 'loanSignature',
-              builder: (context, params) => LoanSignatureWidget(
-                signURL: params.getParam('signURL', ParamType.int),
-              ),
-            ),
-            FFRoute(
-              name: 'LoanAcceptance_SuccessCopy',
-              path: 'loanAcceptanceSuccess',
-              builder: (context, params) => LoanAcceptanceSuccessCopyWidget(
-                signURL: params.getParam('signURL', ParamType.String),
-              ),
-            ),
-            FFRoute(
-              name: 'LoanSignatureSuccess',
-              path: 'loanSignatureSuccess',
-              builder: (context, params) => LoanSignatureSuccessWidget(
-                signURL: params.getParam('signURL', ParamType.String),
-              ),
-            ),
-            FFRoute(
-              name: 'LoanDocument',
-              path: 'loanDocument',
-              builder: (context, params) => LoanDocumentWidget(),
-            )
-          ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
+        FFRoute(
+          name: 'Onboarding',
+          path: '/onboarding',
+          builder: (context, params) => OnboardingWidget(),
+        ),
+        FFRoute(
+          name: 'SMS_signup',
+          path: '/sMSSignup',
+          builder: (context, params) => SMSSignupWidget(),
+        ),
+        FFRoute(
+          name: 'SMS_verify_code',
+          path: '/sMSVerifyCode',
+          builder: (context, params) => SMSVerifyCodeWidget(),
+        ),
+        FFRoute(
+          name: 'Home',
+          path: '/home',
+          requireAuth: true,
+          builder: (context, params) =>
+              params.isEmpty ? NavBarPage(initialPage: 'Home') : HomeWidget(),
+        ),
+        FFRoute(
+          name: 'Profile',
+          path: '/profile',
+          requireAuth: true,
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'Profile')
+              : NavBarPage(
+                  initialPage: 'Profile',
+                  page: ProfileWidget(),
+                ),
+        ),
+        FFRoute(
+          name: 'Application_Name',
+          path: '/applicationName',
+          requireAuth: true,
+          builder: (context, params) => ApplicationNameWidget(
+            applicationRecieve: params.getParam('applicationRecieve',
+                ParamType.DocumentReference, false, ['users', 'application']),
+          ),
+        ),
+        FFRoute(
+          name: 'Help',
+          path: '/help',
+          requireAuth: true,
+          builder: (context, params) => HelpWidget(),
+        ),
+        FFRoute(
+          name: 'Application_LoanCalculator',
+          path: '/applicationLoanCalculator',
+          requireAuth: true,
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'Application_LoanCalculator')
+              : ApplicationLoanCalculatorWidget(),
+        ),
+        FFRoute(
+          name: 'Application_Address',
+          path: '/applicationAddress',
+          requireAuth: true,
+          builder: (context, params) => ApplicationAddressWidget(
+            applicationRecieve: params.getParam('applicationRecieve',
+                ParamType.DocumentReference, false, ['users', 'application']),
+          ),
+        ),
+        FFRoute(
+          name: 'phone_SignIn',
+          path: '/SMS_SignIn',
+          builder: (context, params) => PhoneSignInWidget(),
+        ),
+        FFRoute(
+          name: 'Email_CreateAccount',
+          path: '/emailCreateAccount',
+          builder: (context, params) => EmailCreateAccountWidget(),
+        ),
+        FFRoute(
+          name: 'Email_Login',
+          path: '/emailLogin',
+          builder: (context, params) => EmailLoginWidget(),
+        ),
+        FFRoute(
+          name: 'Email_ForgotPassword',
+          path: '/emailForgotPassword',
+          builder: (context, params) => EmailForgotPasswordWidget(),
+        ),
+        FFRoute(
+          name: 'Application_Review',
+          path: '/applicationReview',
+          requireAuth: true,
+          builder: (context, params) => ApplicationReviewWidget(
+            applicationRecieve: params.getParam('applicationRecieve',
+                ParamType.DocumentReference, false, ['users', 'application']),
+          ),
+        ),
+        FFRoute(
+          name: 'Applicaiton_Success',
+          path: '/applicaitonSuccess',
+          builder: (context, params) => ApplicaitonSuccessWidget(
+            nameAppRecieve: params.getParam('nameAppRecieve', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'Applicaiton_Summary',
+          path: '/applicaitonSummary',
+          builder: (context, params) => ApplicaitonSummaryWidget(
+            applicationRecieve: params.getParam('applicationRecieve',
+                ParamType.DocumentReference, false, ['users', 'application']),
+          ),
+        ),
+        FFRoute(
+          name: 'Application_Map',
+          path: '/applicationMap',
+          builder: (context, params) => ApplicationMapWidget(
+            applicationRecieve: params.getParam('applicationRecieve',
+                ParamType.DocumentReference, false, ['users', 'application']),
+          ),
+        ),
+        FFRoute(
+          name: 'Application_DNI_Validation',
+          path: '/Application_DNI_Validation',
+          builder: (context, params) => ApplicationDNIValidationWidget(
+            applicationRecieve: params.getParam('applicationRecieve',
+                ParamType.DocumentReference, false, ['users', 'application']),
+          ),
+        ),
+        FFRoute(
+          name: 'Profile_Edit',
+          path: '/profileEdit',
+          requireAuth: true,
+          builder: (context, params) => ProfileEditWidget(),
+        ),
+        FFRoute(
+          name: 'Application_List',
+          path: '/applicationList',
+          builder: (context, params) => ApplicationListWidget(),
+        ),
+        FFRoute(
+          name: 'Loan_Signature',
+          path: '/loanSignature',
+          builder: (context, params) => LoanSignatureWidget(
+            signURL: params.getParam('signURL', ParamType.int),
+          ),
+        ),
+        FFRoute(
+          name: 'LoanAcceptance_SuccessCopy',
+          path: '/loanAcceptanceSuccess',
+          builder: (context, params) => LoanAcceptanceSuccessCopyWidget(
+            signURL: params.getParam('signURL', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'LoanSignatureSuccess',
+          path: '/loanSignatureSuccess',
+          builder: (context, params) => LoanSignatureSuccessWidget(
+            signURL: params.getParam('signURL', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'LoanDocument',
+          path: '/loanDocument',
+          builder: (context, params) => LoanDocumentWidget(),
+        )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
     );
