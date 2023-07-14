@@ -295,6 +295,10 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                 );
               }
               List<LoansRecord> columnLoansRecordList = snapshot.data!;
+              // Return an empty Container when the item does not exist.
+              if (snapshot.data!.isEmpty) {
+                return Container();
+              }
               final columnLoansRecord = columnLoansRecordList.isNotEmpty
                   ? columnLoansRecordList.first
                   : null;
@@ -403,15 +407,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Text(
-                                    valueOrDefault<String>(
-                                      'Ultimo Pago:  ${dateTimeFormat(
-                                        'd/M/y',
-                                        columnLoansRecord?.fechaUltimoPago,
-                                        locale: FFLocalizations.of(context)
-                                            .languageCode,
-                                      )}',
-                                      '¡Aplica Hoy!',
-                                    ),
+                                    'Ultimo Pago: 8 de Junio, 2024',
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                   ),
@@ -529,7 +525,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 4.0),
                                     child: Text(
-                                      columnLoansRecord!.reference.id,
+                                      '#1234567890',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -539,15 +535,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Text(
-                                    valueOrDefault<String>(
-                                      'Ultimo Pago:  ${dateTimeFormat(
-                                        'd/M/y',
-                                        columnLoansRecord?.fechaUltimoPago,
-                                        locale: FFLocalizations.of(context)
-                                            .languageCode,
-                                      )}',
-                                      '¡Aplica Hoy!',
-                                    ),
+                                    'Ultimo Pago: 8 de Junio, 2024',
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                   ),
@@ -577,16 +565,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             .bodyLarge,
                                       ),
                                       Text(
-                                        valueOrDefault<String>(
-                                          ' de  ${formatNumber(
-                                            columnLoansRecord?.monto,
-                                            formatType: FormatType.custom,
-                                            currency: 'L. ',
-                                            format: '',
-                                            locale: '',
-                                          )}',
-                                          'L. 5000.00',
-                                        ),
+                                        ' de L. 5,500.00',
                                         style: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
