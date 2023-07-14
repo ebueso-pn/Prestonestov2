@@ -191,6 +191,78 @@ class ZapSIgnCreateDocumentFromTemplateCall {
   }
 }
 
+class GetAccessTokenCall {
+  static Future<ApiCallResponse> call() {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Access Token',
+      apiUrl: 'https://api.shuftipro.com/get/access/token',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Basic bzdQRnZLY0pNWktDSklXbEdCYjdEUkdxb0FmTTJreEVJZlBaUEtYSENzbVoxQ2hQcTUxNjg5MjExMTI1OjhNcWptU0hoNTBUMVVTekxPcmtNSm9pRVNyVGIxaHhu',
+      },
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic accessToken(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+      );
+}
+
+class ShuftiOnsiteWithOCRCall {
+  static Future<ApiCallResponse> call({
+    String? shuftiReference = '',
+  }) {
+    final body = '''
+{
+  "reference": "${shuftiReference}",
+  "country": "HN",
+  "language": "ES",
+  "redirect_url": "http://www.prestonesto.co/applicationAddress",
+  "verification_mode": "image_only",
+  "document": {
+    "supported_types": [
+      "id_card"
+    ],
+    "age": {
+      "min": "21",
+      "max": "70"
+    },
+    "allow_offline":"0"
+  },
+     "face" : {
+        "allow_offline" : "0",
+        "check_duplicate_request" : "1"
+  }
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Shufti Onsite with OCR',
+      apiUrl: 'https://api.shuftipro.com/',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Basic bzdQRnZLY0pNWktDSklXbEdCYjdEUkdxb0FmTTJreEVJZlBaUEtYSENzbVoxQ2hQcTUxNjg5MjExMTI1OjhNcWptU0hoNTBUMVVTekxPcmtNSm9pRVNyVGIxaHhu',
+      },
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

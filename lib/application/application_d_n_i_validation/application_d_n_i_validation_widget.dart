@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -123,15 +125,11 @@ class _ApplicationDNIValidationWidgetState
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  context.pushNamed(
-                    'Application_Address',
-                    queryParameters: {
-                      'applicationRecieve': serializeParam(
-                        widget.applicationRecieve,
-                        ParamType.DocumentReference,
-                      ),
-                    }.withoutNulls,
+                  _model.shuftiResponse = await ShuftiOnsiteWithOCRCall.call(
+                    shuftiReference: currentUserReference?.id,
                   );
+
+                  setState(() {});
                 },
                 text: 'Button',
                 options: FFButtonOptions(

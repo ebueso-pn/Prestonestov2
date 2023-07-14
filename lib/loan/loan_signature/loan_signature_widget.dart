@@ -154,7 +154,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           width: 50.0,
                           height: 50.0,
                           child: CircularProgressIndicator(
-                            color: Color(0xFF2AAF7A),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Color(0xFF2AAF7A),
+                            ),
                           ),
                         ),
                       );
@@ -378,7 +380,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           width: 50.0,
                           height: 50.0,
                           child: CircularProgressIndicator(
-                            color: Color(0xFF2AAF7A),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Color(0xFF2AAF7A),
+                            ),
                           ),
                         ),
                       );
@@ -448,12 +452,12 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           ),
                           fechaPrimerPagoAno: dateTimeFormat(
                             'y',
-                            buttonApplicationRecord!.fechaPrimerPago,
+                            buttonApplicationRecord?.fechaPrimerPago,
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaUltimoPagoDia: dateTimeFormat(
                             'd',
-                            buttonApplicationRecord!.fechaUltimoPago,
+                            buttonApplicationRecord?.fechaUltimoPago,
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaUltimoPagoMes: dateTimeFormat(
@@ -468,7 +472,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                                 buttonApplicationRecord!.plazoAprobado),
                             locale: FFLocalizations.of(context).languageCode,
                           ),
-                          cuota: buttonApplicationRecord!.cuotaAprobada,
+                          cuota: buttonApplicationRecord?.cuotaAprobada,
                           tasaEfectivaMensual: functions.decimaltoPercent(
                               buttonApplicationRecord!.tasaMensualAprobada),
                           tasaEfectivaMensualL: functions.tasaEnLetras(

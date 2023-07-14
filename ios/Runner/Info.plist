@@ -37,10 +37,10 @@
         <key>CFBundleTypeRole</key>
         <string>Editor</string>
         <key>CFBundleURLName</key>
-        <string>prestonestov1.com</string>
+        <string>prestonesto.co</string>
         <key>CFBundleURLSchemes</key>
         <array>
-        <string>prestonestov1</string>
+        <string>prestonesto</string>
         </array>
         </dict>
     </array>

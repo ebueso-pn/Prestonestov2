@@ -251,10 +251,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             ),
             FFRoute(
               name: 'LoanAcceptance_SuccessCopy',
-              path: 'loanAcceptanceSuccessCopy',
+              path: 'loanAcceptanceSuccess',
               builder: (context, params) => LoanAcceptanceSuccessCopyWidget(
                 signURL: params.getParam('signURL', ParamType.String),
               ),
+            ),
+            FFRoute(
+              name: 'LoanSignatureSuccess',
+              path: 'loanSignatureSuccess',
+              builder: (context, params) => LoanSignatureSuccessWidget(
+                signURL: params.getParam('signURL', ParamType.String),
+              ),
+            ),
+            FFRoute(
+              name: 'LoanDocument',
+              path: 'loanDocument',
+              builder: (context, params) => LoanDocumentWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -442,7 +454,9 @@ class FFRoute {
                     width: 50.0,
                     height: 50.0,
                     child: CircularProgressIndicator(
-                      color: Color(0xFF2AAF7A),
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Color(0xFF2AAF7A),
+                      ),
                     ),
                   ),
                 )

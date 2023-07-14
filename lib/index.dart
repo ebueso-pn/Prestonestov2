@@ -31,6 +31,10 @@ export '/application/application_d_n_i_validation/application_d_n_i_validation_w
 export '/profile_edit/profile_edit_widget.dart' show ProfileEditWidget;
 export '/archive/application_list/application_list_widget.dart'
     show ApplicationListWidget;
-export '/loan_signature/loan_signature_widget.dart' show LoanSignatureWidget;
-export '/loan_acceptance_success_copy/loan_acceptance_success_copy_widget.dart'
+export '/loan/loan_signature/loan_signature_widget.dart'
+    show LoanSignatureWidget;
+export '/loan/loan_acceptance_success_copy/loan_acceptance_success_copy_widget.dart'
     show LoanAcceptanceSuccessCopyWidget;
+export '/loan/loan_signature_success/loan_signature_success_widget.dart'
+    show LoanSignatureSuccessWidget;
+export '/loan/loan_document/loan_document_widget.dart' show LoanDocumentWidget;

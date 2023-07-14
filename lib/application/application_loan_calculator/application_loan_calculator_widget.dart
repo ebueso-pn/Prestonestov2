@@ -183,7 +183,9 @@ class _ApplicationLoanCalculatorWidgetState
                 width: 50.0,
                 height: 50.0,
                 child: CircularProgressIndicator(
-                  color: Color(0xFF2AAF7A),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Color(0xFF2AAF7A),
+                  ),
                 ),
               ),
             ),
@@ -562,8 +564,8 @@ class _ApplicationLoanCalculatorWidgetState
                       child: FFButtonWidget(
                         onPressed: () async {
                           var _shouldSetState = false;
-                          if ((applicationLoanCalculatorApplicationRecord!
-                                      .status ==
+                          if ((applicationLoanCalculatorApplicationRecord
+                                      ?.status ==
                                   'Enviada') &&
                               (functions.appIneligible(
                                       applicationLoanCalculatorApplicationRecord!
@@ -643,7 +645,7 @@ class _ApplicationLoanCalculatorWidgetState
                             'Applicaiton_Summary',
                             queryParameters: {
                               'applicationRecieve': serializeParam(
-                                _model.createdAppVar!.reference,
+                                _model.createdAppVar?.reference,
                                 ParamType.DocumentReference,
                               ),
                             }.withoutNulls,

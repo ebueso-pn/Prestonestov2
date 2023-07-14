@@ -410,31 +410,41 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 12.0, 0.0, 0.0),
-                                child: FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onLongPress: () async {
+                                    context.pushNamed('LoanDocument');
                                   },
-                                  text: 'Ver Contrato de Prestamo',
-                                  options: FFButtonOptions(
-                                    width: 230.0,
-                                    height: 40.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily: 'Urbanist',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                        ),
-                                    elevation: 0.0,
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1.0,
+                                  child: FFButtonWidget(
+                                    onPressed: () {
+                                      print('Button pressed ...');
+                                    },
+                                    text: 'Ver Contrato de Prestamo',
+                                    options: FFButtonOptions(
+                                      width: 230.0,
+                                      height: 40.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBackground,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Urbanist',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                          ),
+                                      elevation: 0.0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1.0,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -560,7 +570,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                 width: 50.0,
                                 height: 50.0,
                                 child: CircularProgressIndicator(
-                                  color: Color(0xFF2AAF7A),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Color(0xFF2AAF7A),
+                                  ),
                                 ),
                               ),
                             );

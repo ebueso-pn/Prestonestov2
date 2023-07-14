@@ -287,7 +287,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               width: 50.0,
                               height: 50.0,
                               child: CircularProgressIndicator(
-                                color: Color(0xFF2AAF7A),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xFF2AAF7A),
+                                ),
                               ),
                             ),
                           ),

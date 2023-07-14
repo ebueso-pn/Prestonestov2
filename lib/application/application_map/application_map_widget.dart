@@ -58,7 +58,9 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
             width: 50.0,
             height: 50.0,
             child: CircularProgressIndicator(
-              color: Color(0xFF2AAF7A),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Color(0xFF2AAF7A),
+              ),
             ),
           ),
         ),

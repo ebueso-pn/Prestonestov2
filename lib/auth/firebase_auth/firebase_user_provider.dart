@@ -23,6 +23,9 @@ class PrestonestoV1FirebaseUser extends BaseAuthUser {
   Future? delete() => user?.delete();
 
   @override
+  Future? updateEmail(String email) async => await user?.updateEmail(email);
+
+  @override
   Future? sendEmailVerification() => user?.sendEmailVerification();
 
   @override
