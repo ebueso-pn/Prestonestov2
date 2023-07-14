@@ -295,10 +295,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                 );
               }
               List<LoansRecord> columnLoansRecordList = snapshot.data!;
-              // Return an empty Container when the item does not exist.
-              if (snapshot.data!.isEmpty) {
-                return Container();
-              }
               final columnLoansRecord = columnLoansRecordList.isNotEmpty
                   ? columnLoansRecordList.first
                   : null;
