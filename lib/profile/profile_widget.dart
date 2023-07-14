@@ -88,270 +88,115 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             : null,
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 3.0,
-                        color: Color(0x33000000),
-                        offset: Offset(0.0, 1.0),
-                      )
-                    ],
-                  ),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Container(
-                          width: 90.0,
-                          height: 90.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).accent2,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context).secondary,
-                              width: 2.0,
-                            ),
-                          ),
-                          child: AuthUserStreamWidget(
-                            builder: (context) => FlutterFlowStaticMap(
-                              location: currentUserDocument!.latLong!,
-                              apiKey:
-                                  'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
-                              style: MapBoxStyle.Light,
-                              width: 300.0,
-                              height: 300.0,
-                              fit: BoxFit.cover,
-                              borderRadius: BorderRadius.circular(0.0),
-                              zoom: 12,
-                              tilt: 0,
-                              rotation: 0,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 0.0, 0.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AuthUserStreamWidget(
-                                builder: (context) => Text(
-                                  '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
-                                  style: FlutterFlowTheme.of(context)
-                                      .headlineSmall,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 4.0, 0.0, 0.0),
-                                child: Text(
-                                  currentUserEmail,
-                                  style:
-                                      FlutterFlowTheme.of(context).labelMedium,
-                                ),
-                              ),
-                              AuthUserStreamWidget(
-                                builder: (context) => Text(
-                                  currentPhoneNumber,
-                                  style:
-                                      FlutterFlowTheme.of(context).bodyMedium,
-                                ),
-                              ),
-                              AuthUserStreamWidget(
-                                builder: (context) => Text(
-                                  valueOrDefault(currentUserDocument?.dni, ''),
-                                  style:
-                                      FlutterFlowTheme.of(context).labelMedium,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 3.0,
+                          color: Color(0x33000000),
+                          offset: Offset(0.0, 1.0),
+                        )
                       ],
                     ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
-                child: Text(
-                  'Account',
-                  style: FlutterFlowTheme.of(context).labelLarge,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 60.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 5.0,
-                        color: Color(0x3416202A),
-                        offset: Offset(0.0, 2.0),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(12.0),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Icon(
-                          Icons.attach_money_rounded,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 24.0,
-                        ),
-                        Expanded(
-                          child: Padding(
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          16.0, 16.0, 16.0, 16.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Container(
+                            width: 90.0,
+                            height: 90.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).accent2,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: FlutterFlowTheme.of(context).secondary,
+                                width: 2.0,
+                              ),
+                            ),
+                            child: AuthUserStreamWidget(
+                              builder: (context) => FlutterFlowStaticMap(
+                                location: currentUserDocument!.latLong!,
+                                apiKey:
+                                    'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
+                                style: MapBoxStyle.Light,
+                                width: 300.0,
+                                height: 300.0,
+                                fit: BoxFit.cover,
+                                borderRadius: BorderRadius.circular(0.0),
+                                zoom: 12,
+                                tilt: 0,
+                                rotation: 0,
+                              ),
+                            ),
+                          ),
+                          Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'Verificar tus Ingresos',
-                              style: FlutterFlowTheme.of(context).bodyLarge,
+                                16.0, 0.0, 0.0, 0.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AuthUserStreamWidget(
+                                  builder: (context) => Text(
+                                    '${valueOrDefault(currentUserDocument?.nombres, '')}${valueOrDefault(currentUserDocument?.apellidos, '')}',
+                                    style: FlutterFlowTheme.of(context)
+                                        .headlineSmall,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 4.0, 0.0, 0.0),
+                                  child: Text(
+                                    currentUserEmail,
+                                    style: FlutterFlowTheme.of(context)
+                                        .labelMedium,
+                                  ),
+                                ),
+                                AuthUserStreamWidget(
+                                  builder: (context) => Text(
+                                    currentPhoneNumber,
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyMedium,
+                                  ),
+                                ),
+                                AuthUserStreamWidget(
+                                  builder: (context) => Text(
+                                    valueOrDefault(
+                                        currentUserDocument?.dni, ''),
+                                    style: FlutterFlowTheme.of(context)
+                                        .labelMedium,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(0.9, 0.0),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            size: 18.0,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 60.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 5.0,
-                        color: Color(0x3416202A),
-                        offset: Offset(0.0, 2.0),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(12.0),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Icon(
-                          Icons.account_balance_outlined,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 24.0,
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'Cuenta Bancaria',
-                              style: FlutterFlowTheme.of(context).bodyLarge,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(0.9, 0.0),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            size: 18.0,
-                          ),
-                        ),
-                      ],
-                    ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
+                  child: Text(
+                    'Account',
+                    style: FlutterFlowTheme.of(context).labelLarge,
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 60.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 5.0,
-                        color: Color(0x3416202A),
-                        offset: Offset(0.0, 2.0),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(12.0),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Icon(
-                          Icons.notifications_none,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 24.0,
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'Notificaciones',
-                              style: FlutterFlowTheme.of(context).bodyLarge,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(0.9, 0.0),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            size: 18.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    context.pushNamed('Profile_Edit');
-                  },
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     height: 60.0,
@@ -374,7 +219,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Icon(
-                            Icons.account_circle_outlined,
+                            Icons.attach_money_rounded,
                             color: FlutterFlowTheme.of(context).secondaryText,
                             size: 24.0,
                           ),
@@ -383,7 +228,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 0.0),
                               child: Text(
-                                'Editar Perfil',
+                                'Verificar tus Ingresos',
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
                             ),
@@ -401,24 +246,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
-                child: Text(
-                  'General',
-                  style: FlutterFlowTheme.of(context).labelLarge,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    context.pushNamed('Help');
-                  },
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     height: 60.0,
@@ -441,7 +271,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Icon(
-                            Icons.help_outline_rounded,
+                            Icons.account_balance_outlined,
                             color: FlutterFlowTheme.of(context).secondaryText,
                             size: 24.0,
                           ),
@@ -450,7 +280,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 0.0),
                               child: Text(
-                                'Soporte',
+                                'Cuenta Bancaria',
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
                             ),
@@ -468,59 +298,59 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 60.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 5.0,
-                        color: Color(0x3416202A),
-                        offset: Offset(0.0, 2.0),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(12.0),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Icon(
-                          Icons.privacy_tip_rounded,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 24.0,
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'Terminos de Servicio',
-                              style: FlutterFlowTheme.of(context).bodyLarge,
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 60.0,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 5.0,
+                          color: Color(0x3416202A),
+                          offset: Offset(0.0, 2.0),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(12.0),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Icon(
+                            Icons.notifications_none,
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            size: 24.0,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                'Notificaciones',
+                                style: FlutterFlowTheme.of(context).bodyLarge,
+                              ),
                             ),
                           ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(0.9, 0.0),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            size: 18.0,
+                          Align(
+                            alignment: AlignmentDirectional(0.9, 0.0),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 18.0,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Builder(
-                builder: (context) => Padding(
+                Padding(
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                   child: InkWell(
@@ -529,10 +359,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
-                      await Share.share(
-                        '',
-                        sharePositionOrigin: getWidgetBoundingBox(context),
-                      );
+                      context.pushNamed('Profile_Edit');
                     },
                     child: Container(
                       width: double.infinity,
@@ -556,7 +383,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Icon(
-                              Icons.ios_share,
+                              Icons.account_circle_outlined,
                               color: FlutterFlowTheme.of(context).secondaryText,
                               size: 24.0,
                             ),
@@ -565,15 +392,19 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     12.0, 0.0, 0.0, 0.0),
                                 child: Text(
-                                  'Invita a tus Aleros',
+                                  'Editar Perfil',
                                   style: FlutterFlowTheme.of(context).bodyLarge,
                                 ),
                               ),
                             ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              size: 18.0,
+                            Align(
+                              alignment: AlignmentDirectional(0.9, 0.0),
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 18.0,
+                              ),
                             ),
                           ],
                         ),
@@ -581,44 +412,78 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 36.0, 16.0, 0.0),
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    var confirmDialogResponse = await showDialog<bool>(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: Text('Cerrar Sesión'),
-                              content:
-                                  Text('¿Estas seguro que quieres salirte?'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext, false),
-                                  child: Text('Cancelar'),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
+                  child: Text(
+                    'General',
+                    style: FlutterFlowTheme.of(context).labelLarge,
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      context.pushNamed('Help');
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            color: Color(0x3416202A),
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(12.0),
+                        shape: BoxShape.rectangle,
+                      ),
+                      child: Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.help_outline_rounded,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 24.0,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  'Soporte',
+                                  style: FlutterFlowTheme.of(context).bodyLarge,
                                 ),
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext, true),
-                                  child: Text('Confirmar'),
-                                ),
-                              ],
-                            );
-                          },
-                        ) ??
-                        false;
-                    GoRouter.of(context).prepareAuthEvent();
-                    await authManager.signOut();
-                    GoRouter.of(context).clearRedirectLocation();
-
-                    context.goNamedAuth('Onboarding', context.mounted);
-                  },
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0.9, 0.0),
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 18.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     height: 60.0,
@@ -641,7 +506,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Icon(
-                            Icons.logout,
+                            Icons.privacy_tip_rounded,
                             color: FlutterFlowTheme.of(context).secondaryText,
                             size: 24.0,
                           ),
@@ -650,23 +515,178 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 0.0),
                               child: Text(
-                                'Cerrar Sesión',
+                                'Terminos de Servicio',
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
                             ),
                           ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            size: 18.0,
+                          Align(
+                            alignment: AlignmentDirectional(0.9, 0.0),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 18.0,
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+                Builder(
+                  builder: (context) => Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        await Share.share(
+                          '',
+                          sharePositionOrigin: getWidgetBoundingBox(context),
+                        );
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 60.0,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5.0,
+                              color: Color(0x3416202A),
+                              offset: Offset(0.0, 2.0),
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(12.0),
+                          shape: BoxShape.rectangle,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              8.0, 8.0, 8.0, 8.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Icon(
+                                Icons.ios_share,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 24.0,
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      12.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Invita a tus Aleros',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyLarge,
+                                  ),
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 18.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 36.0, 16.0, 0.0),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      var confirmDialogResponse = await showDialog<bool>(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: Text('Cerrar Sesión'),
+                                content:
+                                    Text('¿Estas seguro que quieres salirte?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(
+                                        alertDialogContext, false),
+                                    child: Text('Cancelar'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext, true),
+                                    child: Text('Confirmar'),
+                                  ),
+                                ],
+                              );
+                            },
+                          ) ??
+                          false;
+                      GoRouter.of(context).prepareAuthEvent();
+                      await authManager.signOut();
+                      GoRouter.of(context).clearRedirectLocation();
+
+                      context.goNamedAuth('Onboarding', context.mounted);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            color: Color(0x3416202A),
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(12.0),
+                        shape: BoxShape.rectangle,
+                      ),
+                      child: Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.logout,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 24.0,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  'Cerrar Sesión',
+                                  style: FlutterFlowTheme.of(context).bodyLarge,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 18.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
