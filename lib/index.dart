@@ -4,7 +4,6 @@ export '/auth/s_m_s_signup/s_m_s_signup_widget.dart' show SMSSignupWidget;
 export '/auth/s_m_s_verify_code/s_m_s_verify_code_widget.dart'
     show SMSVerifyCodeWidget;
 export '/home/home_widget.dart' show HomeWidget;
-export '/profile/profile_widget.dart' show ProfileWidget;
 export '/application/application_name/application_name_widget.dart'
     show ApplicationNameWidget;
 export '/help/help_widget.dart' show HelpWidget;
@@ -38,3 +37,4 @@ export '/loan/loan_acceptance_success_copy/loan_acceptance_success_copy_widget.d
 export '/loan/loan_signature_success/loan_signature_success_widget.dart'
     show LoanSignatureSuccessWidget;
 export '/loan/loan_document/loan_document_widget.dart' show LoanDocumentWidget;
+export '/profile/profile_widget.dart' show ProfileWidget;
