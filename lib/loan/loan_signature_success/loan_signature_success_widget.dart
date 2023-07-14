@@ -190,6 +190,9 @@ class _LoanSignatureSuccessWidgetState
                                 ?.montoAprobado,
                             plazo: loanSignatureSuccessApplicationRecord
                                 ?.plazoAprobado,
+                            fechaUltimoPago:
+                                loanSignatureSuccessApplicationRecord
+                                    ?.fechaUltimoPago,
                           ),
                           'FechaFirma': FieldValue.serverTimestamp(),
                         });
