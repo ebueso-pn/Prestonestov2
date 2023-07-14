@@ -403,12 +403,15 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Text(
-                                    'Ultimo Pago:  ${dateTimeFormat(
-                                      'd/M/y',
-                                      columnLoansRecord?.fechaUltimoPago,
-                                      locale: FFLocalizations.of(context)
-                                          .languageCode,
-                                    )}',
+                                    valueOrDefault<String>(
+                                      'Ultimo Pago:  ${dateTimeFormat(
+                                        'd/M/y',
+                                        columnLoansRecord?.fechaUltimoPago,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      )}',
+                                      '¡Aplica Hoy!',
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                   ),
@@ -536,12 +539,15 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Text(
-                                    'Ultimo Pago:  ${dateTimeFormat(
-                                      'd/M/y',
-                                      columnLoansRecord?.fechaUltimoPago,
-                                      locale: FFLocalizations.of(context)
-                                          .languageCode,
-                                    )}',
+                                    valueOrDefault<String>(
+                                      'Ultimo Pago:  ${dateTimeFormat(
+                                        'd/M/y',
+                                        columnLoansRecord?.fechaUltimoPago,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      )}',
+                                      '¡Aplica Hoy!',
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                   ),
@@ -571,13 +577,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             .bodyLarge,
                                       ),
                                       Text(
-                                        ' de  ${formatNumber(
-                                          columnLoansRecord?.monto,
-                                          formatType: FormatType.custom,
-                                          currency: 'L. ',
-                                          format: '',
-                                          locale: '',
-                                        )}',
+                                        valueOrDefault<String>(
+                                          ' de  ${formatNumber(
+                                            columnLoansRecord?.monto,
+                                            formatType: FormatType.custom,
+                                            currency: 'L. ',
+                                            format: '',
+                                            locale: '',
+                                          )}',
+                                          'L. 5000.00',
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
