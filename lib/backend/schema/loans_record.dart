@@ -61,6 +61,21 @@ class LoansRecord extends FirestoreRecord {
   DateTime? get fechaUltimoPago => _fechaUltimoPago;
   bool hasFechaUltimoPago() => _fechaUltimoPago != null;
 
+  // "fecha_primer_pago" field.
+  DateTime? _fechaPrimerPago;
+  DateTime? get fechaPrimerPago => _fechaPrimerPago;
+  bool hasFechaPrimerPago() => _fechaPrimerPago != null;
+
+  // "FechaCreado" field.
+  DateTime? _fechaCreado;
+  DateTime? get fechaCreado => _fechaCreado;
+  bool hasFechaCreado() => _fechaCreado != null;
+
+  // "status" field.
+  String? _status;
+  String get status => _status ?? '';
+  bool hasStatus() => _status != null;
+
   void _initializeFields() {
     _applicationDocReference =
         snapshotData['ApplicationDocReference'] as DocumentReference?;
@@ -72,6 +87,9 @@ class LoansRecord extends FirestoreRecord {
     _fechaFirma = snapshotData['FechaFirma'] as DateTime?;
     _plazo = castToType<double>(snapshotData['Plazo']);
     _fechaUltimoPago = snapshotData['fecha_ultimo_pago'] as DateTime?;
+    _fechaPrimerPago = snapshotData['fecha_primer_pago'] as DateTime?;
+    _fechaCreado = snapshotData['FechaCreado'] as DateTime?;
+    _status = snapshotData['status'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -117,6 +135,9 @@ Map<String, dynamic> createLoansRecordData({
   DateTime? fechaFirma,
   double? plazo,
   DateTime? fechaUltimoPago,
+  DateTime? fechaPrimerPago,
+  DateTime? fechaCreado,
+  String? status,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -129,6 +150,9 @@ Map<String, dynamic> createLoansRecordData({
       'FechaFirma': fechaFirma,
       'Plazo': plazo,
       'fecha_ultimo_pago': fechaUltimoPago,
+      'fecha_primer_pago': fechaPrimerPago,
+      'FechaCreado': fechaCreado,
+      'status': status,
     }.withoutNulls,
   );
 
@@ -148,7 +172,10 @@ class LoansRecordDocumentEquality implements Equality<LoansRecord> {
         e1?.monto == e2?.monto &&
         e1?.fechaFirma == e2?.fechaFirma &&
         e1?.plazo == e2?.plazo &&
-        e1?.fechaUltimoPago == e2?.fechaUltimoPago;
+        e1?.fechaUltimoPago == e2?.fechaUltimoPago &&
+        e1?.fechaPrimerPago == e2?.fechaPrimerPago &&
+        e1?.fechaCreado == e2?.fechaCreado &&
+        e1?.status == e2?.status;
   }
 
   @override
@@ -161,7 +188,10 @@ class LoansRecordDocumentEquality implements Equality<LoansRecord> {
         e?.monto,
         e?.fechaFirma,
         e?.plazo,
-        e?.fechaUltimoPago
+        e?.fechaUltimoPago,
+        e?.fechaPrimerPago,
+        e?.fechaCreado,
+        e?.status
       ]);
 
   @override

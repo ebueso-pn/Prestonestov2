@@ -27,7 +27,7 @@ export '/application/application_map/application_map_widget.dart'
     show ApplicationMapWidget;
 export '/application/application_d_n_i_validation/application_d_n_i_validation_widget.dart'
     show ApplicationDNIValidationWidget;
-export '/profile_edit/profile_edit_widget.dart' show ProfileEditWidget;
+export '/profile/profile_edit/profile_edit_widget.dart' show ProfileEditWidget;
 export '/archive/application_list/application_list_widget.dart'
     show ApplicationListWidget;
 export '/loan/loan_signature/loan_signature_widget.dart'
@@ -37,4 +37,6 @@ export '/loan/loan_acceptance_success_copy/loan_acceptance_success_copy_widget.d
 export '/loan/loan_signature_success/loan_signature_success_widget.dart'
     show LoanSignatureSuccessWidget;
 export '/loan/loan_document/loan_document_widget.dart' show LoanDocumentWidget;
-export '/profile/profile_widget.dart' show ProfileWidget;
+export '/profile/profile/profile_widget.dart' show ProfileWidget;
+export '/profile/profile_income_validation/profile_income_validation_widget.dart'
+    show ProfileIncomeValidationWidget;

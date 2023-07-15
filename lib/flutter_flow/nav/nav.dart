@@ -242,6 +242,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'Profile')
               : ProfileWidget(),
+        ),
+        FFRoute(
+          name: 'Profile_IncomeValidation',
+          path: '/profileIncomeValidation',
+          builder: (context, params) => ProfileIncomeValidationWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

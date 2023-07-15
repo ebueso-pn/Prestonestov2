@@ -408,7 +408,14 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           fechaUltimoPago: functions.fechaUltimoPago(
                               getCurrentTimestamp,
                               buttonApplicationRecord!.plazoMeses),
+                          status: 'Aceptada',
                         ));
+
+                        await DocumentsRecord.collection
+                            .doc()
+                            .set(createDocumentsRecordData(
+                              userDocReference: currentUserReference,
+                            ));
                         _model.zapSignAPIresponse =
                             await ZapSIgnCreateDocumentFromTemplateCall.call(
                           phone: currentPhoneNumber,
@@ -517,6 +524,23 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           return;
                         }
 
+                        await LoansRecord.collection
+                            .doc()
+                            .set(createLoansRecordData(
+                              applicationDocReference:
+                                  buttonApplicationRecord?.reference,
+                              userDocReference: currentUserReference,
+                              tasa:
+                                  buttonApplicationRecord?.tasaMensualAprobada,
+                              cuota: buttonApplicationRecord?.cuotaAprobada,
+                              monto: buttonApplicationRecord?.montoAprobado,
+                              plazo: buttonApplicationRecord?.plazoAprobado,
+                              fechaUltimoPago:
+                                  buttonApplicationRecord?.fechaUltimoPago,
+                              fechaCreado: getCurrentTimestamp,
+                              fechaPrimerPago:
+                                  buttonApplicationRecord?.fechaPrimerPago,
+                            ));
                         if (_shouldSetState) setState(() {});
                       },
                       text: 'Aceptar',

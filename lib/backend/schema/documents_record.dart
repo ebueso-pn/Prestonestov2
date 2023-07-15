@@ -21,8 +21,14 @@ class DocumentsRecord extends FirestoreRecord {
   String get pagare => _pagare ?? '';
   bool hasPagare() => _pagare != null;
 
+  // "UserDocReference" field.
+  DocumentReference? _userDocReference;
+  DocumentReference? get userDocReference => _userDocReference;
+  bool hasUserDocReference() => _userDocReference != null;
+
   void _initializeFields() {
     _pagare = snapshotData['pagare'] as String?;
+    _userDocReference = snapshotData['UserDocReference'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -61,10 +67,12 @@ class DocumentsRecord extends FirestoreRecord {
 
 Map<String, dynamic> createDocumentsRecordData({
   String? pagare,
+  DocumentReference? userDocReference,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'pagare': pagare,
+      'UserDocReference': userDocReference,
     }.withoutNulls,
   );
 
@@ -76,11 +84,13 @@ class DocumentsRecordDocumentEquality implements Equality<DocumentsRecord> {
 
   @override
   bool equals(DocumentsRecord? e1, DocumentsRecord? e2) {
-    return e1?.pagare == e2?.pagare;
+    return e1?.pagare == e2?.pagare &&
+        e1?.userDocReference == e2?.userDocReference;
   }
 
   @override
-  int hash(DocumentsRecord? e) => const ListEquality().hash([e?.pagare]);
+  int hash(DocumentsRecord? e) =>
+      const ListEquality().hash([e?.pagare, e?.userDocReference]);
 
   @override
   bool isValidKey(Object? o) => o is DocumentsRecord;

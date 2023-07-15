@@ -41,10 +41,11 @@ class ZapSIgnCreateDocumentFromTemplateCall {
     String? tasaEfectivaMensualL = '',
     double? cuota,
     String? direccion = '',
+    String? documentReference = '',
   }) {
     final body = '''
 {
-  "template_id": "58e98150-afec-4a12-9f21-540bb271c54b",
+  "template_id": "f204dcc3-38a1-4724-abcb-bc3818714531",
   "signer_name": "${name}",
   "signer_email": "${email}",
   "signer_phone_number": "${phone}",
@@ -168,6 +169,10 @@ class ZapSIgnCreateDocumentFromTemplateCall {
     {
       "de": "{{DIRECCION}}",
       "para": "${direccion}"
+    },
+    {
+      "de": "{{DocReference}}",
+      "para": "${documentReference}"
     }
   ]
 }''';
