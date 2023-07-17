@@ -104,7 +104,7 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget> {
                 width: double.infinity,
                 child: Form(
                   key: _model.formKey,
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.disabled,
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
@@ -118,13 +118,13 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget> {
                             controller: _model.dropDownValueController ??=
                                 FormFieldController<String>(null),
                             options: List.generate(
-                                random_data.randomInteger(0, 0),
+                                random_data.randomInteger(5, 14),
                                 (index) => random_data.randomString(
-                                      0,
-                                      0,
+                                      9,
+                                      11,
+                                      false,
+                                      false,
                                       true,
-                                      false,
-                                      false,
                                     )),
                             onChanged: (val) =>
                                 setState(() => _model.dropDownValue = val),
@@ -296,6 +296,28 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 82.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
+                      if (_model.cuentaConfirmarController.text !=
+                          _model.cuentaController.text) {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Numero de Cuenta'),
+                              content:
+                                  Text('La cuenta ingresada no es la misma'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        return;
+                      }
+
                       await currentUserReference!.update(createUsersRecordData(
                         bankAccountBank: _model.dropDownValue,
                         bankAccountNumber: _model.cuentaController.text,
