@@ -96,6 +96,21 @@ class UsersRecord extends FirestoreRecord {
   String get incomeVerification => _incomeVerification ?? '';
   bool hasIncomeVerification() => _incomeVerification != null;
 
+  // "bank_account_bank" field.
+  String? _bankAccountBank;
+  String get bankAccountBank => _bankAccountBank ?? '';
+  bool hasBankAccountBank() => _bankAccountBank != null;
+
+  // "bank_account_number" field.
+  String? _bankAccountNumber;
+  String get bankAccountNumber => _bankAccountNumber ?? '';
+  bool hasBankAccountNumber() => _bankAccountNumber != null;
+
+  // "bank_account_type" field.
+  String? _bankAccountType;
+  String get bankAccountType => _bankAccountType ?? '';
+  bool hasBankAccountType() => _bankAccountType != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -113,6 +128,9 @@ class UsersRecord extends FirestoreRecord {
     _ciudad = snapshotData['ciudad'] as String?;
     _latLong = snapshotData['lat_long'] as LatLng?;
     _incomeVerification = snapshotData['income_verification'] as String?;
+    _bankAccountBank = snapshotData['bank_account_bank'] as String?;
+    _bankAccountNumber = snapshotData['bank_account_number'] as String?;
+    _bankAccountType = snapshotData['bank_account_type'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -165,6 +183,9 @@ Map<String, dynamic> createUsersRecordData({
   String? ciudad,
   LatLng? latLong,
   String? incomeVerification,
+  String? bankAccountBank,
+  String? bankAccountNumber,
+  String? bankAccountType,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -184,6 +205,9 @@ Map<String, dynamic> createUsersRecordData({
       'ciudad': ciudad,
       'lat_long': latLong,
       'income_verification': incomeVerification,
+      'bank_account_bank': bankAccountBank,
+      'bank_account_number': bankAccountNumber,
+      'bank_account_type': bankAccountType,
     }.withoutNulls,
   );
 
@@ -210,7 +234,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.descripcionDireccion == e2?.descripcionDireccion &&
         e1?.ciudad == e2?.ciudad &&
         e1?.latLong == e2?.latLong &&
-        e1?.incomeVerification == e2?.incomeVerification;
+        e1?.incomeVerification == e2?.incomeVerification &&
+        e1?.bankAccountBank == e2?.bankAccountBank &&
+        e1?.bankAccountNumber == e2?.bankAccountNumber &&
+        e1?.bankAccountType == e2?.bankAccountType;
   }
 
   @override
@@ -230,7 +257,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.descripcionDireccion,
         e?.ciudad,
         e?.latLong,
-        e?.incomeVerification
+        e?.incomeVerification,
+        e?.bankAccountBank,
+        e?.bankAccountNumber,
+        e?.bankAccountType
       ]);
 
   @override
