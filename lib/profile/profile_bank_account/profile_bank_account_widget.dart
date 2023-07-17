@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -114,24 +113,79 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               8.0, 16.0, 8.0, 0.0),
+                          child: StreamBuilder<List<AdminRecord>>(
+                            stream: queryAdminRecord(
+                              queryBuilder: (adminRecord) => adminRecord.where(
+                                  'banks_for_bankaccount',
+                                  arrayContains: 'Atlantida'),
+                              singleRecord: true,
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Color(0xFF2AAF7A),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<AdminRecord> dropDownAdminRecordList =
+                                  snapshot.data!;
+                              final dropDownAdminRecord =
+                                  dropDownAdminRecordList.isNotEmpty
+                                      ? dropDownAdminRecordList.first
+                                      : null;
+                              return FlutterFlowDropDown<String>(
+                                controller: _model.dropDownValueController1 ??=
+                                    FormFieldController<String>(null),
+                                options: ['Option 1'],
+                                onChanged: (val) =>
+                                    setState(() => _model.dropDownValue1 = val),
+                                width: double.infinity,
+                                height: 50.0,
+                                textStyle:
+                                    FlutterFlowTheme.of(context).bodyMedium,
+                                hintText: 'Porfavor elige tu banco...',
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 24.0,
+                                ),
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                elevation: 2.0,
+                                borderColor:
+                                    FlutterFlowTheme.of(context).alternate,
+                                borderWidth: 2.0,
+                                borderRadius: 8.0,
+                                margin: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 4.0, 16.0, 4.0),
+                                hidesUnderline: true,
+                                isSearchable: false,
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              8.0, 16.0, 8.0, 0.0),
                           child: FlutterFlowDropDown<String>(
-                            controller: _model.dropDownValueController ??=
+                            controller: _model.dropDownValueController2 ??=
                                 FormFieldController<String>(null),
-                            options: List.generate(
-                                random_data.randomInteger(5, 14),
-                                (index) => random_data.randomString(
-                                      9,
-                                      11,
-                                      false,
-                                      false,
-                                      true,
-                                    )),
+                            options: ['Cheques', 'Ahorros'],
                             onChanged: (val) =>
-                                setState(() => _model.dropDownValue = val),
+                                setState(() => _model.dropDownValue2 = val),
                             width: double.infinity,
                             height: 50.0,
                             textStyle: FlutterFlowTheme.of(context).bodyMedium,
-                            hintText: 'Porfavor elige tu banco...',
+                            hintText: 'Porfavor elige el tipo de cuenta...',
                             icon: Icon(
                               Icons.keyboard_arrow_down_rounded,
                               color: FlutterFlowTheme.of(context).secondaryText,
@@ -319,8 +373,9 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget> {
                       }
 
                       await currentUserReference!.update(createUsersRecordData(
-                        bankAccountBank: _model.dropDownValue,
+                        bankAccountBank: _model.dropDownValue1,
                         bankAccountNumber: _model.cuentaController.text,
+                        bankAccountType: _model.dropDownValue2,
                       ));
 
                       context.pushNamed('Profile');

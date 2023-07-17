@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +22,11 @@ class ProfileBankAccountModel extends FlutterFlowModel {
   final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   // State field(s) for DropDown widget.
-  String? dropDownValue;
-  FormFieldController<String>? dropDownValueController;
+  String? dropDownValue1;
+  FormFieldController<String>? dropDownValueController1;
+  // State field(s) for DropDown widget.
+  String? dropDownValue2;
+  FormFieldController<String>? dropDownValueController2;
   // State field(s) for Cuenta widget.
   TextEditingController? cuentaController;
   String? Function(BuildContext, String?)? cuentaControllerValidator;
@@ -33,8 +35,8 @@ class ProfileBankAccountModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length > 11) {
-      return 'Maximum 11 characters allowed, currently ${val.length}.';
+    if (val.length > 12) {
+      return 'Maximum 12 characters allowed, currently ${val.length}.';
     }
     if (!RegExp('').hasMatch(val)) {
       return 'Invalid text';
@@ -51,8 +53,8 @@ class ProfileBankAccountModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length > 11) {
-      return 'Maximum 11 characters allowed, currently ${val.length}.';
+    if (val.length > 12) {
+      return 'Maximum 12 characters allowed, currently ${val.length}.';
     }
 
     return null;
