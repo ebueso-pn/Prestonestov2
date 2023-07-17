@@ -115,9 +115,6 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget> {
                               8.0, 16.0, 8.0, 0.0),
                           child: StreamBuilder<List<AdminRecord>>(
                             stream: queryAdminRecord(
-                              queryBuilder: (adminRecord) => adminRecord.where(
-                                  'banks_for_bankaccount',
-                                  arrayContains: 'Atlantida'),
                               singleRecord: true,
                             ),
                             builder: (context, snapshot) {
