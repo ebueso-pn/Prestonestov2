@@ -357,9 +357,9 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget> {
                           context: context,
                           builder: (alertDialogContext) {
                             return AlertDialog(
-                              title: Text('Numero de Cuenta'),
-                              content:
-                                  Text('La cuenta ingresada no es la misma'),
+                              title: Text('Oops...'),
+                              content: Text(
+                                  'Los numeros de cuenta ingresados no concuerdan'),
                               actions: [
                                 TextButton(
                                   onPressed: () =>
