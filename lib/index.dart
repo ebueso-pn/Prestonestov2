@@ -40,3 +40,5 @@ export '/loan/loan_document/loan_document_widget.dart' show LoanDocumentWidget;
 export '/profile/profile/profile_widget.dart' show ProfileWidget;
 export '/profile/profile_income_validation/profile_income_validation_widget.dart'
     show ProfileIncomeValidationWidget;
+export '/profile/profile_bank_account/profile_bank_account_widget.dart'
+    show ProfileBankAccountWidget;

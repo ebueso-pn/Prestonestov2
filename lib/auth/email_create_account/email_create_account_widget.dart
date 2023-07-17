@@ -1,8 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -368,6 +370,12 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                 if (user == null) {
                   return;
                 }
+
+                await DocumentsRecord.collection
+                    .doc()
+                    .set(createDocumentsRecordData(
+                      userDocReference: currentUserReference,
+                    ));
 
                 context.goNamedAuth(
                     'Application_LoanCalculator', context.mounted);

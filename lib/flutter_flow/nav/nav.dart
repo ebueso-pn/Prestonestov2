@@ -247,6 +247,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Profile_IncomeValidation',
           path: '/profileIncomeValidation',
           builder: (context, params) => ProfileIncomeValidationWidget(),
+        ),
+        FFRoute(
+          name: 'Profile_BankAccount',
+          path: '/profileBankAccount',
+          builder: (context, params) => ProfileBankAccountWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -410,12 +410,6 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               buttonApplicationRecord!.plazoMeses),
                           status: 'Aceptada',
                         ));
-
-                        await DocumentsRecord.collection
-                            .doc()
-                            .set(createDocumentsRecordData(
-                              userDocReference: currentUserReference,
-                            ));
                         _model.zapSignAPIresponse =
                             await ZapSIgnCreateDocumentFromTemplateCall.call(
                           phone: currentPhoneNumber,
