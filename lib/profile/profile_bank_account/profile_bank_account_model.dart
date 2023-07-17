@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class ProfileBankAccountModel extends FlutterFlowModel {
   ///  Local state fields for this page.
 
-  bool? bankaccount;
+  bool? bankaccount = false;
 
   ///  State fields for stateful widgets in this page.
 
