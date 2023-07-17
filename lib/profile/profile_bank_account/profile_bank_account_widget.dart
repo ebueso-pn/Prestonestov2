@@ -141,14 +141,18 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget> {
                               return FlutterFlowDropDown<String>(
                                 controller: _model.dropDownValueController1 ??=
                                     FormFieldController<String>(null),
-                                options: ['Option 1'],
+                                options:
+                                    dropDownAdminRecord!.banksForBankaccount,
                                 onChanged: (val) =>
                                     setState(() => _model.dropDownValue1 = val),
                                 width: double.infinity,
                                 height: 50.0,
+                                searchHintTextStyle:
+                                    FlutterFlowTheme.of(context).labelMedium,
                                 textStyle:
                                     FlutterFlowTheme.of(context).bodyMedium,
                                 hintText: 'Porfavor elige tu banco...',
+                                searchHintText: 'Busca tu banco...',
                                 icon: Icon(
                                   Icons.keyboard_arrow_down_rounded,
                                   color: FlutterFlowTheme.of(context)
@@ -165,7 +169,7 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget> {
                                 margin: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 4.0, 16.0, 4.0),
                                 hidesUnderline: true,
-                                isSearchable: false,
+                                isSearchable: true,
                               );
                             },
                           ),
