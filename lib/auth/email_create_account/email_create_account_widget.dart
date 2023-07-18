@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'email_create_account_model.dart';
 export 'email_create_account_model.dart';
@@ -30,6 +31,7 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
     _model = createModel(context, () => EmailCreateAccountModel());
 
     _model.emailAddressController ??= TextEditingController();
+    _model.phoneNumberController ??= TextEditingController();
     _model.passwordController ??= TextEditingController();
     _model.confirmPasswordController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -190,6 +192,67 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                 style: FlutterFlowTheme.of(context).bodyMedium,
                 validator:
                     _model.emailAddressControllerValidator.asValidator(context),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(24.0, 14.0, 24.0, 0.0),
+            child: Container(
+              width: double.infinity,
+              height: 60.0,
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).primaryBackground,
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: TextFormField(
+                controller: _model.phoneNumberController,
+                obscureText: false,
+                decoration: InputDecoration(
+                  labelText: 'Numero de  celular',
+                  labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                  hintText: '+504 9999-9999',
+                  hintStyle: FlutterFlowTheme.of(context).labelMedium.override(
+                        fontFamily: 'Urbanist',
+                        fontStyle: FontStyle.italic,
+                      ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0xFF7A8087),
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(40.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: FlutterFlowTheme.of(context).primary,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(40.0),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: FlutterFlowTheme.of(context).error,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(40.0),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: FlutterFlowTheme.of(context).error,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(40.0),
+                  ),
+                  filled: true,
+                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                  contentPadding:
+                      EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 20.0, 24.0),
+                ),
+                style: FlutterFlowTheme.of(context).bodyMedium,
+                keyboardType: TextInputType.number,
+                validator:
+                    _model.phoneNumberControllerValidator.asValidator(context),
+                inputFormatters: [_model.phoneNumberMask],
               ),
             ),
           ),
@@ -370,6 +433,12 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                 if (user == null) {
                   return;
                 }
+
+                await UsersRecord.collection
+                    .doc(user.uid)
+                    .update(createUsersRecordData(
+                      phoneNumber: _model.phoneNumberController.text,
+                    ));
 
                 await DocumentsRecord.collection
                     .doc()

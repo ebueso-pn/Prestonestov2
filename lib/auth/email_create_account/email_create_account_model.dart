@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 class EmailCreateAccountModel extends FlutterFlowModel {
@@ -15,6 +16,10 @@ class EmailCreateAccountModel extends FlutterFlowModel {
   // State field(s) for emailAddress widget.
   TextEditingController? emailAddressController;
   String? Function(BuildContext, String?)? emailAddressControllerValidator;
+  // State field(s) for phoneNumber widget.
+  TextEditingController? phoneNumberController;
+  final phoneNumberMask = MaskTextInputFormatter(mask: '+504 ####-####');
+  String? Function(BuildContext, String?)? phoneNumberControllerValidator;
   // State field(s) for password widget.
   TextEditingController? passwordController;
   late bool passwordVisibility;
@@ -33,6 +38,7 @@ class EmailCreateAccountModel extends FlutterFlowModel {
 
   void dispose() {
     emailAddressController?.dispose();
+    phoneNumberController?.dispose();
     passwordController?.dispose();
     confirmPasswordController?.dispose();
   }
