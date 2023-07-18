@@ -292,7 +292,7 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                 width: double.infinity,
                 child: Form(
                   key: _model.formKey,
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.disabled,
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
