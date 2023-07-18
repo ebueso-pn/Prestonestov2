@@ -342,7 +342,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                           .headlineSmall
                                           .override(
                                             fontFamily: 'Urbanist',
-                                            fontSize: 20.0,
+                                            fontSize: 18.0,
                                           ),
                                     ),
                                   ),
