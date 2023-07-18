@@ -534,6 +534,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               fechaCreado: getCurrentTimestamp,
                               fechaPrimerPago:
                                   buttonApplicationRecord?.fechaPrimerPago,
+                              balance: buttonApplicationRecord?.montoAprobado,
                             ));
                         if (_shouldSetState) setState(() {});
                       },

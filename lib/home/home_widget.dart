@@ -204,26 +204,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                       children: [
                         Row(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 0.0, 0.0, 0.0),
-                              child: FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30.0,
-                                borderWidth: 1.0,
-                                buttonSize: 50.0,
-                                icon: Icon(
-                                  Icons.arrow_back_rounded,
-                                  color: Colors.white,
-                                  size: 30.0,
-                                ),
-                                onPressed: () async {
-                                  context.pop();
-                                },
-                              ),
-                            ),
                             Align(
                               alignment: AlignmentDirectional(1.0, 0.0),
                               child: FlutterFlowIconButton(
@@ -319,11 +301,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 0.0, 0.0, 0.0),
                                 child: Text(
-                                  valueOrDefault<String>(
-                                    valueOrDefault(
-                                        currentUserDocument?.nombres, ''),
-                                    'Aquí va tu Nombre',
-                                  ),
+                                  valueOrDefault(
+                                      currentUserDocument?.nombres, ''),
                                   style: FlutterFlowTheme.of(context)
                                       .headlineLarge,
                                 ).animateOnPageLoad(
@@ -588,14 +567,11 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Text(
-                                        valueOrDefault<String>(
-                                          formatNumber(
-                                            columnLoansRecord?.balance,
-                                            formatType: FormatType.decimal,
-                                            decimalType: DecimalType.automatic,
-                                            currency: 'L. ',
-                                          ),
-                                          '0 ',
+                                        formatNumber(
+                                          columnLoansRecord!.balance,
+                                          formatType: FormatType.decimal,
+                                          decimalType: DecimalType.automatic,
+                                          currency: 'L. ',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge,
@@ -604,10 +580,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         valueOrDefault<String>(
                                           formatNumber(
                                             columnLoansRecord?.monto,
-                                            formatType: FormatType.custom,
-                                            currency: 'de L .',
-                                            format: '####.##',
-                                            locale: '',
+                                            formatType: FormatType.decimal,
+                                            decimalType: DecimalType.automatic,
+                                            currency: 'de L. ',
                                           ),
                                           'de L. 0',
                                         ),

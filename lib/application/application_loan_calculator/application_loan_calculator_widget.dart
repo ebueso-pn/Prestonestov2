@@ -220,26 +220,8 @@ class _ApplicationLoanCalculatorWidgetState
                           children: [
                             Row(
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 0.0, 0.0, 0.0),
-                                  child: FlutterFlowIconButton(
-                                    borderColor: Colors.transparent,
-                                    borderRadius: 30.0,
-                                    borderWidth: 1.0,
-                                    buttonSize: 50.0,
-                                    icon: Icon(
-                                      Icons.arrow_back_rounded,
-                                      color: Colors.white,
-                                      size: 30.0,
-                                    ),
-                                    onPressed: () async {
-                                      context.pop();
-                                    },
-                                  ),
-                                ),
                                 Align(
                                   alignment: AlignmentDirectional(1.0, 0.0),
                                   child: FlutterFlowIconButton(
