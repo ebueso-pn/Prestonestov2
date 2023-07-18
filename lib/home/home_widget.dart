@@ -527,7 +527,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     child: Text(
                                       valueOrDefault<String>(
                                         columnLoansRecord?.reference.id,
-                                        '# ',
+                                        '-',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
