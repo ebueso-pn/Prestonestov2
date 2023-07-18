@@ -290,31 +290,33 @@ class _ProfileWidgetState extends State<ProfileWidget>
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Container(
-                            width: 90.0,
-                            height: 90.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).accent2,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: FlutterFlowTheme.of(context).secondary,
-                                width: 2.0,
+                          Flexible(
+                            child: Container(
+                              width: 90.0,
+                              height: 100.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context).accent2,
+                                shape: BoxShape.rectangle,
+                                border: Border.all(
+                                  color: FlutterFlowTheme.of(context).secondary,
+                                  width: 2.0,
+                                ),
                               ),
-                            ),
-                            child: AuthUserStreamWidget(
-                              builder: (context) => FlutterFlowStaticMap(
-                                location: currentUserDocument!.latLong!,
-                                apiKey:
-                                    'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
-                                style: MapBoxStyle.Streets,
-                                width: 300.0,
-                                height: 300.0,
-                                fit: BoxFit.cover,
-                                borderRadius: BorderRadius.circular(0.0),
-                                markerColor: Color(0xFFFF0412),
-                                zoom: 14,
-                                tilt: 0,
-                                rotation: 0,
+                              child: AuthUserStreamWidget(
+                                builder: (context) => FlutterFlowStaticMap(
+                                  location: currentUserDocument!.latLong!,
+                                  apiKey:
+                                      'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
+                                  style: MapBoxStyle.Streets,
+                                  width: 300.0,
+                                  height: 500.0,
+                                  fit: BoxFit.cover,
+                                  borderRadius: BorderRadius.circular(0.0),
+                                  markerColor: Color(0xFFFF0412),
+                                  zoom: 14,
+                                  tilt: 0,
+                                  rotation: 0,
+                                ),
                               ),
                             ),
                           ),
@@ -345,8 +347,13 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                 AuthUserStreamWidget(
                                   builder: (context) => Text(
                                     currentPhoneNumber,
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Urbanist',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                        ),
                                   ),
                                 ),
                                 AuthUserStreamWidget(
@@ -363,9 +370,17 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             currentUserDocument
                                                 ?.bankAccountNumber,
                                             '')
-                                        .maybeHandleOverflow(maxChars: 4),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                        .maybeHandleOverflow(
+                                      maxChars: 4,
+                                      replacement: '…',
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Urbanist',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                        ),
                                   ),
                                 ),
                               ],
