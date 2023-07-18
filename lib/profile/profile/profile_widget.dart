@@ -336,7 +336,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             ''))
                                   AuthUserStreamWidget(
                                     builder: (context) => Text(
-                                      '${valueOrDefault(currentUserDocument?.nombres, '')}${valueOrDefault(currentUserDocument?.apellidos, '')}',
+                                      '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
                                       style: FlutterFlowTheme.of(context)
                                           .headlineSmall,
                                     ),
