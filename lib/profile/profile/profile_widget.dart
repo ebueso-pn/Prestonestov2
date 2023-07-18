@@ -319,42 +319,33 @@ class _ProfileWidgetState extends State<ProfileWidget>
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  height: 50.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                  ),
-                                  child: Visibility(
-                                    visible: (valueOrDefault(
-                                                    currentUserDocument
-                                                        ?.nombres,
-                                                    '') !=
-                                                null &&
-                                            valueOrDefault(
-                                                    currentUserDocument
-                                                        ?.nombres,
-                                                    '') !=
-                                                '') &&
-                                        (valueOrDefault(
-                                                    currentUserDocument
-                                                        ?.apellidos,
-                                                    '') !=
-                                                null &&
-                                            valueOrDefault(
-                                                    currentUserDocument
-                                                        ?.apellidos,
-                                                    '') !=
-                                                ''),
-                                    child: AuthUserStreamWidget(
-                                      builder: (context) => AutoSizeText(
-                                        '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
-                                        style: FlutterFlowTheme.of(context)
-                                            .headlineSmall,
-                                      ),
+                                if ((valueOrDefault(
+                                                currentUserDocument?.nombres,
+                                                '') !=
+                                            null &&
+                                        valueOrDefault(
+                                                currentUserDocument?.nombres,
+                                                '') !=
+                                            '') &&
+                                    (valueOrDefault(
+                                                currentUserDocument?.apellidos,
+                                                '') !=
+                                            null &&
+                                        valueOrDefault(
+                                                currentUserDocument?.apellidos,
+                                                '') !=
+                                            ''))
+                                  AuthUserStreamWidget(
+                                    builder: (context) => AutoSizeText(
+                                      '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
+                                      style: FlutterFlowTheme.of(context)
+                                          .headlineSmall
+                                          .override(
+                                            fontFamily: 'Urbanist',
+                                            fontSize: 20.0,
+                                          ),
                                     ),
                                   ),
-                                ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 4.0, 0.0, 0.0),
