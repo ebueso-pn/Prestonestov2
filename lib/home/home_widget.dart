@@ -385,7 +385,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           decimalType: DecimalType.automatic,
                                           currency: 'L. ',
                                         ),
-                                        'L. 0',
+                                        'L. 0.00',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .displaySmall
@@ -577,7 +577,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             decimalType: DecimalType.automatic,
                                             currency: 'L. ',
                                           ),
-                                          '0',
+                                          '0.00 ',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge,
@@ -590,7 +590,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             decimalType: DecimalType.automatic,
                                             currency: 'de L. ',
                                           ),
-                                          'de L. 0',
+                                          'de L. 0.00',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .titleSmall
