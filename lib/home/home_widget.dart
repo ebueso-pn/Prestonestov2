@@ -397,195 +397,37 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 8.0, 16.0, 0.0),
-                          child: Container(
-                            width: double.infinity,
-                            constraints: BoxConstraints(
-                              maxWidth: 500.0,
-                            ),
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4.0,
-                                  color: Color(0x33000000),
-                                  offset: Offset(0.0, 2.0),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 16.0, 12.0, 12.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Balance ',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodySmall
-                                        .override(
-                                          fontFamily: 'Urbanist',
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 4.0, 0.0, 4.0),
-                                    child: Text(
-                                      valueOrDefault<String>(
-                                        formatNumber(
-                                          columnLoansRecord?.monto,
-                                          formatType: FormatType.decimal,
-                                          decimalType: DecimalType.automatic,
-                                          currency: 'L. ',
-                                        ),
-                                        'L. 0',
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .displaySmall
-                                          .override(
-                                            fontFamily: 'Urbanist',
-                                            fontSize: 44.0,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                    ),
-                                  ),
-                                  Text(
-                                    valueOrDefault<String>(
-                                      'Ultimo pago: ${dateTimeFormat(
-                                        'd/M/y',
-                                        columnLoansRecord?.fechaUltimoPago,
-                                        locale: FFLocalizations.of(context)
-                                            .languageCode,
-                                      )}',
-                                      '0',
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .labelMedium,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 12.0, 0.0, 0.0),
-                                    child: FFButtonWidget(
-                                      onPressed: () {
-                                        print('Button pressed ...');
-                                      },
-                                      text: 'Realizar un Pago',
-                                      options: FFButtonOptions(
-                                        width: 230.0,
-                                        height: 40.0,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 0.0),
-                                        iconPadding:
-                                            EdgeInsetsDirectional.fromSTEB(
-                                                0.0, 0.0, 0.0, 0.0),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                              fontFamily: 'Urbanist',
-                                              color: Colors.white,
-                                            ),
-                                        elevation: 2.0,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 12.0, 0.0, 0.0),
-                                    child: FFButtonWidget(
-                                      onPressed: () async {
-                                        context.pushNamed('LoanDocument');
-                                      },
-                                      text: 'Ver Contrato de Prestamo',
-                                      options: FFButtonOptions(
-                                        width: 230.0,
-                                        height: 40.0,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 0.0),
-                                        iconPadding:
-                                            EdgeInsetsDirectional.fromSTEB(
-                                                0.0, 0.0, 0.0, 0.0),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                              fontFamily: 'Urbanist',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                            ),
-                                        elevation: 0.0,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                        Visibility(
+                          visible: (columnLoansRecord != null) == false,
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 8.0, 16.0, 0.0),
+                            child: Container(
+                              width: double.infinity,
+                              constraints: BoxConstraints(
+                                maxWidth: 500.0,
                               ),
-                            ),
-                          ).animateOnPageLoad(
-                              animationsMap['containerOnPageLoadAnimation2']!),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 16.0, 16.0, 16.0),
-                          child: Container(
-                            width: double.infinity,
-                            constraints: BoxConstraints(
-                              maxWidth: 500.0,
-                            ),
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4.0,
-                                  color: Color(0x33000000),
-                                  offset: Offset(0.0, 2.0),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(12.0),
-                              border: Border.all(
+                              decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .primaryBackground,
-                                width: 2.0,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 4.0,
+                                    color: Color(0x33000000),
+                                    offset: Offset(0.0, 2.0),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(12.0),
                               ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 16.0, 12.0, 12.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Mi Prestonesto',
-                                    style:
-                                        FlutterFlowTheme.of(context).titleLarge,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 4.0, 0.0, 4.0),
-                                    child: Text(
-                                      valueOrDefault<String>(
-                                        columnLoansRecord?.reference.id,
-                                        '# ',
-                                      ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 16.0, 12.0, 12.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Balance ',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -593,81 +435,249 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             fontWeight: FontWeight.bold,
                                           ),
                                     ),
-                                  ),
-                                  Text(
-                                    valueOrDefault<String>(
-                                      'Ultimo pago: ${dateTimeFormat(
-                                        'd/M/y',
-                                        columnLoansRecord?.fechaUltimoPago,
-                                        locale: FFLocalizations.of(context)
-                                            .languageCode,
-                                      )}',
-                                      '0',
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .labelMedium,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 12.0, 0.0, 12.0),
-                                    child: LinearPercentIndicator(
-                                      percent: 0.7,
-                                      width: 310.0,
-                                      lineHeight: 16.0,
-                                      animation: true,
-                                      progressColor:
-                                          FlutterFlowTheme.of(context).primary,
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .primaryBackground,
-                                      barRadius: Radius.circular(16.0),
-                                      padding: EdgeInsets.zero,
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Text(
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 4.0, 0.0, 4.0),
+                                      child: Text(
                                         valueOrDefault<String>(
                                           formatNumber(
-                                            columnLoansRecord?.balance,
+                                            columnLoansRecord?.monto,
                                             formatType: FormatType.decimal,
                                             decimalType: DecimalType.automatic,
                                             currency: 'L. ',
                                           ),
-                                          '0 ',
+                                          'L. 0',
                                         ),
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyLarge,
-                                      ),
-                                      Text(
-                                        valueOrDefault<String>(
-                                          formatNumber(
-                                            columnLoansRecord?.monto,
-                                            formatType: FormatType.custom,
-                                            currency: 'de L .',
-                                            format: '####.##',
-                                            locale: '',
-                                          ),
-                                          'de L. 0',
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .titleSmall
+                                            .displaySmall
                                             .override(
                                               fontFamily: 'Urbanist',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
+                                              fontSize: 44.0,
                                               fontWeight: FontWeight.normal,
                                             ),
                                       ),
-                                    ],
-                                  ),
-                                ],
+                                    ),
+                                    if (columnLoansRecord?.fechaUltimoPago !=
+                                        null)
+                                      Text(
+                                        'Ultimo pago: ${dateTimeFormat(
+                                          'd/M/y',
+                                          columnLoansRecord?.fechaUltimoPago,
+                                          locale: FFLocalizations.of(context)
+                                              .languageCode,
+                                        )}',
+                                        style: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                      ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 12.0, 0.0, 0.0),
+                                      child: FFButtonWidget(
+                                        onPressed: () {
+                                          print('Button pressed ...');
+                                        },
+                                        text: 'Realizar un Pago',
+                                        options: FFButtonOptions(
+                                          width: 230.0,
+                                          height: 40.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          textStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .override(
+                                                    fontFamily: 'Urbanist',
+                                                    color: Colors.white,
+                                                  ),
+                                          elevation: 2.0,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 12.0, 0.0, 0.0),
+                                      child: FFButtonWidget(
+                                        onPressed: () async {
+                                          context.pushNamed('LoanDocument');
+                                        },
+                                        text: 'Ver Contrato de Prestamo',
+                                        options: FFButtonOptions(
+                                          width: 230.0,
+                                          height: 40.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBackground,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .titleSmall
+                                              .override(
+                                                fontFamily: 'Urbanist',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                              ),
+                                          elevation: 0.0,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ).animateOnPageLoad(
-                              animationsMap['containerOnPageLoadAnimation3']!),
+                            ).animateOnPageLoad(animationsMap[
+                                'containerOnPageLoadAnimation2']!),
+                          ),
+                        ),
+                        Visibility(
+                          visible: (columnLoansRecord != null) == false,
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 16.0, 16.0, 16.0),
+                            child: Container(
+                              width: double.infinity,
+                              constraints: BoxConstraints(
+                                maxWidth: 500.0,
+                              ),
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 4.0,
+                                    color: Color(0x33000000),
+                                    offset: Offset(0.0, 2.0),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(12.0),
+                                border: Border.all(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  width: 2.0,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 16.0, 12.0, 12.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Mi Prestonesto',
+                                      style: FlutterFlowTheme.of(context)
+                                          .titleLarge,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 4.0, 0.0, 4.0),
+                                      child: Text(
+                                        valueOrDefault<String>(
+                                          columnLoansRecord?.reference.id,
+                                          '# ',
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              fontFamily: 'Urbanist',
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ),
+                                    if (columnLoansRecord?.fechaUltimoPago !=
+                                        null)
+                                      Text(
+                                        'Ultimo pago: ${dateTimeFormat(
+                                          'd/M/y',
+                                          columnLoansRecord?.fechaUltimoPago,
+                                          locale: FFLocalizations.of(context)
+                                              .languageCode,
+                                        )}',
+                                        style: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                      ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 12.0, 0.0, 12.0),
+                                      child: LinearPercentIndicator(
+                                        percent: 0.7,
+                                        width: 310.0,
+                                        lineHeight: 16.0,
+                                        animation: true,
+                                        progressColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryBackground,
+                                        barRadius: Radius.circular(16.0),
+                                        padding: EdgeInsets.zero,
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Text(
+                                          valueOrDefault<String>(
+                                            formatNumber(
+                                              columnLoansRecord?.balance,
+                                              formatType: FormatType.decimal,
+                                              decimalType:
+                                                  DecimalType.automatic,
+                                              currency: 'L. ',
+                                            ),
+                                            '0 ',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyLarge,
+                                        ),
+                                        Text(
+                                          valueOrDefault<String>(
+                                            formatNumber(
+                                              columnLoansRecord?.monto,
+                                              formatType: FormatType.custom,
+                                              currency: 'de L .',
+                                              format: '####.##',
+                                              locale: '',
+                                            ),
+                                            'de L. 0',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .titleSmall
+                                              .override(
+                                                fontFamily: 'Urbanist',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ).animateOnPageLoad(animationsMap[
+                                'containerOnPageLoadAnimation3']!),
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
