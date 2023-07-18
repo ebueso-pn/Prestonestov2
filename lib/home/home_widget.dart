@@ -275,6 +275,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
           top: true,
           child: StreamBuilder<List<LoansRecord>>(
             stream: queryLoansRecord(
+              queryBuilder: (loansRecord) => loansRecord
+                  .where('UserDocReference', isEqualTo: currentUserReference),
               singleRecord: true,
             ),
             builder: (context, snapshot) {
