@@ -654,6 +654,22 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                         return;
                       }
                       if (_model.dropDownValue == null) {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Oops...'),
+                              content: Text('Porfavor elige tu banco'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                         return;
                       }
                       if (_model.cuentaConfirmarController.text !=
