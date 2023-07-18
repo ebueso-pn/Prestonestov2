@@ -337,7 +337,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             ''))
                                   AuthUserStreamWidget(
                                     builder: (context) => AutoSizeText(
-                                      '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
+                                      '${valueOrDefault(currentUserDocument?.nombres, '')}${valueOrDefault(currentUserDocument?.apellidos, '')}',
                                       style: FlutterFlowTheme.of(context)
                                           .headlineSmall
                                           .override(
