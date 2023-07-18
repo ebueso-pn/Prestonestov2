@@ -342,13 +342,13 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                           .headlineSmall
                                           .override(
                                             fontFamily: 'Urbanist',
-                                            fontSize: 18.0,
+                                            fontSize: 16.0,
                                           ),
                                     ),
                                   ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                      0.0, 2.0, 0.0, 0.0),
                                   child: Text(
                                     currentUserEmail,
                                     style: FlutterFlowTheme.of(context)
