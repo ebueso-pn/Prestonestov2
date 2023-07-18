@@ -193,10 +193,6 @@ class _ApplicationLoanCalculatorWidgetState
         }
         List<ApplicationRecord> applicationLoanCalculatorApplicationRecordList =
             snapshot.data!;
-        // Return an empty Container when the item does not exist.
-        if (snapshot.data!.isEmpty) {
-          return Container();
-        }
         final applicationLoanCalculatorApplicationRecord =
             applicationLoanCalculatorApplicationRecordList.isNotEmpty
                 ? applicationLoanCalculatorApplicationRecordList.first
