@@ -361,31 +361,35 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                           visible: (columnLoansRecord != null) != null,
                           child: Align(
                             alignment: AlignmentDirectional(0.0, 0.0),
-                            child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
-                              text: '¡Aplica Hoy!',
-                              options: FFButtonOptions(
-                                width: 374.0,
-                                height: 40.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 0.0, 24.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Urbanist',
-                                      color: Colors.white,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 16.0, 16.0, 16.0),
+                              child: FFButtonWidget(
+                                onPressed: () {
+                                  print('Button pressed ...');
+                                },
+                                text: '¡Aplica Hoy!',
+                                options: FFButtonOptions(
+                                  width: 374.0,
+                                  height: 40.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      24.0, 0.0, 24.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Urbanist',
+                                        color: Colors.white,
+                                      ),
+                                  elevation: 3.0,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
                           ),
@@ -437,7 +441,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           decimalType: DecimalType.automatic,
                                           currency: 'L. ',
                                         ),
-                                        '0',
+                                        'L. 0',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .displaySmall
@@ -575,7 +579,10 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 4.0),
                                     child: Text(
-                                      '#1234567890',
+                                      valueOrDefault<String>(
+                                        columnLoansRecord?.reference.id,
+                                        '# ',
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -625,7 +632,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             decimalType: DecimalType.automatic,
                                             currency: 'L. ',
                                           ),
-                                          '0',
+                                          '0 ',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge,
