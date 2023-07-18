@@ -36,9 +36,12 @@ class ProfileBankAccountModel extends FlutterFlowModel {
   String? Function(BuildContext, String?)? cuentaControllerValidator;
   String? _cuentaControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Field is required';
+      return 'Necesitamos tu numero de cuenta';
     }
 
+    if (val.length < 8) {
+      return 'Requires at least 8 characters.';
+    }
     if (val.length > 12) {
       return 'Maximum 12 characters allowed, currently ${val.length}.';
     }
@@ -54,9 +57,12 @@ class ProfileBankAccountModel extends FlutterFlowModel {
   String? _cuentaConfirmarControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Field is required';
+      return 'Necesitamos tu numero de cuenta';
     }
 
+    if (val.length < 8) {
+      return 'Requires at least 8 characters.';
+    }
     if (val.length > 12) {
       return 'Maximum 12 characters allowed, currently ${val.length}.';
     }

@@ -292,7 +292,7 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                 width: double.infinity,
                 child: Form(
                   key: _model.formKey,
-                  autovalidateMode: AutovalidateMode.disabled,
+                  autovalidateMode: AutovalidateMode.always,
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
@@ -649,6 +649,13 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 48.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
+                      if (_model.formKey.currentState == null ||
+                          !_model.formKey.currentState!.validate()) {
+                        return;
+                      }
+                      if (_model.dropDownValue == null) {
+                        return;
+                      }
                       if (_model.cuentaConfirmarController.text !=
                           _model.cuentaController.text) {
                         await showDialog(
@@ -679,7 +686,7 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
 
                       context.pushNamed('Profile');
                     },
-                    text: 'Guardar',
+                    text: 'Guardar y regresar',
                     options: FFButtonOptions(
                       width: 230.0,
                       height: 50.0,
