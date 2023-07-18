@@ -199,7 +199,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                   flexibleSpace: FlexibleSpaceBar(
                     title: Column(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
