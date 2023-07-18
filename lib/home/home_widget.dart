@@ -275,8 +275,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
           top: true,
           child: StreamBuilder<List<LoansRecord>>(
             stream: queryLoansRecord(
-              queryBuilder: (loansRecord) =>
-                  loansRecord.orderBy('FechaFirma', descending: true),
+              queryBuilder: (loansRecord) => loansRecord
+                  .where('UserDocReference', isEqualTo: currentUserReference)
+                  .orderBy('FechaFirma', descending: true),
               singleRecord: true,
             ),
             builder: (context, snapshot) {
@@ -304,44 +305,48 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 0.0, 0.0),
-                            child: AuthUserStreamWidget(
-                              builder: (context) => Text(
-                                valueOrDefault(
-                                    currentUserDocument?.nombres, ''),
-                                style:
-                                    FlutterFlowTheme.of(context).headlineLarge,
-                              ).animateOnPageLoad(
-                                  animationsMap['textOnPageLoadAnimation']!),
-                            ),
+                    if (valueOrDefault(currentUserDocument?.nombres, '') !=
+                            null &&
+                        valueOrDefault(currentUserDocument?.nombres, '') != '')
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 16.0, 16.0, 0.0),
+                        child: AuthUserStreamWidget(
+                          builder: (context) => Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  valueOrDefault(
+                                      currentUserDocument?.nombres, ''),
+                                  style: FlutterFlowTheme.of(context)
+                                      .headlineLarge,
+                                ).animateOnPageLoad(
+                                    animationsMap['textOnPageLoadAnimation']!),
+                              ),
+                              Container(
+                                width: 70.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: Icon(
+                                  Icons.credit_card,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 36.0,
+                                ),
+                              ).animateOnPageLoad(animationsMap[
+                                  'containerOnPageLoadAnimation1']!),
+                            ],
                           ),
-                          Container(
-                            width: 70.0,
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: Icon(
-                              Icons.credit_card,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 36.0,
-                            ),
-                          ).animateOnPageLoad(
-                              animationsMap['containerOnPageLoadAnimation1']!),
-                        ],
+                        ),
                       ),
-                    ),
                     Wrap(
                       spacing: 0.0,
                       runSpacing: 0.0,
@@ -352,6 +357,39 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                       verticalDirection: VerticalDirection.down,
                       clipBehavior: Clip.none,
                       children: [
+                        Visibility(
+                          visible: (columnLoansRecord != null) != null,
+                          child: Align(
+                            alignment: AlignmentDirectional(0.0, 0.0),
+                            child: FFButtonWidget(
+                              onPressed: () {
+                                print('Button pressed ...');
+                              },
+                              text: '¡Aplica Hoy!',
+                              options: FFButtonOptions(
+                                width: 374.0,
+                                height: 40.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    24.0, 0.0, 24.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).primary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      color: Colors.white,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 8.0, 16.0, 0.0),
@@ -392,7 +430,15 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 4.0),
                                     child: Text(
-                                      'L. 1,943.71',
+                                      valueOrDefault<String>(
+                                        formatNumber(
+                                          columnLoansRecord?.monto,
+                                          formatType: FormatType.decimal,
+                                          decimalType: DecimalType.automatic,
+                                          currency: 'L. ',
+                                        ),
+                                        '0',
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .displaySmall
                                           .override(
@@ -403,7 +449,15 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Text(
-                                    'Ultimo Pago: 8 de Junio, 2024',
+                                    valueOrDefault<String>(
+                                      'Ultimo pago: ${dateTimeFormat(
+                                        'd/M/y',
+                                        columnLoansRecord?.fechaUltimoPago,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      )}',
+                                      '0',
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                   ),
@@ -531,7 +585,15 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Text(
-                                    'Ultimo Pago: 8 de Junio, 2024',
+                                    valueOrDefault<String>(
+                                      'Ultimo pago: ${dateTimeFormat(
+                                        'd/M/y',
+                                        columnLoansRecord?.fechaUltimoPago,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      )}',
+                                      '0',
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                   ),
@@ -556,12 +618,29 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Text(
-                                        'L. 3,556.29',
+                                        valueOrDefault<String>(
+                                          formatNumber(
+                                            columnLoansRecord?.balance,
+                                            formatType: FormatType.decimal,
+                                            decimalType: DecimalType.automatic,
+                                            currency: 'L. ',
+                                          ),
+                                          '0',
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge,
                                       ),
                                       Text(
-                                        ' de L. 5,500.00',
+                                        valueOrDefault<String>(
+                                          formatNumber(
+                                            columnLoansRecord?.monto,
+                                            formatType: FormatType.custom,
+                                            currency: 'de L .',
+                                            format: '####.##',
+                                            locale: '',
+                                          ),
+                                          'de L. 0',
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(

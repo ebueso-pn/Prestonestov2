@@ -76,6 +76,11 @@ class LoansRecord extends FirestoreRecord {
   String get status => _status ?? '';
   bool hasStatus() => _status != null;
 
+  // "Balance" field.
+  double? _balance;
+  double get balance => _balance ?? 0.0;
+  bool hasBalance() => _balance != null;
+
   void _initializeFields() {
     _applicationDocReference =
         snapshotData['ApplicationDocReference'] as DocumentReference?;
@@ -90,6 +95,7 @@ class LoansRecord extends FirestoreRecord {
     _fechaPrimerPago = snapshotData['fecha_primer_pago'] as DateTime?;
     _fechaCreado = snapshotData['FechaCreado'] as DateTime?;
     _status = snapshotData['status'] as String?;
+    _balance = castToType<double>(snapshotData['Balance']);
   }
 
   static CollectionReference get collection =>
@@ -138,6 +144,7 @@ Map<String, dynamic> createLoansRecordData({
   DateTime? fechaPrimerPago,
   DateTime? fechaCreado,
   String? status,
+  double? balance,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -153,6 +160,7 @@ Map<String, dynamic> createLoansRecordData({
       'fecha_primer_pago': fechaPrimerPago,
       'FechaCreado': fechaCreado,
       'status': status,
+      'Balance': balance,
     }.withoutNulls,
   );
 
@@ -175,7 +183,8 @@ class LoansRecordDocumentEquality implements Equality<LoansRecord> {
         e1?.fechaUltimoPago == e2?.fechaUltimoPago &&
         e1?.fechaPrimerPago == e2?.fechaPrimerPago &&
         e1?.fechaCreado == e2?.fechaCreado &&
-        e1?.status == e2?.status;
+        e1?.status == e2?.status &&
+        e1?.balance == e2?.balance;
   }
 
   @override
@@ -191,7 +200,8 @@ class LoansRecordDocumentEquality implements Equality<LoansRecord> {
         e?.fechaUltimoPago,
         e?.fechaPrimerPago,
         e?.fechaCreado,
-        e?.status
+        e?.status,
+        e?.balance
       ]);
 
   @override
