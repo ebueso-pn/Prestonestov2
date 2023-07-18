@@ -127,7 +127,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
       effects: [
         MoveEffect(
           curve: Curves.easeInOut,
-          delay: 0.ms,
+          delay: 50.ms,
           duration: 600.ms,
           begin: Offset(100.0, 0.0),
           end: Offset(0.0, 0.0),
@@ -146,7 +146,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
       effects: [
         MoveEffect(
           curve: Curves.easeInOut,
-          delay: 25.ms,
+          delay: 0.ms,
           duration: 600.ms,
           begin: Offset(100.0, 0.0),
           end: Offset(0.0, 0.0),
@@ -165,7 +165,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
       effects: [
         MoveEffect(
           curve: Curves.easeInOut,
-          delay: 50.ms,
+          delay: 25.ms,
           duration: 600.ms,
           begin: Offset(100.0, 0.0),
           end: Offset(0.0, 0.0),
@@ -417,7 +417,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
                   child: Text(
-                    'Account',
+                    'Cuenta',
                     style: FlutterFlowTheme.of(context).labelLarge,
                   ),
                 ),
@@ -678,6 +678,63 @@ class _ProfileWidgetState extends State<ProfileWidget>
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
+                    onTap: () async {},
+                    child: Container(
+                      width: double.infinity,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            color: Color(0x3416202A),
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(12.0),
+                        shape: BoxShape.rectangle,
+                      ),
+                      child: Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.ios_share,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 24.0,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  'Invita a tus Aleros',
+                                  style: FlutterFlowTheme.of(context).bodyLarge,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 18.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation6']!),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
                     onTap: () async {
                       context.pushNamed('Help');
                     },
@@ -731,7 +788,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                       ),
                     ),
                   ).animateOnPageLoad(
-                      animationsMap['containerOnPageLoadAnimation6']!),
+                      animationsMap['containerOnPageLoadAnimation7']!),
                 ),
                 Padding(
                   padding:
@@ -781,63 +838,6 @@ class _ProfileWidgetState extends State<ProfileWidget>
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                  ).animateOnPageLoad(
-                      animationsMap['containerOnPageLoadAnimation7']!),
-                ),
-                Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {},
-                    child: Container(
-                      width: double.infinity,
-                      height: 60.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 5.0,
-                            color: Color(0x3416202A),
-                            offset: Offset(0.0, 2.0),
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(12.0),
-                        shape: BoxShape.rectangle,
-                      ),
-                      child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Icon(
-                              Icons.ios_share,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              size: 24.0,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  'Invita a tus Aleros',
-                                  style: FlutterFlowTheme.of(context).bodyLarge,
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              size: 18.0,
-                            ),
-                          ],
-                        ),
                       ),
                     ),
                   ).animateOnPageLoad(

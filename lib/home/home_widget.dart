@@ -291,7 +291,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                         valueOrDefault(currentUserDocument?.nombres, '') != '')
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 16.0, 16.0, 0.0),
+                            16.0, 8.0, 16.0, 0.0),
                         child: AuthUserStreamWidget(
                           builder: (context) => Row(
                             mainAxisSize: MainAxisSize.max,
@@ -399,15 +399,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                   if (columnLoansRecord?.fechaUltimoPago !=
                                       null)
                                     Text(
-                                      valueOrDefault<String>(
-                                        'Ultimo pago: ${dateTimeFormat(
-                                          'd/M/y',
-                                          columnLoansRecord?.fechaUltimoPago,
-                                          locale: FFLocalizations.of(context)
-                                              .languageCode,
-                                        )}',
-                                        '0',
-                                      ),
+                                      'Proximo Pago: 30 de Junio, 2023',
                                       style: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                     ),
