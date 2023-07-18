@@ -672,6 +672,27 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                         );
                         return;
                       }
+                      if (!(_model.choiceChipsValue != null &&
+                          _model.choiceChipsValue != '')) {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Oops'),
+                              content:
+                                  Text('Porfavor elige el tipo de tu cuenta'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        return;
+                      }
                       if (_model.cuentaConfirmarController.text !=
                           _model.cuentaController.text) {
                         await showDialog(
