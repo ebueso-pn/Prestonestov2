@@ -319,29 +319,41 @@ class _ProfileWidgetState extends State<ProfileWidget>
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                if ((valueOrDefault(
-                                                currentUserDocument?.nombres,
-                                                '') !=
-                                            null &&
-                                        valueOrDefault(
-                                                currentUserDocument?.nombres,
-                                                '') !=
-                                            '') &&
-                                    (valueOrDefault(
-                                                currentUserDocument?.apellidos,
-                                                '') !=
-                                            null &&
-                                        valueOrDefault(
-                                                currentUserDocument?.apellidos,
-                                                '') !=
-                                            ''))
-                                  AuthUserStreamWidget(
-                                    builder: (context) => AutoSizeText(
-                                      '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
-                                      style: FlutterFlowTheme.of(context)
-                                          .headlineSmall,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                  ),
+                                  child: Visibility(
+                                    visible: (valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.nombres,
+                                                    '') !=
+                                                null &&
+                                            valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.nombres,
+                                                    '') !=
+                                                '') &&
+                                        (valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.apellidos,
+                                                    '') !=
+                                                null &&
+                                            valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.apellidos,
+                                                    '') !=
+                                                ''),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => AutoSizeText(
+                                        '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
+                                        style: FlutterFlowTheme.of(context)
+                                            .headlineSmall,
+                                      ),
                                     ),
                                   ),
+                                ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 4.0, 0.0, 0.0),
