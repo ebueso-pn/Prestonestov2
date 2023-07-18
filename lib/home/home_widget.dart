@@ -399,12 +399,15 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                   if (columnLoansRecord?.fechaUltimoPago !=
                                       null)
                                     Text(
-                                      'Ultimo pago: ${dateTimeFormat(
-                                        'd/M/y',
-                                        columnLoansRecord?.fechaUltimoPago,
-                                        locale: FFLocalizations.of(context)
-                                            .languageCode,
-                                      )}',
+                                      valueOrDefault<String>(
+                                        'Ultimo pago: ${dateTimeFormat(
+                                          'd/M/y',
+                                          columnLoansRecord?.fechaUltimoPago,
+                                          locale: FFLocalizations.of(context)
+                                              .languageCode,
+                                        )}',
+                                        '0',
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                     ),
@@ -567,11 +570,14 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Text(
-                                        formatNumber(
-                                          columnLoansRecord!.balance,
-                                          formatType: FormatType.decimal,
-                                          decimalType: DecimalType.automatic,
-                                          currency: 'L. ',
+                                        valueOrDefault<String>(
+                                          formatNumber(
+                                            columnLoansRecord?.balance,
+                                            formatType: FormatType.decimal,
+                                            decimalType: DecimalType.automatic,
+                                            currency: 'L. ',
+                                          ),
+                                          '0',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge,
