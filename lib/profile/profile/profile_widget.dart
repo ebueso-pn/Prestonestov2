@@ -1,10 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_static_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/lat_lng.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mapbox_search/mapbox_search.dart';
 import 'package:provider/provider.dart';
@@ -19,10 +22,185 @@ class ProfileWidget extends StatefulWidget {
   _ProfileWidgetState createState() => _ProfileWidgetState();
 }
 
-class _ProfileWidgetState extends State<ProfileWidget> {
+class _ProfileWidgetState extends State<ProfileWidget>
+    with TickerProviderStateMixin {
   late ProfileModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = {
+    'containerOnPageLoadAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0.0, -50.0),
+          end: Offset(0.0, 0.0),
+        ),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(-100.0, 0.0),
+          end: Offset(0.0, 0.0),
+        ),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation3': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 25.ms,
+          duration: 600.ms,
+          begin: Offset(-100.0, 0.0),
+          end: Offset(0.0, 0.0),
+        ),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation4': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 50.ms,
+          duration: 600.ms,
+          begin: Offset(-100.0, 0.0),
+          end: Offset(0.0, 0.0),
+        ),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation5': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 75.ms,
+          duration: 600.ms,
+          begin: Offset(-100.0, 0.0),
+          end: Offset(0.0, 0.0),
+        ),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation6': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(100.0, 0.0),
+          end: Offset(0.0, 0.0),
+        ),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation7': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 25.ms,
+          duration: 600.ms,
+          begin: Offset(100.0, 0.0),
+          end: Offset(0.0, 0.0),
+        ),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation8': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 50.ms,
+          duration: 600.ms,
+          begin: Offset(100.0, 0.0),
+          end: Offset(0.0, 0.0),
+        ),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation9': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 75.ms,
+          duration: 600.ms,
+          begin: Offset(100.0, 0.0),
+          end: Offset(0.0, 0.0),
+        ),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+  };
 
   @override
   void initState() {
@@ -186,7 +364,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ],
                       ),
                     ),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation1']!),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
@@ -255,7 +434,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ),
                       ),
                     ),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation2']!),
                 ),
                 Padding(
                   padding:
@@ -317,7 +497,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ),
                       ),
                     ),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation3']!),
                 ),
                 Padding(
                   padding:
@@ -369,7 +550,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ],
                       ),
                     ),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation4']!),
                 ),
                 Padding(
                   padding:
@@ -431,7 +613,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ),
                       ),
                     ),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation5']!),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
@@ -500,7 +683,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ),
                       ),
                     ),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation6']!),
                 ),
                 Padding(
                   padding:
@@ -552,7 +736,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ],
                       ),
                     ),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation7']!),
                 ),
                 Builder(
                   builder: (context) => Padding(
@@ -618,7 +803,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           ),
                         ),
                       ),
-                    ),
+                    ).animateOnPageLoad(
+                        animationsMap['containerOnPageLoadAnimation8']!),
                   ),
                 ),
                 Padding(
@@ -704,7 +890,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ),
                       ),
                     ),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation9']!),
                 ),
               ],
             ),
