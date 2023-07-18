@@ -305,47 +305,51 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 0.0, 0.0),
-                            child: AuthUserStreamWidget(
-                              builder: (context) => Text(
-                                valueOrDefault<String>(
-                                  valueOrDefault(
-                                      currentUserDocument?.nombres, ''),
-                                  'Aquí va tu Nombre',
+                    if (valueOrDefault(currentUserDocument?.nombres, '') !=
+                            null &&
+                        valueOrDefault(currentUserDocument?.nombres, '') != '')
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 16.0, 16.0, 0.0),
+                        child: AuthUserStreamWidget(
+                          builder: (context) => Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  valueOrDefault<String>(
+                                    valueOrDefault(
+                                        currentUserDocument?.nombres, ''),
+                                    'Aquí va tu Nombre',
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .headlineLarge,
+                                ).animateOnPageLoad(
+                                    animationsMap['textOnPageLoadAnimation']!),
+                              ),
+                              Container(
+                                width: 70.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  borderRadius: BorderRadius.circular(12.0),
                                 ),
-                                style:
-                                    FlutterFlowTheme.of(context).headlineLarge,
-                              ).animateOnPageLoad(
-                                  animationsMap['textOnPageLoadAnimation']!),
-                            ),
+                                child: Icon(
+                                  Icons.credit_card,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 36.0,
+                                ),
+                              ).animateOnPageLoad(animationsMap[
+                                  'containerOnPageLoadAnimation1']!),
+                            ],
                           ),
-                          Container(
-                            width: 70.0,
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: Icon(
-                              Icons.credit_card,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 36.0,
-                            ),
-                          ).animateOnPageLoad(
-                              animationsMap['containerOnPageLoadAnimation1']!),
-                        ],
+                        ),
                       ),
-                    ),
                     Wrap(
                       spacing: 0.0,
                       runSpacing: 0.0,
@@ -440,7 +444,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           decimalType: DecimalType.automatic,
                                           currency: 'L. ',
                                         ),
-                                        'Aqui va tu Balance',
+                                        'L. 0',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .displaySmall
@@ -459,7 +463,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         locale: FFLocalizations.of(context)
                                             .languageCode,
                                       )}',
-                                      'Aqui va la fecha de tu ultima cuota',
+                                      '0',
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
@@ -580,7 +584,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     child: Text(
                                       valueOrDefault<String>(
                                         columnLoansRecord?.reference.id,
-                                        'Aqui va el numero de tu Prestamo',
+                                        '# ',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
@@ -598,7 +602,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         locale: FFLocalizations.of(context)
                                             .languageCode,
                                       )}',
-                                      'Aqui va la fecha de tu ultima cuota',
+                                      '0',
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
@@ -631,7 +635,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             decimalType: DecimalType.automatic,
                                             currency: 'L. ',
                                           ),
-                                          'Aqui va tu balance',
+                                          '0 ',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge,
@@ -645,7 +649,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             format: '####.##',
                                             locale: '',
                                           ),
-                                          'Aqui va el monto de tu prestamo',
+                                          'de L. 0',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .titleSmall
