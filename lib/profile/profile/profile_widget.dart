@@ -357,6 +357,17 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                         .labelMedium,
                                   ),
                                 ),
+                                AuthUserStreamWidget(
+                                  builder: (context) => Text(
+                                    valueOrDefault(
+                                            currentUserDocument
+                                                ?.bankAccountNumber,
+                                            '')
+                                        .maybeHandleOverflow(maxChars: 4),
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyMedium,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
