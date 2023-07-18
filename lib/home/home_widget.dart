@@ -398,7 +398,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                           ),
                         ),
                         Visibility(
-                          visible: (columnLoansRecord != null) != null,
+                          visible: (columnLoansRecord != null) == false,
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 16.0, 8.0, 16.0, 0.0),
