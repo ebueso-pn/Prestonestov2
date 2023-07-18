@@ -290,7 +290,10 @@ class _ProfileWidgetState extends State<ProfileWidget>
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          if (currentUserDocument?.latLong != null)
+                          if (valueOrDefault<bool>(
+                            currentUserDocument?.latLong != null,
+                            true,
+                          ))
                             Flexible(
                               child: AuthUserStreamWidget(
                                 builder: (context) => Container(
