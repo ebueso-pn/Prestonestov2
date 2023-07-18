@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_pdf_viewer.dart';
@@ -42,6 +43,8 @@ class _LoanDocumentWidgetState extends State<LoanDocumentWidget> {
 
     return StreamBuilder<List<DocumentsRecord>>(
       stream: queryDocumentsRecord(
+        queryBuilder: (documentsRecord) => documentsRecord
+            .where('UserDocReference', isEqualTo: currentUserReference),
         singleRecord: true,
       ),
       builder: (context, snapshot) {
