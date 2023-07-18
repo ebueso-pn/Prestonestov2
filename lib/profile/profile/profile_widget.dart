@@ -270,128 +270,123 @@ class _ProfileWidgetState extends State<ProfileWidget>
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 3.0,
-                          color: Color(0x33000000),
-                          offset: Offset(0.0, 1.0),
-                        )
-                      ],
-                    ),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 16.0, 16.0, 16.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Flexible(
-                            child: Container(
-                              width: 90.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).accent2,
-                                shape: BoxShape.rectangle,
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context).secondary,
-                                  width: 2.0,
-                                ),
-                              ),
-                              child: AuthUserStreamWidget(
-                                builder: (context) => FlutterFlowStaticMap(
-                                  location: currentUserDocument!.latLong!,
-                                  apiKey:
-                                      'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
-                                  style: MapBoxStyle.Streets,
-                                  width: 300.0,
-                                  height: 500.0,
-                                  fit: BoxFit.cover,
-                                  borderRadius: BorderRadius.circular(0.0),
-                                  markerColor: Color(0xFFFF0412),
-                                  zoom: 14,
-                                  tilt: 0,
-                                  rotation: 0,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 0.0, 0.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AuthUserStreamWidget(
-                                  builder: (context) => Text(
-                                    '${valueOrDefault(currentUserDocument?.nombres, '')}${valueOrDefault(currentUserDocument?.apellidos, '')}',
-                                    style: FlutterFlowTheme.of(context)
-                                        .headlineSmall,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
-                                  child: Text(
-                                    currentUserEmail,
-                                    style: FlutterFlowTheme.of(context)
-                                        .labelMedium,
-                                  ),
-                                ),
-                                AuthUserStreamWidget(
-                                  builder: (context) => Text(
-                                    currentPhoneNumber,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Urbanist',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                        ),
-                                  ),
-                                ),
-                                AuthUserStreamWidget(
-                                  builder: (context) => Text(
-                                    valueOrDefault(
-                                        currentUserDocument?.dni, ''),
-                                    style: FlutterFlowTheme.of(context)
-                                        .labelMedium,
-                                  ),
-                                ),
-                                AuthUserStreamWidget(
-                                  builder: (context) => Text(
-                                    valueOrDefault(
-                                            currentUserDocument
-                                                ?.bankAccountNumber,
-                                            '')
-                                        .maybeHandleOverflow(
-                                      maxChars: 4,
-                                      replacement: '…',
+                if (currentUserDocument?.latLong != null)
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
+                    child: AuthUserStreamWidget(
+                      builder: (context) => Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 3.0,
+                              color: Color(0x33000000),
+                              offset: Offset(0.0, 1.0),
+                            )
+                          ],
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 16.0, 16.0, 16.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Flexible(
+                                child: Container(
+                                  width: 90.0,
+                                  height: 100.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context).accent2,
+                                    shape: BoxShape.rectangle,
+                                    border: Border.all(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondary,
+                                      width: 2.0,
                                     ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Urbanist',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                        ),
+                                  ),
+                                  child: FlutterFlowStaticMap(
+                                    location: currentUserDocument!.latLong!,
+                                    apiKey:
+                                        'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
+                                    style: MapBoxStyle.Streets,
+                                    width: 300.0,
+                                    height: 500.0,
+                                    fit: BoxFit.cover,
+                                    borderRadius: BorderRadius.circular(0.0),
+                                    markerColor: Color(0xFFFF0412),
+                                    zoom: 14,
+                                    tilt: 0,
+                                    rotation: 0,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 0.0, 0.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${valueOrDefault(currentUserDocument?.nombres, '')}${valueOrDefault(currentUserDocument?.apellidos, '')}',
+                                      style: FlutterFlowTheme.of(context)
+                                          .headlineSmall,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 4.0, 0.0, 0.0),
+                                      child: Text(
+                                        currentUserEmail,
+                                        style: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                      ),
+                                    ),
+                                    Text(
+                                      currentPhoneNumber,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Urbanist',
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                          ),
+                                    ),
+                                    Text(
+                                      valueOrDefault(
+                                          currentUserDocument?.dni, ''),
+                                      style: FlutterFlowTheme.of(context)
+                                          .labelMedium,
+                                    ),
+                                    Text(
+                                      valueOrDefault(
+                                              currentUserDocument
+                                                  ?.bankAccountNumber,
+                                              '')
+                                          .maybeHandleOverflow(
+                                        maxChars: 4,
+                                        replacement: '…',
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Urbanist',
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ).animateOnPageLoad(
+                          animationsMap['containerOnPageLoadAnimation1']!),
                     ),
-                  ).animateOnPageLoad(
-                      animationsMap['containerOnPageLoadAnimation1']!),
-                ),
+                  ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
                   child: Text(
