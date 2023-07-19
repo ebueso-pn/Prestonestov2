@@ -92,7 +92,7 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 0.0, 0.0),
+                              20.0, 0.0, 0.0, 0.0),
                           child: Text(
                             'Aplicación',
                             style: FlutterFlowTheme.of(context)
@@ -156,8 +156,7 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                               width: 16.0,
                               height: 16.0,
                               decoration: BoxDecoration(
-                                color:
-                                    FlutterFlowTheme.of(context).customColor1,
+                                color: FlutterFlowTheme.of(context).primary,
                                 shape: BoxShape.circle,
                               ),
                               child: Icon(
@@ -171,8 +170,7 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                               width: 2.0,
                               height: 50.0,
                               decoration: BoxDecoration(
-                                color:
-                                    FlutterFlowTheme.of(context).customColor1,
+                                color: FlutterFlowTheme.of(context).primary,
                               ),
                             ),
                           ],
