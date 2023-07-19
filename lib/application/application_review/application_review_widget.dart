@@ -161,7 +161,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                               final progressBarApplicationRecord =
                                   snapshot.data!;
                               return LinearPercentIndicator(
-                                percent: progressBarApplicationRecord.index / 6,
+                                percent: progressBarApplicationRecord.index / 5,
                                 lineHeight: 7.0,
                                 animation: true,
                                 progressColor:
@@ -398,7 +398,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                     contentApplicationRecord.monto,
                                     formatType: FormatType.decimal,
                                     decimalType: DecimalType.automatic,
-                                    currency: 'L. ',
+                                    currency: 'L ',
                                   ),
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
@@ -498,7 +498,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                         2,
                                     formatType: FormatType.custom,
                                     currency: 'L ',
-                                    format: '####.#',
+                                    format: '#,###.#',
                                     locale: '',
                                   ),
                                   style: FlutterFlowTheme.of(context)

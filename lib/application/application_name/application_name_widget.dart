@@ -223,7 +223,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           }
                           final progressBarApplicationRecord = snapshot.data!;
                           return LinearPercentIndicator(
-                            percent: progressBarApplicationRecord.index / 6,
+                            percent: progressBarApplicationRecord.index / 5,
                             lineHeight: 7.0,
                             animation: true,
                             progressColor: FlutterFlowTheme.of(context).primary,
