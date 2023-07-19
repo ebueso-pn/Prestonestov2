@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_address_model.dart';
 export 'application_address_model.dart';
@@ -35,25 +36,6 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = {
-    'rowOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(-60.0, 0.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
     'columnOnPageLoadAnimation': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
@@ -69,6 +51,25 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
           delay: 0.ms,
           duration: 600.ms,
           begin: Offset(0.0, 60.0),
+          end: Offset(0.0, 0.0),
+        ),
+      ],
+    ),
+    'rowOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(-60.0, 0.0),
           end: Offset(0.0, 0.0),
         ),
       ],
@@ -198,26 +199,71 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 16.0),
-                    child: Text(
-                      'Necesitamos tu dirección para validar tu identidad. ',
-                      textAlign: TextAlign.start,
-                      style: FlutterFlowTheme.of(context).bodyLarge,
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: AlignmentDirectional(0.0, -1.0),
+                        child: StreamBuilder<ApplicationRecord>(
+                          stream: ApplicationRecord.getDocument(
+                              widget.applicationRecieve!),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Color(0xFF2AAF7A),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                            final progressBarApplicationRecord = snapshot.data!;
+                            return LinearPercentIndicator(
+                              percent: progressBarApplicationRecord.index / 7,
+                              lineHeight: 7.0,
+                              animation: true,
+                              progressColor:
+                                  FlutterFlowTheme.of(context).primary,
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
+                              padding: EdgeInsets.zero,
+                            );
+                          },
+                        ),
+                      ),
                     ),
-                  ),
-                ],
-              ).animateOnPageLoad(animationsMap['rowOnPageLoadAnimation']!),
+                  ],
+                ),
+              ),
               Form(
                 key: _model.formKey,
                 autovalidateMode: AutovalidateMode.disabled,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 16.0, 0.0, 16.0),
+                          child: Text(
+                            'Necesitamos tu dirección para validar tu identidad. ',
+                            textAlign: TextAlign.start,
+                            style: FlutterFlowTheme.of(context).bodyLarge,
+                          ),
+                        ),
+                      ],
+                    ).animateOnPageLoad(
+                        animationsMap['rowOnPageLoadAnimation']!),
                     Align(
                       alignment: AlignmentDirectional(0.0, 0.0),
                       child: Padding(
@@ -552,6 +598,10 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                       colonia: _model.addressFieldColoniaController.text,
                       ciudad: _model.addressFieldCiudadController.text,
                     ));
+
+                    await widget.applicationRecieve!.update({
+                      'index': FieldValue.increment(1),
+                    });
 
                     context.pushNamed(
                       'Application_Map',

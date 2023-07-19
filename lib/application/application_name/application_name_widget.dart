@@ -12,6 +12,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_name_model.dart';
 export 'application_name_model.dart';
@@ -135,7 +136,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                   flexibleSpace: FlexibleSpaceBar(
                     title: Column(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
@@ -190,8 +191,49 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: StreamBuilder<ApplicationRecord>(
+                        stream: ApplicationRecord.getDocument(
+                            widget.applicationRecieve!),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50.0,
+                                height: 50.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Color(0xFF2AAF7A),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                          final progressBarApplicationRecord = snapshot.data!;
+                          return LinearPercentIndicator(
+                            percent: progressBarApplicationRecord.index / 7,
+                            lineHeight: 7.0,
+                            animation: true,
+                            progressColor: FlutterFlowTheme.of(context).primary,
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).primaryBtnText,
+                            padding: EdgeInsets.zero,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -507,6 +549,10 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                         apellidos: _model.apellidosController.text,
                         dni: _model.dniController.text,
                       ));
+
+                      await widget.applicationRecieve!.update({
+                        'index': FieldValue.increment(1),
+                      });
 
                       context.pushNamed(
                         'Application_DNI_Validation',

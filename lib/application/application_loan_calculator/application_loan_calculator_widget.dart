@@ -624,6 +624,7 @@ class _ApplicationLoanCalculatorWidgetState
                                   _model.loanAmtValue!,
                                   .033,
                                   _model.loanTermValue!),
+                              index: 1,
                             ),
                             'date_applied': FieldValue.serverTimestamp(),
                           });
@@ -636,6 +637,7 @@ class _ApplicationLoanCalculatorWidgetState
                                   _model.loanAmtValue!,
                                   .033,
                                   _model.loanTermValue!),
+                              index: 1,
                             ),
                             'date_applied': DateTime.now(),
                           }, applicationRecordReference);

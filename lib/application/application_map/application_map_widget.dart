@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_map_model.dart';
 export 'application_map_model.dart';
@@ -189,6 +190,58 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                               size: 40.0,
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 4.0, 16.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Align(
+                                    alignment: AlignmentDirectional(0.0, -1.0),
+                                    child: StreamBuilder<ApplicationRecord>(
+                                      stream: ApplicationRecord.getDocument(
+                                          widget.applicationRecieve!),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 50.0,
+                                              height: 50.0,
+                                              child: CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(
+                                                  Color(0xFF2AAF7A),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        final progressBarApplicationRecord =
+                                            snapshot.data!;
+                                        return LinearPercentIndicator(
+                                          percent: progressBarApplicationRecord
+                                                  .index /
+                                              7,
+                                          lineHeight: 7.0,
+                                          animation: true,
+                                          progressColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryBtnText,
+                                          padding: EdgeInsets.zero,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -218,6 +271,10 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                             .update(createUsersRecordData(
                           latLong: _model.googleMapsCenter,
                         ));
+
+                        await widget.applicationRecieve!.update({
+                          'index': FieldValue.increment(1),
+                        });
 
                         context.pushNamed(
                           'Application_Review',
