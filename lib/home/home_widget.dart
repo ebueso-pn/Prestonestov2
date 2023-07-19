@@ -399,7 +399,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                   if (columnLoansRecord?.fechaUltimoPago !=
                                       null)
                                     Text(
-                                      'Primer Pago${dateTimeFormat(
+                                      'Primer Pago: ${dateTimeFormat(
                                         'd/M/y',
                                         columnLoansRecord?.fechaUltimoPago,
                                         locale: FFLocalizations.of(context)
