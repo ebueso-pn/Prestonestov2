@@ -182,7 +182,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                             }),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.0, -0.05),
+                            alignment: AlignmentDirectional(0.0, -0.06),
                             child: Icon(
                               Icons.location_pin,
                               color: Color(0xFFFF0412),
