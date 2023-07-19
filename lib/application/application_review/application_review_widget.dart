@@ -471,7 +471,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 12.0),
+                                  0.0, 0.0, 0.0, 8.0),
                               child: Text(
                                 'Dirección',
                                 style: FlutterFlowTheme.of(context).labelLarge,
@@ -512,7 +512,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 12.0),
+                                  0.0, 0.0, 0.0, 8.0),
                               child: Text(
                                 'Autorización',
                                 style: FlutterFlowTheme.of(context).labelLarge,
