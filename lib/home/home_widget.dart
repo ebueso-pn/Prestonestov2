@@ -574,7 +574,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               fontWeight: FontWeight.normal,
                                             ),
                                       ),
-                                    ],
+                                    ].divide(SizedBox(width: 2.0)),
                                   ),
                                 ],
                               ),
