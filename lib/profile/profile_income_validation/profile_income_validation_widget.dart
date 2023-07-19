@@ -532,45 +532,41 @@ class _ProfileIncomeValidationWidgetState
                       ),
                       Divider(
                         height: 40.0,
-                        thickness: 2.0,
+                        thickness: 3.0,
                         color: FlutterFlowTheme.of(context).alternate,
                       ).animateOnPageLoad(
                           animationsMap['dividerOnPageLoadAnimation']!),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                        child: Builder(
-                          builder: (context) {
-                            if (_model.uploadedFileUrls2.length > 0) {
-                              return FlutterFlowPdfViewer(
-                                networkPath: _model.uploadedFileUrls2.first,
+                      Builder(
+                        builder: (context) {
+                          if (_model.uploadedFileUrls2.length > 0) {
+                            return FlutterFlowPdfViewer(
+                              networkPath: _model.uploadedFileUrls2.first,
+                              height: 300.0,
+                              horizontalScroll: false,
+                            ).animateOnPageLoad(
+                                animationsMap['pdfViewerOnPageLoadAnimation']!);
+                          } else if (_model.uploadedFileUrls1.length > 0) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.network(
+                                _model.uploadedFileUrls1.first,
+                                width: double.infinity,
                                 height: 300.0,
-                                horizontalScroll: false,
-                              ).animateOnPageLoad(animationsMap[
-                                  'pdfViewerOnPageLoadAnimation']!);
-                            } else if (_model.uploadedFileUrls1.length > 0) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.network(
-                                  _model.uploadedFileUrls1.first,
-                                  width: double.infinity,
-                                  height: 300.0,
-                                  fit: BoxFit.cover,
-                                ),
-                              );
-                            } else {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.network(
-                                  'https://picsum.photos/seed/979/600',
-                                  width: double.infinity,
-                                  height: 300.0,
-                                  fit: BoxFit.cover,
-                                ),
-                              );
-                            }
-                          },
-                        ),
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          } else {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.network(
+                                'https://picsum.photos/seed/979/600',
+                                width: double.infinity,
+                                height: 300.0,
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          }
+                        },
                       ),
                       Align(
                         alignment: AlignmentDirectional(0.0, 0.0),
