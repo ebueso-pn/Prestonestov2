@@ -628,8 +628,6 @@ class _ProfileIncomeValidationWidgetState
                                       FlutterFlowTheme.of(context).secondary,
                                 ),
                               );
-                              await Future.delayed(
-                                  const Duration(milliseconds: 2000));
                             },
                             text: 'Guardar y regresar',
                             options: FFButtonOptions(
