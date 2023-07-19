@@ -106,28 +106,13 @@ class _LoanAcceptanceSuccessCopyWidgetState
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                 child: Text(
-                  'Te enviamos el contrato de Prestamo',
+                  'Tu contrato de prestamo esta listo',
                   style: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Urbanist',
                         color: Colors.white,
                         fontSize: 20.0,
                         fontWeight: FontWeight.w300,
                       ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 16.0, 0.0),
-                  child: Text(
-                    'Porfavor firmalo',
-                    textAlign: TextAlign.start,
-                    style: FlutterFlowTheme.of(context).bodyLarge.override(
-                          fontFamily: 'Urbanist',
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                          fontWeight: FontWeight.w300,
-                        ),
-                  ),
                 ),
               ),
               Padding(
