@@ -160,13 +160,13 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                   0.0, 12.0, 0.0, 12.0),
                               child: Text(
                                 'Solicitante',
-                                style: FlutterFlowTheme.of(context).bodyLarge,
+                                style: FlutterFlowTheme.of(context).labelLarge,
                               ),
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 24.0),
+                                0.0, 0.0, 0.0, 12.0),
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
@@ -246,6 +246,22 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                     ),
                                   ],
                                 ),
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            height: 35.0,
+                            thickness: 2.0,
+                            color: FlutterFlowTheme.of(context).alternate,
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 12.0),
+                              child: Text(
+                                'Solicitud',
+                                style: FlutterFlowTheme.of(context).labelLarge,
                               ),
                             ),
                           ),
@@ -430,24 +446,33 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                   0.0, 0.0, 0.0, 12.0),
                               child: Text(
                                 'Dirección',
-                                style: FlutterFlowTheme.of(context).labelMedium,
+                                style: FlutterFlowTheme.of(context).labelLarge,
                               ),
                             ),
                           ),
-                          AuthUserStreamWidget(
-                            builder: (context) => FlutterFlowStaticMap(
-                              location: currentUserDocument!.latLong!,
-                              apiKey:
-                                  'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
-                              style: MapBoxStyle.Streets,
-                              width: double.infinity,
-                              height: 150.0,
-                              fit: BoxFit.cover,
-                              borderRadius: BorderRadius.circular(40.0),
-                              markerColor: Color(0xFFFF0412),
-                              zoom: 15,
-                              tilt: 0,
-                              rotation: 0,
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            child: AuthUserStreamWidget(
+                              builder: (context) => FlutterFlowStaticMap(
+                                location: currentUserDocument!.latLong!,
+                                apiKey:
+                                    'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
+                                style: MapBoxStyle.Light,
+                                width: double.infinity,
+                                height: 150.0,
+                                fit: BoxFit.cover,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(40.0),
+                                  bottomRight: Radius.circular(40.0),
+                                  topLeft: Radius.circular(20.0),
+                                  topRight: Radius.circular(40.0),
+                                ),
+                                markerColor: Color(0xFFFF0412),
+                                zoom: 15,
+                                tilt: 0,
+                                rotation: 0,
+                              ),
                             ),
                           ),
                         ],

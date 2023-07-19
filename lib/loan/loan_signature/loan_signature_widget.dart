@@ -343,6 +343,40 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                             ],
                           ),
                         ),
+                        Divider(
+                          thickness: 1.0,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 12.0, 0.0, 12.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Total a repagar',
+                                style: FlutterFlowTheme.of(context).labelLarge,
+                              ),
+                              Text(
+                                formatNumber(
+                                  columnApplicationRecord!.cuotaAprobada *
+                                      columnApplicationRecord!.numeroDeCuotas,
+                                  formatType: FormatType.custom,
+                                  currency: 'L ',
+                                  format: '####.#',
+                                  locale: '',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyLarge
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     );
                   },
