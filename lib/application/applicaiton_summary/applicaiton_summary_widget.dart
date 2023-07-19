@@ -92,7 +92,7 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              20.0, 0.0, 0.0, 0.0),
+                              24.0, 0.0, 0.0, 0.0),
                           child: Text(
                             'Aplicación',
                             style: FlutterFlowTheme.of(context)
@@ -117,7 +117,7 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+            padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
