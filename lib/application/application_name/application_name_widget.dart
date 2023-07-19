@@ -2,11 +2,9 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_radio_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -192,14 +190,15 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 16.0),
                     child: Text(
                       'Como esta escrito en tu DNI. \nNecesitamos tu nombre para verificar tu identidad.',
                       textAlign: TextAlign.start,
@@ -455,129 +454,94 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                         inputFormatters: [_model.dniMask],
                       ),
                     ),
-                    Align(
-                      alignment: AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            28.0, 16.0, 16.0, 0.0),
-                        child: Text(
-                          '¿Podemos Revisar tu historial crediticio en el Buró?',
-                          style: FlutterFlowTheme.of(context).bodyMedium,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 16.0, 16.0, 16.0),
-                        child: FlutterFlowRadioButton(
-                          options: ['¡Si, de acuerdo!'].toList(),
-                          onChanged: (val) => setState(() {}),
-                          controller: _model.radioButtonValueController ??=
-                              FormFieldController<String>(null),
-                          optionHeight: 32.0,
-                          textStyle: FlutterFlowTheme.of(context).labelMedium,
-                          selectedTextStyle:
-                              FlutterFlowTheme.of(context).bodyMedium,
-                          buttonPosition: RadioButtonPosition.left,
-                          direction: Axis.vertical,
-                          radioButtonColor:
-                              FlutterFlowTheme.of(context).primary,
-                          inactiveRadioButtonColor:
-                              FlutterFlowTheme.of(context).secondaryText,
-                          toggleable: true,
-                          horizontalAlignment: WrapAlignment.start,
-                          verticalAlignment: WrapCrossAlignment.start,
-                        ),
-                      ),
-                    ),
                   ],
                 ).animateOnPageLoad(
                     animationsMap['columnOnPageLoadAnimation']!),
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    if (_model.nombresController.text != null &&
-                        _model.nombresController.text != '') {
-                      setState(() {
-                        FFAppState().nombresApplicationState = false;
-                      });
-                    } else {
-                      setState(() {
-                        FFAppState().nombresApplicationState = true;
-                      });
-                    }
+              Align(
+                alignment: AlignmentDirectional(0.0, 0.0),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      if (_model.nombresController.text != null &&
+                          _model.nombresController.text != '') {
+                        setState(() {
+                          FFAppState().nombresApplicationState = false;
+                        });
+                      } else {
+                        setState(() {
+                          FFAppState().nombresApplicationState = true;
+                        });
+                      }
 
-                    if (_model.apellidosController.text != null &&
-                        _model.apellidosController.text != '') {
-                      setState(() {
-                        FFAppState().apellidosApplicationState = false;
-                      });
-                    } else {
-                      setState(() {
-                        FFAppState().apellidosApplicationState = true;
-                      });
-                    }
+                      if (_model.apellidosController.text != null &&
+                          _model.apellidosController.text != '') {
+                        setState(() {
+                          FFAppState().apellidosApplicationState = false;
+                        });
+                      } else {
+                        setState(() {
+                          FFAppState().apellidosApplicationState = true;
+                        });
+                      }
 
-                    if (_model.dniController.text != null &&
-                        _model.dniController.text != '') {
-                      setState(() {
-                        FFAppState().DNIapplicationState = false;
-                      });
-                    } else {
-                      setState(() {
-                        FFAppState().DNIapplicationState = true;
-                      });
-                    }
+                      if (_model.dniController.text != null &&
+                          _model.dniController.text != '') {
+                        setState(() {
+                          FFAppState().DNIapplicationState = false;
+                        });
+                      } else {
+                        setState(() {
+                          FFAppState().DNIapplicationState = true;
+                        });
+                      }
 
-                    if (_model.formKey.currentState == null ||
-                        !_model.formKey.currentState!.validate()) {
-                      return;
-                    }
-                    if (_model.radioButtonValue == null) {
-                      return;
-                    }
+                      if (_model.formKey.currentState == null ||
+                          !_model.formKey.currentState!.validate()) {
+                        return;
+                      }
 
-                    await currentUserReference!.update(createUsersRecordData(
-                      nombres: _model.nombresController.text,
-                      apellidos: _model.apellidosController.text,
-                      dni: _model.dniController.text,
-                    ));
+                      await currentUserReference!.update(createUsersRecordData(
+                        nombres: _model.nombresController.text,
+                        apellidos: _model.apellidosController.text,
+                        dni: _model.dniController.text,
+                      ));
 
-                    context.pushNamed(
-                      'Application_DNI_Validation',
-                      queryParameters: {
-                        'applicationRecieve': serializeParam(
-                          widget.applicationRecieve,
-                          ParamType.DocumentReference,
-                        ),
-                      }.withoutNulls,
-                    );
-                  },
-                  text: 'Continuar',
-                  options: FFButtonOptions(
-                    width: 230.0,
-                    height: 50.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Urbanist',
-                          color: Colors.white,
-                        ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+                      context.pushNamed(
+                        'Application_DNI_Validation',
+                        queryParameters: {
+                          'applicationRecieve': serializeParam(
+                            widget.applicationRecieve,
+                            ParamType.DocumentReference,
+                          ),
+                        }.withoutNulls,
+                      );
+                    },
+                    text: 'Continuar',
+                    options: FFButtonOptions(
+                      width: 230.0,
+                      height: 50.0,
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      iconPadding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Urbanist',
+                                color: Colors.white,
+                              ),
+                      elevation: 3.0,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(48.0),
                     ),
-                    borderRadius: BorderRadius.circular(48.0),
-                  ),
-                ).animateOnPageLoad(
-                    animationsMap['buttonOnPageLoadAnimation']!),
+                  ).animateOnPageLoad(
+                      animationsMap['buttonOnPageLoadAnimation']!),
+                ),
               ),
             ],
           ),

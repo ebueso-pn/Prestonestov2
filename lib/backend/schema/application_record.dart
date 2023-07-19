@@ -106,6 +106,11 @@ class ApplicationRecord extends FirestoreRecord {
   int get index => _index ?? 0;
   bool hasIndex() => _index != null;
 
+  // "bureau_consent" field.
+  bool? _bureauConsent;
+  bool get bureauConsent => _bureauConsent ?? false;
+  bool hasBureauConsent() => _bureauConsent != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -128,6 +133,7 @@ class ApplicationRecord extends FirestoreRecord {
     _fechaPrimerPago = snapshotData['fecha_primer_pago'] as DateTime?;
     _fechaUltimoPago = snapshotData['fecha_ultimo_pago'] as DateTime?;
     _index = castToType<int>(snapshotData['index']);
+    _bureauConsent = snapshotData['bureau_consent'] as bool?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -188,6 +194,7 @@ Map<String, dynamic> createApplicationRecordData({
   DateTime? fechaPrimerPago,
   DateTime? fechaUltimoPago,
   int? index,
+  bool? bureauConsent,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -209,6 +216,7 @@ Map<String, dynamic> createApplicationRecordData({
       'fecha_primer_pago': fechaPrimerPago,
       'fecha_ultimo_pago': fechaUltimoPago,
       'index': index,
+      'bureau_consent': bureauConsent,
     }.withoutNulls,
   );
 
@@ -237,7 +245,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e1?.numeroDeCuotas == e2?.numeroDeCuotas &&
         e1?.fechaPrimerPago == e2?.fechaPrimerPago &&
         e1?.fechaUltimoPago == e2?.fechaUltimoPago &&
-        e1?.index == e2?.index;
+        e1?.index == e2?.index &&
+        e1?.bureauConsent == e2?.bureauConsent;
   }
 
   @override
@@ -259,7 +268,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.numeroDeCuotas,
         e?.fechaPrimerPago,
         e?.fechaUltimoPago,
-        e?.index
+        e?.index,
+        e?.bureauConsent
       ]);
 
   @override

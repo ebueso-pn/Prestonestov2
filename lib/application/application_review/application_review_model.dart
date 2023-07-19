@@ -16,6 +16,8 @@ class ApplicationReviewModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  // State field(s) for Checkbox widget.
+  bool? checkboxValue;
 
   /// Initialization and disposal methods.
 

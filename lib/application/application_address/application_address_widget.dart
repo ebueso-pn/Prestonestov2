@@ -100,8 +100,8 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
     _model = createModel(context, () => ApplicationAddressModel());
 
     _model.addressFieldCasaCalleController ??= TextEditingController();
-    _model.addressFieldColoniaController ??= TextEditingController();
     _model.addressFieldDescripcionController ??= TextEditingController();
+    _model.addressFieldColoniaController ??= TextEditingController();
     _model.addressFieldCiudadController ??= TextEditingController();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -302,6 +302,63 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                       padding: EdgeInsetsDirectional.fromSTEB(
                           16.0, 16.0, 16.0, 16.0),
                       child: TextFormField(
+                        controller: _model.addressFieldDescripcionController,
+                        onChanged: (_) => EasyDebounce.debounce(
+                          '_model.addressFieldDescripcionController',
+                          Duration(milliseconds: 100),
+                          () => setState(() {}),
+                        ),
+                        textCapitalization: TextCapitalization.words,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelText: 'Descripción (opcional)',
+                          labelStyle: FlutterFlowTheme.of(context).labelLarge,
+                          hintText: 'Abajo del palo de mangos',
+                          hintStyle:
+                              FlutterFlowTheme.of(context).labelMedium.override(
+                                    fontFamily: 'Urbanist',
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).alternate,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(42.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).alternate,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(42.0),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).error,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(42.0),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).error,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(42.0),
+                          ),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium,
+                        textAlign: TextAlign.center,
+                        validator: _model
+                            .addressFieldDescripcionControllerValidator
+                            .asValidator(context),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          16.0, 16.0, 16.0, 16.0),
+                      child: TextFormField(
                         controller: _model.addressFieldColoniaController,
                         onChanged: (_) => EasyDebounce.debounce(
                           '_model.addressFieldColoniaController',
@@ -368,63 +425,6 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                         style: FlutterFlowTheme.of(context).bodyMedium,
                         textAlign: TextAlign.center,
                         validator: _model.addressFieldColoniaControllerValidator
-                            .asValidator(context),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 16.0, 16.0, 16.0),
-                      child: TextFormField(
-                        controller: _model.addressFieldDescripcionController,
-                        onChanged: (_) => EasyDebounce.debounce(
-                          '_model.addressFieldDescripcionController',
-                          Duration(milliseconds: 100),
-                          () => setState(() {}),
-                        ),
-                        textCapitalization: TextCapitalization.words,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Descripción (opcional)',
-                          labelStyle: FlutterFlowTheme.of(context).labelLarge,
-                          hintText: 'Abajo del palo de mangos',
-                          hintStyle:
-                              FlutterFlowTheme.of(context).labelMedium.override(
-                                    fontFamily: 'Urbanist',
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).alternate,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).alternate,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).error,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).error,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                        textAlign: TextAlign.center,
-                        validator: _model
-                            .addressFieldDescripcionControllerValidator
                             .asValidator(context),
                       ),
                     ),

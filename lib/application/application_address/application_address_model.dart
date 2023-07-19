@@ -31,6 +31,10 @@ class ApplicationAddressModel extends FlutterFlowModel {
     return null;
   }
 
+  // State field(s) for AddressField_Descripcion widget.
+  TextEditingController? addressFieldDescripcionController;
+  String? Function(BuildContext, String?)?
+      addressFieldDescripcionControllerValidator;
   // State field(s) for AddressField_Colonia widget.
   TextEditingController? addressFieldColoniaController;
   String? Function(BuildContext, String?)?
@@ -44,10 +48,6 @@ class ApplicationAddressModel extends FlutterFlowModel {
     return null;
   }
 
-  // State field(s) for AddressField_Descripcion widget.
-  TextEditingController? addressFieldDescripcionController;
-  String? Function(BuildContext, String?)?
-      addressFieldDescripcionControllerValidator;
   // State field(s) for AddressField_Ciudad widget.
   TextEditingController? addressFieldCiudadController;
   String? Function(BuildContext, String?)?
@@ -75,8 +75,8 @@ class ApplicationAddressModel extends FlutterFlowModel {
   void dispose() {
     unfocusNode.dispose();
     addressFieldCasaCalleController?.dispose();
-    addressFieldColoniaController?.dispose();
     addressFieldDescripcionController?.dispose();
+    addressFieldColoniaController?.dispose();
     addressFieldCiudadController?.dispose();
   }
 

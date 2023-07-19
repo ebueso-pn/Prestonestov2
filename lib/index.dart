@@ -1,7 +1,7 @@
 // Export pages
 export '/onboarding/onboarding_widget.dart' show OnboardingWidget;
-export '/auth/s_m_s_signup/s_m_s_signup_widget.dart' show SMSSignupWidget;
-export '/auth/s_m_s_verify_code/s_m_s_verify_code_widget.dart'
+export '/archive/s_m_s_signup/s_m_s_signup_widget.dart' show SMSSignupWidget;
+export '/archive/s_m_s_verify_code/s_m_s_verify_code_widget.dart'
     show SMSVerifyCodeWidget;
 export '/home/home_widget.dart' show HomeWidget;
 export '/application/application_name/application_name_widget.dart'
@@ -11,7 +11,8 @@ export '/application/application_loan_calculator/application_loan_calculator_wid
     show ApplicationLoanCalculatorWidget;
 export '/application/application_address/application_address_widget.dart'
     show ApplicationAddressWidget;
-export '/auth/phone_sign_in/phone_sign_in_widget.dart' show PhoneSignInWidget;
+export '/archive/phone_sign_in/phone_sign_in_widget.dart'
+    show PhoneSignInWidget;
 export '/auth/email_create_account/email_create_account_widget.dart'
     show EmailCreateAccountWidget;
 export '/auth/email_login/email_login_widget.dart' show EmailLoginWidget;

@@ -322,8 +322,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                               maxWidth: 500.0,
                             ),
                             decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
+                              color:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
                               boxShadow: [
                                 BoxShadow(
                                   blurRadius: 4.0,
