@@ -159,6 +159,10 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                 ),
                                 onPressed: () async {
                                   context.pop();
+
+                                  await widget.applicationRecieve!.update({
+                                    'index': FieldValue.increment(-(1)),
+                                  });
                                 },
                               ),
                             ),
