@@ -260,7 +260,7 @@ class _ApplicationLoanCalculatorWidgetState
                                         fontFamily: 'Urbanist',
                                         color:
                                             FlutterFlowTheme.of(context).info,
-                                        fontSize: 22.0,
+                                        fontSize: 24.0,
                                         fontWeight: FontWeight.w600,
                                       ),
                                 ),
@@ -283,49 +283,69 @@ class _ApplicationLoanCalculatorWidgetState
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 24.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
-                          child: Text(
-                            'Cuota quincenal estimada: ',
-                            style: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .override(
-                                  fontFamily: 'Urbanist',
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                          ).animateOnPageLoad(
-                              animationsMap['textOnPageLoadAnimation1']!),
-                        ),
-                        Text(
-                          formatNumber(
-                            functions.loanCalculator(
-                                valueOrDefault<double>(
-                                  _model.loanAmtValue,
-                                  1000.0,
-                                ),
-                                .033,
-                                valueOrDefault<double>(
-                                  _model.loanTermValue,
-                                  3.0,
-                                )),
-                            formatType: FormatType.custom,
-                            currency: 'L. ',
-                            format: '###.#',
-                            locale: '',
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).titleLarge.override(
+                        EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 12.0),
+                    child: Container(
+                      width: double.infinity,
+                      height: 75.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            color: Color(0x3416202A),
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            12.0, 24.0, 12.0, 24.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Text(
+                                'Cuota quincenal estimada: ',
+                                style: FlutterFlowTheme.of(context)
+                                    .titleLarge
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ).animateOnPageLoad(
+                                  animationsMap['textOnPageLoadAnimation1']!),
+                            ),
+                            Text(
+                              formatNumber(
+                                functions.loanCalculator(
+                                    valueOrDefault<double>(
+                                      _model.loanAmtValue,
+                                      1000.0,
+                                    ),
+                                    .033,
+                                    valueOrDefault<double>(
+                                      _model.loanTermValue,
+                                      3.0,
+                                    )),
+                                formatType: FormatType.custom,
+                                currency: 'L. ',
+                                format: '###.#',
+                                locale: '',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .titleLarge
+                                  .override(
                                     fontFamily: 'Urbanist',
                                     color: FlutterFlowTheme.of(context).accent1,
                                   ),
-                        ).animateOnPageLoad(
-                            animationsMap['textOnPageLoadAnimation2']!),
-                      ],
+                            ).animateOnPageLoad(
+                                animationsMap['textOnPageLoadAnimation2']!),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                   Padding(
@@ -336,6 +356,13 @@ class _ApplicationLoanCalculatorWidgetState
                       height: 100.0,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            color: Color(0x3416202A),
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Padding(
@@ -352,8 +379,12 @@ class _ApplicationLoanCalculatorWidgetState
                                   alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     'Monto de tu Prestamo: ',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Urbanist',
+                                          fontSize: 18.0,
+                                        ),
                                   ),
                                 ),
                                 Align(
@@ -374,6 +405,7 @@ class _ApplicationLoanCalculatorWidgetState
                                           fontFamily: 'Urbanist',
                                           color: FlutterFlowTheme.of(context)
                                               .accent1,
+                                          fontSize: 18.0,
                                         ),
                                   ),
                                 ),
@@ -414,6 +446,13 @@ class _ApplicationLoanCalculatorWidgetState
                       height: 100.0,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            color: Color(0x3416202A),
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Padding(
@@ -430,8 +469,12 @@ class _ApplicationLoanCalculatorWidgetState
                                   alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     'Tiempo de Repago: ',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Urbanist',
+                                          fontSize: 18.0,
+                                        ),
                                   ),
                                 ),
                                 Align(
@@ -452,6 +495,7 @@ class _ApplicationLoanCalculatorWidgetState
                                           fontFamily: 'Urbanist',
                                           color: FlutterFlowTheme.of(context)
                                               .accent1,
+                                          fontSize: 18.0,
                                         ),
                                   ),
                                 ),
@@ -486,6 +530,13 @@ class _ApplicationLoanCalculatorWidgetState
                       height: 100.0,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            color: Color(0x3416202A),
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Padding(
@@ -518,7 +569,7 @@ class _ApplicationLoanCalculatorWidgetState
                             Align(
                               alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Text(
-                                '*La tasa final será determinada despues de un analisis crediticio',
+                                '*La tasa final será determinada despues de analizar tu solicitud',
                                 style: FlutterFlowTheme.of(context)
                                     .bodySmall
                                     .override(

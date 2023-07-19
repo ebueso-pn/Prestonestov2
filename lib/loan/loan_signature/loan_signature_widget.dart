@@ -91,20 +91,6 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                                 },
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  4.0, 0.0, 0.0, 0.0),
-                              child: Text(
-                                'Back',
-                                style: FlutterFlowTheme.of(context)
-                                    .headlineMedium
-                                    .override(
-                                      fontFamily: 'Urbanist',
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                    ),
-                              ),
-                            ),
                           ],
                         ),
                         Padding(

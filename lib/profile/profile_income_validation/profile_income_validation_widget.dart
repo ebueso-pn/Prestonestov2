@@ -387,6 +387,13 @@ class _ProfileIncomeValidationWidgetState
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 5.0,
+                                  color: Color(0x3416202A),
+                                  offset: Offset(0.0, 2.0),
+                                )
+                              ],
                               borderRadius: BorderRadius.circular(12.0),
                               border: Border.all(
                                 color: FlutterFlowTheme.of(context).alternate,
@@ -496,6 +503,13 @@ class _ProfileIncomeValidationWidgetState
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 5.0,
+                                  color: Color(0x3416202A),
+                                  offset: Offset(0.0, 2.0),
+                                )
+                              ],
                               borderRadius: BorderRadius.circular(12.0),
                               border: Border.all(
                                 color: FlutterFlowTheme.of(context).alternate,
