@@ -133,38 +133,52 @@ class _ApplicationDNIValidationWidgetState
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
-                      child: Align(
-                        alignment: AlignmentDirectional(0.0, -1.0),
-                        child: StreamBuilder<ApplicationRecord>(
-                          stream: ApplicationRecord.getDocument(
-                              widget.applicationRecieve!),
-                          builder: (context, snapshot) {
-                            // Customize what your widget looks like when it's loading.
-                            if (!snapshot.hasData) {
-                              return Center(
-                                child: SizedBox(
-                                  width: 50.0,
-                                  height: 50.0,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Color(0xFF2AAF7A),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5.0,
+                              color: Color(0x3416202A),
+                              offset: Offset(0.0, 2.0),
+                            )
+                          ],
+                        ),
+                        child: Align(
+                          alignment: AlignmentDirectional(0.0, -1.0),
+                          child: StreamBuilder<ApplicationRecord>(
+                            stream: ApplicationRecord.getDocument(
+                                widget.applicationRecieve!),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Color(0xFF2AAF7A),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                );
+                              }
+                              final progressBarApplicationRecord =
+                                  snapshot.data!;
+                              return LinearPercentIndicator(
+                                percent: progressBarApplicationRecord.index / 5,
+                                lineHeight: 7.0,
+                                animation: true,
+                                progressColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                padding: EdgeInsets.zero,
                               );
-                            }
-                            final progressBarApplicationRecord = snapshot.data!;
-                            return LinearPercentIndicator(
-                              percent: progressBarApplicationRecord.index / 5,
-                              lineHeight: 7.0,
-                              animation: true,
-                              progressColor:
-                                  FlutterFlowTheme.of(context).primary,
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                              padding: EdgeInsets.zero,
-                            );
-                          },
+                            },
+                          ),
                         ),
                       ),
                     ),
