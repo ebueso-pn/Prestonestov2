@@ -423,7 +423,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                             onPressed: () async {
                               context.pushNamed('Email_Login');
                             },
-                            text: 'Iniciar Sesión',
+                            text: 'Iniciar sesión',
                             options: FFButtonOptions(
                               width: 190.0,
                               height: 40.0,
@@ -468,7 +468,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                 },
                               );
                             },
-                            text: 'Ingresar',
+                            text: 'Crear cuenta',
                             options: FFButtonOptions(
                               width: 190.0,
                               height: 40.0,

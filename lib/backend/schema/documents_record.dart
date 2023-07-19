@@ -26,9 +26,15 @@ class DocumentsRecord extends FirestoreRecord {
   DocumentReference? get userDocReference => _userDocReference;
   bool hasUserDocReference() => _userDocReference != null;
 
+  // "income_verification" field.
+  List<String>? _incomeVerification;
+  List<String> get incomeVerification => _incomeVerification ?? const [];
+  bool hasIncomeVerification() => _incomeVerification != null;
+
   void _initializeFields() {
     _pagare = snapshotData['pagare'] as String?;
     _userDocReference = snapshotData['UserDocReference'] as DocumentReference?;
+    _incomeVerification = getDataList(snapshotData['income_verification']);
   }
 
   static CollectionReference get collection =>
@@ -84,13 +90,15 @@ class DocumentsRecordDocumentEquality implements Equality<DocumentsRecord> {
 
   @override
   bool equals(DocumentsRecord? e1, DocumentsRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.pagare == e2?.pagare &&
-        e1?.userDocReference == e2?.userDocReference;
+        e1?.userDocReference == e2?.userDocReference &&
+        listEquality.equals(e1?.incomeVerification, e2?.incomeVerification);
   }
 
   @override
-  int hash(DocumentsRecord? e) =>
-      const ListEquality().hash([e?.pagare, e?.userDocReference]);
+  int hash(DocumentsRecord? e) => const ListEquality()
+      .hash([e?.pagare, e?.userDocReference, e?.incomeVerification]);
 
   @override
   bool isValidKey(Object? o) => o is DocumentsRecord;

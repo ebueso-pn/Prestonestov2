@@ -9,6 +9,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -641,79 +642,18 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 48.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (_model.formKey.currentState == null ||
-                          !_model.formKey.currentState!.validate()) {
-                        return;
-                      }
-                      if (_model.dropDownValue == null) {
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: Text('Oops...'),
-                              content: Text('Porfavor elige tu banco'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        return;
-                      }
-                      if (!(_model.choiceChipsValue != null &&
-                          _model.choiceChipsValue != '')) {
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: Text('Oops'),
-                              content:
-                                  Text('Porfavor elige el tipo de tu cuenta'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        return;
-                      }
-                      if (_model.cuentaConfirmarController.text !=
-                          _model.cuentaController.text) {
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: Text('Oops...'),
-                              content: Text(
-                                  'Los numeros de cuenta ingresados no concuerdan'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        return;
-                      }
+                      await queryDocumentsRecordOnce(
+                        queryBuilder: (documentsRecord) =>
+                            documentsRecord.where('UserDocReference',
+                                isEqualTo: currentUserReference),
+                        singleRecord: true,
+                      ).then((s) => s.firstOrNull);
 
                       await currentUserReference!.update(createUsersRecordData(
                         bankAccountBank: _model.dropDownValue,
                         bankAccountNumber: _model.cuentaController.text,
                         bankAccountType: _model.choiceChipsValue,
                       ));
-
-                      context.pushNamed('Profile');
                     },
                     text: 'Guardar y regresar',
                     options: FFButtonOptions(
