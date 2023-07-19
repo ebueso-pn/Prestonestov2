@@ -550,7 +550,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 12.0, 0.0, 12.0),
                                     child: LinearPercentIndicator(
-                                      percent: 0.7,
+                                      percent: 0.1,
                                       width: 310.0,
                                       lineHeight: 16.0,
                                       animation: true,
@@ -587,7 +587,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             decimalType: DecimalType.automatic,
                                             currency: 'de L. ',
                                           ),
-                                          'de L. 0.00',
+                                          ' de L. 0.00',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .titleSmall
