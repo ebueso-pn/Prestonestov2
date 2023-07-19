@@ -579,15 +579,15 @@ class _ProfileIncomeValidationWidgetState
                                 await profileIncomeValidationDocumentsRecord!
                                     .reference
                                     .update({
-                                  'income_verification': FieldValue.arrayUnion(
-                                      [_model.uploadedFileUrls2]),
+                                  'income_verification':
+                                      _model.uploadedFileUrls2,
                                 });
                               } else if (_model.uploadedFileUrls1.length > 0) {
                                 await profileIncomeValidationDocumentsRecord!
                                     .reference
                                     .update({
-                                  'income_verification': FieldValue.arrayUnion(
-                                      [_model.uploadedFileUrls1]),
+                                  'income_verification':
+                                      _model.uploadedFileUrls1,
                                 });
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
