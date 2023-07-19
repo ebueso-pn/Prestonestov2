@@ -1,6 +1,7 @@
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_pdf_viewer.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/upload_data.dart';
@@ -140,19 +141,33 @@ class _ProfileIncomeValidationWidgetState
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                     child: Text(
-                      'Sube tu captura de pantalla o documento escandeado',
+                      'Sube tu captura de pantalla o documento escandeado. ',
                       style: FlutterFlowTheme.of(context).labelLarge,
                     ),
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text(
-                        'Tipos de Documentos vallidos\n- Comprobante de pago planilla\n- Captura de pantalla de depositos \n- Constancia de trabajo\n',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Urbanist',
-                              lineHeight: 1.6,
-                            ),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {},
+                          child: Text(
+                            '¿Que documentos puedo subir?',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Urbanist',
+                                  color: FlutterFlowTheme.of(context).accent1,
+                                  lineHeight: 1.6,
+                                ),
+                          ),
+                        ),
                       ),
                     ]
                         .divide(SizedBox(height: 16.0))
@@ -166,7 +181,63 @@ class _ProfileIncomeValidationWidgetState
                       focusColor: Colors.transparent,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
-                      onTap: () async {},
+                      onTap: () async {
+                        final selectedMedia = await selectMedia(
+                          mediaSource: MediaSource.photoGallery,
+                          multiImage: true,
+                        );
+                        if (selectedMedia != null &&
+                            selectedMedia.every((m) =>
+                                validateFileFormat(m.storagePath, context))) {
+                          setState(() => _model.isDataUploading1 = true);
+                          var selectedUploadedFiles = <FFUploadedFile>[];
+
+                          var downloadUrls = <String>[];
+                          try {
+                            showUploadMessage(
+                              context,
+                              'Uploading file...',
+                              showLoading: true,
+                            );
+                            selectedUploadedFiles = selectedMedia
+                                .map((m) => FFUploadedFile(
+                                      name: m.storagePath.split('/').last,
+                                      bytes: m.bytes,
+                                      height: m.dimensions?.height,
+                                      width: m.dimensions?.width,
+                                      blurHash: m.blurHash,
+                                    ))
+                                .toList();
+
+                            downloadUrls = (await Future.wait(
+                              selectedMedia.map(
+                                (m) async =>
+                                    await uploadData(m.storagePath, m.bytes),
+                              ),
+                            ))
+                                .where((u) => u != null)
+                                .map((u) => u!)
+                                .toList();
+                          } finally {
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            _model.isDataUploading1 = false;
+                          }
+                          if (selectedUploadedFiles.length ==
+                                  selectedMedia.length &&
+                              downloadUrls.length == selectedMedia.length) {
+                            setState(() {
+                              _model.uploadedLocalFiles1 =
+                                  selectedUploadedFiles;
+                              _model.uploadedFileUrls1 = downloadUrls;
+                            });
+                            showUploadMessage(context, 'Success!');
+                          } else {
+                            setState(() {});
+                            showUploadMessage(context, 'Failed to upload data');
+                            return;
+                          }
+                        }
+                      },
                       child: Container(
                         width: double.infinity,
                         constraints: BoxConstraints(
@@ -218,52 +289,59 @@ class _ProfileIncomeValidationWidgetState
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        final selectedMedia =
-                            await selectMediaWithSourceBottomSheet(
-                          context: context,
-                          allowPhoto: true,
-                          pickerFontFamily: 'Urbanist',
+                        final selectedFiles = await selectFiles(
+                          allowedExtensions: ['pdf'],
+                          multiFile: true,
                         );
-                        if (selectedMedia != null &&
-                            selectedMedia.every((m) =>
-                                validateFileFormat(m.storagePath, context))) {
-                          setState(() => _model.isDataUploading = true);
+                        if (selectedFiles != null) {
+                          setState(() => _model.isDataUploading2 = true);
                           var selectedUploadedFiles = <FFUploadedFile>[];
 
                           var downloadUrls = <String>[];
                           try {
-                            selectedUploadedFiles = selectedMedia
+                            showUploadMessage(
+                              context,
+                              'Uploading file...',
+                              showLoading: true,
+                            );
+                            selectedUploadedFiles = selectedFiles
                                 .map((m) => FFUploadedFile(
                                       name: m.storagePath.split('/').last,
                                       bytes: m.bytes,
-                                      height: m.dimensions?.height,
-                                      width: m.dimensions?.width,
-                                      blurHash: m.blurHash,
                                     ))
                                 .toList();
 
                             downloadUrls = (await Future.wait(
-                              selectedMedia.map(
-                                (m) async =>
-                                    await uploadData(m.storagePath, m.bytes),
+                              selectedFiles.map(
+                                (f) async =>
+                                    await uploadData(f.storagePath, f.bytes),
                               ),
                             ))
                                 .where((u) => u != null)
                                 .map((u) => u!)
                                 .toList();
                           } finally {
-                            _model.isDataUploading = false;
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            _model.isDataUploading2 = false;
                           }
                           if (selectedUploadedFiles.length ==
-                                  selectedMedia.length &&
-                              downloadUrls.length == selectedMedia.length) {
+                                  selectedFiles.length &&
+                              downloadUrls.length == selectedFiles.length) {
                             setState(() {
-                              _model.uploadedLocalFile =
-                                  selectedUploadedFiles.first;
-                              _model.uploadedFileUrl = downloadUrls.first;
+                              _model.uploadedLocalFiles2 =
+                                  selectedUploadedFiles;
+                              _model.uploadedFileUrls2 = downloadUrls;
                             });
+                            showUploadMessage(
+                              context,
+                              'Success!',
+                            );
                           } else {
                             setState(() {});
+                            showUploadMessage(
+                              context,
+                              'Failed to upload file',
+                            );
                             return;
                           }
                         }
@@ -309,6 +387,46 @@ class _ProfileIncomeValidationWidgetState
                       ),
                     ).animateOnPageLoad(
                         animationsMap['containerOnPageLoadAnimation2']!),
+                  ),
+                  Divider(
+                    height: 60.0,
+                    thickness: 2.0,
+                    color: FlutterFlowTheme.of(context).alternate,
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    child: Builder(
+                      builder: (context) {
+                        if (_model.uploadedFileUrls2.length > 0) {
+                          return FlutterFlowPdfViewer(
+                            networkPath: _model.uploadedFileUrls1.first,
+                            height: 300.0,
+                            horizontalScroll: false,
+                          );
+                        } else if (_model.uploadedFileUrls1.length > 0) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              _model.uploadedFileUrls1.first,
+                              width: double.infinity,
+                              height: 300.0,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        } else {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              'https://picsum.photos/seed/461/600',
+                              width: double.infinity,
+                              height: 300.0,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),
