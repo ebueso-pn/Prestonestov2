@@ -181,20 +181,17 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  AuthUserStreamWidget(
-                                    builder: (context) => FlutterFlowStaticMap(
-                                      location: currentUserDocument!.latLong!,
-                                      apiKey:
-                                          'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
-                                      style: MapBoxStyle.Light,
-                                      width: 50.0,
-                                      height: 50.0,
-                                      fit: BoxFit.cover,
-                                      borderRadius: BorderRadius.circular(0.0),
-                                      markerColor: Color(0xFFFF0412),
-                                      zoom: 13,
-                                      tilt: 0,
-                                      rotation: 0,
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        2.0, 2.0, 2.0, 2.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Image.network(
+                                        'https://picsum.photos/seed/313/600',
+                                        width: 44.0,
+                                        height: 44.0,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                   Padding(
@@ -461,6 +458,47 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                       ),
                                 ),
                               ],
+                            ),
+                          ),
+                          Divider(
+                            height: 30.0,
+                            thickness: 2.0,
+                            color: FlutterFlowTheme.of(context).alternate,
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 12.0),
+                              child: Text(
+                                'Dirección',
+                                style: FlutterFlowTheme.of(context).labelLarge,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            child: AuthUserStreamWidget(
+                              builder: (context) => FlutterFlowStaticMap(
+                                location: currentUserDocument!.latLong!,
+                                apiKey:
+                                    'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
+                                style: MapBoxStyle.Light,
+                                width: double.infinity,
+                                height: 75.0,
+                                fit: BoxFit.cover,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(40.0),
+                                  bottomRight: Radius.circular(40.0),
+                                  topLeft: Radius.circular(20.0),
+                                  topRight: Radius.circular(40.0),
+                                ),
+                                markerColor: Color(0xFFFF0412),
+                                zoom: 12,
+                                tilt: 0,
+                                rotation: 0,
+                              ),
                             ),
                           ),
                           Divider(
