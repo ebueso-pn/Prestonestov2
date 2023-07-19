@@ -1,7 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -215,43 +214,14 @@ class _ApplicationLoanCalculatorWidgetState
                       flexibleSpace: FlexibleSpaceBar(
                         title: Column(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(1.0, 0.0),
-                                  child: FlutterFlowIconButton(
-                                    borderColor: Colors.transparent,
-                                    borderRadius: 30.0,
-                                    borderWidth: 1.0,
-                                    buttonSize: 50.0,
-                                    icon: Icon(
-                                      Icons.logout,
-                                      color: Colors.white,
-                                      size: 30.0,
-                                    ),
-                                    onPressed: () async {
-                                      GoRouter.of(context).prepareAuthEvent();
-                                      await authManager.signOut();
-                                      GoRouter.of(context)
-                                          .clearRedirectLocation();
-
-                                      context.goNamedAuth(
-                                          'Onboarding', context.mounted);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
                             Align(
                               alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 0.0, 0.0, 0.0),
+                                    24.0, 0.0, 0.0, 24.0),
                                 child: Text(
                                   'Calculadora Prestonesto',
                                   style: FlutterFlowTheme.of(context)
@@ -260,7 +230,7 @@ class _ApplicationLoanCalculatorWidgetState
                                         fontFamily: 'Urbanist',
                                         color:
                                             FlutterFlowTheme.of(context).info,
-                                        fontSize: 24.0,
+                                        fontSize: 22.0,
                                         fontWeight: FontWeight.w600,
                                       ),
                                 ),
@@ -312,7 +282,7 @@ class _ApplicationLoanCalculatorWidgetState
                                     .titleLarge
                                     .override(
                                       fontFamily: 'Urbanist',
-                                      fontSize: 20.0,
+                                      fontSize: 18.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                               ).animateOnPageLoad(
@@ -340,6 +310,7 @@ class _ApplicationLoanCalculatorWidgetState
                                   .override(
                                     fontFamily: 'Urbanist',
                                     color: FlutterFlowTheme.of(context).accent1,
+                                    fontSize: 18.0,
                                   ),
                             ).animateOnPageLoad(
                                 animationsMap['textOnPageLoadAnimation2']!),
@@ -383,7 +354,7 @@ class _ApplicationLoanCalculatorWidgetState
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Urbanist',
-                                          fontSize: 18.0,
+                                          fontSize: 16.0,
                                         ),
                                   ),
                                 ),
@@ -405,7 +376,7 @@ class _ApplicationLoanCalculatorWidgetState
                                           fontFamily: 'Urbanist',
                                           color: FlutterFlowTheme.of(context)
                                               .accent1,
-                                          fontSize: 18.0,
+                                          fontSize: 16.0,
                                         ),
                                   ),
                                 ),
@@ -473,7 +444,7 @@ class _ApplicationLoanCalculatorWidgetState
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Urbanist',
-                                          fontSize: 18.0,
+                                          fontSize: 16.0,
                                         ),
                                   ),
                                 ),
@@ -495,7 +466,7 @@ class _ApplicationLoanCalculatorWidgetState
                                           fontFamily: 'Urbanist',
                                           color: FlutterFlowTheme.of(context)
                                               .accent1,
-                                          fontSize: 18.0,
+                                          fontSize: 16.0,
                                         ),
                                   ),
                                 ),
