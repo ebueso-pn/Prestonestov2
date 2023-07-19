@@ -401,7 +401,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     Text(
                                       'Primer Pago: ${dateTimeFormat(
                                         'd/M/y',
-                                        columnLoansRecord?.fechaUltimoPago,
+                                        columnLoansRecord?.fechaPrimerPago,
                                         locale: FFLocalizations.of(context)
                                             .languageCode,
                                       )}',
