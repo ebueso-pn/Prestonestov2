@@ -399,7 +399,12 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                   if (columnLoansRecord?.fechaUltimoPago !=
                                       null)
                                     Text(
-                                      'Proximo Pago: 30 de Junio, 2023',
+                                      'Primer Pago${dateTimeFormat(
+                                        'd/M/y',
+                                        columnLoansRecord?.fechaUltimoPago,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      )}',
                                       style: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                     ),
