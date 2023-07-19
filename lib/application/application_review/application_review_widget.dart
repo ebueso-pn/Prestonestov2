@@ -269,7 +269,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Numero de Aplicación',
+                                  'Codigo de Aplicación',
                                   style:
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),
