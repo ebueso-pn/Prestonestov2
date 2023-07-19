@@ -107,6 +107,9 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
+                                  await widget.applicationRecieve!.update({
+                                    'index': FieldValue.increment(-(1)),
+                                  });
                                   context.pop();
                                 },
                               ),
@@ -224,7 +227,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                         return LinearPercentIndicator(
                                           percent: progressBarApplicationRecord
                                                   .index /
-                                              7,
+                                              6,
                                           lineHeight: 7.0,
                                           animation: true,
                                           progressColor:

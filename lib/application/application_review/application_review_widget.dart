@@ -90,6 +90,9 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
+                                  await widget.applicationRecieve!.update({
+                                    'index': FieldValue.increment(-(1)),
+                                  });
                                   context.pop();
                                 },
                               ),
@@ -158,7 +161,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                               final progressBarApplicationRecord =
                                   snapshot.data!;
                               return LinearPercentIndicator(
-                                percent: progressBarApplicationRecord.index / 7,
+                                percent: progressBarApplicationRecord.index / 6,
                                 lineHeight: 7.0,
                                 animation: true,
                                 progressColor:

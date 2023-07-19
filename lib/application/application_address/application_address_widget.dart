@@ -227,7 +227,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                             }
                             final progressBarApplicationRecord = snapshot.data!;
                             return LinearPercentIndicator(
-                              percent: progressBarApplicationRecord.index / 7,
+                              percent: progressBarApplicationRecord.index / 6,
                               lineHeight: 7.0,
                               animation: true,
                               progressColor:
