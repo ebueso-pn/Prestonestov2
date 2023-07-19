@@ -180,7 +180,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 12.0),
                           child: Text(
-                            '¡Felicidades! ',
+                            '¡Aprobado! ',
                             style: FlutterFlowTheme.of(context).titleLarge,
                           ),
                         ),
