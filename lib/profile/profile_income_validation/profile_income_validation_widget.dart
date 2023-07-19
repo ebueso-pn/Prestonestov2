@@ -575,15 +575,14 @@ class _ProfileIncomeValidationWidgetState
                               0.0, 48.0, 0.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              if (_model.uploadedFileUrls2.length != null) {
+                              if (_model.uploadedFileUrls2.length > 0) {
                                 await profileIncomeValidationDocumentsRecord!
                                     .reference
                                     .update({
                                   'income_verification': FieldValue.arrayUnion(
                                       [_model.uploadedFileUrls2]),
                                 });
-                              } else if (_model.uploadedFileUrls1.length !=
-                                  null) {
+                              } else if (_model.uploadedFileUrls1.length > 0) {
                                 await profileIncomeValidationDocumentsRecord!
                                     .reference
                                     .update({
