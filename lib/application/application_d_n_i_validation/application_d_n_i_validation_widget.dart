@@ -191,7 +191,7 @@ class _ApplicationDNIValidationWidgetState
                 child: FFButtonWidget(
                   onPressed: () async {
                     _model.shuftiResponse = await ShuftiOnsiteWithOCRCall.call(
-                      shuftiReference: '68468468494654',
+                      shuftiReference: currentUserReference?.id,
                     );
                     await launchURL(ShuftiOnsiteWithOCRCall.verificiationURL(
                       (_model.shuftiResponse?.jsonBody ?? ''),
