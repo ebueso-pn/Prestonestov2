@@ -162,29 +162,26 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                             15.0, 0.0, 15.0, 0.0),
                                         child: AutoSizeText(
                                           'Tu préstamo, simplificado',
-                                          textAlign: TextAlign.center,
-                                          maxLines: 2,
+                                          textAlign: TextAlign.start,
+                                          maxLines: 1,
                                           style: FlutterFlowTheme.of(context)
-                                              .headlineLarge
+                                              .displayMedium
                                               .override(
                                                 fontFamily: 'Urbanist',
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryBtnText,
+                                                fontSize: 30.0,
                                               ),
                                         ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 36.0, 0.0, 0.0),
-                                      child: Lottie.asset(
-                                        'assets/lottie_animations/tmpzrejxg10.json',
-                                        width: 350.0,
-                                        height: 350.0,
-                                        fit: BoxFit.fill,
-                                        animate: true,
-                                      ),
+                                    Lottie.asset(
+                                      'assets/lottie_animations/tmpzrejxg10.json',
+                                      width: 350.0,
+                                      height: 350.0,
+                                      fit: BoxFit.fill,
+                                      animate: true,
                                     ),
                                   ],
                                 ).animateOnPageLoad(animationsMap[
@@ -206,7 +203,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                         child: AutoSizeText(
                                           'Sin cobros escondidos',
                                           textAlign: TextAlign.center,
-                                          maxLines: 2,
+                                          maxLines: 1,
                                           style: FlutterFlowTheme.of(context)
                                               .displayMedium
                                               .override(
@@ -214,8 +211,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryBtnText,
-                                                fontSize: 32.0,
-                                                fontWeight: FontWeight.w600,
+                                                fontSize: 30.0,
                                               ),
                                         ),
                                       ),
@@ -247,7 +243,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                         child: AutoSizeText(
                                           'Aplica en 2 minutos',
                                           textAlign: TextAlign.center,
-                                          maxLines: 2,
+                                          maxLines: 1,
                                           style: FlutterFlowTheme.of(context)
                                               .displayMedium
                                               .override(
@@ -255,8 +251,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryBtnText,
-                                                fontSize: 32.0,
-                                                fontWeight: FontWeight.w600,
+                                                fontSize: 30.0,
+                                                fontWeight: FontWeight.normal,
                                               ),
                                         ),
                                       ),
