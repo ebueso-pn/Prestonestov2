@@ -117,10 +117,10 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.asset(
-                              'assets/images/PN.png',
+                              'assets/images/PrestoNesto_Green_Color_2400x1800.jpg',
                               width: 300.0,
                               height: 95.0,
-                              fit: BoxFit.scaleDown,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
@@ -162,10 +162,16 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                             15.0, 0.0, 15.0, 0.0),
                                         child: AutoSizeText(
                                           'Tu Préstamo, Simplificado',
-                                          textAlign: TextAlign.start,
-                                          maxLines: 1,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
                                           style: FlutterFlowTheme.of(context)
-                                              .headlineLarge,
+                                              .headlineLarge
+                                              .override(
+                                                fontFamily: 'Urbanist',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBtnText,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -199,15 +205,15 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                             15.0, 0.0, 15.0, 0.0),
                                         child: AutoSizeText(
                                           'Aplica en 5 minutos',
-                                          textAlign: TextAlign.start,
-                                          maxLines: 1,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
                                           style: FlutterFlowTheme.of(context)
                                               .displayMedium
                                               .override(
                                                 fontFamily: 'Urbanist',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                        .primaryBtnText,
                                                 fontSize: 32.0,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -240,16 +246,16 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                             15.0, 0.0, 15.0, 0.0),
                                         child: AutoSizeText(
                                           'Sin Cobros Escondidos',
-                                          textAlign: TextAlign.start,
-                                          maxLines: 1,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
                                           style: FlutterFlowTheme.of(context)
                                               .displayMedium
                                               .override(
                                                 fontFamily: 'Urbanist',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                fontSize: 42.0,
+                                                        .primaryBtnText,
+                                                fontSize: 32.0,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                         ),
