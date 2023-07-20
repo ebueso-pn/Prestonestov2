@@ -190,17 +190,16 @@ class _ApplicationDNIValidationWidgetState
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    await widget.applicationRecieve!.update({
-                      'index': FieldValue.increment(1),
-                    });
                     _model.shuftiResponse = await ShuftiOnsiteWithOCRCall.call(
                       shuftiReference: currentUserReference?.id,
                     );
-                    if ((_model.shuftiResponse?.succeeded ?? true) == false) {
-                      await launchURL(ShuftiOnsiteWithOCRCall.verificiationURL(
-                        (_model.shuftiResponse?.jsonBody ?? ''),
-                      ).toString());
-                    }
+                    await launchURL(ShuftiOnsiteWithOCRCall.verificiationURL(
+                      (_model.shuftiResponse?.jsonBody ?? ''),
+                    ).toString());
+
+                    await widget.applicationRecieve!.update({
+                      'index': FieldValue.increment(1),
+                    });
 
                     setState(() {});
                   },

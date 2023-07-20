@@ -224,7 +224,7 @@ class GetAccessTokenCall {
 
 class ShuftiOnsiteWithOCRCall {
   static Future<ApiCallResponse> call({
-    String? shuftiReference = '99999999',
+    String? shuftiReference = '',
   }) {
     final body = '''
 {
