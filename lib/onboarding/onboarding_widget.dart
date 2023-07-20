@@ -176,7 +176,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                         'assets/lottie_animations/tmpzrejxg10.json',
                                         width: 350.0,
                                         height: 350.0,
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.fill,
                                         animate: true,
                                       ),
                                     ),
@@ -334,7 +334,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                             ],
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.0, -1.0),
+                            alignment: AlignmentDirectional(0.0, 0.7),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 80.0, 0.0, 0.0),
@@ -356,7 +356,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                   expansionFactor: 3.0,
                                   spacing: 8.0,
                                   radius: 16.0,
-                                  dotWidth: 42.0,
+                                  dotWidth: 10.0,
                                   dotHeight: 8.0,
                                   dotColor: Color(0xFFBDBDBD),
                                   activeDotColor: FlutterFlowTheme.of(context)
