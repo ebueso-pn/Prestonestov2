@@ -122,7 +122,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
                                 child: Image.asset(
-                                  'assets/images/PrestoNesto_Green_Color_2400x1800.jpg',
+                                  'assets/images/PrestoNesto_Inverted_Color_2400x1800.png',
                                   width: 300.0,
                                   height: 95.0,
                                   fit: BoxFit.cover,
@@ -315,7 +315,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       expansionFactor: 3.0,
                                       spacing: 8.0,
                                       radius: 16.0,
-                                      dotWidth: 10.0,
+                                      dotWidth: 35.0,
                                       dotHeight: 8.0,
                                       dotColor: Color(0xFFBDBDBD),
                                       activeDotColor:
