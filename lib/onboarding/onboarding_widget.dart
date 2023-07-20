@@ -151,14 +151,22 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          15.0, 0.0, 15.0, 0.0),
-                                      child: Text(
-                                        'Tu Préstamo, Simplificado',
-                                        textAlign: TextAlign.start,
-                                        style: FlutterFlowTheme.of(context)
-                                            .headlineLarge,
+                                    Align(
+                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            15.0, 0.0, 15.0, 0.0),
+                                        child: AutoSizeText(
+                                          'Tu Préstamo, Simplificado',
+                                          textAlign: TextAlign.start,
+                                          maxLines: 2,
+                                          style: FlutterFlowTheme.of(context)
+                                              .displaySmall
+                                              .override(
+                                                fontFamily: 'Urbanist',
+                                                fontSize: 32.0,
+                                              ),
+                                        ),
                                       ),
                                     ),
                                     Padding(
@@ -166,8 +174,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           0.0, 36.0, 0.0, 0.0),
                                       child: Lottie.asset(
                                         'assets/lottie_animations/tmpzrejxg10.json',
-                                        width: 300.0,
-                                        height: 300.0,
+                                        width: 350.0,
+                                        height: 350.0,
                                         fit: BoxFit.cover,
                                         animate: true,
                                       ),
