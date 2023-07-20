@@ -210,7 +210,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Cuota',
+                                'Cuota quincenal',
                                 style: FlutterFlowTheme.of(context).labelLarge,
                               ),
                               Text(

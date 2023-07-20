@@ -432,7 +432,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             EdgeInsetsDirectional.fromSTEB(
                                                 0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
+                                            .primaryBtnText,
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
