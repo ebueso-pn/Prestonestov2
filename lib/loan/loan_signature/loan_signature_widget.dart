@@ -365,7 +365,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                                       2,
                                   formatType: FormatType.custom,
                                   currency: 'L ',
-                                  format: '####.#',
+                                  format: '#,###.#',
                                   locale: '',
                                 ),
                                 style: FlutterFlowTheme.of(context)
