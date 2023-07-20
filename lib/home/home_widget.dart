@@ -189,43 +189,24 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
           context: context,
           desktop: false,
         )
-            ? PreferredSize(
-                preferredSize: Size.fromHeight(100.0),
-                child: AppBar(
-                  backgroundColor: FlutterFlowTheme.of(context).primary,
-                  automaticallyImplyLeading: false,
-                  actions: [],
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(-0.9, 0.0),
-                            child: Text(
-                              '¡Buen Día!',
-                              style: FlutterFlowTheme.of(context)
-                                  .headlineMedium
-                                  .override(
-                                    fontFamily: 'Urbanist',
-                                    color: Colors.white,
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    centerTitle: true,
-                    expandedTitleScale: 1.0,
+            ? AppBar(
+                backgroundColor: FlutterFlowTheme.of(context).primary,
+                automaticallyImplyLeading: false,
+                title: Align(
+                  alignment: AlignmentDirectional(-0.9, 0.0),
+                  child: Text(
+                    '¡Buen Día!',
+                    style: FlutterFlowTheme.of(context).headlineMedium.override(
+                          fontFamily: 'Urbanist',
+                          color: Colors.white,
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
-                  elevation: 2.0,
                 ),
+                actions: [],
+                centerTitle: false,
+                elevation: 2.0,
               )
             : null,
         body: SafeArea(
