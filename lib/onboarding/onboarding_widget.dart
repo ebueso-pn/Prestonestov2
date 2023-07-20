@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'onboarding_model.dart';
 export 'onboarding_model.dart';
@@ -144,76 +145,36 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                             children: [
                               Align(
                                 alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 50.0, 12.0, 12.0),
-                                  child: Container(
-                                    width: 300.0,
-                                    height: 350.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondary,
-                                      borderRadius: BorderRadius.circular(32.0),
-                                      shape: BoxShape.rectangle,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          15.0, 0.0, 15.0, 0.0),
+                                      child: Text(
+                                        'Tu Préstamo, Simplificado',
+                                        textAlign: TextAlign.start,
+                                        style: FlutterFlowTheme.of(context)
+                                            .headlineLarge,
+                                      ),
                                     ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 0.0, 15.0, 0.0),
-                                            child: Text(
-                                              'Tu Préstamo, Simplificado',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .displayMedium
-                                                  .override(
-                                                    fontFamily: 'Urbanist',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    fontSize: 42.0,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 30.0, 15.0, 0.0),
-                                            child: AutoSizeText(
-                                              '- Solicita tu crédito en minutos\n- Recibe tu desembolso en 24 horas\n- Sin cobros escondidos',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Urbanist',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    fontWeight: FontWeight.w300,
-                                                    lineHeight: 2.0,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ).animateOnPageLoad(animationsMap[
-                                        'columnOnPageLoadAnimation1']!),
-                                  ),
-                                ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 36.0, 0.0, 0.0),
+                                      child: Lottie.asset(
+                                        'assets/lottie_animations/Loan_Registration.json',
+                                        width: 300.0,
+                                        height: 300.0,
+                                        fit: BoxFit.cover,
+                                        animate: true,
+                                      ),
+                                    ),
+                                  ],
+                                ).animateOnPageLoad(animationsMap[
+                                    'columnOnPageLoadAnimation1']!),
                               ),
                               Align(
                                 alignment: AlignmentDirectional(0.0, 0.0),
