@@ -262,7 +262,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       ),
                                     ),
                                     Lottie.asset(
-                                      'assets/lottie_animations/financial-planning.json',
+                                      'assets/lottie_animations/tmpalk_ndtf.json',
                                       width: 350.0,
                                       height: 350.0,
                                       fit: BoxFit.cover,
