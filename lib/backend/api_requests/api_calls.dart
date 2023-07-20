@@ -224,14 +224,14 @@ class GetAccessTokenCall {
 
 class ShuftiOnsiteWithOCRCall {
   static Future<ApiCallResponse> call({
-    String? shuftiReference = '',
+    String? shuftiReference = '123456',
   }) {
     final body = '''
 {
   "reference": "${shuftiReference}",
   "country": "HN",
   "language": "ES",
-  "redirect_url": "prestonesto://prestonesto.co/applicationAddress",
+  "redirect_url": "https://prestonesto.co/applicationAddress",
   "verification_mode": "image_only",
   "document": {
     "supported_types": [
@@ -262,6 +262,19 @@ class ShuftiOnsiteWithOCRCall {
       cache: false,
     );
   }
+
+  static dynamic verificiationURL(dynamic response) => getJsonField(
+        response,
+        r'''$.verification_url''',
+      );
+  static dynamic userDocRef(dynamic response) => getJsonField(
+        response,
+        r'''$.reference''',
+      );
+  static dynamic status(dynamic response) => getJsonField(
+        response,
+        r'''$.event''',
+      );
 }
 
 class ApiPagingParams {

@@ -196,6 +196,11 @@ class _ApplicationDNIValidationWidgetState
                     _model.shuftiResponse = await ShuftiOnsiteWithOCRCall.call(
                       shuftiReference: currentUserReference?.id,
                     );
+                    if ((_model.shuftiResponse?.succeeded ?? true) == false) {
+                      await launchURL(ShuftiOnsiteWithOCRCall.verificiationURL(
+                        (_model.shuftiResponse?.jsonBody ?? ''),
+                      ).toString());
+                    }
 
                     setState(() {});
                   },
