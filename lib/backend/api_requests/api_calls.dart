@@ -234,7 +234,7 @@ class ShuftiOnsiteWithOCRCall {
   "verification_mode": "image_only",
   "document": {
     "supported_types": [
-      "id_card"
+      "id_card","driving_license"
     ],
   
     "allow_offline":"0"
