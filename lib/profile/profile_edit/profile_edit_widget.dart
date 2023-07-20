@@ -100,7 +100,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget> {
                                   GoRouter.of(context).clearRedirectLocation();
 
                                   context.goNamedAuth(
-                                      'Onboarding', context.mounted);
+                                      'OnboardingCopy', context.mounted);
                                 },
                               ),
                             ),

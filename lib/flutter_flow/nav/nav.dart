@@ -77,13 +77,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? NavBarPage() : OnboardingWidget(),
+          appStateNotifier.loggedIn ? NavBarPage() : OnboardingCopyWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : OnboardingWidget(),
+              appStateNotifier.loggedIn ? NavBarPage() : OnboardingCopyWidget(),
         ),
         FFRoute(
           name: 'Onboarding',
@@ -252,6 +252,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Profile_BankAccount',
           path: '/profileBankAccount',
           builder: (context, params) => ProfileBankAccountWidget(),
+        ),
+        FFRoute(
+          name: 'OnboardingCopy',
+          path: '/onboardingCopy',
+          builder: (context, params) => OnboardingCopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -418,7 +423,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/onboarding';
+            return '/onboardingCopy';
           }
           return null;
         },
