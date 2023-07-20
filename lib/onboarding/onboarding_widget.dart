@@ -165,7 +165,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 36.0, 0.0, 0.0),
                                       child: Lottie.asset(
-                                        'assets/lottie_animations/Loan_Registration.json',
+                                        'assets/lottie_animations/tmpzrejxg10.json',
                                         width: 300.0,
                                         height: 300.0,
                                         fit: BoxFit.cover,
