@@ -282,7 +282,7 @@ class _ApplicationLoanCalculatorWidgetState
                                     )),
                                 formatType: FormatType.custom,
                                 currency: 'L ',
-                                format: '###.#',
+                                format: '#,###.#',
                                 locale: '',
                               ),
                               style: FlutterFlowTheme.of(context)

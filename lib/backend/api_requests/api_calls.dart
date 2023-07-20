@@ -229,7 +229,6 @@ class ShuftiOnsiteWithOCRCall {
     final body = '''
 {
   "reference": "${shuftiReference}",
-  "country": "HN",
   "language": "ES",
   "redirect_url": "https://prestonesto.co/applicationAddress",
   "verification_mode": "image_only",
