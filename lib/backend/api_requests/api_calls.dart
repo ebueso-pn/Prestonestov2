@@ -231,21 +231,17 @@ class ShuftiOnsiteWithOCRCall {
   "reference": "${shuftiReference}",
   "country": "HN",
   "language": "ES",
-  "redirect_url": "http://www.prestonesto.co/applicationAddress",
+  "redirect_url": "prestonesto://prestonesto.co/applicationAddress",
   "verification_mode": "image_only",
   "document": {
     "supported_types": [
       "id_card"
     ],
-    "age": {
-      "min": "21",
-      "max": "70"
-    },
+  
     "allow_offline":"0"
   },
      "face" : {
-        "allow_offline" : "0",
-        "check_duplicate_request" : "1"
+        "allow_offline" : "0"
   }
 }''';
     return ApiManager.instance.makeApiCall(

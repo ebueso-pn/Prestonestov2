@@ -158,7 +158,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                         child: Text(
                                           'Tu Préstamo, Simplificado',
                                           textAlign: TextAlign.start,
-                                          maxLines: 2,
+                                          maxLines: 1,
                                           style: FlutterFlowTheme.of(context)
                                               .headlineLarge,
                                         ),
@@ -188,14 +188,14 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.0, 0.0),
+                                      alignment: AlignmentDirectional(0.0, 0.0),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             15.0, 0.0, 15.0, 0.0),
                                         child: Text(
                                           'Aplica en 5 minutos',
                                           textAlign: TextAlign.start,
+                                          maxLines: 1,
                                           style: FlutterFlowTheme.of(context)
                                               .displayMedium
                                               .override(
@@ -203,7 +203,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                fontSize: 42.0,
+                                                fontSize: 32.0,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                         ),
@@ -234,7 +234,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             15.0, 0.0, 15.0, 0.0),
                                         child: Text(
-                                          '¿Cómo Funciona?',
+                                          '',
                                           textAlign: TextAlign.start,
                                           style: FlutterFlowTheme.of(context)
                                               .displayMedium
