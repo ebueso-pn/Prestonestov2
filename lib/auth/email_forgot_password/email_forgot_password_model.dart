@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 class EmailForgotPasswordModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
+  final unfocusNode = FocusNode();
   // State field(s) for emailAddress widget.
   TextEditingController? emailAddressController;
   String? Function(BuildContext, String?)? emailAddressControllerValidator;
@@ -19,6 +20,7 @@ class EmailForgotPasswordModel extends FlutterFlowModel {
   void initState(BuildContext context) {}
 
   void dispose() {
+    unfocusNode.dispose();
     emailAddressController?.dispose();
   }
 
