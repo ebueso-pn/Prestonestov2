@@ -361,7 +361,8 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               Text(
                                 formatNumber(
                                   columnApplicationRecord!.cuotaAprobada *
-                                      columnApplicationRecord!.numeroDeCuotas,
+                                      columnApplicationRecord!.plazoAprobado *
+                                      2,
                                   formatType: FormatType.custom,
                                   currency: 'L ',
                                   format: '####.#',
