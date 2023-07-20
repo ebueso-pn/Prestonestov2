@@ -30,44 +30,6 @@ class _ApplicationLoanCalculatorWidgetState
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = {
-    'textOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(-60.0, 0.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'textOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(60.0, 0.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
     'containerOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
@@ -82,7 +44,7 @@ class _ApplicationLoanCalculatorWidgetState
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0.0, 60.0),
+          begin: Offset(0.0, -60.0),
           end: Offset(0.0, 0.0),
         ),
       ],
@@ -101,12 +63,31 @@ class _ApplicationLoanCalculatorWidgetState
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0.0, 80.0),
+          begin: Offset(0.0, 60.0),
           end: Offset(0.0, 0.0),
         ),
       ],
     ),
     'containerOnPageLoadAnimation3': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0.0, 80.0),
+          end: Offset(0.0, 0.0),
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation4': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
         FadeEffect(
@@ -285,8 +266,7 @@ class _ApplicationLoanCalculatorWidgetState
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.normal,
                                     ),
-                              ).animateOnPageLoad(
-                                  animationsMap['textOnPageLoadAnimation1']!),
+                              ),
                             ),
                             Text(
                               formatNumber(
@@ -312,12 +292,12 @@ class _ApplicationLoanCalculatorWidgetState
                                     color: FlutterFlowTheme.of(context).accent1,
                                     fontSize: 18.0,
                                   ),
-                            ).animateOnPageLoad(
-                                animationsMap['textOnPageLoadAnimation2']!),
+                            ),
                           ],
                         ),
                       ),
-                    ),
+                    ).animateOnPageLoad(
+                        animationsMap['containerOnPageLoadAnimation1']!),
                   ),
                   Padding(
                     padding:
@@ -407,7 +387,7 @@ class _ApplicationLoanCalculatorWidgetState
                         ),
                       ),
                     ).animateOnPageLoad(
-                        animationsMap['containerOnPageLoadAnimation1']!),
+                        animationsMap['containerOnPageLoadAnimation2']!),
                   ),
                   Padding(
                     padding:
@@ -491,7 +471,7 @@ class _ApplicationLoanCalculatorWidgetState
                         ),
                       ),
                     ).animateOnPageLoad(
-                        animationsMap['containerOnPageLoadAnimation2']!),
+                        animationsMap['containerOnPageLoadAnimation3']!),
                   ),
                   Padding(
                     padding:
@@ -554,7 +534,7 @@ class _ApplicationLoanCalculatorWidgetState
                         ),
                       ),
                     ).animateOnPageLoad(
-                        animationsMap['containerOnPageLoadAnimation3']!),
+                        animationsMap['containerOnPageLoadAnimation4']!),
                   ),
                   Align(
                     alignment: AlignmentDirectional(0.0, 0.0),

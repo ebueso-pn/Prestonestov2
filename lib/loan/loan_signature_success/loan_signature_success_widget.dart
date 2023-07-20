@@ -3,7 +3,6 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -160,7 +159,7 @@ class _LoanSignatureSuccessWidgetState
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 16.0, 0.0),
                       child: Text(
-                        'Ahora te vamos a hacer el desembolso',
+                        'Pronto te vamos a hacer el desembolso',
                         textAlign: TextAlign.start,
                         style: FlutterFlowTheme.of(context).bodyLarge.override(
                               fontFamily: 'Urbanist',
@@ -176,29 +175,6 @@ class _LoanSignatureSuccessWidgetState
                         EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        await LoansRecord.collection.doc().set({
-                          ...createLoansRecordData(
-                            applicationDocReference:
-                                loanSignatureSuccessApplicationRecord
-                                    ?.reference,
-                            userDocReference: currentUserReference,
-                            tasa: loanSignatureSuccessApplicationRecord
-                                ?.tasaMensualAprobada,
-                            cuota: loanSignatureSuccessApplicationRecord
-                                ?.cuotaAprobada,
-                            monto: loanSignatureSuccessApplicationRecord
-                                ?.montoAprobado,
-                            plazo: loanSignatureSuccessApplicationRecord
-                                ?.plazoAprobado,
-                          ),
-                          'FechaFirma': FieldValue.serverTimestamp(),
-                        });
-
-                        await loanSignatureSuccessApplicationRecord!.reference
-                            .update(createApplicationRecordData(
-                          status: 'Firmada',
-                        ));
-
                         context.pushNamed('Home');
                       },
                       text: 'Continuar',

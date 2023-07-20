@@ -410,7 +410,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                           ),
                                     ),
                                   ),
-                              ],
+                              ].divide(SizedBox(height: 1.5)),
                             ),
                           ),
                         ],
