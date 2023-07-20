@@ -161,7 +161,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             15.0, 0.0, 15.0, 0.0),
                                         child: AutoSizeText(
-                                          'Tu Préstamo, Simplificado',
+                                          'Tu préstamo, simplificado',
                                           textAlign: TextAlign.center,
                                           maxLines: 2,
                                           style: FlutterFlowTheme.of(context)
@@ -204,7 +204,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             15.0, 0.0, 15.0, 0.0),
                                         child: AutoSizeText(
-                                          'Aplica en 5 minutos',
+                                          'Sin cobros escondidos',
                                           textAlign: TextAlign.center,
                                           maxLines: 2,
                                           style: FlutterFlowTheme.of(context)
@@ -245,7 +245,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             15.0, 0.0, 15.0, 0.0),
                                         child: AutoSizeText(
-                                          'Sin Cobros Escondidos',
+                                          'Aplica en 2 minutos',
                                           textAlign: TextAlign.center,
                                           maxLines: 2,
                                           style: FlutterFlowTheme.of(context)
