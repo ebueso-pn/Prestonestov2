@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -110,13 +111,17 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                     children: [
                       Align(
                         alignment: AlignmentDirectional(0.0, 0.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.asset(
-                            'assets/images/PN.png',
-                            width: 300.0,
-                            height: 95.0,
-                            fit: BoxFit.scaleDown,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 24.0, 0.0, 0.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.asset(
+                              'assets/images/PN.png',
+                              width: 300.0,
+                              height: 95.0,
+                              fit: BoxFit.scaleDown,
+                            ),
                           ),
                         ),
                       ),
@@ -155,7 +160,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             15.0, 0.0, 15.0, 0.0),
-                                        child: Text(
+                                        child: AutoSizeText(
                                           'Tu Préstamo, Simplificado',
                                           textAlign: TextAlign.start,
                                           maxLines: 1,
@@ -192,7 +197,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             15.0, 0.0, 15.0, 0.0),
-                                        child: Text(
+                                        child: AutoSizeText(
                                           'Aplica en 5 minutos',
                                           textAlign: TextAlign.start,
                                           maxLines: 1,
@@ -233,9 +238,10 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             15.0, 0.0, 15.0, 0.0),
-                                        child: Text(
-                                          '',
+                                        child: AutoSizeText(
+                                          'Sin Cobros Escondidos',
                                           textAlign: TextAlign.start,
+                                          maxLines: 1,
                                           style: FlutterFlowTheme.of(context)
                                               .displayMedium
                                               .override(
@@ -250,7 +256,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       ),
                                     ),
                                     Lottie.asset(
-                                      'assets/lottie_animations/tmpim_xp9tz.json',
+                                      'assets/lottie_animations/tmpu0obnwsg.json',
                                       width: 350.0,
                                       height: 350.0,
                                       fit: BoxFit.cover,
