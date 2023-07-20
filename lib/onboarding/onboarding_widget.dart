@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -156,16 +155,12 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             15.0, 0.0, 15.0, 0.0),
-                                        child: AutoSizeText(
+                                        child: Text(
                                           'Tu Préstamo, Simplificado',
                                           textAlign: TextAlign.start,
                                           maxLines: 2,
                                           style: FlutterFlowTheme.of(context)
-                                              .displaySmall
-                                              .override(
-                                                fontFamily: 'Urbanist',
-                                                fontSize: 32.0,
-                                              ),
+                                              .headlineLarge,
                                         ),
                                       ),
                                     ),
@@ -186,150 +181,84 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                               ),
                               Align(
                                 alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 50.0, 12.0, 12.0),
-                                  child: Container(
-                                    width: 300.0,
-                                    height: 350.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondary,
-                                      borderRadius: BorderRadius.circular(32.0),
-                                      shape: BoxShape.rectangle,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Align(
+                                      alignment:
+                                          AlignmentDirectional(-1.0, 0.0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            15.0, 0.0, 15.0, 0.0),
+                                        child: Text(
+                                          'Aplica en 5 minutos',
+                                          textAlign: TextAlign.start,
+                                          style: FlutterFlowTheme.of(context)
+                                              .displayMedium
+                                              .override(
+                                                fontFamily: 'Urbanist',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 42.0,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ),
                                     ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 0.0, 15.0, 0.0),
-                                            child: Text(
-                                              'Requisitos ',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .displayMedium
-                                                  .override(
-                                                    fontFamily: 'Urbanist',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    fontSize: 42.0,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 30.0, 15.0, 0.0),
-                                            child: AutoSizeText(
-                                              '- Documento Nacional de Identidad (DNI)\n- Cuenta bancaria a tu nombre\n- Comprobante de Ingresos',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Urbanist',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    fontSize: 16.0,
-                                                    fontWeight: FontWeight.w300,
-                                                    lineHeight: 2.0,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ).animateOnPageLoad(animationsMap[
-                                        'columnOnPageLoadAnimation2']!),
-                                  ),
-                                ),
+                                    Lottie.asset(
+                                      'assets/lottie_animations/tmpth1s_av_.json',
+                                      width: 350.0,
+                                      height: 350.0,
+                                      fit: BoxFit.cover,
+                                      animate: true,
+                                    ),
+                                  ],
+                                ).animateOnPageLoad(animationsMap[
+                                    'columnOnPageLoadAnimation2']!),
                               ),
                               Align(
                                 alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 50.0, 12.0, 12.0),
-                                  child: Container(
-                                    width: 300.0,
-                                    height: 350.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondary,
-                                      borderRadius: BorderRadius.circular(32.0),
-                                      shape: BoxShape.rectangle,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Align(
+                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            15.0, 0.0, 15.0, 0.0),
+                                        child: Text(
+                                          '¿Cómo Funciona?',
+                                          textAlign: TextAlign.start,
+                                          style: FlutterFlowTheme.of(context)
+                                              .displayMedium
+                                              .override(
+                                                fontFamily: 'Urbanist',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 42.0,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ),
                                     ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 0.0, 15.0, 0.0),
-                                            child: Text(
-                                              '¿Cómo Funciona?',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .displayMedium
-                                                  .override(
-                                                    fontFamily: 'Urbanist',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    fontSize: 42.0,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 30.0, 15.0, 0.0),
-                                            child: AutoSizeText(
-                                              '- Monto máximo de L. 25,000\n- Tasa mensual máxima del 3.3%\n- Pagos quincenales',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Urbanist',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    fontWeight: FontWeight.w300,
-                                                    lineHeight: 2.0,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ).animateOnPageLoad(animationsMap[
-                                        'columnOnPageLoadAnimation3']!),
-                                  ),
-                                ),
+                                    Lottie.asset(
+                                      'assets/lottie_animations/tmpim_xp9tz.json',
+                                      width: 350.0,
+                                      height: 350.0,
+                                      fit: BoxFit.cover,
+                                      animate: true,
+                                    ),
+                                  ],
+                                ).animateOnPageLoad(animationsMap[
+                                    'columnOnPageLoadAnimation3']!),
                               ),
                             ],
                           ),
