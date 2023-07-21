@@ -209,7 +209,7 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                   flexibleSpace: FlexibleSpaceBar(
                     title: Column(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(

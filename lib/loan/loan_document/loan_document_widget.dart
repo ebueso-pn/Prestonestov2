@@ -90,57 +90,53 @@ class _LoanDocumentWidgetState extends State<LoanDocumentWidget> {
                       automaticallyImplyLeading: false,
                       actions: [],
                       flexibleSpace: FlexibleSpaceBar(
-                        title: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 14.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
-                                      child: FlutterFlowIconButton(
-                                        borderColor: Colors.transparent,
-                                        borderRadius: 30.0,
-                                        borderWidth: 1.0,
-                                        buttonSize: 50.0,
-                                        icon: Icon(
-                                          Icons.arrow_back_rounded,
-                                          color: Colors.white,
-                                          size: 30.0,
-                                        ),
-                                        onPressed: () async {
-                                          context.pop();
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  'Contrato de PrestoNesto',
-                                  style: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .override(
-                                        fontFamily: 'Urbanist',
+                        title: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 8.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12.0, 0.0, 0.0, 0.0),
+                                    child: FlutterFlowIconButton(
+                                      borderColor: Colors.transparent,
+                                      borderRadius: 30.0,
+                                      borderWidth: 1.0,
+                                      buttonSize: 50.0,
+                                      icon: Icon(
+                                        Icons.arrow_back_rounded,
                                         color: Colors.white,
-                                        fontSize: 22.0,
+                                        size: 30.0,
                                       ),
-                                ),
+                                      onPressed: () async {
+                                        context.pop();
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  24.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                'Contrato de PrestoNesto',
+                                style: FlutterFlowTheme.of(context)
+                                    .headlineMedium
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      color: Colors.white,
+                                      fontSize: 22.0,
+                                    ),
+                              ),
+                            ),
+                          ],
                         ),
                         centerTitle: true,
                         expandedTitleScale: 1.0,

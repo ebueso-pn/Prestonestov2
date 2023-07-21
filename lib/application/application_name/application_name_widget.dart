@@ -136,7 +136,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                   flexibleSpace: FlexibleSpaceBar(
                     title: Column(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
