@@ -224,7 +224,7 @@ class GetAccessTokenCall {
 
 class ShuftiOnsiteWithOCRCall {
   static Future<ApiCallResponse> call({
-    String? shuftiReference = '2342efgweg235',
+    String? shuftiReference = '777777',
   }) {
     final body = '''
 {
@@ -284,6 +284,49 @@ class ShuftiOnsiteWithOCRCall {
         true,
       );
   static dynamic additionaldata(dynamic response) => getJsonField(
+        response,
+        r'''$.additional_data''',
+        true,
+      );
+}
+
+class ShuftiStatusRequestCall {
+  static Future<ApiCallResponse> call({
+    String? shuftiReference = '210c8cGgadoTjrjZWOw4',
+  }) {
+    final body = '''
+{
+  "reference": "${shuftiReference}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Shufti Status Request',
+      apiUrl: 'https://api.shuftipro.com/',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Basic bzdQRnZLY0pNWktDSklXbEdCYjdEUkdxb0FmTTJreEVJZlBaUEtYSENzbVoxQ2hQcTUxNjg5MjExMTI1OjhNcWptU0hoNTBUMVVTekxPcmtNSm9pRVNyVGIxaHhu',
+      },
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic status(dynamic response) => getJsonField(
+        response,
+        r'''$.event''',
+      );
+  static dynamic verificationData(dynamic response) => getJsonField(
+        response,
+        r'''$.verification_data''',
+        true,
+      );
+  static dynamic additionalData(dynamic response) => getJsonField(
         response,
         r'''$.additional_data''',
         true,

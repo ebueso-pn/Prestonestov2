@@ -224,37 +224,30 @@ class _ApplicationDNIValidationWidgetState
                       child: FFButtonWidget(
                         onPressed: () async {
                           var _shouldSetState = false;
-                          _model.shuftiResponse =
-                              await ShuftiOnsiteWithOCRCall.call(
+                          _model.shuftiAPI = await ShuftiOnsiteWithOCRCall.call(
                             shuftiReference: widget.applicationRecieve?.id,
                           );
                           _shouldSetState = true;
                           await launchURL(
                               ShuftiOnsiteWithOCRCall.verificiationURL(
-                            (_model.shuftiResponse?.jsonBody ?? ''),
+                            (_model.shuftiAPI?.jsonBody ?? ''),
                           ).toString());
                           if (ShuftiOnsiteWithOCRCall.status(
-                                (_model.shuftiResponse?.jsonBody ?? ''),
+                                (_model.shuftiAPI?.jsonBody ?? ''),
                               ).toString() ==
                               'verification.accepted') {
                             await widget.applicationRecieve!.update({
-                              ...createApplicationRecordData(
-                                idVerifcationResult:
-                                    ShuftiOnsiteWithOCRCall.verificationresult(
-                                  (_model.shuftiResponse?.jsonBody ?? ''),
-                                ).toString(),
-                              ),
-                              'shufti_additional':
-                                  (ShuftiOnsiteWithOCRCall.additionaldata(
-                                (_model.shuftiResponse?.jsonBody ?? ''),
+                              'shufti_data':
+                                  (ShuftiOnsiteWithOCRCall.verificationdata(
+                                (_model.shuftiAPI?.jsonBody ?? ''),
                               ) as List)
                                       .map<String>((s) => s.toString())
                                       .toList()
                                       ?.map((e) => e.toString())
                                       .toList(),
-                              'shufti_data':
-                                  (ShuftiOnsiteWithOCRCall.verificationdata(
-                                (_model.shuftiResponse?.jsonBody ?? ''),
+                              'shufti_additional':
+                                  (ShuftiOnsiteWithOCRCall.additionaldata(
+                                (_model.shuftiAPI?.jsonBody ?? ''),
                               ) as List)
                                       .map<String>((s) => s.toString())
                                       .toList()

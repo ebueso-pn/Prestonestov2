@@ -22,11 +22,15 @@ class ApplicationDNIValidationModel extends FlutterFlowModel {
 
   bool buttonDisplay = true;
 
+  int maxattempts = 5;
+
+  int attemptcount = 0;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
   // Stores action output result for [Backend Call - API (Shufti Onsite with OCR)] action in Button widget.
-  ApiCallResponse? shuftiResponse;
+  ApiCallResponse? shuftiAPI;
 
   /// Initialization and disposal methods.
 
