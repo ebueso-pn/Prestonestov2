@@ -233,10 +233,10 @@ class _ApplicationDNIValidationWidgetState
                               ShuftiOnsiteWithOCRCall.verificiationURL(
                             (_model.shuftiResponse?.jsonBody ?? ''),
                           ).toString());
-                          if (ShuftiOnsiteWithOCRCall.verificationresult(
+                          if (ShuftiOnsiteWithOCRCall.status(
                                 (_model.shuftiResponse?.jsonBody ?? ''),
-                              ) ==
-                              _model.verificationPass) {
+                              ).toString() ==
+                              'verification.accepted') {
                             await widget.applicationRecieve!.update({
                               ...createApplicationRecordData(
                                 idVerifcationResult:
