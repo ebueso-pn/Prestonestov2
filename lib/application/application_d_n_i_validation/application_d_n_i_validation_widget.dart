@@ -233,10 +233,6 @@ class _ApplicationDNIValidationWidgetState
                               ShuftiOnsiteWithOCRCall.verificiationURL(
                             (_model.shuftiResponse?.jsonBody ?? ''),
                           ).toString());
-
-                          await widget.applicationRecieve!.update({
-                            'index': FieldValue.increment(1),
-                          });
                           if (ShuftiOnsiteWithOCRCall.verificationresult(
                                 (_model.shuftiResponse?.jsonBody ?? ''),
                               ) ==
@@ -275,6 +271,9 @@ class _ApplicationDNIValidationWidgetState
                             return;
                           }
 
+                          await widget.applicationRecieve!.update({
+                            'index': FieldValue.increment(1),
+                          });
                           if (_shouldSetState) setState(() {});
                         },
                         text: 'Verificar mi identidad',
