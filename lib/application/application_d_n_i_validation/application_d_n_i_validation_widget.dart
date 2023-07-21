@@ -5,11 +5,13 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+
 import 'application_d_n_i_validation_model.dart';
 export 'application_d_n_i_validation_model.dart';
 
@@ -102,7 +104,7 @@ class _ApplicationDNIValidationWidgetState
                           padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 0.0, 0.0, 0.0),
                           child: Text(
-                            'Shufti Pro',
+                            'Protejamos tu identidad',
                             style: FlutterFlowTheme.of(context)
                                 .headlineLarge
                                 .override(
@@ -191,8 +193,51 @@ class _ApplicationDNIValidationWidgetState
                 child: FFButtonWidget(
                   onPressed: () async {
                     _model.shuftiResponse = await ShuftiOnsiteWithOCRCall.call(
-                      shuftiReference: widget.applicationRecieve?.id,
+                      authObject: {
+                        "auth_type": "basic_auth",
+                        "client_id": clientId,
+                        "secret_key": secretKey,
+                      },
+                      createdPayload: {
+                        "country": "HN",
+                        "language": "ES",
+                        "email": "",
+                        "callback_url": "http://www.example.com",
+                        "redirect_url":
+                            "https://www.mydummy.package_sample.com/",
+                        "show_consent": 1,
+                        "show_privacy_policy": 1,
+                        "verification_mode": "image_only",
+                        "face": {},
+                        "document": {
+                          "supported_types": [
+                            "id_card",
+                          ],
+                          "name": {
+                            "first_name": "frstName",
+                            "last_name": "",
+                            "middle_name": "",
+                          },
+                          "dob": "",
+                          "document_number": "",
+                          "expiry_date": "",
+                          "issue_date": "",
+                          "fetch_enhanced_data": "",
+                          "gender": "",
+                          "backside_proof_required": "0",
+                        },
+                      },
+                      configObject: {
+                        "open_webview": false,
+                        "asyncRequest": false,
+                        "captureEnabled": false,
+                        "dark_mode": false,
+                        "font_color": "#263B54",
+                        "button_text_color": "#FFFFFF",
+                        "button_background_color": "#1F5AF6"
+                      },
                     );
+
                     await launchURL(ShuftiOnsiteWithOCRCall.verificiationURL(
                       (_model.shuftiResponse?.jsonBody ?? ''),
                     ).toString());
@@ -203,7 +248,7 @@ class _ApplicationDNIValidationWidgetState
 
                     setState(() {});
                   },
-                  text: 'Button',
+                  text: 'Verificar mi identidad',
                   options: FFButtonOptions(
                     height: 40.0,
                     padding:
