@@ -274,6 +274,20 @@ class ShuftiOnsiteWithOCRCall {
         response,
         r'''$.event''',
       );
+  static dynamic verificationresult(dynamic response) => getJsonField(
+        response,
+        r'''$.verification_result''',
+      );
+  static dynamic verificationdata(dynamic response) => getJsonField(
+        response,
+        r'''$.verification_data''',
+        true,
+      );
+  static dynamic additionaldata(dynamic response) => getJsonField(
+        response,
+        r'''$.additional_data''',
+        true,
+      );
 }
 
 class ApiPagingParams {

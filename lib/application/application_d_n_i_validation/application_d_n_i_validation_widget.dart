@@ -7,7 +7,9 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_d_n_i_validation_model.dart';
@@ -36,6 +38,13 @@ class _ApplicationDNIValidationWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => ApplicationDNIValidationModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+        _model.buttonDisplay = false;
+      });
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -102,7 +111,7 @@ class _ApplicationDNIValidationWidgetState
                           padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 0.0, 0.0, 0.0),
                           child: Text(
-                            'Shufti Pro',
+                            'Protejamos tu identidad',
                             style: FlutterFlowTheme.of(context)
                                 .headlineLarge
                                 .override(
@@ -187,42 +196,150 @@ class _ApplicationDNIValidationWidgetState
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    _model.shuftiResponse = await ShuftiOnsiteWithOCRCall.call(
-                      shuftiReference: widget.applicationRecieve?.id,
-                    );
-                    await launchURL(ShuftiOnsiteWithOCRCall.verificiationURL(
-                      (_model.shuftiResponse?.jsonBody ?? ''),
-                    ).toString());
-
-                    await widget.applicationRecieve!.update({
-                      'index': FieldValue.increment(1),
-                    });
-
-                    setState(() {});
-                  },
-                  text: 'Button',
-                  options: FFButtonOptions(
-                    height: 40.0,
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Urbanist',
-                          color: Colors.white,
-                        ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 48.0, 0.0, 0.0),
+                child: Text(
+                  'Hora de tomarnos fotos  📸',
+                  style: FlutterFlowTheme.of(context).headlineMedium,
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(0.0, 0.0),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
+                  child: Lottie.asset(
+                    'assets/lottie_animations/tmpo2dz_7be.json',
+                    width: 350.0,
+                    height: 350.0,
+                    fit: BoxFit.cover,
+                    animate: true,
                   ),
                 ),
+              ),
+              Builder(
+                builder: (context) {
+                  if (_model.buttonDisplay == false) {
+                    return Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          var _shouldSetState = false;
+                          _model.shuftiResponse =
+                              await ShuftiOnsiteWithOCRCall.call(
+                            shuftiReference: widget.applicationRecieve?.id,
+                          );
+                          _shouldSetState = true;
+                          await launchURL(
+                              ShuftiOnsiteWithOCRCall.verificiationURL(
+                            (_model.shuftiResponse?.jsonBody ?? ''),
+                          ).toString());
+
+                          await widget.applicationRecieve!.update({
+                            'index': FieldValue.increment(1),
+                          });
+                          if (ShuftiOnsiteWithOCRCall.verificationresult(
+                                (_model.shuftiResponse?.jsonBody ?? ''),
+                              ) ==
+                              _model.verificationPass) {
+                            await widget.applicationRecieve!.update({
+                              ...createApplicationRecordData(
+                                idVerifcationResult:
+                                    ShuftiOnsiteWithOCRCall.verificationresult(
+                                  (_model.shuftiResponse?.jsonBody ?? ''),
+                                ).toString(),
+                              ),
+                              'shufti_additional':
+                                  (ShuftiOnsiteWithOCRCall.additionaldata(
+                                (_model.shuftiResponse?.jsonBody ?? ''),
+                              ) as List)
+                                      .map<String>((s) => s.toString())
+                                      .toList()
+                                      ?.map((e) => e.toString())
+                                      .toList(),
+                              'shufti_data':
+                                  (ShuftiOnsiteWithOCRCall.verificationdata(
+                                (_model.shuftiResponse?.jsonBody ?? ''),
+                              ) as List)
+                                      .map<String>((s) => s.toString())
+                                      .toList()
+                                      ?.map((e) => e.toString())
+                                      .toList(),
+                            });
+                            await Future.delayed(
+                                const Duration(milliseconds: 500));
+                            setState(() {
+                              _model.buttonDisplay = true;
+                            });
+                          } else {
+                            if (_shouldSetState) setState(() {});
+                            return;
+                          }
+
+                          if (_shouldSetState) setState(() {});
+                        },
+                        text: 'Verificar mi identidad',
+                        options: FFButtonOptions(
+                          height: 40.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 24.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Urbanist',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          context.pushNamed(
+                            'Application_Address',
+                            queryParameters: {
+                              'applicationRecieve': serializeParam(
+                                widget.applicationRecieve,
+                                ParamType.DocumentReference,
+                              ),
+                            }.withoutNulls,
+                          );
+                        },
+                        text: 'Continuar',
+                        options: FFButtonOptions(
+                          width: 194.0,
+                          height: 40.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 24.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Urbanist',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    );
+                  }
+                },
               ),
             ],
           ),

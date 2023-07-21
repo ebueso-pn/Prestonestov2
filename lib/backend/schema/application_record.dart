@@ -111,6 +111,21 @@ class ApplicationRecord extends FirestoreRecord {
   bool get bureauConsent => _bureauConsent ?? false;
   bool hasBureauConsent() => _bureauConsent != null;
 
+  // "id_verifcation_result" field.
+  String? _idVerifcationResult;
+  String get idVerifcationResult => _idVerifcationResult ?? '';
+  bool hasIdVerifcationResult() => _idVerifcationResult != null;
+
+  // "shufti_additional" field.
+  List<String>? _shuftiAdditional;
+  List<String> get shuftiAdditional => _shuftiAdditional ?? const [];
+  bool hasShuftiAdditional() => _shuftiAdditional != null;
+
+  // "shufti_data" field.
+  List<String>? _shuftiData;
+  List<String> get shuftiData => _shuftiData ?? const [];
+  bool hasShuftiData() => _shuftiData != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -134,6 +149,9 @@ class ApplicationRecord extends FirestoreRecord {
     _fechaUltimoPago = snapshotData['fecha_ultimo_pago'] as DateTime?;
     _index = castToType<int>(snapshotData['index']);
     _bureauConsent = snapshotData['bureau_consent'] as bool?;
+    _idVerifcationResult = snapshotData['id_verifcation_result'] as String?;
+    _shuftiAdditional = getDataList(snapshotData['shufti_additional']);
+    _shuftiData = getDataList(snapshotData['shufti_data']);
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -195,6 +213,7 @@ Map<String, dynamic> createApplicationRecordData({
   DateTime? fechaUltimoPago,
   int? index,
   bool? bureauConsent,
+  String? idVerifcationResult,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -217,6 +236,7 @@ Map<String, dynamic> createApplicationRecordData({
       'fecha_ultimo_pago': fechaUltimoPago,
       'index': index,
       'bureau_consent': bureauConsent,
+      'id_verifcation_result': idVerifcationResult,
     }.withoutNulls,
   );
 
@@ -228,6 +248,7 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
 
   @override
   bool equals(ApplicationRecord? e1, ApplicationRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.applicationId == e2?.applicationId &&
         e1?.cuota == e2?.cuota &&
         e1?.tasaMensual == e2?.tasaMensual &&
@@ -246,7 +267,10 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e1?.fechaPrimerPago == e2?.fechaPrimerPago &&
         e1?.fechaUltimoPago == e2?.fechaUltimoPago &&
         e1?.index == e2?.index &&
-        e1?.bureauConsent == e2?.bureauConsent;
+        e1?.bureauConsent == e2?.bureauConsent &&
+        e1?.idVerifcationResult == e2?.idVerifcationResult &&
+        listEquality.equals(e1?.shuftiAdditional, e2?.shuftiAdditional) &&
+        listEquality.equals(e1?.shuftiData, e2?.shuftiData);
   }
 
   @override
@@ -269,7 +293,10 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.fechaPrimerPago,
         e?.fechaUltimoPago,
         e?.index,
-        e?.bureauConsent
+        e?.bureauConsent,
+        e?.idVerifcationResult,
+        e?.shuftiAdditional,
+        e?.shuftiData
       ]);
 
   @override
