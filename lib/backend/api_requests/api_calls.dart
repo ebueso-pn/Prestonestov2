@@ -41,10 +41,11 @@ class ZapSIgnCreateDocumentFromTemplateCall {
     String? tasaEfectivaMensualL = '',
     double? cuota,
     String? direccion = '',
+    String? documentReference = '',
   }) {
     final body = '''
 {
-  "template_id": "58e98150-afec-4a12-9f21-540bb271c54b",
+  "template_id": "f204dcc3-38a1-4724-abcb-bc3818714531",
   "signer_name": "${name}",
   "signer_email": "${email}",
   "signer_phone_number": "${phone}",
@@ -168,6 +169,10 @@ class ZapSIgnCreateDocumentFromTemplateCall {
     {
       "de": "{{DIRECCION}}",
       "para": "${direccion}"
+    },
+    {
+      "de": "{{DocReference}}",
+      "para": "${documentReference}"
     }
   ]
 }''';
@@ -189,6 +194,143 @@ class ZapSIgnCreateDocumentFromTemplateCall {
       cache: false,
     );
   }
+}
+
+class GetAccessTokenCall {
+  static Future<ApiCallResponse> call() {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Access Token',
+      apiUrl: 'https://api.shuftipro.com/get/access/token',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Basic bzdQRnZLY0pNWktDSklXbEdCYjdEUkdxb0FmTTJreEVJZlBaUEtYSENzbVoxQ2hQcTUxNjg5MjExMTI1OjhNcWptU0hoNTBUMVVTekxPcmtNSm9pRVNyVGIxaHhu',
+      },
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic accessToken(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+      );
+}
+
+class ShuftiOnsiteWithOCRCall {
+  static Future<ApiCallResponse> call({
+    String? shuftiReference = '777777',
+  }) {
+    final body = '''
+{
+  "reference": "${shuftiReference}",
+  "language": "ES",
+  "redirect_url": "https://prestonesto.co/applicationAddress",
+  "verification_mode": "image_only",
+  "document": {
+    "supported_types": [
+      "id_card","driving_license"
+    ],
+  
+    "allow_offline":"0"
+  },
+     "face" : {
+        "allow_offline" : "0"
+  }
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Shufti Onsite with OCR',
+      apiUrl: 'https://api.shuftipro.com/',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Basic bzdQRnZLY0pNWktDSklXbEdCYjdEUkdxb0FmTTJreEVJZlBaUEtYSENzbVoxQ2hQcTUxNjg5MjExMTI1OjhNcWptU0hoNTBUMVVTekxPcmtNSm9pRVNyVGIxaHhu',
+      },
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic verificiationURL(dynamic response) => getJsonField(
+        response,
+        r'''$.verification_url''',
+      );
+  static dynamic userDocRef(dynamic response) => getJsonField(
+        response,
+        r'''$.reference''',
+      );
+  static dynamic status(dynamic response) => getJsonField(
+        response,
+        r'''$.event''',
+      );
+  static dynamic verificationresult(dynamic response) => getJsonField(
+        response,
+        r'''$.verification_result''',
+      );
+  static dynamic verificationdata(dynamic response) => getJsonField(
+        response,
+        r'''$.verification_data''',
+        true,
+      );
+  static dynamic additionaldata(dynamic response) => getJsonField(
+        response,
+        r'''$.additional_data''',
+        true,
+      );
+}
+
+class ShuftiStatusRequestCall {
+  static Future<ApiCallResponse> call({
+    String? shuftiReference = '210c8cGgadoTjrjZWOw4',
+  }) {
+    final body = '''
+{
+  "reference": "${shuftiReference}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Shufti Status Request',
+      apiUrl: 'https://api.shuftipro.com/',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Basic bzdQRnZLY0pNWktDSklXbEdCYjdEUkdxb0FmTTJreEVJZlBaUEtYSENzbVoxQ2hQcTUxNjg5MjExMTI1OjhNcWptU0hoNTBUMVVTekxPcmtNSm9pRVNyVGIxaHhu',
+      },
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic status(dynamic response) => getJsonField(
+        response,
+        r'''$.event''',
+      );
+  static dynamic verificationData(dynamic response) => getJsonField(
+        response,
+        r'''$.verification_data''',
+        true,
+      );
+  static dynamic additionalData(dynamic response) => getJsonField(
+        response,
+        r'''$.additional_data''',
+        true,
+      );
 }
 
 class ApiPagingParams {

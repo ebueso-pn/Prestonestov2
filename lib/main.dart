@@ -1,3 +1,4 @@
+import '/custom_code/actions/index.dart' as actions;
 import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'flutter_flow/firebase_app_check_util.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 
@@ -22,6 +22,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   await initFirebase();
+
+  // Start initial custom actions code
+  await actions.portraitLock();
+  // End initial custom actions code
 
   await FlutterFlowTheme.initialize();
 
@@ -139,21 +143,14 @@ class _NavBarPageState extends State<NavBarPage> {
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
-    final MediaQueryData queryData = MediaQuery.of(context);
-
     return Scaffold(
-      body: MediaQuery(
-          data: queryData
-              .removeViewInsets(removeBottom: true)
-              .removeViewPadding(removeBottom: true),
-          child: _currentPage ?? tabs[_currentPageName]!),
-      extendBody: true,
+      body: _currentPage ?? tabs[_currentPageName],
       bottomNavigationBar: Visibility(
         visible: responsiveVisibility(
           context: context,
           desktop: false,
         ),
-        child: FloatingNavbar(
+        child: BottomNavigationBar(
           currentIndex: currentIndex,
           onTap: (i) => setState(() {
             _currentPage = null;
@@ -162,85 +159,33 @@ class _NavBarPageState extends State<NavBarPage> {
           backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
           selectedItemColor: FlutterFlowTheme.of(context).primary,
           unselectedItemColor: FlutterFlowTheme.of(context).secondaryText,
-          selectedBackgroundColor: Color(0x00000000),
-          borderRadius: 8.0,
-          itemBorderRadius: 8.0,
-          margin: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-          width: double.infinity,
-          elevation: 0.0,
-          items: [
-            FloatingNavbarItem(
-              customWidget: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.account_balance_wallet_outlined,
-                    color: currentIndex == 0
-                        ? FlutterFlowTheme.of(context).primary
-                        : FlutterFlowTheme.of(context).secondaryText,
-                    size: 24.0,
-                  ),
-                  Text(
-                    'Prestamos',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: currentIndex == 0
-                          ? FlutterFlowTheme.of(context).primary
-                          : FlutterFlowTheme.of(context).secondaryText,
-                      fontSize: 11.0,
-                    ),
-                  ),
-                ],
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.account_balance_wallet_outlined,
+                size: 24.0,
               ),
+              label: 'Prestamos',
+              tooltip: '',
             ),
-            FloatingNavbarItem(
-              customWidget: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.app_registration,
-                    color: currentIndex == 1
-                        ? FlutterFlowTheme.of(context).primary
-                        : FlutterFlowTheme.of(context).secondaryText,
-                    size: 24.0,
-                  ),
-                  Text(
-                    'Solicitud',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: currentIndex == 1
-                          ? FlutterFlowTheme.of(context).primary
-                          : FlutterFlowTheme.of(context).secondaryText,
-                      fontSize: 11.0,
-                    ),
-                  ),
-                ],
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.app_registration,
+                size: 24.0,
               ),
+              label: 'Solicitud',
+              tooltip: '',
             ),
-            FloatingNavbarItem(
-              customWidget: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.person_outline_sharp,
-                    color: currentIndex == 2
-                        ? FlutterFlowTheme.of(context).primary
-                        : FlutterFlowTheme.of(context).secondaryText,
-                    size: 24.0,
-                  ),
-                  Text(
-                    'Perfil',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: currentIndex == 2
-                          ? FlutterFlowTheme.of(context).primary
-                          : FlutterFlowTheme.of(context).secondaryText,
-                      fontSize: 11.0,
-                    ),
-                  ),
-                ],
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person_outline_rounded,
+                size: 28.0,
               ),
+              label: 'Perfil',
+              tooltip: '',
             )
           ],
         ),

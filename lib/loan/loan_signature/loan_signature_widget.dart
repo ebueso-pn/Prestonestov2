@@ -91,20 +91,6 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                                 },
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  4.0, 0.0, 0.0, 0.0),
-                              child: Text(
-                                'Back',
-                                style: FlutterFlowTheme.of(context)
-                                    .headlineMedium
-                                    .override(
-                                      fontFamily: 'Urbanist',
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                    ),
-                              ),
-                            ),
                           ],
                         ),
                         Padding(
@@ -154,7 +140,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           width: 50.0,
                           height: 50.0,
                           child: CircularProgressIndicator(
-                            color: Color(0xFF2AAF7A),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Color(0xFF2AAF7A),
+                            ),
                           ),
                         ),
                       );
@@ -178,7 +166,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 12.0),
                           child: Text(
-                            '¡Felicidades! ',
+                            '¡Aprobado! ',
                             style: FlutterFlowTheme.of(context).titleLarge,
                           ),
                         ),
@@ -222,7 +210,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Cuota',
+                                'Cuota quincenal',
                                 style: FlutterFlowTheme.of(context).labelLarge,
                               ),
                               Text(
@@ -355,6 +343,41 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                             ],
                           ),
                         ),
+                        Divider(
+                          thickness: 1.0,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 12.0, 0.0, 12.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Total a repagar',
+                                style: FlutterFlowTheme.of(context).labelLarge,
+                              ),
+                              Text(
+                                formatNumber(
+                                  columnApplicationRecord!.cuotaAprobada *
+                                      columnApplicationRecord!.plazoAprobado *
+                                      2,
+                                  formatType: FormatType.custom,
+                                  currency: 'L ',
+                                  format: '#,###.#',
+                                  locale: '',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyLarge
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     );
                   },
@@ -378,7 +401,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           width: 50.0,
                           height: 50.0,
                           child: CircularProgressIndicator(
-                            color: Color(0xFF2AAF7A),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Color(0xFF2AAF7A),
+                            ),
                           ),
                         ),
                       );
@@ -404,6 +429,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           fechaUltimoPago: functions.fechaUltimoPago(
                               getCurrentTimestamp,
                               buttonApplicationRecord!.plazoMeses),
+                          status: 'Aceptada',
                         ));
                         _model.zapSignAPIresponse =
                             await ZapSIgnCreateDocumentFromTemplateCall.call(
@@ -448,12 +474,12 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           ),
                           fechaPrimerPagoAno: dateTimeFormat(
                             'y',
-                            buttonApplicationRecord!.fechaPrimerPago,
+                            buttonApplicationRecord?.fechaPrimerPago,
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaUltimoPagoDia: dateTimeFormat(
                             'd',
-                            buttonApplicationRecord!.fechaUltimoPago,
+                            buttonApplicationRecord?.fechaUltimoPago,
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaUltimoPagoMes: dateTimeFormat(
@@ -468,7 +494,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                                 buttonApplicationRecord!.plazoAprobado),
                             locale: FFLocalizations.of(context).languageCode,
                           ),
-                          cuota: buttonApplicationRecord!.cuotaAprobada,
+                          cuota: buttonApplicationRecord?.cuotaAprobada,
                           tasaEfectivaMensual: functions.decimaltoPercent(
                               buttonApplicationRecord!.tasaMensualAprobada),
                           tasaEfectivaMensualL: functions.tasaEnLetras(
@@ -513,6 +539,24 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           return;
                         }
 
+                        await LoansRecord.collection
+                            .doc()
+                            .set(createLoansRecordData(
+                              applicationDocReference:
+                                  buttonApplicationRecord?.reference,
+                              userDocReference: currentUserReference,
+                              tasa:
+                                  buttonApplicationRecord?.tasaMensualAprobada,
+                              cuota: buttonApplicationRecord?.cuotaAprobada,
+                              monto: buttonApplicationRecord?.montoAprobado,
+                              plazo: buttonApplicationRecord?.plazoAprobado,
+                              fechaUltimoPago:
+                                  buttonApplicationRecord?.fechaUltimoPago,
+                              fechaCreado: getCurrentTimestamp,
+                              fechaPrimerPago:
+                                  buttonApplicationRecord?.fechaPrimerPago,
+                              balance: buttonApplicationRecord?.montoAprobado,
+                            ));
                         if (_shouldSetState) setState(() {});
                       },
                       text: 'Aceptar',

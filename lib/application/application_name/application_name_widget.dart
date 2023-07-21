@@ -2,11 +2,9 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_radio_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +12,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_name_model.dart';
 export 'application_name_model.dart';
@@ -158,6 +157,9 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
+                                  await widget.applicationRecieve!.update({
+                                    'index': FieldValue.increment(-(1)),
+                                  });
                                   context.pop();
                                 },
                               ),
@@ -190,50 +192,193 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
             : null,
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
-                    child: Text(
-                      'Como esta escrito en tu DNI. \nNecesitamos tu nombre para verificar tu identidad.',
-                      textAlign: TextAlign.start,
-                      style: FlutterFlowTheme.of(context).bodyLarge,
-                    ).animateOnPageLoad(
-                        animationsMap['textOnPageLoadAnimation']!),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 5.0,
+                                color: Color(0x3416202A),
+                                offset: Offset(0.0, 2.0),
+                              )
+                            ],
+                          ),
+                          child: StreamBuilder<ApplicationRecord>(
+                            stream: ApplicationRecord.getDocument(
+                                widget.applicationRecieve!),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Color(0xFF2AAF7A),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              final progressBarApplicationRecord =
+                                  snapshot.data!;
+                              return LinearPercentIndicator(
+                                percent: progressBarApplicationRecord.index / 5,
+                                lineHeight: 7.0,
+                                animation: true,
+                                progressColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                padding: EdgeInsets.zero,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              Form(
-                key: _model.formKey,
-                autovalidateMode: AutovalidateMode.disabled,
-                child: Column(
+                ),
+                Row(
                   mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
-                      child: Padding(
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 16.0),
+                      child: Text(
+                        'Como esta escrito en tu DNI. \nNecesitamos tu nombre para verificar tu identidad.',
+                        textAlign: TextAlign.start,
+                        style: FlutterFlowTheme.of(context).bodyLarge,
+                      ).animateOnPageLoad(
+                          animationsMap['textOnPageLoadAnimation']!),
+                    ),
+                  ],
+                ),
+                Form(
+                  key: _model.formKey,
+                  autovalidateMode: AutovalidateMode.disabled,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 16.0, 16.0, 16.0),
+                          child: TextFormField(
+                            controller: _model.nombresController,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              '_model.nombresController',
+                              Duration(milliseconds: 100),
+                              () async {
+                                if (_model.nombresController.text != null &&
+                                    _model.nombresController.text != '') {
+                                  setState(() {
+                                    FFAppState().nombresApplicationState =
+                                        false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    FFAppState().nombresApplicationState = true;
+                                  });
+                                }
+                              },
+                            ),
+                            onFieldSubmitted: (_) async {
+                              await currentUserReference!
+                                  .update(createUsersRecordData(
+                                nombres: _model.nombresController.text,
+                              ));
+                            },
+                            autofocus: true,
+                            textCapitalization: TextCapitalization.words,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Nombres',
+                              labelStyle:
+                                  FlutterFlowTheme.of(context).labelLarge,
+                              hintText: 'Juan Pablo',
+                              hintStyle: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Urbanist',
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FFAppState().nombresApplicationState
+                                      ? FlutterFlowTheme.of(context).error
+                                      : FlutterFlowTheme.of(context).alternate,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(42.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FFAppState().nombresApplicationState
+                                      ? FlutterFlowTheme.of(context).error
+                                      : FlutterFlowTheme.of(context).alternate,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(42.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).error,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(42.0),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).error,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(42.0),
+                              ),
+                            ),
+                            style: FlutterFlowTheme.of(context).bodyMedium,
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.name,
+                            validator: _model.nombresControllerValidator
+                                .asValidator(context),
+                          ),
+                        ),
+                      ),
+                      Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 16.0, 16.0, 16.0),
                         child: TextFormField(
-                          controller: _model.nombresController,
+                          controller: _model.apellidosController,
                           onChanged: (_) => EasyDebounce.debounce(
-                            '_model.nombresController',
+                            '_model.apellidosController',
                             Duration(milliseconds: 100),
                             () async {
-                              if (_model.nombresController.text != null &&
-                                  _model.nombresController.text != '') {
+                              if (_model.apellidosController.text != null &&
+                                  _model.apellidosController.text != '') {
                                 setState(() {
-                                  FFAppState().nombresApplicationState = false;
+                                  FFAppState().apellidosApplicationState =
+                                      false;
                                 });
                               } else {
                                 setState(() {
-                                  FFAppState().nombresApplicationState = true;
+                                  FFAppState().apellidosApplicationState = true;
                                 });
                               }
                             },
@@ -241,16 +386,15 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           onFieldSubmitted: (_) async {
                             await currentUserReference!
                                 .update(createUsersRecordData(
-                              nombres: _model.nombresController.text,
+                              apellidos: _model.apellidosController.text,
                             ));
                           },
-                          autofocus: true,
                           textCapitalization: TextCapitalization.words,
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText: 'Nombres',
+                            labelText: 'Apellidos',
                             labelStyle: FlutterFlowTheme.of(context).labelLarge,
-                            hintText: 'Juan Pablo',
+                            hintText: 'Perez Gomez',
                             hintStyle: FlutterFlowTheme.of(context)
                                 .labelMedium
                                 .override(
@@ -259,7 +403,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                                 ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: FFAppState().nombresApplicationState
+                                color: FFAppState().apellidosApplicationState
                                     ? FlutterFlowTheme.of(context).error
                                     : FlutterFlowTheme.of(context).alternate,
                                 width: 2.0,
@@ -268,7 +412,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: FFAppState().nombresApplicationState
+                                color: FFAppState().apellidosApplicationState
                                     ? FlutterFlowTheme.of(context).error
                                     : FlutterFlowTheme.of(context).alternate,
                                 width: 2.0,
@@ -293,293 +437,187 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           style: FlutterFlowTheme.of(context).bodyMedium,
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.name,
-                          validator: _model.nombresControllerValidator
+                          validator: _model.apellidosControllerValidator
                               .asValidator(context),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 16.0, 16.0, 16.0),
-                      child: TextFormField(
-                        controller: _model.apellidosController,
-                        onChanged: (_) => EasyDebounce.debounce(
-                          '_model.apellidosController',
-                          Duration(milliseconds: 100),
-                          () async {
-                            if (_model.apellidosController.text != null &&
-                                _model.apellidosController.text != '') {
-                              setState(() {
-                                FFAppState().apellidosApplicationState = false;
-                              });
-                            } else {
-                              setState(() {
-                                FFAppState().apellidosApplicationState = true;
-                              });
-                            }
-                          },
-                        ),
-                        onFieldSubmitted: (_) async {
-                          await currentUserReference!
-                              .update(createUsersRecordData(
-                            apellidos: _model.apellidosController.text,
-                          ));
-                        },
-                        textCapitalization: TextCapitalization.words,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Apellidos',
-                          labelStyle: FlutterFlowTheme.of(context).labelLarge,
-                          hintText: 'Perez Gomez',
-                          hintStyle:
-                              FlutterFlowTheme.of(context).labelMedium.override(
-                                    fontFamily: 'Urbanist',
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FFAppState().apellidosApplicationState
-                                  ? FlutterFlowTheme.of(context).error
-                                  : FlutterFlowTheme.of(context).alternate,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FFAppState().apellidosApplicationState
-                                  ? FlutterFlowTheme.of(context).error
-                                  : FlutterFlowTheme.of(context).alternate,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).error,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).error,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.name,
-                        validator: _model.apellidosControllerValidator
-                            .asValidator(context),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 16.0, 16.0, 16.0),
-                      child: TextFormField(
-                        controller: _model.dniController,
-                        onChanged: (_) => EasyDebounce.debounce(
-                          '_model.dniController',
-                          Duration(milliseconds: 100),
-                          () async {
-                            if (_model.dniController.text != null &&
-                                _model.dniController.text != '') {
-                              setState(() {
-                                FFAppState().DNIapplicationState = false;
-                              });
-                            } else {
-                              setState(() {
-                                FFAppState().DNIapplicationState = true;
-                              });
-                            }
-                          },
-                        ),
-                        onFieldSubmitted: (_) async {
-                          await currentUserReference!
-                              .update(createUsersRecordData(
-                            dni: '',
-                          ));
-                        },
-                        textCapitalization: TextCapitalization.none,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Documento Nacional de Identidad (DNI)',
-                          labelStyle: FlutterFlowTheme.of(context).labelLarge,
-                          hintText: '0801-1989-00000',
-                          hintStyle:
-                              FlutterFlowTheme.of(context).labelMedium.override(
-                                    fontFamily: 'Urbanist',
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FFAppState().DNIapplicationState
-                                  ? FlutterFlowTheme.of(context).error
-                                  : FlutterFlowTheme.of(context).alternate,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FFAppState().DNIapplicationState
-                                  ? FlutterFlowTheme.of(context).error
-                                  : FlutterFlowTheme.of(context).alternate,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).error,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).error,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
-                        validator:
-                            _model.dniControllerValidator.asValidator(context),
-                        inputFormatters: [_model.dniMask],
-                      ),
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            28.0, 16.0, 16.0, 0.0),
-                        child: Text(
-                          '¿Podemos Revisar tu historial crediticio en el Buró?',
-                          style: FlutterFlowTheme.of(context).bodyMedium,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
+                      Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 16.0, 16.0, 16.0),
-                        child: FlutterFlowRadioButton(
-                          options: ['¡Si, de acuerdo!'].toList(),
-                          onChanged: (val) => setState(() {}),
-                          controller: _model.radioButtonValueController ??=
-                              FormFieldController<String>(null),
-                          optionHeight: 32.0,
-                          textStyle: FlutterFlowTheme.of(context).labelMedium,
-                          selectedTextStyle:
-                              FlutterFlowTheme.of(context).bodyMedium,
-                          buttonPosition: RadioButtonPosition.left,
-                          direction: Axis.vertical,
-                          radioButtonColor:
-                              FlutterFlowTheme.of(context).primary,
-                          inactiveRadioButtonColor:
-                              FlutterFlowTheme.of(context).secondaryText,
-                          toggleable: true,
-                          horizontalAlignment: WrapAlignment.start,
-                          verticalAlignment: WrapCrossAlignment.start,
+                        child: TextFormField(
+                          controller: _model.dniController,
+                          onChanged: (_) => EasyDebounce.debounce(
+                            '_model.dniController',
+                            Duration(milliseconds: 100),
+                            () async {
+                              if (_model.dniController.text != null &&
+                                  _model.dniController.text != '') {
+                                setState(() {
+                                  FFAppState().DNIapplicationState = false;
+                                });
+                              } else {
+                                setState(() {
+                                  FFAppState().DNIapplicationState = true;
+                                });
+                              }
+                            },
+                          ),
+                          onFieldSubmitted: (_) async {
+                            await currentUserReference!
+                                .update(createUsersRecordData(
+                              dni: '',
+                            ));
+                          },
+                          textCapitalization: TextCapitalization.none,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelText: 'Documento Nacional de Identidad (DNI)',
+                            labelStyle: FlutterFlowTheme.of(context).labelLarge,
+                            hintText: '0801-1989-00000',
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  fontFamily: 'Urbanist',
+                                  fontStyle: FontStyle.italic,
+                                ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FFAppState().DNIapplicationState
+                                    ? FlutterFlowTheme.of(context).error
+                                    : FlutterFlowTheme.of(context).alternate,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(42.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FFAppState().DNIapplicationState
+                                    ? FlutterFlowTheme.of(context).error
+                                    : FlutterFlowTheme.of(context).alternate,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(42.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(42.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(42.0),
+                            ),
+                          ),
+                          style: FlutterFlowTheme.of(context).bodyMedium,
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          validator: _model.dniControllerValidator
+                              .asValidator(context),
+                          inputFormatters: [_model.dniMask],
                         ),
                       ),
-                    ),
-                  ],
-                ).animateOnPageLoad(
-                    animationsMap['columnOnPageLoadAnimation']!),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    if (_model.nombresController.text != null &&
-                        _model.nombresController.text != '') {
-                      setState(() {
-                        FFAppState().nombresApplicationState = false;
-                      });
-                    } else {
-                      setState(() {
-                        FFAppState().nombresApplicationState = true;
-                      });
-                    }
+                    ],
+                  ).animateOnPageLoad(
+                      animationsMap['columnOnPageLoadAnimation']!),
+                ),
+                Align(
+                  alignment: AlignmentDirectional(0.0, 0.0),
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        if (_model.nombresController.text != null &&
+                            _model.nombresController.text != '') {
+                          setState(() {
+                            FFAppState().nombresApplicationState = false;
+                          });
+                        } else {
+                          setState(() {
+                            FFAppState().nombresApplicationState = true;
+                          });
+                        }
 
-                    if (_model.apellidosController.text != null &&
-                        _model.apellidosController.text != '') {
-                      setState(() {
-                        FFAppState().apellidosApplicationState = false;
-                      });
-                    } else {
-                      setState(() {
-                        FFAppState().apellidosApplicationState = true;
-                      });
-                    }
+                        if (_model.apellidosController.text != null &&
+                            _model.apellidosController.text != '') {
+                          setState(() {
+                            FFAppState().apellidosApplicationState = false;
+                          });
+                        } else {
+                          setState(() {
+                            FFAppState().apellidosApplicationState = true;
+                          });
+                        }
 
-                    if (_model.dniController.text != null &&
-                        _model.dniController.text != '') {
-                      setState(() {
-                        FFAppState().DNIapplicationState = false;
-                      });
-                    } else {
-                      setState(() {
-                        FFAppState().DNIapplicationState = true;
-                      });
-                    }
+                        if (_model.dniController.text != null &&
+                            _model.dniController.text != '') {
+                          setState(() {
+                            FFAppState().DNIapplicationState = false;
+                          });
+                        } else {
+                          setState(() {
+                            FFAppState().DNIapplicationState = true;
+                          });
+                        }
 
-                    if (_model.formKey.currentState == null ||
-                        !_model.formKey.currentState!.validate()) {
-                      return;
-                    }
-                    if (_model.radioButtonValue == null) {
-                      return;
-                    }
+                        if (_model.formKey.currentState == null ||
+                            !_model.formKey.currentState!.validate()) {
+                          return;
+                        }
 
-                    await currentUserReference!.update(createUsersRecordData(
-                      nombres: _model.nombresController.text,
-                      apellidos: _model.apellidosController.text,
-                      dni: _model.dniController.text,
-                    ));
+                        await currentUserReference!
+                            .update(createUsersRecordData(
+                          nombres: _model.nombresController.text,
+                          apellidos: _model.apellidosController.text,
+                          dni: _model.dniController.text,
+                        ));
 
-                    context.pushNamed(
-                      'Application_DNI_Validation',
-                      queryParameters: {
-                        'applicationRecieve': serializeParam(
-                          widget.applicationRecieve,
-                          ParamType.DocumentReference,
+                        await widget.applicationRecieve!.update({
+                          'index': FieldValue.increment(1),
+                        });
+
+                        context.pushNamed(
+                          'Application_DNI_Validation',
+                          queryParameters: {
+                            'applicationRecieve': serializeParam(
+                              widget.applicationRecieve,
+                              ParamType.DocumentReference,
+                            ),
+                          }.withoutNulls,
+                        );
+                      },
+                      text: 'Continuar',
+                      options: FFButtonOptions(
+                        width: 230.0,
+                        height: 50.0,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primary,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Urbanist',
+                                  color: Colors.white,
+                                ),
+                        elevation: 3.0,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
                         ),
-                      }.withoutNulls,
-                    );
-                  },
-                  text: 'Continuar',
-                  options: FFButtonOptions(
-                    width: 230.0,
-                    height: 50.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Urbanist',
-                          color: Colors.white,
-                        ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(48.0),
+                        borderRadius: BorderRadius.circular(48.0),
+                      ),
+                    ).animateOnPageLoad(
+                        animationsMap['buttonOnPageLoadAnimation']!),
                   ),
-                ).animateOnPageLoad(
-                    animationsMap['buttonOnPageLoadAnimation']!),
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

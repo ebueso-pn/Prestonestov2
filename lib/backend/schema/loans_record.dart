@@ -56,6 +56,31 @@ class LoansRecord extends FirestoreRecord {
   double get plazo => _plazo ?? 0.0;
   bool hasPlazo() => _plazo != null;
 
+  // "fecha_ultimo_pago" field.
+  DateTime? _fechaUltimoPago;
+  DateTime? get fechaUltimoPago => _fechaUltimoPago;
+  bool hasFechaUltimoPago() => _fechaUltimoPago != null;
+
+  // "fecha_primer_pago" field.
+  DateTime? _fechaPrimerPago;
+  DateTime? get fechaPrimerPago => _fechaPrimerPago;
+  bool hasFechaPrimerPago() => _fechaPrimerPago != null;
+
+  // "FechaCreado" field.
+  DateTime? _fechaCreado;
+  DateTime? get fechaCreado => _fechaCreado;
+  bool hasFechaCreado() => _fechaCreado != null;
+
+  // "status" field.
+  String? _status;
+  String get status => _status ?? '';
+  bool hasStatus() => _status != null;
+
+  // "Balance" field.
+  double? _balance;
+  double get balance => _balance ?? 0.0;
+  bool hasBalance() => _balance != null;
+
   void _initializeFields() {
     _applicationDocReference =
         snapshotData['ApplicationDocReference'] as DocumentReference?;
@@ -66,6 +91,11 @@ class LoansRecord extends FirestoreRecord {
     _monto = castToType<double>(snapshotData['Monto']);
     _fechaFirma = snapshotData['FechaFirma'] as DateTime?;
     _plazo = castToType<double>(snapshotData['Plazo']);
+    _fechaUltimoPago = snapshotData['fecha_ultimo_pago'] as DateTime?;
+    _fechaPrimerPago = snapshotData['fecha_primer_pago'] as DateTime?;
+    _fechaCreado = snapshotData['FechaCreado'] as DateTime?;
+    _status = snapshotData['status'] as String?;
+    _balance = castToType<double>(snapshotData['Balance']);
   }
 
   static CollectionReference get collection =>
@@ -110,6 +140,11 @@ Map<String, dynamic> createLoansRecordData({
   double? monto,
   DateTime? fechaFirma,
   double? plazo,
+  DateTime? fechaUltimoPago,
+  DateTime? fechaPrimerPago,
+  DateTime? fechaCreado,
+  String? status,
+  double? balance,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -121,6 +156,11 @@ Map<String, dynamic> createLoansRecordData({
       'Monto': monto,
       'FechaFirma': fechaFirma,
       'Plazo': plazo,
+      'fecha_ultimo_pago': fechaUltimoPago,
+      'fecha_primer_pago': fechaPrimerPago,
+      'FechaCreado': fechaCreado,
+      'status': status,
+      'Balance': balance,
     }.withoutNulls,
   );
 
@@ -139,7 +179,12 @@ class LoansRecordDocumentEquality implements Equality<LoansRecord> {
         e1?.cuota == e2?.cuota &&
         e1?.monto == e2?.monto &&
         e1?.fechaFirma == e2?.fechaFirma &&
-        e1?.plazo == e2?.plazo;
+        e1?.plazo == e2?.plazo &&
+        e1?.fechaUltimoPago == e2?.fechaUltimoPago &&
+        e1?.fechaPrimerPago == e2?.fechaPrimerPago &&
+        e1?.fechaCreado == e2?.fechaCreado &&
+        e1?.status == e2?.status &&
+        e1?.balance == e2?.balance;
   }
 
   @override
@@ -151,7 +196,12 @@ class LoansRecordDocumentEquality implements Equality<LoansRecord> {
         e?.cuota,
         e?.monto,
         e?.fechaFirma,
-        e?.plazo
+        e?.plazo,
+        e?.fechaUltimoPago,
+        e?.fechaPrimerPago,
+        e?.fechaCreado,
+        e?.status,
+        e?.balance
       ]);
 
   @override

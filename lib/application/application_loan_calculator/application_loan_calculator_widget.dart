@@ -1,7 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -31,44 +30,6 @@ class _ApplicationLoanCalculatorWidgetState
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = {
-    'textOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(-60.0, 0.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'textOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(60.0, 0.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
     'containerOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
@@ -83,7 +44,7 @@ class _ApplicationLoanCalculatorWidgetState
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0.0, 60.0),
+          begin: Offset(0.0, -60.0),
           end: Offset(0.0, 0.0),
         ),
       ],
@@ -102,12 +63,31 @@ class _ApplicationLoanCalculatorWidgetState
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0.0, 80.0),
+          begin: Offset(0.0, 60.0),
           end: Offset(0.0, 0.0),
         ),
       ],
     ),
     'containerOnPageLoadAnimation3': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0.0, 80.0),
+          end: Offset(0.0, 0.0),
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation4': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
         FadeEffect(
@@ -183,7 +163,9 @@ class _ApplicationLoanCalculatorWidgetState
                 width: 50.0,
                 height: 50.0,
                 child: CircularProgressIndicator(
-                  color: Color(0xFF2AAF7A),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Color(0xFF2AAF7A),
+                  ),
                 ),
               ),
             ),
@@ -191,10 +173,6 @@ class _ApplicationLoanCalculatorWidgetState
         }
         List<ApplicationRecord> applicationLoanCalculatorApplicationRecordList =
             snapshot.data!;
-        // Return an empty Container when the item does not exist.
-        if (snapshot.data!.isEmpty) {
-          return Container();
-        }
         final applicationLoanCalculatorApplicationRecord =
             applicationLoanCalculatorApplicationRecordList.isNotEmpty
                 ? applicationLoanCalculatorApplicationRecordList.first
@@ -217,61 +195,14 @@ class _ApplicationLoanCalculatorWidgetState
                       flexibleSpace: FlexibleSpaceBar(
                         title: Column(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 0.0, 0.0, 0.0),
-                                  child: FlutterFlowIconButton(
-                                    borderColor: Colors.transparent,
-                                    borderRadius: 30.0,
-                                    borderWidth: 1.0,
-                                    buttonSize: 50.0,
-                                    icon: Icon(
-                                      Icons.arrow_back_rounded,
-                                      color: Colors.white,
-                                      size: 30.0,
-                                    ),
-                                    onPressed: () async {
-                                      context.pop();
-                                    },
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(1.0, 0.0),
-                                  child: FlutterFlowIconButton(
-                                    borderColor: Colors.transparent,
-                                    borderRadius: 30.0,
-                                    borderWidth: 1.0,
-                                    buttonSize: 50.0,
-                                    icon: Icon(
-                                      Icons.logout,
-                                      color: Colors.white,
-                                      size: 30.0,
-                                    ),
-                                    onPressed: () async {
-                                      GoRouter.of(context).prepareAuthEvent();
-                                      await authManager.signOut();
-                                      GoRouter.of(context)
-                                          .clearRedirectLocation();
-
-                                      context.goNamedAuth(
-                                          'Onboarding', context.mounted);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
                             Align(
                               alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 0.0, 0.0, 0.0),
+                                    24.0, 0.0, 0.0, 24.0),
                                 child: Text(
                                   'Calculadora Prestonesto',
                                   style: FlutterFlowTheme.of(context)
@@ -303,50 +234,70 @@ class _ApplicationLoanCalculatorWidgetState
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 24.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
-                          child: Text(
-                            'Cuota quincenal estimada: ',
-                            style: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .override(
-                                  fontFamily: 'Urbanist',
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                          ).animateOnPageLoad(
-                              animationsMap['textOnPageLoadAnimation1']!),
-                        ),
-                        Text(
-                          formatNumber(
-                            functions.loanCalculator(
-                                valueOrDefault<double>(
-                                  _model.loanAmtValue,
-                                  1000.0,
-                                ),
-                                .033,
-                                valueOrDefault<double>(
-                                  _model.loanTermValue,
-                                  3.0,
-                                )),
-                            formatType: FormatType.custom,
-                            currency: 'L. ',
-                            format: '###.##',
-                            locale: '',
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).titleLarge.override(
+                        EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 12.0),
+                    child: Container(
+                      width: double.infinity,
+                      height: 75.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            color: Color(0x3416202A),
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            12.0, 24.0, 12.0, 24.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Text(
+                                'Cuota quincenal estimada: ',
+                                style: FlutterFlowTheme.of(context)
+                                    .titleLarge
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Text(
+                              formatNumber(
+                                functions.loanCalculator(
+                                    valueOrDefault<double>(
+                                      _model.loanAmtValue,
+                                      1000.0,
+                                    ),
+                                    .033,
+                                    valueOrDefault<double>(
+                                      _model.loanTermValue,
+                                      3.0,
+                                    )),
+                                formatType: FormatType.custom,
+                                currency: 'L ',
+                                format: '#,###.#',
+                                locale: '',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .titleLarge
+                                  .override(
                                     fontFamily: 'Urbanist',
                                     color: FlutterFlowTheme.of(context).accent1,
+                                    fontSize: 18.0,
                                   ),
-                        ).animateOnPageLoad(
-                            animationsMap['textOnPageLoadAnimation2']!),
-                      ],
-                    ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ).animateOnPageLoad(
+                        animationsMap['containerOnPageLoadAnimation1']!),
                   ),
                   Padding(
                     padding:
@@ -356,6 +307,13 @@ class _ApplicationLoanCalculatorWidgetState
                       height: 100.0,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            color: Color(0x3416202A),
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Padding(
@@ -372,8 +330,12 @@ class _ApplicationLoanCalculatorWidgetState
                                   alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     'Monto de tu Prestamo: ',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Urbanist',
+                                          fontSize: 16.0,
+                                        ),
                                   ),
                                 ),
                                 Align(
@@ -384,7 +346,7 @@ class _ApplicationLoanCalculatorWidgetState
                                         _model.loanAmtValue,
                                         formatType: FormatType.decimal,
                                         decimalType: DecimalType.automatic,
-                                        currency: 'L. ',
+                                        currency: 'L ',
                                       ),
                                       '1000',
                                     ),
@@ -394,6 +356,7 @@ class _ApplicationLoanCalculatorWidgetState
                                           fontFamily: 'Urbanist',
                                           color: FlutterFlowTheme.of(context)
                                               .accent1,
+                                          fontSize: 16.0,
                                         ),
                                   ),
                                 ),
@@ -424,7 +387,7 @@ class _ApplicationLoanCalculatorWidgetState
                         ),
                       ),
                     ).animateOnPageLoad(
-                        animationsMap['containerOnPageLoadAnimation1']!),
+                        animationsMap['containerOnPageLoadAnimation2']!),
                   ),
                   Padding(
                     padding:
@@ -434,6 +397,13 @@ class _ApplicationLoanCalculatorWidgetState
                       height: 100.0,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            color: Color(0x3416202A),
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Padding(
@@ -450,8 +420,12 @@ class _ApplicationLoanCalculatorWidgetState
                                   alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     'Tiempo de Repago: ',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Urbanist',
+                                          fontSize: 16.0,
+                                        ),
                                   ),
                                 ),
                                 Align(
@@ -472,6 +446,7 @@ class _ApplicationLoanCalculatorWidgetState
                                           fontFamily: 'Urbanist',
                                           color: FlutterFlowTheme.of(context)
                                               .accent1,
+                                          fontSize: 16.0,
                                         ),
                                   ),
                                 ),
@@ -496,7 +471,7 @@ class _ApplicationLoanCalculatorWidgetState
                         ),
                       ),
                     ).animateOnPageLoad(
-                        animationsMap['containerOnPageLoadAnimation2']!),
+                        animationsMap['containerOnPageLoadAnimation3']!),
                   ),
                   Padding(
                     padding:
@@ -506,6 +481,13 @@ class _ApplicationLoanCalculatorWidgetState
                       height: 100.0,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            color: Color(0x3416202A),
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Padding(
@@ -538,7 +520,7 @@ class _ApplicationLoanCalculatorWidgetState
                             Align(
                               alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Text(
-                                '*La tasa final será determinada despues de un analisis crediticio',
+                                '*La tasa final será determinada despues de analizar tu solicitud',
                                 style: FlutterFlowTheme.of(context)
                                     .bodySmall
                                     .override(
@@ -552,7 +534,7 @@ class _ApplicationLoanCalculatorWidgetState
                         ),
                       ),
                     ).animateOnPageLoad(
-                        animationsMap['containerOnPageLoadAnimation3']!),
+                        animationsMap['containerOnPageLoadAnimation4']!),
                   ),
                   Align(
                     alignment: AlignmentDirectional(0.0, 0.0),
@@ -562,8 +544,8 @@ class _ApplicationLoanCalculatorWidgetState
                       child: FFButtonWidget(
                         onPressed: () async {
                           var _shouldSetState = false;
-                          if ((applicationLoanCalculatorApplicationRecord!
-                                      .status ==
+                          if ((applicationLoanCalculatorApplicationRecord
+                                      ?.status ==
                                   'Enviada') &&
                               (functions.appIneligible(
                                       applicationLoanCalculatorApplicationRecord!
@@ -622,6 +604,7 @@ class _ApplicationLoanCalculatorWidgetState
                                   _model.loanAmtValue!,
                                   .033,
                                   _model.loanTermValue!),
+                              index: 1,
                             ),
                             'date_applied': FieldValue.serverTimestamp(),
                           });
@@ -634,6 +617,7 @@ class _ApplicationLoanCalculatorWidgetState
                                   _model.loanAmtValue!,
                                   .033,
                                   _model.loanTermValue!),
+                              index: 1,
                             ),
                             'date_applied': DateTime.now(),
                           }, applicationRecordReference);
@@ -643,7 +627,7 @@ class _ApplicationLoanCalculatorWidgetState
                             'Applicaiton_Summary',
                             queryParameters: {
                               'applicationRecieve': serializeParam(
-                                _model.createdAppVar!.reference,
+                                _model.createdAppVar?.reference,
                                 ParamType.DocumentReference,
                               ),
                             }.withoutNulls,

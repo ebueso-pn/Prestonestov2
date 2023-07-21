@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mapbox_search/mapbox_search.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_review_model.dart';
 export 'application_review_model.dart';
@@ -89,6 +90,9 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
+                                  await widget.applicationRecieve!.update({
+                                    'index': FieldValue.increment(-(1)),
+                                  });
                                   context.pop();
                                 },
                               ),
@@ -129,8 +133,68 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 5.0,
+                                color: Color(0x3416202A),
+                                offset: Offset(0.0, 2.0),
+                              )
+                            ],
+                          ),
+                          child: Align(
+                            alignment: AlignmentDirectional(0.0, -1.0),
+                            child: StreamBuilder<ApplicationRecord>(
+                              stream: ApplicationRecord.getDocument(
+                                  widget.applicationRecieve!),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          Color(0xFF2AAF7A),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                final progressBarApplicationRecord =
+                                    snapshot.data!;
+                                return LinearPercentIndicator(
+                                  percent:
+                                      progressBarApplicationRecord.index / 5,
+                                  lineHeight: 7.0,
+                                  animation: true,
+                                  progressColor:
+                                      FlutterFlowTheme.of(context).primary,
+                                  backgroundColor: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  padding: EdgeInsets.zero,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 16.0),
+                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
                   child: StreamBuilder<ApplicationRecord>(
                     stream: ApplicationRecord.getDocument(
                         widget.applicationRecieve!),
@@ -142,7 +206,9 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             width: 50.0,
                             height: 50.0,
                             child: CircularProgressIndicator(
-                              color: Color(0xFF2AAF7A),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Color(0xFF2AAF7A),
+                              ),
                             ),
                           ),
                         );
@@ -155,16 +221,16 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 12.0, 0.0, 12.0),
+                                  0.0, 8.0, 0.0, 0.0),
                               child: Text(
                                 'Solicitante',
-                                style: FlutterFlowTheme.of(context).bodyLarge,
+                                style: FlutterFlowTheme.of(context).labelLarge,
                               ),
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 24.0),
+                                0.0, 8.0, 0.0, 0.0),
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
@@ -247,6 +313,18 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                               ),
                             ),
                           ),
+                          Divider(
+                            height: 30.0,
+                            thickness: 2.0,
+                            color: FlutterFlowTheme.of(context).alternate,
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            child: Text(
+                              'Solicitud',
+                              style: FlutterFlowTheme.of(context).labelLarge,
+                            ),
+                          ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 8.0, 0.0, 0.0),
@@ -255,7 +333,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Numero de Aplicación',
+                                  'Codigo de Aplicación',
                                   style:
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),
@@ -290,7 +368,10 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                           width: 50.0,
                                           height: 50.0,
                                           child: CircularProgressIndicator(
-                                            color: Color(0xFF2AAF7A),
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              Color(0xFF2AAF7A),
+                                            ),
                                           ),
                                         ),
                                       );
@@ -332,7 +413,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                     contentApplicationRecord.monto,
                                     formatType: FormatType.decimal,
                                     decimalType: DecimalType.automatic,
-                                    currency: 'L. ',
+                                    currency: 'L ',
                                   ),
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
@@ -413,8 +494,40 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                               ],
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 8.0, 0.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Total estimado',
+                                  style:
+                                      FlutterFlowTheme.of(context).labelMedium,
+                                ),
+                                Text(
+                                  formatNumber(
+                                    contentApplicationRecord.cuota *
+                                        contentApplicationRecord.plazoMeses *
+                                        2,
+                                    formatType: FormatType.custom,
+                                    currency: 'L ',
+                                    format: '#,###.#',
+                                    locale: '',
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Urbanist',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
                           Divider(
-                            height: 35.0,
+                            height: 30.0,
                             thickness: 2.0,
                             color: FlutterFlowTheme.of(context).alternate,
                           ),
@@ -422,28 +535,88 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 12.0),
+                                  0.0, 0.0, 0.0, 8.0),
                               child: Text(
                                 'Dirección',
-                                style: FlutterFlowTheme.of(context).labelMedium,
+                                style: FlutterFlowTheme.of(context).labelLarge,
                               ),
                             ),
                           ),
-                          AuthUserStreamWidget(
-                            builder: (context) => FlutterFlowStaticMap(
-                              location: currentUserDocument!.latLong!,
-                              apiKey:
-                                  'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
-                              style: MapBoxStyle.Streets,
-                              width: double.infinity,
-                              height: 150.0,
-                              fit: BoxFit.cover,
-                              borderRadius: BorderRadius.circular(40.0),
-                              markerColor: Color(0xFFFF0412),
-                              zoom: 15,
-                              tilt: 0,
-                              rotation: 0,
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            child: AuthUserStreamWidget(
+                              builder: (context) => FlutterFlowStaticMap(
+                                location: currentUserDocument!.latLong!,
+                                apiKey:
+                                    'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
+                                style: MapBoxStyle.Light,
+                                width: double.infinity,
+                                height: 75.0,
+                                fit: BoxFit.cover,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(40.0),
+                                  bottomRight: Radius.circular(40.0),
+                                  topLeft: Radius.circular(20.0),
+                                  topRight: Radius.circular(40.0),
+                                ),
+                                markerColor: Color(0xFFFF0412),
+                                zoom: 12,
+                                tilt: 0,
+                                rotation: 0,
+                              ),
                             ),
+                          ),
+                          Divider(
+                            height: 30.0,
+                            thickness: 2.0,
+                            color: FlutterFlowTheme.of(context).alternate,
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 8.0),
+                              child: Text(
+                                'Autorización',
+                                style: FlutterFlowTheme.of(context).labelLarge,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'PrestoNesto puede revisar mi credito',
+                                style: FlutterFlowTheme.of(context).labelMedium,
+                              ),
+                              Theme(
+                                data: ThemeData(
+                                  checkboxTheme: CheckboxThemeData(
+                                    visualDensity: VisualDensity.compact,
+                                    materialTapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
+                                  ),
+                                  unselectedWidgetColor:
+                                      FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                ),
+                                child: Checkbox(
+                                  value: _model.checkboxValue ??= true,
+                                  onChanged: (newValue) async {
+                                    setState(
+                                        () => _model.checkboxValue = newValue!);
+                                  },
+                                  activeColor:
+                                      FlutterFlowTheme.of(context).primary,
+                                  checkColor: FlutterFlowTheme.of(context).info,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       );
@@ -459,6 +632,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                         dateApplied: dateTimeFromSecondsSinceEpoch(
                             getCurrentTimestamp.secondsSinceEpoch),
                         status: 'Enviada',
+                        bureauConsent: _model.checkboxValue,
                       ));
 
                       context.pushNamed(

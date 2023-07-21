@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class OnboardingModel extends FlutterFlowModel {
@@ -17,6 +18,7 @@ class OnboardingModel extends FlutterFlowModel {
   final unfocusNode = FocusNode();
   // State field(s) for PageView widget.
   PageController? pageViewController;
+
   int get pageViewCurrentIndex => pageViewController != null &&
           pageViewController!.hasClients &&
           pageViewController!.page != null
