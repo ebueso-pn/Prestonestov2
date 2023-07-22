@@ -5,13 +5,13 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
-
 import 'application_d_n_i_validation_model.dart';
 export 'application_d_n_i_validation_model.dart';
 
@@ -118,7 +118,8 @@ class _ApplicationDNIValidationWidgetState
                                   fontFamily: 'Urbanist',
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBtnText,
-                                  fontSize: 22.0,
+                                  fontSize: 26.0,
+                                  fontWeight: FontWeight.w500,
                                 ),
                           ),
                         ),
@@ -196,84 +197,137 @@ class _ApplicationDNIValidationWidgetState
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    _model.shuftiResponse = await ShuftiOnsiteWithOCRCall.call(
-                      authObject: {
-                        "auth_type": "basic_auth",
-                        "client_id": clientId,
-                        "secret_key": secretKey,
-                      },
-                      createdPayload: {
-                        "country": "HN",
-                        "language": "ES",
-                        "email": "",
-                        "callback_url": "http://www.example.com",
-                        "redirect_url":
-                            "https://www.mydummy.package_sample.com/",
-                        "show_consent": 1,
-                        "show_privacy_policy": 1,
-                        "verification_mode": "image_only",
-                        "face": {},
-                        "document": {
-                          "supported_types": [
-                            "id_card",
-                          ],
-                          "name": {
-                            "first_name": "frstName",
-                            "last_name": "",
-                            "middle_name": "",
-                          },
-                          "dob": "",
-                          "document_number": "",
-                          "expiry_date": "",
-                          "issue_date": "",
-                          "fetch_enhanced_data": "",
-                          "gender": "",
-                          "backside_proof_required": "0",
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 48.0, 0.0, 0.0),
+                child: Text(
+                  'Hora de tomarnos fotos  ',
+                  style: FlutterFlowTheme.of(context).headlineMedium,
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(0.0, 0.0),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
+                  child: Lottie.asset(
+                    'assets/lottie_animations/tmpo2dz_7be.json',
+                    width: 350.0,
+                    height: 350.0,
+                    fit: BoxFit.cover,
+                    animate: true,
+                  ),
+                ),
+              ),
+              Builder(
+                builder: (context) {
+                  if (_model.buttonDisplay == false) {
+                    return Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          var _shouldSetState = false;
+                          _model.shuftiAPI = await ShuftiOnsiteWithOCRCall.call(
+                            shuftiReference: widget.applicationRecieve?.id,
+                          );
+                          _shouldSetState = true;
+                          await launchURL(
+                              ShuftiOnsiteWithOCRCall.verificiationURL(
+                            (_model.shuftiAPI?.jsonBody ?? ''),
+                          ).toString());
+                          if (ShuftiOnsiteWithOCRCall.status(
+                                (_model.shuftiAPI?.jsonBody ?? ''),
+                              ).toString() ==
+                              'verification.accepted') {
+                            await widget.applicationRecieve!.update({
+                              'shufti_data':
+                                  (ShuftiOnsiteWithOCRCall.verificationdata(
+                                (_model.shuftiAPI?.jsonBody ?? ''),
+                              ) as List)
+                                      .map<String>((s) => s.toString())
+                                      .toList()
+                                      ?.map((e) => e.toString())
+                                      .toList(),
+                              'shufti_additional':
+                                  (ShuftiOnsiteWithOCRCall.additionaldata(
+                                (_model.shuftiAPI?.jsonBody ?? ''),
+                              ) as List)
+                                      .map<String>((s) => s.toString())
+                                      .toList()
+                                      ?.map((e) => e.toString())
+                                      .toList(),
+                            });
+                            await Future.delayed(
+                                const Duration(milliseconds: 500));
+                            setState(() {
+                              _model.buttonDisplay = true;
+                            });
+                          } else {
+                            if (_shouldSetState) setState(() {});
+                            return;
+                          }
+
+                          await widget.applicationRecieve!.update({
+                            'index': FieldValue.increment(1),
+                          });
+                          if (_shouldSetState) setState(() {});
                         },
-                      },
-                      configObject: {
-                        "open_webview": false,
-                        "asyncRequest": false,
-                        "captureEnabled": false,
-                        "dark_mode": false,
-                        "font_color": "#263B54",
-                        "button_text_color": "#FFFFFF",
-                        "button_background_color": "#1F5AF6"
-                      },
-                    );
-
-                    await launchURL(ShuftiOnsiteWithOCRCall.verificiationURL(
-                      (_model.shuftiResponse?.jsonBody ?? ''),
-                    ).toString());
-
-                    await widget.applicationRecieve!.update({
-                      'index': FieldValue.increment(1),
-                    });
-
-                    setState(() {});
-                  },
-                  text: 'Verificar mi identidad',
-                  options: FFButtonOptions(
-                    height: 40.0,
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Urbanist',
-                          color: Colors.white,
+                        text: 'Verificar mi identidad',
+                        options: FFButtonOptions(
+                          height: 40.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 24.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Urbanist',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-
+                      ),
+                    );
+                  } else {
+                    return Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          context.pushNamed(
+                            'Application_Address',
+                            queryParameters: {
+                              'applicationRecieve': serializeParam(
+                                widget.applicationRecieve,
+                                ParamType.DocumentReference,
+                              ),
+                            }.withoutNulls,
+                          );
+                        },
+                        text: 'Continuar',
+                        options: FFButtonOptions(
+                          width: 194.0,
+                          height: 40.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 24.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Urbanist',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                     );

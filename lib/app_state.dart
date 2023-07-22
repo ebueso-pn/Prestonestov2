@@ -55,6 +55,72 @@ class FFAppState extends ChangeNotifier {
   set CiudadApplicationState(bool _value) {
     _CiudadApplicationState = _value;
   }
+
+  bool _ApplicationEnviada = false;
+  bool get ApplicationEnviada => _ApplicationEnviada;
+  set ApplicationEnviada(bool _value) {
+    _ApplicationEnviada = _value;
+  }
+
+  bool _LoanCreado = false;
+  bool get LoanCreado => _LoanCreado;
+  set LoanCreado(bool _value) {
+    _LoanCreado = _value;
+  }
+
+  bool _LoanFirmado = false;
+  bool get LoanFirmado => _LoanFirmado;
+  set LoanFirmado(bool _value) {
+    _LoanFirmado = _value;
+  }
+
+  bool _LoanDesembolsado = false;
+  bool get LoanDesembolsado => _LoanDesembolsado;
+  set LoanDesembolsado(bool _value) {
+    _LoanDesembolsado = _value;
+  }
+
+  bool _LoanLiquidado = false;
+  bool get LoanLiquidado => _LoanLiquidado;
+  set LoanLiquidado(bool _value) {
+    _LoanLiquidado = _value;
+  }
+
+  bool _LoanAlDia = false;
+  bool get LoanAlDia => _LoanAlDia;
+  set LoanAlDia(bool _value) {
+    _LoanAlDia = _value;
+  }
+
+  bool _LoanMora = false;
+  bool get LoanMora => _LoanMora;
+  set LoanMora(bool _value) {
+    _LoanMora = _value;
+  }
+
+  bool _ApplicationAceptada = false;
+  bool get ApplicationAceptada => _ApplicationAceptada;
+  set ApplicationAceptada(bool _value) {
+    _ApplicationAceptada = _value;
+  }
+
+  bool _ApplicationAprobada = false;
+  bool get ApplicationAprobada => _ApplicationAprobada;
+  set ApplicationAprobada(bool _value) {
+    _ApplicationAprobada = _value;
+  }
+
+  String _ApplicationDenegada = '';
+  String get ApplicationDenegada => _ApplicationDenegada;
+  set ApplicationDenegada(String _value) {
+    _ApplicationDenegada = _value;
+  }
+
+  bool _IngresosEnviados = false;
+  bool get IngresosEnviados => _IngresosEnviados;
+  set IngresosEnviados(bool _value) {
+    _IngresosEnviados = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

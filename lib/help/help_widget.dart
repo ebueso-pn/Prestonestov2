@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'help_model.dart';
 export 'help_model.dart';
@@ -93,7 +94,7 @@ class _HelpWidgetState extends State<HelpWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 24.0, 0.0, 0.0, 0.0),
                             child: Text(
-                              'Cómo podemos auyudarte?',
+                              '¿Cómo podemos auyudarte?',
                               style: FlutterFlowTheme.of(context)
                                   .headlineMedium
                                   .override(
@@ -119,7 +120,7 @@ class _HelpWidgetState extends State<HelpWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                width: 443.0,
+                width: double.infinity,
                 height: 100.0,
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -131,6 +132,13 @@ class _HelpWidgetState extends State<HelpWidget> {
                     style: FlutterFlowTheme.of(context).bodyMedium,
                   ),
                 ),
+              ),
+              Lottie.asset(
+                'assets/lottie_animations/tmpf1xwjyru.json',
+                width: 150.0,
+                height: 130.0,
+                fit: BoxFit.cover,
+                animate: true,
               ),
             ],
           ),
