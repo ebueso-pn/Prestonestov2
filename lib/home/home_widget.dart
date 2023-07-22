@@ -1214,7 +1214,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       'assets/lottie_animations/approved-4246793.json',
                                       width: 500.0,
                                       height: 570.0,
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.contain,
                                       animate: true,
                                     ),
                                   ],
