@@ -635,6 +635,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                         status: 'Enviada',
                         bureauConsent: _model.checkboxValue,
                       ));
+                      FFAppState().ApplicationEnviada = true;
 
                       context.pushNamed(
                         'Applicaiton_Success',
