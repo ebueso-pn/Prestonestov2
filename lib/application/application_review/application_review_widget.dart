@@ -560,7 +560,8 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                   topLeft: Radius.circular(20.0),
                                   topRight: Radius.circular(40.0),
                                 ),
-                                markerColor: Color(0xFFFF0412),
+                                markerColor:
+                                    FlutterFlowTheme.of(context).secondary,
                                 zoom: 12,
                                 tilt: 0,
                                 rotation: 0,
