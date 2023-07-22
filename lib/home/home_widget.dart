@@ -179,25 +179,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
         ),
       ],
     ),
-    'containerOnPageLoadAnimation8': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(0.0, 110.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
   };
 
   @override
@@ -1122,102 +1103,59 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             },
                                           ),
                                         ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 16.0, 16.0),
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              context.pushNamed('Help');
-                                            },
-                                            child: Container(
-                                              width: double.infinity,
-                                              constraints: BoxConstraints(
-                                                maxWidth: 500.0,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 4.0,
-                                                    color: Color(0x33000000),
-                                                    offset: Offset(0.0, 2.0),
-                                                  )
-                                                ],
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
-                                                border: Border.all(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryBackground,
-                                                  width: 2.0,
-                                                ),
-                                              ),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        12.0, 8.0, 12.0, 8.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.help_outline,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      size: 36.0,
-                                                    ),
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    12.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              'Contáctanos',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyLarge,
-                                                            ),
-                                                          ],
-                                                        ),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Gracias, ',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineMedium
+                                                      .override(
+                                                        fontFamily: 'Urbanist',
+                                                        color: Colors.white,
+                                                        fontSize: 32.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
+                                            ),
+                                            AuthUserStreamWidget(
+                                              builder: (context) => Text(
+                                                valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.nombres,
+                                                    ''),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Urbanist',
+                                                          color: Colors.white,
+                                                          fontSize: 32.0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
                                               ),
                                             ),
-                                          ).animateOnPageLoad(animationsMap[
-                                              'containerOnPageLoadAnimation8']!),
+                                          ],
                                         ),
                                       ],
                                     ),
                                     Align(
-                                      alignment: AlignmentDirectional(0.0, 1.0),
-                                      child: Lottie.asset(
-                                        'assets/lottie_animations/tmpeb_zd7gu.json',
-                                        width: 400.0,
-                                        height: 400.0,
-                                        fit: BoxFit.contain,
-                                        animate: true,
+                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 150.0, 0.0, 0.0),
+                                        child: Lottie.asset(
+                                          'assets/lottie_animations/Approved.json',
+                                          width: 400.0,
+                                          height: 400.0,
+                                          fit: BoxFit.contain,
+                                          animate: true,
+                                        ),
                                       ),
                                     ),
                                   ],
