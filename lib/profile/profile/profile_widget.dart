@@ -451,6 +451,12 @@ class _ProfileWidgetState extends State<ProfileWidget>
                         ],
                         borderRadius: BorderRadius.circular(12.0),
                         shape: BoxShape.rectangle,
+                        border: Border.all(
+                          color: (FFAppState().ApplicationEnviada == true) &&
+                                  (FFAppState().IngresosEnviados == false)
+                              ? FlutterFlowTheme.of(context).accent1
+                              : Color(0x00000000),
+                        ),
                       ),
                       child: Padding(
                         padding:
