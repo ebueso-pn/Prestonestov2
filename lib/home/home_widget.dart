@@ -1142,21 +1142,14 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    ),
-                                    Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 150.0, 0.0, 0.0),
-                                        child: Lottie.asset(
+                                        Lottie.asset(
                                           'assets/lottie_animations/Approved.json',
-                                          width: 400.0,
-                                          height: 400.0,
-                                          fit: BoxFit.contain,
+                                          width: 150.0,
+                                          height: 130.0,
+                                          fit: BoxFit.cover,
                                           animate: true,
                                         ),
-                                      ),
+                                      ],
                                     ),
                                   ],
                                 ),
