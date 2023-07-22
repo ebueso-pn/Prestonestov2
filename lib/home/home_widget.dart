@@ -1211,7 +1211,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       ],
                                     ),
                                     Lottie.asset(
-                                      'assets/lottie_animations/tmpm6isbemj.json',
+                                      'assets/lottie_animations/tmpeb_zd7gu.json',
                                       width: 500.0,
                                       height: 570.0,
                                       fit: BoxFit.cover,
