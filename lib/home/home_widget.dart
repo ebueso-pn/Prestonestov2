@@ -1129,7 +1129,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                         } else {
                           return Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 24.0, 24.0, 24.0),
+                                12.0, 12.0, 12.0, 12.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
