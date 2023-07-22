@@ -970,7 +970,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                             } else if (homeApplicationRecord?.status ==
                                 'Aprobada') {
                               return Align(
-                                alignment: AlignmentDirectional(0.0, -1.0),
+                                alignment: AlignmentDirectional(0.0, 1.0),
                                 child: Stack(
                                   children: [
                                     Column(
@@ -1210,12 +1210,15 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         ),
                                       ],
                                     ),
-                                    Lottie.asset(
-                                      'assets/lottie_animations/approved-4246793.json',
-                                      width: 500.0,
-                                      height: 570.0,
-                                      fit: BoxFit.contain,
-                                      animate: true,
+                                    Align(
+                                      alignment: AlignmentDirectional(0.0, 1.0),
+                                      child: Lottie.asset(
+                                        'assets/lottie_animations/tmpeb_zd7gu.json',
+                                        width: 400.0,
+                                        height: 400.0,
+                                        fit: BoxFit.contain,
+                                        animate: true,
+                                      ),
                                     ),
                                   ],
                                 ),
