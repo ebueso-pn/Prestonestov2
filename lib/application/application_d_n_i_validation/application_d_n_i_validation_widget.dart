@@ -1,5 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -228,53 +227,8 @@ class _ApplicationDNIValidationWidgetState
                         padding: EdgeInsetsDirectional.fromSTEB(
                             0.0, 100.0, 0.0, 0.0),
                         child: FFButtonWidget(
-                          onPressed: () async {
-                            var _shouldSetState = false;
-                            _model.shuftiAPI =
-                                await ShuftiOnsiteWithOCRCall.call(
-                              shuftiReference: widget.applicationRecieve?.id,
-                            );
-                            _shouldSetState = true;
-                            await launchURL(
-                                ShuftiOnsiteWithOCRCall.verificiationURL(
-                              (_model.shuftiAPI?.jsonBody ?? ''),
-                            ).toString());
-                            if (ShuftiOnsiteWithOCRCall.status(
-                                  (_model.shuftiAPI?.jsonBody ?? ''),
-                                ).toString() ==
-                                'verification.accepted') {
-                              await widget.applicationRecieve!.update({
-                                'shufti_data':
-                                    (ShuftiOnsiteWithOCRCall.verificationdata(
-                                  (_model.shuftiAPI?.jsonBody ?? ''),
-                                ) as List)
-                                        .map<String>((s) => s.toString())
-                                        .toList()
-                                        ?.map((e) => e.toString())
-                                        .toList(),
-                                'shufti_additional':
-                                    (ShuftiOnsiteWithOCRCall.additionaldata(
-                                  (_model.shuftiAPI?.jsonBody ?? ''),
-                                ) as List)
-                                        .map<String>((s) => s.toString())
-                                        .toList()
-                                        ?.map((e) => e.toString())
-                                        .toList(),
-                              });
-                              await Future.delayed(
-                                  const Duration(milliseconds: 500));
-                              setState(() {
-                                _model.buttonDisplay = true;
-                              });
-                            } else {
-                              if (_shouldSetState) setState(() {});
-                              return;
-                            }
-
-                            await widget.applicationRecieve!.update({
-                              'index': FieldValue.increment(1),
-                            });
-                            if (_shouldSetState) setState(() {});
+                          onPressed: () {
+                            print('Button pressed ...');
                           },
                           text: 'Verificar mi identidad',
                           options: FFButtonOptions(
