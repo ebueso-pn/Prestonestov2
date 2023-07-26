@@ -1,3 +1,4 @@
+import 'package:prestonesto_v1/application/application_d_n_i_validation/verification_model.dart';
 import 'package:shuftipro_sdk/shuftipro_sdk.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -16,7 +17,8 @@ import 'package:provider/provider.dart';
 import 'application_d_n_i_validation_model.dart';
 export 'application_d_n_i_validation_model.dart';
 
-String clientId = "o7PFvKcJMZKCJIWlGBb7DRGqoAfM2kxEIfPZPKXHCsmZ1ChPq51689211125"; // enter client id here
+String clientId =
+    "o7PFvKcJMZKCJIWlGBb7DRGqoAfM2kxEIfPZPKXHCsmZ1ChPq51689211125"; // enter client id here
 String secretKey = "8MqjmSHh50T1USzLOrkMJoiESrTb1hxn"; // enter secret key here
 
 class ApplicationDNIValidationWidget extends StatefulWidget {
@@ -40,57 +42,78 @@ class _ApplicationDNIValidationWidgetState
     "client_id": clientId,
     "secret_key": secretKey,
   };
+
   Map<String, Object> createdPayload = {
-    "country": "ES",
+    "country": "HN",
+    // for testing purposes ok to use US and IN for testing purposes
+    "reference": "",
+    // please send the Application Document reference available under the application receive parameter,
     "language": "ES",
-    "email": "",
-    "callback_url": "http://www.example.com",
-    "redirect_url": "https://www.mydummy.package_sample.com/",
-    "show_consent": 1,
-    "show_privacy_policy": 1,
+    // can use EN for testing purposes
     "verification_mode": "image_only",
-    "face": {},
+    "show_results": 1,
+    "face": {"allow_offline": "1"},
     "document": {
       "supported_types": [
-        "passport",
         "id_card",
         "driving_license",
-        "credit_or_debit_card",
       ],
       "name": {
-        "first_name": "frstName",
-        "last_name": "",
-        "middle_name": "",
+        "first_name": "FERNANDO ",
+        "last_name": "BALZARETTI CORDOVA",
+        "middle_name": "ANTONIO",
       },
-      "dob": "",
-      "document_number": "",
-      "expiry_date": "",
-      "issue_date": "",
-      "fetch_enhanced_data": "",
-      "gender": "",
-      "backside_proof_required": "0",
+      "document_number": "0801 2014 20883",
     },
   };
-  Map<String,Object> configObj = {
+
+  Map<String, Object> configObj = {
     "open_webview": false,
     "asyncRequest": false,
     "captureEnabled": false,
-    "dark_mode" : false,
-    "font_color" : "#263B54",
-    "button_text_color" : "#FFFFFF",
-    "button_background_color" : "#1F5AF6"
+    "dark_mode": false,
+    "font_color": "#263B54",
+    "button_text_color": "#FFFFFF",
+    "button_background_color": "#1F5AF6"
   };
 
   Future<void> initPlatformState() async {
     String response = '';
-    try{
-      response = await ShuftiproSdk.sendRequest(authObject: authObject,
-          createdPayload: createdPayload, configObject: configObj);
+    try {
+      response = await ShuftiproSdk.sendRequest(
+          authObject: authObject,
+          createdPayload: createdPayload,
+          configObject: configObj);
+      VerificationResponse verificationResponse =
+          verificationResponseFromJson(response);
+      print('Event::: ' + '${verificationResponse.event}');
+      if (verificationResponse.event == 'request.received') {
+        ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
+          content: Text(
+            verificationResponse.toJson().toString(),
+          ),
+        ));
+      } else {
+        print(
+          'Message::: ' +
+              '${verificationResponse.message.isNotEmpty ? verificationResponse.message : verificationResponse.error}',
+        );
+        ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
+          content: Text(
+            verificationResponse.message.isNotEmpty
+                ? verificationResponse.message
+                : verificationResponse.error.isNotEmpty
+                    ? verificationResponse.error
+                    : verificationResponse.declinedReason,
+          ),
+        ));
+      }
+    } catch (e) {
       ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
-        content: Text(response),
+        content: Text(
+          e.toString(),
+        ),
       ));
-    }catch(e){
-      print(e);
     }
     if (!mounted) return;
   }
