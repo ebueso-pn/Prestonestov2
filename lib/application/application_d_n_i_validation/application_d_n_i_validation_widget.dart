@@ -1,5 +1,7 @@
+import 'package:prestonesto_v1/application/application_d_n_i_validation/verification_model.dart';
+import 'package:shuftipro_sdk/shuftipro_sdk.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -14,6 +16,10 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_d_n_i_validation_model.dart';
 export 'application_d_n_i_validation_model.dart';
+
+String clientId =
+    "o7PFvKcJMZKCJIWlGBb7DRGqoAfM2kxEIfPZPKXHCsmZ1ChPq51689211125"; // enter client id here
+String secretKey = "8MqjmSHh50T1USzLOrkMJoiESrTb1hxn"; // enter secret key here
 
 class ApplicationDNIValidationWidget extends StatefulWidget {
   const ApplicationDNIValidationWidget({
@@ -31,6 +37,104 @@ class ApplicationDNIValidationWidget extends StatefulWidget {
 class _ApplicationDNIValidationWidgetState
     extends State<ApplicationDNIValidationWidget> {
   late ApplicationDNIValidationModel _model;
+  var authObject = {
+    "auth_type": "basic_auth",
+    "client_id": clientId,
+    "secret_key": secretKey,
+  };
+
+  Map<String, Object> createdPayload = {
+    "country": "",
+    "reference": "",
+    // please send the Application Document reference available under the application receive parameter,
+    "language": "ES",
+    "verification_mode": "image_only",
+    "show_results": 1,
+    "face": {"allow_offline": "1"},
+    "document": {
+      "supported_types": [
+        "id_card",
+        "driving_license",
+        "passport",
+        "credit_or_debit_card",
+      ],
+    },
+  };
+
+  Map<String, Object> configObj = {
+    "open_webview": false,
+    "asyncRequest": false,
+    "captureEnabled": false,
+    "dark_mode": false,
+    "font_color": "#263B54",
+    "button_text_color": "#FFFFFF",
+    "button_background_color": "#1F5AF6"
+  };
+
+  Future<void> initPlatformState() async {
+    String response = '';
+    try {
+      response = await ShuftiproSdk.sendRequest(
+        authObject: authObject,
+        createdPayload: createdPayload,
+        configObject: configObj,
+      );
+      VerificationResponse verificationResponse =
+          verificationResponseFromJson(response);
+      print('Event::: ' + '${verificationResponse.event}');
+      if (verificationResponse.event == 'verification.accepted') {
+        ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
+          content: Text(
+            "Verification Success",
+          ),
+        ));
+        var refData = (await widget.applicationRecieve!.get()).data();
+        print(refData);
+        await widget.applicationRecieve!.update({
+          'shufti_data': verificationDataResponseModelFromJson(
+                  verificationResponse.verificationData!)
+              .toJson(),
+          'id_verification_result': verificationResultResponseModelFromJson(
+                  verificationResponse.verificationResult!)
+              .toJson(),
+          'shufti_addtional': '',
+        });
+        setState(() {
+          _model.buttonDisplay = true;
+        });
+      } else {
+        print(
+          'Message::: ' +
+              '${verificationResponse.message.isNotEmpty ? verificationResponse.message : verificationResponse.error}',
+        );
+        ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
+          content: Text(
+            verificationResponse.message.isNotEmpty
+                ? verificationResponse.message
+                : verificationResponse.error.isNotEmpty
+                    ? verificationResponse.error
+                    : verificationResponse.declinedReason,
+          ),
+        ));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
+        content: Text(
+          e.toString(),
+        ),
+      ));
+    }
+    if (!mounted) return;
+  }
+
+  void continueFun() async {
+    // createdPayload["reference"] = widget.applicationRecieve?.path ?? '';
+    // print(createdPayload["reference"]);
+    var v = DateTime.now();
+    var reference = "package_sample_Flutter_$v";
+    createdPayload["reference"] = reference;
+    initPlatformState();
+  }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -118,7 +222,8 @@ class _ApplicationDNIValidationWidgetState
                                   fontFamily: 'Urbanist',
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBtnText,
-                                  fontSize: 22.0,
+                                  fontSize: 26.0,
+                                  fontWeight: FontWeight.w500,
                                 ),
                           ),
                         ),
@@ -133,207 +238,172 @@ class _ApplicationDNIValidationWidgetState
             : null,
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 5.0,
-                              color: Color(0x3416202A),
-                              offset: Offset(0.0, 2.0),
-                            )
-                          ],
-                        ),
-                        child: Align(
-                          alignment: AlignmentDirectional(0.0, -1.0),
-                          child: StreamBuilder<ApplicationRecord>(
-                            stream: ApplicationRecord.getDocument(
-                                widget.applicationRecieve!),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        Color(0xFF2AAF7A),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 5.0,
+                                color: Color(0x3416202A),
+                                offset: Offset(0.0, 2.0),
+                              )
+                            ],
+                          ),
+                          child: Align(
+                            alignment: AlignmentDirectional(0.0, -1.0),
+                            child: StreamBuilder<ApplicationRecord>(
+                              stream: ApplicationRecord.getDocument(
+                                  widget.applicationRecieve!),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          Color(0xFF2AAF7A),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                  );
+                                }
+                                final progressBarApplicationRecord =
+                                    snapshot.data!;
+                                return LinearPercentIndicator(
+                                  percent:
+                                      progressBarApplicationRecord.index / 5,
+                                  lineHeight: 7.0,
+                                  animation: true,
+                                  progressColor:
+                                      FlutterFlowTheme.of(context).primary,
+                                  backgroundColor: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  padding: EdgeInsets.zero,
                                 );
-                              }
-                              final progressBarApplicationRecord =
-                                  snapshot.data!;
-                              return LinearPercentIndicator(
-                                percent: progressBarApplicationRecord.index / 5,
-                                lineHeight: 7.0,
-                                animation: true,
-                                progressColor:
-                                    FlutterFlowTheme.of(context).primary,
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
-                                padding: EdgeInsets.zero,
-                              );
-                            },
+                              },
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 48.0, 0.0, 0.0),
-                child: Text(
-                  'Hora de tomarnos fotos  📸',
-                  style: FlutterFlowTheme.of(context).headlineMedium,
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
-                  child: Lottie.asset(
-                    'assets/lottie_animations/tmpo2dz_7be.json',
-                    width: 350.0,
-                    height: 350.0,
-                    fit: BoxFit.cover,
-                    animate: true,
+                    ],
                   ),
                 ),
-              ),
-              Builder(
-                builder: (context) {
-                  if (_model.buttonDisplay == false) {
-                    return Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          var _shouldSetState = false;
-                          _model.shuftiAPI = await ShuftiOnsiteWithOCRCall.call(
-                            shuftiReference: widget.applicationRecieve?.id,
-                          );
-                          _shouldSetState = true;
-                          await launchURL(
-                              ShuftiOnsiteWithOCRCall.verificiationURL(
-                            (_model.shuftiAPI?.jsonBody ?? ''),
-                          ).toString());
-                          if (ShuftiOnsiteWithOCRCall.status(
-                                (_model.shuftiAPI?.jsonBody ?? ''),
-                              ).toString() ==
-                              'verification.accepted') {
-                            await widget.applicationRecieve!.update({
-                              'shufti_data':
-                                  (ShuftiOnsiteWithOCRCall.verificationdata(
-                                (_model.shuftiAPI?.jsonBody ?? ''),
-                              ) as List)
-                                      .map<String>((s) => s.toString())
-                                      .toList()
-                                      ?.map((e) => e.toString())
-                                      .toList(),
-                              'shufti_additional':
-                                  (ShuftiOnsiteWithOCRCall.additionaldata(
-                                (_model.shuftiAPI?.jsonBody ?? ''),
-                              ) as List)
-                                      .map<String>((s) => s.toString())
-                                      .toList()
-                                      ?.map((e) => e.toString())
-                                      .toList(),
-                            });
-                            await Future.delayed(
-                                const Duration(milliseconds: 500));
-                            setState(() {
-                              _model.buttonDisplay = true;
-                            });
-                          } else {
-                            if (_shouldSetState) setState(() {});
-                            return;
-                          }
-
-                          await widget.applicationRecieve!.update({
-                            'index': FieldValue.increment(1),
-                          });
-                          if (_shouldSetState) setState(() {});
-                        },
-                        text: 'Verificar mi identidad',
-                        options: FFButtonOptions(
-                          height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 24.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primary,
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Urbanist',
-                                    color: Colors.white,
-                                  ),
-                          elevation: 3.0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 48.0, 0.0, 0.0),
+                  child: Text(
+                    'Hora de tomarnos fotos  ',
+                    style: FlutterFlowTheme.of(context).headlineMedium,
+                  ),
+                ),
+                Align(
+                  alignment: AlignmentDirectional(0.0, 0.0),
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
+                    child: Lottie.asset(
+                      'assets/lottie_animations/tmpo2dz_7be.json',
+                      width: 350.0,
+                      height: 350.0,
+                      fit: BoxFit.cover,
+                      animate: true,
+                    ),
+                  ),
+                ),
+                Builder(
+                  builder: (context) {
+                    if (_model.buttonDisplay == false) {
+                      return Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0.0, 100.0, 0.0, 0.0),
+                        child: FFButtonWidget(
+                          onPressed: () {
+                            print('Button pressed ...');
+                            continueFun();
+                          },
+                          text: 'Verificar mi identidad',
+                          options: FFButtonOptions(
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Urbanist',
+                                  color: Colors.white,
+                                ),
+                            elevation: 3.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                      ),
-                    );
-                  } else {
-                    return Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          context.pushNamed(
-                            'Application_Address',
-                            queryParameters: {
-                              'applicationRecieve': serializeParam(
-                                widget.applicationRecieve,
-                                ParamType.DocumentReference,
-                              ),
-                            }.withoutNulls,
-                          );
-                        },
-                        text: 'Continuar',
-                        options: FFButtonOptions(
-                          width: 194.0,
-                          height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 24.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primary,
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Urbanist',
-                                    color: Colors.white,
-                                  ),
-                          elevation: 3.0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                      );
+                    } else {
+                      return Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0.0, 100.0, 0.0, 0.0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            context.pushNamed(
+                              'Application_Address',
+                              queryParameters: {
+                                'applicationRecieve': serializeParam(
+                                  widget.applicationRecieve,
+                                  ParamType.DocumentReference,
+                                ),
+                              }.withoutNulls,
+                            );
+                          },
+                          text: 'Continuar',
+                          options: FFButtonOptions(
+                            width: 194.0,
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Urbanist',
+                                  color: Colors.white,
+                                ),
+                            elevation: 3.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                      ),
-                    );
-                  }
-                },
-              ),
-            ],
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

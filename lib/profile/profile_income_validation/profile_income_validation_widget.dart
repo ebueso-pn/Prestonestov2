@@ -641,6 +641,9 @@ class _ProfileIncomeValidationWidgetState
                                       FlutterFlowTheme.of(context).secondary,
                                 ),
                               );
+                              setState(() {
+                                FFAppState().IngresosEnviados = true;
+                              });
                             },
                             text: 'Guardar y regresar',
                             options: FFButtonOptions(
