@@ -174,6 +174,20 @@ class ApplicationRecord extends FirestoreRecord {
         mapFromFirestore(snapshot.data() as Map<String, dynamic>),
       );
 
+  //get map from document reference
+  Future<ApplicationRecord?> getReferenceDetailWithStringPath({
+    required String reference,
+  }) async {
+    DocumentReference<Map<String, dynamic>> doc = FirebaseFirestore.instance.doc(reference);
+    final DocumentSnapshot<Map<String, dynamic>> data =
+    await FirebaseFirestore.instance.doc(reference).get();
+    // return data.data();
+    return ApplicationRecord._(
+      doc,
+      mapFromFirestore(data as Map<String, dynamic>),
+    );
+  }
+
   static ApplicationRecord getDocumentFromData(
     Map<String, dynamic> data,
     DocumentReference reference,

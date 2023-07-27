@@ -44,12 +44,10 @@ class _ApplicationDNIValidationWidgetState
   };
 
   Map<String, Object> createdPayload = {
-    "country": "HN",
-    // for testing purposes ok to use US and IN for testing purposes
+    "country": "",
     "reference": "",
     // please send the Application Document reference available under the application receive parameter,
     "language": "ES",
-    // can use EN for testing purposes
     "verification_mode": "image_only",
     "show_results": 1,
     "face": {"allow_offline": "1"},
@@ -57,13 +55,9 @@ class _ApplicationDNIValidationWidgetState
       "supported_types": [
         "id_card",
         "driving_license",
+        "passport",
+        "credit_or_debit_card",
       ],
-      "name": {
-        "first_name": "FERNANDO ",
-        "last_name": "BALZARETTI CORDOVA",
-        "middle_name": "ANTONIO",
-      },
-      "document_number": "0801 2014 20883",
     },
   };
 
@@ -81,18 +75,33 @@ class _ApplicationDNIValidationWidgetState
     String response = '';
     try {
       response = await ShuftiproSdk.sendRequest(
-          authObject: authObject,
-          createdPayload: createdPayload,
-          configObject: configObj);
+        authObject: authObject,
+        createdPayload: createdPayload,
+        configObject: configObj,
+      );
       VerificationResponse verificationResponse =
           verificationResponseFromJson(response);
       print('Event::: ' + '${verificationResponse.event}');
-      if (verificationResponse.event == 'request.received') {
+      if (verificationResponse.event == 'verification.accepted') {
         ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
           content: Text(
-            verificationResponse.toJson().toString(),
+            "Verification Success",
           ),
         ));
+        var refData = (await widget.applicationRecieve!.get()).data();
+        print(refData);
+        await widget.applicationRecieve!.update({
+          'shufti_data': verificationDataResponseModelFromJson(
+                  verificationResponse.verificationData!)
+              .toJson(),
+          'id_verification_result': verificationResultResponseModelFromJson(
+                  verificationResponse.verificationResult!)
+              .toJson(),
+          'shufti_addtional': '',
+        });
+        setState(() {
+          _model.buttonDisplay = true;
+        });
       } else {
         print(
           'Message::: ' +
@@ -118,7 +127,9 @@ class _ApplicationDNIValidationWidgetState
     if (!mounted) return;
   }
 
-  void continueFun() {
+  void continueFun() async {
+    // createdPayload["reference"] = widget.applicationRecieve?.path ?? '';
+    // print(createdPayload["reference"]);
     var v = DateTime.now();
     var reference = "package_sample_Flutter_$v";
     createdPayload["reference"] = reference;
