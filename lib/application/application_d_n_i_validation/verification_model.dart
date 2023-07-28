@@ -87,11 +87,17 @@ class VerificationDataResponseModel {
 }
 
 class VerificationDataDocument {
+  Name? name;
+  DateTime? dob;
+  String? documentNumber;
   List<String>? selectedType;
   List<String>? supportedTypes;
   int? faceMatchConfidence;
 
   VerificationDataDocument({
+    this.name,
+    this.dob,
+    this.documentNumber,
     this.selectedType,
     this.supportedTypes,
     this.faceMatchConfidence,
@@ -99,6 +105,9 @@ class VerificationDataDocument {
 
   factory VerificationDataDocument.fromJson(Map<String, dynamic> json) =>
       VerificationDataDocument(
+        name: json["name"] == null ? null : Name.fromJson(json["name"]),
+        dob: json["dob"] == null ? null : DateTime.parse(json["dob"]),
+        documentNumber: json["document_number"] ?? '',
         selectedType: json["selected_type"] == null
             ? []
             : List<String>.from(json["selected_type"]!.map((x) => x)),
@@ -109,6 +118,10 @@ class VerificationDataDocument {
       );
 
   Map<String, dynamic> toJson() => {
+        "name": name?.toJson(),
+        "dob":
+            "${dob!.year.toString().padLeft(4, '0')}-${dob!.month.toString().padLeft(2, '0')}-${dob!.day.toString().padLeft(2, '0')}",
+        "document_number": documentNumber,
         "selected_type": selectedType == null
             ? []
             : List<dynamic>.from(selectedType!.map((x) => x)),
@@ -116,6 +129,34 @@ class VerificationDataDocument {
             ? []
             : List<dynamic>.from(supportedTypes!.map((x) => x)),
         "face_match_confidence": faceMatchConfidence,
+      };
+}
+
+class Name {
+  String? firstName;
+  String? middleName;
+  String? lastName;
+  String? fullName;
+
+  Name({
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.fullName,
+  });
+
+  factory Name.fromJson(Map<String, dynamic> json) => Name(
+        firstName: json["first_name"] ?? '',
+        middleName: json["middle_name"] ?? '',
+        lastName: json["last_name"] ?? '',
+        fullName: json["full_name"] ?? '',
+      );
+
+  Map<String, dynamic> toJson() => {
+        "first_name": firstName,
+        "middle_name": middleName,
+        "last_name": lastName,
+        "full_name": fullName,
       };
 }
 
@@ -158,6 +199,9 @@ class VerificationResultDocument {
   int? selectedType;
   int? documentCountry;
   int? faceOnDocumentMatched;
+  int? documentNumber;
+  int? dob;
+  int? name;
 
   VerificationResultDocument({
     this.document,
@@ -167,6 +211,9 @@ class VerificationResultDocument {
     this.selectedType,
     this.documentCountry,
     this.faceOnDocumentMatched,
+    this.documentNumber,
+    this.dob,
+    this.name,
   });
 
   factory VerificationResultDocument.fromJson(Map<String, dynamic> json) =>
@@ -178,6 +225,9 @@ class VerificationResultDocument {
         selectedType: json["selected_type"],
         documentCountry: json["document_country"],
         faceOnDocumentMatched: json["face_on_document_matched"],
+        documentNumber: json["document_number"],
+        dob: json["dob"],
+        name: json["name"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -188,5 +238,8 @@ class VerificationResultDocument {
         "selected_type": selectedType,
         "document_country": documentCountry,
         "face_on_document_matched": faceOnDocumentMatched,
+        "document_number": documentNumber,
+        "dob": dob,
+        "name": name,
       };
 }

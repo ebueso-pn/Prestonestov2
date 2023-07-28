@@ -58,6 +58,14 @@ class _ApplicationDNIValidationWidgetState
         "passport",
         "credit_or_debit_card",
       ],
+      /* Keep name, dob, document_number, expiry_date, issue_date empty for with-OCR request*/
+      "name": {
+        "first_name": "",
+        "last_name": "",
+        "middle_name": "",
+      },
+      "dob": "",
+      "document_number": "",
     },
   };
 
@@ -88,8 +96,6 @@ class _ApplicationDNIValidationWidgetState
             "Verification Success",
           ),
         ));
-        var refData = (await widget.applicationRecieve!.get()).data();
-        print(refData);
         await widget.applicationRecieve!.update({
           'shufti_data': verificationDataResponseModelFromJson(
                   verificationResponse.verificationData!)
@@ -98,6 +104,7 @@ class _ApplicationDNIValidationWidgetState
                   verificationResponse.verificationResult!)
               .toJson(),
           'shufti_addtional': '',
+          'index': FieldValue.increment((1)),
         });
         setState(() {
           _model.buttonDisplay = true;
@@ -365,7 +372,7 @@ class _ApplicationDNIValidationWidgetState
                             0.0, 100.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            context.pushNamed(
+                           dynamic returnResult = await context.pushNamed(
                               'Application_Address',
                               queryParameters: {
                                 'applicationRecieve': serializeParam(
@@ -374,6 +381,11 @@ class _ApplicationDNIValidationWidgetState
                                 ),
                               }.withoutNulls,
                             );
+                           if(returnResult == "Refresh") {
+                             setState(() {
+                               _model.buttonDisplay = false;
+                             });
+                           }
                           },
                           text: 'Continuar',
                           options: FFButtonOptions(
