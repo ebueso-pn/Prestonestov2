@@ -1,16 +1,13 @@
 import 'package:prestonesto_v1/application/application_d_n_i_validation/verification_model.dart';
 import 'package:shuftipro_sdk/shuftipro_sdk.dart';
 
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -97,12 +94,9 @@ class _ApplicationDNIValidationWidgetState
           ),
         ));
         await widget.applicationRecieve!.update({
-          'shufti_data': verificationDataResponseModelFromJson(
-                  verificationResponse.verificationData!)
-              .toJson(),
-          'id_verification_result': verificationResultResponseModelFromJson(
-                  verificationResponse.verificationResult!)
-              .toJson(),
+          'shufti_data': verificationResponse.verificationData!.toJson(),
+          'id_verification_result':
+              verificationResponse.verificationResult!.toJson(),
           'shufti_addtional': '',
           'index': FieldValue.increment((1)),
         });
@@ -110,10 +104,6 @@ class _ApplicationDNIValidationWidgetState
           _model.buttonDisplay = true;
         });
       } else {
-        print(
-          'Message::: ' +
-              '${verificationResponse.message.isNotEmpty ? verificationResponse.message : verificationResponse.error}',
-        );
         ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
           content: Text(
             verificationResponse.message.isNotEmpty
@@ -372,7 +362,7 @@ class _ApplicationDNIValidationWidgetState
                             0.0, 100.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                           dynamic returnResult = await context.pushNamed(
+                            dynamic returnResult = await context.pushNamed(
                               'Application_Address',
                               queryParameters: {
                                 'applicationRecieve': serializeParam(
@@ -381,11 +371,11 @@ class _ApplicationDNIValidationWidgetState
                                 ),
                               }.withoutNulls,
                             );
-                           if(returnResult == "Refresh") {
-                             setState(() {
-                               _model.buttonDisplay = false;
-                             });
-                           }
+                            if (returnResult == "Refresh") {
+                              setState(() {
+                                _model.buttonDisplay = false;
+                              });
+                            }
                           },
                           text: 'Continuar',
                           options: FFButtonOptions(
