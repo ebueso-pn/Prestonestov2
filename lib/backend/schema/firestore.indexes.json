@@ -1,0 +1,18 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "application",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "date_applied",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ]
+}
