@@ -1146,9 +1146,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                   decoration: BoxDecoration(
                                                     color:
                                                         valueOrDefault<Color>(
-                                                      homeApplicationRecord
-                                                                  ?.status ==
-                                                              'Enviada'
+                                                      FFAppState().ApplicationEnviada ==
+                                                              true
                                                           ? FlutterFlowTheme.of(
                                                                   context)
                                                               .primary
@@ -1168,9 +1167,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                   decoration: BoxDecoration(
                                                     color:
                                                         valueOrDefault<Color>(
-                                                      homeApplicationRecord
-                                                                  ?.status ==
-                                                              'Enviada'
+                                                      FFAppState().ApplicationEnviada ==
+                                                              true
                                                           ? FlutterFlowTheme.of(
                                                                   context)
                                                               .primary
@@ -1230,9 +1228,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 height: 16.0,
                                                 decoration: BoxDecoration(
                                                   color: valueOrDefault<Color>(
-                                                    homeApplicationRecord
-                                                                ?.status ==
-                                                            'Enviada'
+                                                    FFAppState().ApplicationEnviada ==
+                                                            true
                                                         ? FlutterFlowTheme.of(
                                                                 context)
                                                             .primary
@@ -1250,9 +1247,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 height: 50.0,
                                                 decoration: BoxDecoration(
                                                   color: valueOrDefault<Color>(
-                                                    homeApplicationRecord
-                                                                ?.status ==
-                                                            'Enviada'
+                                                    FFAppState().ApplicationEnviada ==
+                                                            true
                                                         ? FlutterFlowTheme.of(
                                                                 context)
                                                             .primary
@@ -1310,9 +1306,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 height: 16.0,
                                                 decoration: BoxDecoration(
                                                   color: valueOrDefault<Color>(
-                                                    homeApplicationRecord
-                                                                ?.status ==
-                                                            'Enviada'
+                                                    FFAppState().ApplicationEnviada ==
+                                                            true
                                                         ? FlutterFlowTheme.of(
                                                                 context)
                                                             .primary
@@ -1330,9 +1325,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 height: 50.0,
                                                 decoration: BoxDecoration(
                                                   color: valueOrDefault<Color>(
-                                                    homeApplicationRecord
-                                                                ?.status ==
-                                                            'Enviada'
+                                                    FFAppState().ApplicationEnviada ==
+                                                            true
                                                         ? FlutterFlowTheme.of(
                                                                 context)
                                                             .primary
@@ -1390,9 +1384,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 height: 16.0,
                                                 decoration: BoxDecoration(
                                                   color: valueOrDefault<Color>(
-                                                    homeApplicationRecord
-                                                                ?.status ==
-                                                            'Enviada'
+                                                    FFAppState().ApplicationEnviada ==
+                                                            true
                                                         ? FlutterFlowTheme.of(
                                                                 context)
                                                             .primary
@@ -1410,9 +1403,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 height: 50.0,
                                                 decoration: BoxDecoration(
                                                   color: valueOrDefault<Color>(
-                                                    homeApplicationRecord
-                                                                ?.status ==
-                                                            'Enviada'
+                                                    FFAppState().ApplicationEnviada ==
+                                                            true
                                                         ? FlutterFlowTheme.of(
                                                                 context)
                                                             .primary
