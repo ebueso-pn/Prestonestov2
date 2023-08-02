@@ -1,6 +1,5 @@
 import 'package:prestonesto_v1/application/application_d_n_i_validation/verification_model.dart';
 import 'package:shuftipro_sdk/shuftipro_sdk.dart';
-
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -16,7 +15,7 @@ export 'application_d_n_i_validation_model.dart';
 
 String clientId =
     "o7PFvKcJMZKCJIWlGBb7DRGqoAfM2kxEIfPZPKXHCsmZ1ChPq51689211125"; // enter client id here
-String secretKey = "8MqjmSHh50T1USzLOrkMJoiESrTb1hxn"; // enter secret key here
+String secretKey = "gIKH3kN6Gx53Fsr7bt0Lx9vb9fviWfft"; // enter secret key here
 
 class ApplicationDNIValidationWidget extends StatefulWidget {
   const ApplicationDNIValidationWidget({

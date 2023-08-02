@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <resources>
     <string name="app_name">PrestonestoV1</string>
-    <string name="select_service">Por favor, selecciona uno o más métodos de verificación.</string>
-    <string name="provide_credentials">Por favor, proporciona clientId y secretKey o accessToken antes de continuar.</string>
+    <string name="select_service">Please, select one or more methods of verification.</string>
+    <string name="provide_credentials">Please provide clientId and secretKey or accessToken before proceed.</string>
     <string name="ok">OK</string>
-    <string name="choose_your_n_method_of_verification">Elige tu \n Método de Verificación</string>
-    <string name="face_verification">Verificación Facial</string>
-    <string name="document_verification">Verificación de Documento</string>
-    <string name="document_two_verification">Verificación de Documento 2</string>
-    <string name="address_verification">Verificación de Dirección</string>
-    <string name="consent_verification">Verificación de Consentimiento</string>
-    <string name="phone_verification">Autenticación de 2 Factores</string>
-    <string name="background_verification">Verificación de Antecedentes</string>
-    <string name="continue_">Continuar</string>
-    <string name="start_verification">Iniciar Verificación</string>
-    <string name="verification_method">Selecciona tu Método de Verificación</string>
-    <string name="verification">Servicios de Verificación</string>
+    <string name="choose_your_n_method_of_verification">Choose your \n Method of Verification</string>
+    <string name="face_verification">Face Verification</string>
+    <string name="document_verification">Document Verification</string>
+    <string name="document_two_verification">Document 2 Verification</string>
+    <string name="address_verification">Address Verification</string>
+    <string name="consent_verification">Consent Verification</string>
+    <string name="phone_verification">2 Factor Authentication</string>
+    <string name="background_verification">Background Checks</string>
+    <string name="continue_">Continue</string>
+    <string name="start_verification">Start Verification</string>
+    <string name="verification_method">Select your Method of Verification</string>
+    <string name="verification">Verification Services</string>
 
-
+    
     <string name="yes_con">Sí, Continuar</string>
     <string name="no_cancel">No, Cancelar</string>
     <string name="agree">Acepto la declaración anterior y he leído la <a color="#000000" href="https://shuftipro.com/privacy-policy">Política de Privacidad</a> de Shufti Pro.</string>
     <string name="decleration_of_consent">Declaro que tengo al menos 16 años de edad; acepto la recopilación, procesamiento o almacenamiento de mi información personal por Shufti Pro con fines de verificación de identidad; que la información que proporciono es verdadera y precisa según mi leal saber y entender; y seré plenamente responsable en caso de proporcionar información incorrecta o de que alguno de los documentos que utilice sea falso, falsificado, falsificado, etc.</string>
     <string name="flash_status_on"> <font color="#EF5351">Encendido</font> </string>
     <string name="face_verifications">Verificación Facial</string>
-    <string name="document_verifications">Verificación de Documentos</string>
+    <string name="document_verifications">Verificación dqe Documentos</string>
     <string name="document_two_verifications">Segunda Verificación de Documentos</string>
     <string name="address_verifications">Verificación de Dirección</string>
     <string name="consent_verifications">Verificación de Consentimiento</string>
