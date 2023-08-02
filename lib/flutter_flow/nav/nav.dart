@@ -436,7 +436,6 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-<<<<<<< HEAD
               ? Center(
                   child: SizedBox(
                     width: 50.0,
@@ -446,13 +445,6 @@ class FFRoute {
                         Color(0xFF2AAF7A),
                       ),
                     ),
-=======
-              ? Container(
-                  color: FlutterFlowTheme.of(context).primary,
-                  child: Image.asset(
-                    'assets/images/PrestoNesto_Green_Color_2400x1800.jpg',
-                    fit: BoxFit.contain,
->>>>>>> 183a9417 (Updating to latest FlutterFlow output.)
                   ),
                 )
               : page;
