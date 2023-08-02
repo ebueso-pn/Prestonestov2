@@ -1,21 +1,18 @@
-import 'package:prestonesto_v1/application/application_d_n_i_validation/verification_model.dart';
-import 'package:shuftipro_sdk/shuftipro_sdk.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_d_n_i_validation_model.dart';
 export 'application_d_n_i_validation_model.dart';
-
-String clientId =
-    "o7PFvKcJMZKCJIWlGBb7DRGqoAfM2kxEIfPZPKXHCsmZ1ChPq51689211125"; // enter client id here
-String secretKey = "gIKH3kN6Gx53Fsr7bt0Lx9vb9fviWfft"; // enter secret key here
 
 class ApplicationDNIValidationWidget extends StatefulWidget {
   const ApplicationDNIValidationWidget({
@@ -33,104 +30,6 @@ class ApplicationDNIValidationWidget extends StatefulWidget {
 class _ApplicationDNIValidationWidgetState
     extends State<ApplicationDNIValidationWidget> {
   late ApplicationDNIValidationModel _model;
-  var authObject = {
-    "auth_type": "basic_auth",
-    "client_id": clientId,
-    "secret_key": secretKey,
-  };
-
-  Map<String, Object> createdPayload = {
-    "country": "",
-    "reference": "",
-    // please send the Application Document reference available under the application receive parameter,
-    "language": "ES",
-    "verification_mode": "image_only",
-    "show_results": 1,
-    "face": {"allow_offline": "1"},
-    "document": {
-      "supported_types": [
-        "id_card",
-        "driving_license",
-        "passport",
-        "credit_or_debit_card",
-      ],
-      /* Keep name, dob, document_number, expiry_date, issue_date empty for with-OCR request*/
-      "name": {
-        "first_name": "",
-        "last_name": "",
-        "middle_name": "",
-      },
-      "dob": "",
-      "document_number": "",
-    },
-  };
-
-  Map<String, Object> configObj = {
-    "open_webview": false,
-    "asyncRequest": false,
-    "captureEnabled": false,
-    "dark_mode": false,
-    "font_color": "#263B54",
-    "button_text_color": "#FFFFFF",
-    "button_background_color": "#1F5AF6"
-  };
-
-  Future<void> initPlatformState() async {
-    String response = '';
-    try {
-      response = await ShuftiproSdk.sendRequest(
-        authObject: authObject,
-        createdPayload: createdPayload,
-        configObject: configObj,
-      );
-      VerificationResponse verificationResponse =
-          verificationResponseFromJson(response);
-      print('Event::: ' + '${verificationResponse.event}');
-      if (verificationResponse.event == 'verification.accepted') {
-        ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
-          content: Text(
-            "Verification Success",
-          ),
-        ));
-        await widget.applicationRecieve!.update({
-          'shufti_data': verificationResponse.verificationData!.toJson(),
-          'id_verification_result':
-              verificationResponse.verificationResult!.toJson(),
-          'shufti_addtional': '',
-          'index': FieldValue.increment((1)),
-        });
-        setState(() {
-          _model.buttonDisplay = true;
-        });
-      } else {
-        ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
-          content: Text(
-            verificationResponse.message.isNotEmpty
-                ? verificationResponse.message
-                : verificationResponse.error.isNotEmpty
-                    ? verificationResponse.error
-                    : verificationResponse.declinedReason,
-          ),
-        ));
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
-        content: Text(
-          e.toString(),
-        ),
-      ));
-    }
-    if (!mounted) return;
-  }
-
-  void continueFun() async {
-    // createdPayload["reference"] = widget.applicationRecieve?.path ?? '';
-    // print(createdPayload["reference"]);
-    var v = DateTime.now();
-    var reference = "package_sample_Flutter_$v";
-    createdPayload["reference"] = reference;
-    initPlatformState();
-  }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -330,7 +229,6 @@ class _ApplicationDNIValidationWidgetState
                         child: FFButtonWidget(
                           onPressed: () {
                             print('Button pressed ...');
-                            continueFun();
                           },
                           text: 'Verificar mi identidad',
                           options: FFButtonOptions(
@@ -361,7 +259,7 @@ class _ApplicationDNIValidationWidgetState
                             0.0, 100.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            dynamic returnResult = await context.pushNamed(
+                            context.pushNamed(
                               'Application_Address',
                               queryParameters: {
                                 'applicationRecieve': serializeParam(
@@ -370,11 +268,6 @@ class _ApplicationDNIValidationWidgetState
                                 ),
                               }.withoutNulls,
                             );
-                            if (returnResult == "Refresh") {
-                              setState(() {
-                                _model.buttonDisplay = false;
-                              });
-                            }
                           },
                           text: 'Continuar',
                           options: FFButtonOptions(
