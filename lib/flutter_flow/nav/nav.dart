@@ -433,10 +433,10 @@ class FFRoute {
               : builder(context, ffParams);
           final child = appStateNotifier.loading
               ? Container(
-                  color: Colors.transparent,
+                  color: FlutterFlowTheme.of(context).primary,
                   child: Image.asset(
-                    'assets/images/financial-planning.svg',
-                    fit: BoxFit.cover,
+                    'assets/images/PrestoNesto_Green_Color_2400x1800.jpg',
+                    fit: BoxFit.scaleDown,
                   ),
                 )
               : page;
