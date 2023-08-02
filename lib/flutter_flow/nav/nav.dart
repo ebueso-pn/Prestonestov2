@@ -435,7 +435,7 @@ class FFRoute {
               ? Container(
                   color: Colors.transparent,
                   child: Image.asset(
-                    'assets/images/Financial_Planning.gif',
+                    'assets/images/financial-planning.svg',
                     fit: BoxFit.cover,
                   ),
                 )
