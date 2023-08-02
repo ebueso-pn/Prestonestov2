@@ -72,7 +72,7 @@ class _ApplicationDNIValidationWidgetState
     "dark_mode": false,
     "font_color": "#263B54",
     "button_text_color": "#FFFFFF",
-    "button_background_color": "#1F5AF6"
+    "button_background_color": "#2fa77a"
   };
 
   Future<void> initPlatformState() async {
