@@ -436,7 +436,7 @@ class FFRoute {
                   color: Colors.transparent,
                   child: Image.asset(
                     'assets/images/financial-planning.svg',
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 )
               : page;
