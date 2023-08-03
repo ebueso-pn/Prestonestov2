@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <string name="app_name">PrestonestoV1</string>
+    <string name="app_name">ShuftiProCore</string>
     <string name="select_service">Please, select one or more methods of verification.</string>
     <string name="provide_credentials">Please provide clientId and secretKey or accessToken before proceed.</string>
     <string name="ok">OK</string>
