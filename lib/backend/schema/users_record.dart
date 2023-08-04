@@ -111,21 +111,6 @@ class UsersRecord extends FirestoreRecord {
   String get bankAccountType => _bankAccountType ?? '';
   bool hasBankAccountType() => _bankAccountType != null;
 
-  // "departamento" field.
-  String? _departamento;
-  String get departamento => _departamento ?? '';
-  bool hasDepartamento() => _departamento != null;
-
-  // "residence_type" field.
-  String? _residenceType;
-  String get residenceType => _residenceType ?? '';
-  bool hasResidenceType() => _residenceType != null;
-
-  // "ingreso_mensual" field.
-  double? _ingresoMensual;
-  double get ingresoMensual => _ingresoMensual ?? 0.0;
-  bool hasIngresoMensual() => _ingresoMensual != null;
-
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -146,9 +131,6 @@ class UsersRecord extends FirestoreRecord {
     _bankAccountBank = snapshotData['bank_account_bank'] as String?;
     _bankAccountNumber = snapshotData['bank_account_number'] as String?;
     _bankAccountType = snapshotData['bank_account_type'] as String?;
-    _departamento = snapshotData['departamento'] as String?;
-    _residenceType = snapshotData['residence_type'] as String?;
-    _ingresoMensual = castToType<double>(snapshotData['ingreso_mensual']);
   }
 
   static CollectionReference get collection =>
@@ -204,9 +186,6 @@ Map<String, dynamic> createUsersRecordData({
   String? bankAccountBank,
   String? bankAccountNumber,
   String? bankAccountType,
-  String? departamento,
-  String? residenceType,
-  double? ingresoMensual,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -229,9 +208,6 @@ Map<String, dynamic> createUsersRecordData({
       'bank_account_bank': bankAccountBank,
       'bank_account_number': bankAccountNumber,
       'bank_account_type': bankAccountType,
-      'departamento': departamento,
-      'residence_type': residenceType,
-      'ingreso_mensual': ingresoMensual,
     }.withoutNulls,
   );
 
@@ -261,10 +237,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.incomeVerification == e2?.incomeVerification &&
         e1?.bankAccountBank == e2?.bankAccountBank &&
         e1?.bankAccountNumber == e2?.bankAccountNumber &&
-        e1?.bankAccountType == e2?.bankAccountType &&
-        e1?.departamento == e2?.departamento &&
-        e1?.residenceType == e2?.residenceType &&
-        e1?.ingresoMensual == e2?.ingresoMensual;
+        e1?.bankAccountType == e2?.bankAccountType;
   }
 
   @override
@@ -287,10 +260,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.incomeVerification,
         e?.bankAccountBank,
         e?.bankAccountNumber,
-        e?.bankAccountType,
-        e?.departamento,
-        e?.residenceType,
-        e?.ingresoMensual
+        e?.bankAccountType
       ]);
 
   @override

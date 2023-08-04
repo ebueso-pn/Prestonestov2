@@ -1,13 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_choice_chips.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -291,94 +288,83 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                         alignment: AlignmentDirectional(0.0, 0.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 16.0, 0.0, 24.0),
-                          child: Text(
-                            'Necesitamos tu dirección para validar tu identidad. ',
-                            textAlign: TextAlign.start,
-                            style: FlutterFlowTheme.of(context).bodyLarge,
-                          ),
-                        ),
-                      ],
-                    ).animateOnPageLoad(
-                        animationsMap['rowOnPageLoadAnimation']!),
-                    Align(
-                      alignment: AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 0.0, 16.0, 0.0),
-                        child: Text(
-                          'Tipo de Vivienda',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Urbanist',
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
+                              16.0, 16.0, 16.0, 16.0),
+                          child: TextFormField(
+                            controller: _model.addressFieldCasaCalleController,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              '_model.addressFieldCasaCalleController',
+                              Duration(milliseconds: 100),
+                              () async {
+                                if (_model.addressFieldCasaCalleController.text !=
+                                        null &&
+                                    _model.addressFieldCasaCalleController.text !=
+                                        '') {
+                                  setState(() {
+                                    FFAppState().ColoniaApplicationState = false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    FFAppState().ColoniaApplicationState = true;
+                                  });
+                                }
+                              },
+                            ),
+                            autofocus: true,
+                            textCapitalization: TextCapitalization.words,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Numero de Casa y Calle',
+                              labelStyle: FlutterFlowTheme.of(context).labelLarge,
+                              hintText: '123 Calle Fransisco Morazan',
+                              hintStyle: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Urbanist',
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FFAppState().CasayCalleApplicationState
+                                      ? FlutterFlowTheme.of(context).error
+                                      : FlutterFlowTheme.of(context).alternate,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(42.0),
                               ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FFAppState().CasayCalleApplicationState
+                                      ? FlutterFlowTheme.of(context).error
+                                      : FlutterFlowTheme.of(context).alternate,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(42.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).error,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(42.0),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).error,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(42.0),
+                              ),
+                            ),
+                            style: FlutterFlowTheme.of(context).bodyMedium,
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.streetAddress,
+                            validator: _model
+                                .addressFieldCasaCalleControllerValidator
+                                .asValidator(context),
+                          ),
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 8.0, 16.0, 16.0),
-                          child: FlutterFlowChoiceChips(
-                            options: [
-                              ChipData('Propia', Icons.home),
-                              ChipData('Alquiler', Icons.key),
-                              ChipData('Familiar', Icons.family_restroom)
-                            ],
-                            onChanged: (val) => setState(
-                                () => _model.choiceChipsValue = val?.first),
-                            selectedChipStyle: ChipStyle(
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).secondary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Urbanist',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                  ),
-                              iconColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              iconSize: 18.0,
-                              elevation: 4.0,
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            unselectedChipStyle: ChipStyle(
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).alternate,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Urbanist',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                  ),
-                              iconColor:
-                                  FlutterFlowTheme.of(context).secondaryText,
-                              iconSize: 18.0,
-                              elevation: 0.0,
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            chipSpacing: 12.0,
-                            rowSpacing: 12.0,
-                            multiselect: false,
-                            alignment: WrapAlignment.start,
-                            controller: _model.choiceChipsValueController ??=
-                                FormFieldController<List<String>>(
-                              [],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
-                      child: Padding(
+                      Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 16.0, 16.0, 16.0),
                         child: TextFormField(
@@ -672,233 +658,11 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                       ),
                       borderRadius: BorderRadius.circular(48.0),
                     ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 16.0, 16.0, 16.0),
-                      child: TextFormField(
-                        controller: _model.addressFieldCiudadController,
-                        onChanged: (_) => EasyDebounce.debounce(
-                          '_model.addressFieldCiudadController',
-                          Duration(milliseconds: 100),
-                          () async {
-                            if (_model.addressFieldCiudadController.text !=
-                                    null &&
-                                _model.addressFieldCiudadController.text !=
-                                    '') {
-                              setState(() {
-                                FFAppState().CiudadApplicationState = false;
-                              });
-                            } else {
-                              setState(() {
-                                FFAppState().CiudadApplicationState = true;
-                              });
-                            }
-                          },
-                        ),
-                        textCapitalization: TextCapitalization.words,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Ciudad',
-                          labelStyle: FlutterFlowTheme.of(context).labelLarge,
-                          hintText: 'Tegucigalpa',
-                          hintStyle:
-                              FlutterFlowTheme.of(context).labelMedium.override(
-                                    fontFamily: 'Urbanist',
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FFAppState().CiudadApplicationState
-                                  ? FlutterFlowTheme.of(context).error
-                                  : FlutterFlowTheme.of(context).alternate,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FFAppState().CiudadApplicationState
-                                  ? FlutterFlowTheme.of(context).error
-                                  : FlutterFlowTheme.of(context).alternate,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).error,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).error,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(42.0),
-                          ),
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                        textAlign: TextAlign.center,
-                        validator: _model.addressFieldCiudadControllerValidator
-                            .asValidator(context),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 16.0, 16.0, 16.0),
-                      child: FlutterFlowDropDown<String>(
-                        controller: _model.dptoDropDownValueController ??=
-                            FormFieldController<String>(null),
-                        options: [
-                          'Francisco Morazán',
-                          'Cortés',
-                          'Yoro',
-                          'Atlántida',
-                          'Olancho',
-                          'Choluteca',
-                          'Comayagua',
-                          'El Paraíso',
-                          'Santa Bárbara',
-                          'Intibucá',
-                          'La Paz',
-                          'Lempira',
-                          'Copán',
-                          'Valle',
-                          'Ocotepeque',
-                          'Gracias a Dios',
-                          'Islas de la Bahía',
-                          'Colon'
-                        ],
-                        onChanged: (val) =>
-                            setState(() => _model.dptoDropDownValue = val),
-                        width: double.infinity,
-                        height: 50.0,
-                        textStyle: FlutterFlowTheme.of(context)
-                            .bodyMedium
-                            .override(
-                              fontFamily: 'Urbanist',
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                            ),
-                        hintText: 'Departamento',
-                        icon: Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 24.0,
-                        ),
-                        fillColor:
-                            FlutterFlowTheme.of(context).primaryBackground,
-                        elevation: 2.0,
-                        borderColor: FlutterFlowTheme.of(context).alternate,
-                        borderWidth: 2.0,
-                        borderRadius: 42.0,
-                        margin: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 4.0, 16.0, 4.0),
-                        hidesUnderline: true,
-                        isSearchable: false,
-                      ),
-                    ),
-                  ],
-                ).animateOnPageLoad(
-                    animationsMap['columnOnPageLoadAnimation']!),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    if (_model.addressFieldCasaCalleController.text != null &&
-                        _model.addressFieldCasaCalleController.text != '') {
-                      setState(() {
-                        FFAppState().nombresApplicationState = false;
-                      });
-                    } else {
-                      setState(() {
-                        FFAppState().nombresApplicationState = true;
-                      });
-                    }
-
-                    if (_model.addressFieldColoniaController.text != null &&
-                        _model.addressFieldColoniaController.text != '') {
-                      setState(() {
-                        FFAppState().apellidosApplicationState = false;
-                      });
-                    } else {
-                      setState(() {
-                        FFAppState().apellidosApplicationState = true;
-                      });
-                    }
-
-                    if (_model.addressFieldCiudadController.text != null &&
-                        _model.addressFieldCiudadController.text != '') {
-                      setState(() {
-                        FFAppState().DNIapplicationState = false;
-                      });
-                    } else {
-                      setState(() {
-                        FFAppState().DNIapplicationState = true;
-                      });
-                    }
-
-                    if (_model.formKey.currentState == null ||
-                        !_model.formKey.currentState!.validate()) {
-                      return;
-                    }
-                    if (_model.dptoDropDownValue == null) {
-                      return;
-                    }
-
-                    await currentUserReference!.update(createUsersRecordData(
-                      calle: _model.addressFieldCasaCalleController.text,
-                      colonia: _model.addressFieldColoniaController.text,
-                      ciudad: _model.addressFieldCiudadController.text,
-                      departamento: _model.dptoDropDownValue,
-                      residenceType: _model.choiceChipsValue,
-                    ));
-
-                    await widget.applicationRecieve!.update({
-                      'index': FieldValue.increment(1),
-                    });
-
-                    context.pushNamed(
-                      'Application_Map',
-                      queryParameters: {
-                        'applicationRecieve': serializeParam(
-                          widget.applicationRecieve,
-                          ParamType.DocumentReference,
-                        ),
-                      }.withoutNulls,
-                      extra: <String, dynamic>{
-                        kTransitionInfoKey: TransitionInfo(
-                          hasTransition: true,
-                          transitionType: PageTransitionType.rightToLeft,
-                        ),
-                      },
-                    );
-                  },
-                  text: 'Continuar',
-                  options: FFButtonOptions(
-                    width: 230.0,
-                    height: 50.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Urbanist',
-                          color: Colors.white,
-                        ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(48.0),
-                  ),
-                ).animateOnPageLoad(
-                    animationsMap['buttonOnPageLoadAnimation']!),
-              ),
-            ],
+                  ).animateOnPageLoad(
+                      animationsMap['buttonOnPageLoadAnimation']!),
+                ),
+              ],
+            ),
           ),
         ),
       ),

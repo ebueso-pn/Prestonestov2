@@ -103,7 +103,6 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
     _model.nombresController ??= TextEditingController();
     _model.apellidosController ??= TextEditingController();
     _model.dniController ??= TextEditingController();
-    _model.ingresosController ??= TextEditingController();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -522,85 +521,6 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           inputFormatters: [_model.dniMask],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 16.0, 16.0, 16.0),
-                        child: TextFormField(
-                          controller: _model.ingresosController,
-                          onChanged: (_) => EasyDebounce.debounce(
-                            '_model.ingresosController',
-                            Duration(milliseconds: 100),
-                            () async {
-                              if (_model.ingresosController.text != null &&
-                                  _model.ingresosController.text != '') {
-                                setState(() {
-                                  FFAppState().DNIapplicationState = false;
-                                });
-                              } else {
-                                setState(() {
-                                  FFAppState().DNIapplicationState = true;
-                                });
-                              }
-                            },
-                          ),
-                          onFieldSubmitted: (_) async {
-                            await currentUserReference!
-                                .update(createUsersRecordData(
-                              dni: '',
-                            ));
-                          },
-                          textCapitalization: TextCapitalization.none,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelText: 'Ingreso Mensual Promedio',
-                            labelStyle: FlutterFlowTheme.of(context).labelLarge,
-                            hintText: 'L.  5,000',
-                            hintStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Urbanist',
-                                  fontStyle: FontStyle.italic,
-                                ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FFAppState().ingresoss == true
-                                    ? FlutterFlowTheme.of(context).error
-                                    : FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(42.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FFAppState().ingresoss == true
-                                    ? FlutterFlowTheme.of(context).error
-                                    : FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(42.0),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(42.0),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(42.0),
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyMedium,
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                          validator: _model.ingresosControllerValidator
-                              .asValidator(context),
-                        ),
-                      ),
                     ],
                   ).animateOnPageLoad(
                       animationsMap['columnOnPageLoadAnimation']!),
@@ -645,17 +565,6 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           });
                         }
 
-                        if (_model.ingresosController.text != null &&
-                            _model.ingresosController.text != '') {
-                          setState(() {
-                            FFAppState().DNIapplicationState = false;
-                          });
-                        } else {
-                          setState(() {
-                            FFAppState().DNIapplicationState = true;
-                          });
-                        }
-
                         if (_model.formKey.currentState == null ||
                             !_model.formKey.currentState!.validate()) {
                           return;
@@ -666,8 +575,6 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           nombres: _model.nombresController.text,
                           apellidos: _model.apellidosController.text,
                           dni: _model.dniController.text,
-                          ingresoMensual:
-                              double.tryParse(_model.ingresosController.text),
                         ));
 
                         await widget.applicationRecieve!.update({

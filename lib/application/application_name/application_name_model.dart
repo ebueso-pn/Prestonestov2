@@ -61,31 +61,12 @@ class ApplicationNameModel extends FlutterFlowModel {
     return null;
   }
 
-  // State field(s) for Ingresos widget.
-  TextEditingController? ingresosController;
-  String? Function(BuildContext, String?)? ingresosControllerValidator;
-  String? _ingresosControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Porfavor estima tus ingresos mensuales';
-    }
-
-    if (val.length < 4) {
-      return 'Mínimo de cuatro digitos';
-    }
-    if (val.length > 6) {
-      return 'Máximo de seis digitos';
-    }
-
-    return null;
-  }
-
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
     nombresControllerValidator = _nombresControllerValidator;
     apellidosControllerValidator = _apellidosControllerValidator;
     dniControllerValidator = _dniControllerValidator;
-    ingresosControllerValidator = _ingresosControllerValidator;
   }
 
   void dispose() {
@@ -93,7 +74,6 @@ class ApplicationNameModel extends FlutterFlowModel {
     nombresController?.dispose();
     apellidosController?.dispose();
     dniController?.dispose();
-    ingresosController?.dispose();
   }
 
   /// Action blocks are added here.

@@ -121,12 +121,6 @@ class FFAppState extends ChangeNotifier {
   set IngresosEnviados(bool _value) {
     _IngresosEnviados = _value;
   }
-
-  bool _ingresoss = false;
-  bool get ingresoss => _ingresoss;
-  set ingresoss(bool _value) {
-    _ingresoss = _value;
-  }
 }
 
 LatLng? _latLngFromString(String? val) {

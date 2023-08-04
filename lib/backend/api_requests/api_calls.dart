@@ -333,41 +333,6 @@ class ShuftiStatusRequestCall {
       );
 }
 
-class EquifaxAuthCall {
-  static Future<ApiCallResponse> call() {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Equifax Auth',
-      apiUrl: 'https://www.equifax.com.hn/efx-app-ws-api360/v1/hn/service/auth',
-      callType: ApiCallType.POST,
-      headers: {},
-      params: {},
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-    );
-  }
-}
-
-class EquifaxCreditReportCall {
-  static Future<ApiCallResponse> call() {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Equifax Credit Report',
-      apiUrl:
-          'https://www.equifax.com.hn/efx-app-ws-api360/v1/hn/service/informacionBureau',
-      callType: ApiCallType.POST,
-      headers: {},
-      params: {},
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-    );
-  }
-}
-
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;
