@@ -1,10 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_choice_chips.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -274,7 +277,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 16.0, 0.0, 16.0),
+                              16.0, 16.0, 0.0, 24.0),
                           child: Text(
                             'Necesitamos tu dirección para validar tu identidad. ',
                             textAlign: TextAlign.start,
@@ -284,6 +287,81 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                       ],
                     ).animateOnPageLoad(
                         animationsMap['rowOnPageLoadAnimation']!),
+                    Align(
+                      alignment: AlignmentDirectional(-1.0, 0.0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 0.0, 16.0, 0.0),
+                        child: Text(
+                          'Tipo de Vivienda',
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: 'Urbanist',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 8.0, 16.0, 16.0),
+                          child: FlutterFlowChoiceChips(
+                            options: [
+                              ChipData('Propia', Icons.home),
+                              ChipData('Alquiler', Icons.key),
+                              ChipData('Familiar', Icons.family_restroom)
+                            ],
+                            onChanged: (val) => setState(
+                                () => _model.choiceChipsValue = val?.first),
+                            selectedChipStyle: ChipStyle(
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).secondary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Urbanist',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                              iconColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              iconSize: 18.0,
+                              elevation: 4.0,
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                            unselectedChipStyle: ChipStyle(
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).alternate,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Urbanist',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                  ),
+                              iconColor:
+                                  FlutterFlowTheme.of(context).secondaryText,
+                              iconSize: 18.0,
+                              elevation: 0.0,
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                            chipSpacing: 12.0,
+                            rowSpacing: 12.0,
+                            multiselect: false,
+                            alignment: WrapAlignment.start,
+                            controller: _model.choiceChipsValueController ??=
+                                FormFieldController<List<String>>(
+                              [],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     Align(
                       alignment: AlignmentDirectional(0.0, 0.0),
                       child: Padding(
@@ -567,6 +645,60 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                             .asValidator(context),
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          16.0, 16.0, 16.0, 16.0),
+                      child: FlutterFlowDropDown<String>(
+                        controller: _model.dptoDropDownValueController ??=
+                            FormFieldController<String>(null),
+                        options: [
+                          'Francisco Morazán',
+                          'Cortés',
+                          'Yoro',
+                          'Atlántida',
+                          'Olancho',
+                          'Choluteca',
+                          'Comayagua',
+                          'El Paraíso',
+                          'Santa Bárbara',
+                          'Intibucá',
+                          'La Paz',
+                          'Lempira',
+                          'Copán',
+                          'Valle',
+                          'Ocotepeque',
+                          'Gracias a Dios',
+                          'Islas de la Bahía',
+                          'Colon'
+                        ],
+                        onChanged: (val) =>
+                            setState(() => _model.dptoDropDownValue = val),
+                        width: double.infinity,
+                        height: 50.0,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .bodyMedium
+                            .override(
+                              fontFamily: 'Urbanist',
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                            ),
+                        hintText: 'Departamento',
+                        icon: Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          size: 24.0,
+                        ),
+                        fillColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
+                        elevation: 2.0,
+                        borderColor: FlutterFlowTheme.of(context).alternate,
+                        borderWidth: 2.0,
+                        borderRadius: 42.0,
+                        margin: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 4.0, 16.0, 4.0),
+                        hidesUnderline: true,
+                        isSearchable: false,
+                      ),
+                    ),
                   ],
                 ).animateOnPageLoad(
                     animationsMap['columnOnPageLoadAnimation']!),
@@ -612,11 +744,16 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                         !_model.formKey.currentState!.validate()) {
                       return;
                     }
+                    if (_model.dptoDropDownValue == null) {
+                      return;
+                    }
 
                     await currentUserReference!.update(createUsersRecordData(
                       calle: _model.addressFieldCasaCalleController.text,
                       colonia: _model.addressFieldColoniaController.text,
                       ciudad: _model.addressFieldCiudadController.text,
+                      departamento: _model.dptoDropDownValue,
+                      residenceType: _model.choiceChipsValue,
                     ));
 
                     await widget.applicationRecieve!.update({
