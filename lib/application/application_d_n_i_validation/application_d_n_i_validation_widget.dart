@@ -30,7 +30,105 @@ class ApplicationDNIValidationWidget extends StatefulWidget {
 class _ApplicationDNIValidationWidgetState
     extends State<ApplicationDNIValidationWidget> {
   late ApplicationDNIValidationModel _model;
+  var authObject = {
+    "auth_type": "basic_auth",
+    "client_id": clientId,
+    "secret_key": secretKey,
+  };
 
+  Map<String, Object> createdPayload = {
+    "country": "",
+    "reference": "",
+    // please send the Application Document reference available under the application receive parameter,
+    "language": "ES",
+    "verification_mode": "image_only",
+    "show_results": 1,
+    "face": {"allow_offline": "1"},
+    "document": {
+      "supported_types": [
+        "id_card",
+        "driving_license",
+        "passport",
+        "credit_or_debit_card",
+      ],
+      /* Keep name, dob, document_number, expiry_date, issue_date empty for with-OCR request*/
+      "name": {
+        "first_name": "",
+        "last_name": "",
+        "middle_name": "",
+      },
+      "dob": "",
+      "document_number": "",
+    },
+  };
+
+  Map<String, Object> configObj = {
+    "open_webview": false,
+    "asyncRequest": false,
+    "captureEnabled": false,
+    "dark_mode": false,
+    "font_color": "#263B54",
+    "button_text_color": "#FFFFFF",
+    "button_background_color": "#2fa77a"
+  };
+
+  Future<void> initPlatformState() async {
+    String response = '';
+    try {
+      response = await ShuftiproSdk.sendRequest(
+        authObject: authObject,
+        createdPayload: createdPayload,
+        configObject: configObj,
+      );
+      VerificationResponse verificationResponse =
+          verificationResponseFromJson(response);
+      print('Event::: ' + '${verificationResponse.event}');
+      if (verificationResponse.event == 'verification.accepted') {
+        ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
+          content: Text(
+            "Verification Success",
+          ),
+        ));
+        await widget.applicationRecieve!.update({
+          'shufti_data': verificationResponse.verificationData!.toJson(),
+          'id_verification_result':
+              verificationResponse.verificationResult!.toJson(),
+          'shufti_addtional': '',
+          'index': FieldValue.increment((1)),
+        });
+        setState(() {
+          _model.buttonDisplay = true;
+        });
+      } else {
+        ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
+          content: Text(
+            verificationResponse.message.isNotEmpty
+                ? verificationResponse.message
+                : verificationResponse.error.isNotEmpty
+                    ? verificationResponse.error
+                    : verificationResponse.declinedReason,
+          ),
+        ));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
+        content: Text(
+          e.toString(),
+        ),
+      ));
+    }
+    if (!mounted) return;
+  }
+
+  void continueFun() async {
+    // createdPayload["reference"] = widget.applicationRecieve?.path ?? '';
+    // print(createdPayload["reference"]);
+    var v = DateTime.now();
+    var reference = "package_sample_Flutter_$v";
+    createdPayload["reference"] = reference;
+    initPlatformState();
+  }
+  
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override

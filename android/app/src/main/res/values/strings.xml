@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PrestonestoV1</string>
-
+<string name="select_doc_type">Elija un documento para verificación</string>
+<string name="document_verifications">Verificación de DNI</string>
+<string name="document_two_verifications">Verificación de DNI</string>
 </resources>
