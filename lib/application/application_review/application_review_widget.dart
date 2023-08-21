@@ -635,6 +635,13 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                         status: 'Enviada',
                         bureauConsent: _model.checkboxValue,
                       ));
+
+                      await EquifaxRecord.collection
+                          .doc()
+                          .set(createEquifaxRecordData(
+                            userDocReference: currentUserReference,
+                            applicationDocReference: widget.applicationRecieve,
+                          ));
                       FFAppState().ApplicationEnviada = true;
 
                       context.pushNamed(

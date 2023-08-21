@@ -10,6 +10,7 @@ import 'schema/application_record.dart';
 import 'schema/loans_record.dart';
 import 'schema/documents_record.dart';
 import 'schema/admin_record.dart';
+import 'schema/equifax_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,6 +23,7 @@ export 'schema/application_record.dart';
 export 'schema/loans_record.dart';
 export 'schema/documents_record.dart';
 export 'schema/admin_record.dart';
+export 'schema/equifax_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -206,6 +208,43 @@ Future<List<AdminRecord>> queryAdminRecordOnce({
     queryCollectionOnce(
       AdminRecord.collection,
       AdminRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query EquifaxRecords (as a Stream and as a Future).
+Future<int> queryEquifaxRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      EquifaxRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<EquifaxRecord>> queryEquifaxRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      EquifaxRecord.collection,
+      EquifaxRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<EquifaxRecord>> queryEquifaxRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      EquifaxRecord.collection,
+      EquifaxRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

@@ -335,12 +335,20 @@ class ShuftiStatusRequestCall {
 
 class EquifaxAuthCall {
   static Future<ApiCallResponse> call() {
+    final body = '''
+{
+    "user":"APIPRESTONE.FB01",
+    "password":"AjRpqZAR@5Px@Y7",
+    "key":"MTEyMzU4",
+    "application":"API360"
+}''';
     return ApiManager.instance.makeApiCall(
       callName: 'Equifax Auth',
       apiUrl: 'https://www.equifax.com.hn/efx-app-ws-api360/v1/hn/service/auth',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
+      body: body,
       bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -348,6 +356,11 @@ class EquifaxAuthCall {
       cache: false,
     );
   }
+
+  static dynamic token(dynamic response) => getJsonField(
+        response,
+        r'''$.respuesta.token''',
+      );
 }
 
 class EquifaxCreditReportCall {
@@ -357,7 +370,9 @@ class EquifaxCreditReportCall {
       apiUrl:
           'https://www.equifax.com.hn/efx-app-ws-api360/v1/hn/service/informacionBureau',
       callType: ApiCallType.POST,
-      headers: {},
+      headers: {
+        'Content-type': 'application/json',
+      },
       params: {},
       bodyType: BodyType.JSON,
       returnBody: true,

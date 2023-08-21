@@ -436,7 +436,7 @@ class FFRoute {
                   color: FlutterFlowTheme.of(context).primary,
                   child: Image.asset(
                     'assets/images/PrestoNesto_Green_Color_2400x1800.jpg',
-                    fit: BoxFit.scaleDown,
+                    fit: BoxFit.contain,
                   ),
                 )
               : page;
