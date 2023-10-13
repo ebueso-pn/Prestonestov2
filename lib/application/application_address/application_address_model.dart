@@ -1,10 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_choice_chips.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +22,9 @@ class ApplicationAddressModel extends FlutterFlowModel {
 
   final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
+  // State field(s) for ChoiceChips widget.
+  String? choiceChipsValue;
+  FormFieldController<List<String>>? choiceChipsValueController;
   // State field(s) for AddressField_Casa_Calle widget.
   TextEditingController? addressFieldCasaCalleController;
   String? Function(BuildContext, String?)?
@@ -61,6 +67,10 @@ class ApplicationAddressModel extends FlutterFlowModel {
 
     return null;
   }
+
+  // State field(s) for Dpto_DropDown widget.
+  String? dptoDropDownValue;
+  FormFieldController<String>? dptoDropDownValueController;
 
   /// Initialization and disposal methods.
 

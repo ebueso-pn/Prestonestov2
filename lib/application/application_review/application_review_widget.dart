@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mapbox_search/mapbox_search.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+
 import 'application_review_model.dart';
 export 'application_review_model.dart';
 
@@ -62,7 +63,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
           desktop: false,
         )
             ? PreferredSize(
-                preferredSize: Size.fromHeight(100.0),
+                preferredSize: Size.fromHeight(100),
                 child: AppBar(
                   backgroundColor: FlutterFlowTheme.of(context).primary,
                   automaticallyImplyLeading: false,
@@ -77,17 +78,17 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 0.0, 0.0, 0.0),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: FlutterFlowIconButton(
                                 borderColor: Colors.transparent,
-                                borderRadius: 30.0,
-                                borderWidth: 1.0,
-                                buttonSize: 50.0,
+                                borderRadius: 30,
+                                borderWidth: 1,
+                                buttonSize: 50,
                                 icon: Icon(
                                   Icons.arrow_back_rounded,
                                   color: Colors.white,
-                                  size: 30.0,
+                                  size: 30,
                                 ),
                                 onPressed: () async {
                                   await widget.applicationRecieve!.update({
@@ -100,10 +101,10 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                           ],
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-0.9, 0.0),
+                          alignment: AlignmentDirectional(-0.9, 0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 0.0, 0.0, 0.0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                             child: Text(
                               'Revisemos tu Solicitud',
                               style: FlutterFlowTheme.of(context)
@@ -111,7 +112,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                   .override(
                                     fontFamily: 'Urbanist',
                                     color: Colors.white,
-                                    fontSize: 22.0,
+                                    fontSize: 22,
                                     fontWeight: FontWeight.w600,
                                   ),
                             ),
@@ -122,7 +123,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                     centerTitle: true,
                     expandedTitleScale: 1.0,
                   ),
-                  elevation: 2.0,
+                  elevation: 2,
                 ),
               )
             : null,
@@ -133,7 +134,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -144,14 +145,14 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                 .secondaryBackground,
                             boxShadow: [
                               BoxShadow(
-                                blurRadius: 5.0,
+                                blurRadius: 5,
                                 color: Color(0x3416202A),
-                                offset: Offset(0.0, 2.0),
+                                offset: Offset(0, 2),
                               )
                             ],
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.0, -1.0),
+                            alignment: AlignmentDirectional(0, -1),
                             child: StreamBuilder<ApplicationRecord>(
                               stream: ApplicationRecord.getDocument(
                                   widget.applicationRecieve!),
@@ -160,8 +161,8 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                 if (!snapshot.hasData) {
                                   return Center(
                                     child: SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
+                                      width: 50,
+                                      height: 50,
                                       child: CircularProgressIndicator(
                                         valueColor:
                                             AlwaysStoppedAnimation<Color>(
@@ -176,7 +177,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                 return LinearPercentIndicator(
                                   percent:
                                       progressBarApplicationRecord.index / 5,
-                                  lineHeight: 7.0,
+                                  lineHeight: 7,
                                   animation: true,
                                   progressColor:
                                       FlutterFlowTheme.of(context).primary,
@@ -193,8 +194,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
                   child: StreamBuilder<ApplicationRecord>(
                     stream: ApplicationRecord.getDocument(
                         widget.applicationRecieve!),
@@ -203,8 +203,8 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                       if (!snapshot.hasData) {
                         return Center(
                           child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
+                            width: 50,
+                            height: 50,
                             child: CircularProgressIndicator(
                               valueColor: AlwaysStoppedAnimation<Color>(
                                 Color(0xFF2AAF7A),
@@ -218,10 +218,10 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 8.0, 0.0, 0.0),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                               child: Text(
                                 'Solicitante',
                                 style: FlutterFlowTheme.of(context).labelLarge,
@@ -229,42 +229,40 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 color:
                                     FlutterFlowTheme.of(context).primaryBtnText,
-                                borderRadius: BorderRadius.circular(12.0),
+                                borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).alternate,
-                                  width: 2.0,
+                                  width: 2,
                                 ),
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 12.0, 12.0, 12.0),
+                                    12, 12, 12, 12),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          2.0, 2.0, 2.0, 2.0),
+                                          2, 2, 2, 2),
                                       child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                                        borderRadius: BorderRadius.circular(10),
                                         child: Image.network(
                                           'https://picsum.photos/seed/313/600',
-                                          width: 44.0,
-                                          height: 44.0,
+                                          width: 44,
+                                          height: 44,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
+                                          12, 0, 0, 0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -314,20 +312,19 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             ),
                           ),
                           Divider(
-                            height: 30.0,
-                            thickness: 2.0,
+                            height: 30,
+                            thickness: 2,
                             color: FlutterFlowTheme.of(context).alternate,
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: AlignmentDirectional(-1, 0),
                             child: Text(
                               'Solicitud',
                               style: FlutterFlowTheme.of(context).labelLarge,
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -346,8 +343,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -365,8 +361,8 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                     if (!snapshot.hasData) {
                                       return Center(
                                         child: SizedBox(
-                                          width: 50.0,
-                                          height: 50.0,
+                                          width: 50,
+                                          height: 50,
                                           child: CircularProgressIndicator(
                                             valueColor:
                                                 AlwaysStoppedAnimation<Color>(
@@ -397,8 +393,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -422,8 +417,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -447,8 +441,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -475,8 +468,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -495,8 +487,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -527,15 +518,15 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             ),
                           ),
                           Divider(
-                            height: 30.0,
-                            thickness: 2.0,
+                            height: 30,
+                            thickness: 2,
                             color: FlutterFlowTheme.of(context).alternate,
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 8.0),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                               child: Text(
                                 'Dirección',
                                 style: FlutterFlowTheme.of(context).labelLarge,
@@ -543,8 +534,8 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 0.0, 24.0, 0.0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                             child: AuthUserStreamWidget(
                               builder: (context) => FlutterFlowStaticMap(
                                 location: currentUserDocument!.latLong!,
@@ -552,13 +543,13 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                     'pk.eyJ1IjoiZWJ1ZXNvIiwiYSI6ImNsam5reTVkODE2eTYzaXFjdnNpOXJpcTUifQ.NeMkGQoCua8892U-YJbMPA',
                                 style: MapBoxStyle.Light,
                                 width: double.infinity,
-                                height: 75.0,
+                                height: 75,
                                 fit: BoxFit.cover,
                                 borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(40.0),
-                                  bottomRight: Radius.circular(40.0),
-                                  topLeft: Radius.circular(20.0),
-                                  topRight: Radius.circular(40.0),
+                                  bottomLeft: Radius.circular(40),
+                                  bottomRight: Radius.circular(40),
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(40),
                                 ),
                                 markerColor:
                                     FlutterFlowTheme.of(context).secondary,
@@ -569,15 +560,15 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             ),
                           ),
                           Divider(
-                            height: 30.0,
-                            thickness: 2.0,
+                            height: 30,
+                            thickness: 2,
                             color: FlutterFlowTheme.of(context).alternate,
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 8.0),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                               child: Text(
                                 'Autorización',
                                 style: FlutterFlowTheme.of(context).labelLarge,
@@ -599,7 +590,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4.0),
+                                      borderRadius: BorderRadius.circular(4),
                                     ),
                                   ),
                                   unselectedWidgetColor:
@@ -625,7 +616,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       await widget.applicationRecieve!
@@ -635,6 +626,13 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                         status: 'Enviada',
                         bureauConsent: _model.checkboxValue,
                       ));
+
+                      await EquifaxRecord.collection
+                          .doc()
+                          .set(createEquifaxRecordData(
+                            userDocReference: currentUserReference,
+                            applicationDocReference: widget.applicationRecieve,
+                          ));
                       FFAppState().ApplicationEnviada = true;
 
                       context.pushNamed(
@@ -649,24 +647,22 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                     },
                     text: 'Enviar Solicitud',
                     options: FFButtonOptions(
-                      width: 230.0,
-                      height: 50.0,
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      width: 230,
+                      height: 50,
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Urbanist',
                                 color: Colors.white,
                               ),
-                      elevation: 3.0,
+                      elevation: 3,
                       borderSide: BorderSide(
                         color: Colors.transparent,
-                        width: 1.0,
+                        width: 1,
                       ),
-                      borderRadius: BorderRadius.circular(48.0),
+                      borderRadius: BorderRadius.circular(48),
                     ),
                   ),
                 ),

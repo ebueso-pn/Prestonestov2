@@ -1,10 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_choice_chips.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+
 import 'application_address_model.dart';
 export 'application_address_model.dart';
 
@@ -43,15 +47,15 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
+          begin: 0,
+          end: 1,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0.0, 60.0),
-          end: Offset(0.0, 0.0),
+          begin: Offset(0, 60),
+          end: Offset(0, 0),
         ),
       ],
     ),
@@ -62,15 +66,15 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
+          begin: 0,
+          end: 1,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(-60.0, 0.0),
-          end: Offset(0.0, 0.0),
+          begin: Offset(-60, 0),
+          end: Offset(0, 0),
         ),
       ],
     ),
@@ -81,15 +85,15 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
+          begin: 0,
+          end: 1,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0.0, 100.0),
-          end: Offset(0.0, 0.0),
+          begin: Offset(0, 100),
+          end: Offset(0, 0),
         ),
       ],
     ),
@@ -129,7 +133,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
           desktop: false,
         )
             ? PreferredSize(
-                preferredSize: Size.fromHeight(100.0),
+                preferredSize: Size.fromHeight(100),
                 child: AppBar(
                   backgroundColor: FlutterFlowTheme.of(context).primary,
                   automaticallyImplyLeading: false,
@@ -146,23 +150,24 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 0.0, 0.0, 0.0),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                                 child: FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
-                                  borderRadius: 30.0,
-                                  borderWidth: 1.0,
-                                  buttonSize: 50.0,
+                                  borderRadius: 30,
+                                  borderWidth: 1,
+                                  buttonSize: 50,
                                   icon: Icon(
                                     Icons.arrow_back_rounded,
                                     color: Colors.white,
-                                    size: 30.0,
+                                    size: 30,
                                   ),
                                   onPressed: () async {
+                                    context.pop();
+
                                     await widget.applicationRecieve!.update({
                                       'index': FieldValue.increment(-(1)),
                                     });
-                                    context.pop("Refresh");
                                   },
                                 ),
                               ),
@@ -172,8 +177,8 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 0.0, 0.0, 0.0),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                                 child: Text(
                                   'Dirección',
                                   style: FlutterFlowTheme.of(context)
@@ -182,7 +187,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                         fontFamily: 'Urbanist',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryBtnText,
-                                        fontSize: 22.0,
+                                        fontSize: 22,
                                         fontWeight: FontWeight.w600,
                                       ),
                                 ),
@@ -195,7 +200,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                     centerTitle: true,
                     expandedTitleScale: 1.0,
                   ),
-                  elevation: 2.0,
+                  elevation: 2,
                 ),
               )
             : null,
@@ -206,25 +211,25 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                            color:
-                                FlutterFlowTheme.of(context).secondaryBackground,
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
                             boxShadow: [
                               BoxShadow(
-                                blurRadius: 5.0,
+                                blurRadius: 5,
                                 color: Color(0x3416202A),
-                                offset: Offset(0.0, 2.0),
+                                offset: Offset(0, 2),
                               )
                             ],
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.0, -1.0),
+                            alignment: AlignmentDirectional(0, -1),
                             child: StreamBuilder<ApplicationRecord>(
                               stream: ApplicationRecord.getDocument(
                                   widget.applicationRecieve!),
@@ -233,10 +238,11 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                 if (!snapshot.hasData) {
                                   return Center(
                                     child: SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
+                                      width: 50,
+                                      height: 50,
                                       child: CircularProgressIndicator(
-                                        valueColor: AlwaysStoppedAnimation<Color>(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
                                           Color(0xFF2AAF7A),
                                         ),
                                       ),
@@ -246,13 +252,14 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                 final progressBarApplicationRecord =
                                     snapshot.data!;
                                 return LinearPercentIndicator(
-                                  percent: progressBarApplicationRecord.index / 5,
-                                  lineHeight: 7.0,
+                                  percent:
+                                      progressBarApplicationRecord.index / 5,
+                                  lineHeight: 7,
                                   animation: true,
                                   progressColor:
                                       FlutterFlowTheme.of(context).primary,
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).primaryBtnText,
+                                  backgroundColor: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
                                   padding: EdgeInsets.zero,
                                 );
                               },
@@ -273,8 +280,8 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 16.0, 0.0, 16.0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(16, 16, 0, 24),
                             child: Text(
                               'Necesitamos tu dirección para validar tu identidad. ',
                               textAlign: TextAlign.start,
@@ -285,22 +292,99 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                       ).animateOnPageLoad(
                           animationsMap['rowOnPageLoadAnimation']!),
                       Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
+                        alignment: AlignmentDirectional(-1, 0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 16.0, 16.0, 16.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                          child: Text(
+                            'Tipo de Vivienda',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Urbanist',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(16, 8, 16, 16),
+                            child: FlutterFlowChoiceChips(
+                              options: [
+                                ChipData('Propia', Icons.home),
+                                ChipData('Alquiler', Icons.key),
+                                ChipData('Familiar', Icons.family_restroom)
+                              ],
+                              onChanged: (val) => setState(
+                                  () => _model.choiceChipsValue = val?.first),
+                              selectedChipStyle: ChipStyle(
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                                iconColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                iconSize: 18,
+                                elevation: 4,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              unselectedChipStyle: ChipStyle(
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).alternate,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                    ),
+                                iconColor:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                iconSize: 18,
+                                elevation: 0,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              chipSpacing: 12,
+                              rowSpacing: 12,
+                              multiselect: false,
+                              alignment: WrapAlignment.start,
+                              controller: _model.choiceChipsValueController ??=
+                                  FormFieldController<List<String>>(
+                                [],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                           child: TextFormField(
                             controller: _model.addressFieldCasaCalleController,
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.addressFieldCasaCalleController',
                               Duration(milliseconds: 100),
                               () async {
-                                if (_model.addressFieldCasaCalleController.text !=
+                                if (_model.addressFieldCasaCalleController
+                                            .text !=
                                         null &&
-                                    _model.addressFieldCasaCalleController.text !=
+                                    _model.addressFieldCasaCalleController
+                                            .text !=
                                         '') {
                                   setState(() {
-                                    FFAppState().ColoniaApplicationState = false;
+                                    FFAppState().ColoniaApplicationState =
+                                        false;
                                   });
                                 } else {
                                   setState(() {
@@ -314,7 +398,8 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Numero de Casa y Calle',
-                              labelStyle: FlutterFlowTheme.of(context).labelLarge,
+                              labelStyle:
+                                  FlutterFlowTheme.of(context).labelLarge,
                               hintText: '123 Calle Fransisco Morazan',
                               hintStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
@@ -327,32 +412,32 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                   color: FFAppState().CasayCalleApplicationState
                                       ? FlutterFlowTheme.of(context).error
                                       : FlutterFlowTheme.of(context).alternate,
-                                  width: 2.0,
+                                  width: 2,
                                 ),
-                                borderRadius: BorderRadius.circular(42.0),
+                                borderRadius: BorderRadius.circular(42),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FFAppState().CasayCalleApplicationState
                                       ? FlutterFlowTheme.of(context).error
                                       : FlutterFlowTheme.of(context).alternate,
-                                  width: 2.0,
+                                  width: 2,
                                 ),
-                                borderRadius: BorderRadius.circular(42.0),
+                                borderRadius: BorderRadius.circular(42),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
+                                  width: 2,
                                 ),
-                                borderRadius: BorderRadius.circular(42.0),
+                                borderRadius: BorderRadius.circular(42),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
+                                  width: 2,
                                 ),
-                                borderRadius: BorderRadius.circular(42.0),
+                                borderRadius: BorderRadius.circular(42),
                               ),
                             ),
                             style: FlutterFlowTheme.of(context).bodyMedium,
@@ -365,8 +450,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 16.0, 16.0, 16.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                         child: TextFormField(
                           controller: _model.addressFieldDescripcionController,
                           onChanged: (_) => EasyDebounce.debounce(
@@ -380,38 +464,39 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                             labelText: 'Descripción (opcional)',
                             labelStyle: FlutterFlowTheme.of(context).labelLarge,
                             hintText: 'Abajo del palo de mangos',
-                            hintStyle:
-                                FlutterFlowTheme.of(context).labelMedium.override(
-                                      fontFamily: 'Urbanist',
-                                      fontStyle: FontStyle.italic,
-                                    ),
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  fontFamily: 'Urbanist',
+                                  fontStyle: FontStyle.italic,
+                                ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              borderRadius: BorderRadius.circular(42),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              borderRadius: BorderRadius.circular(42),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              borderRadius: BorderRadius.circular(42),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              borderRadius: BorderRadius.circular(42),
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyMedium,
@@ -422,8 +507,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 16.0, 16.0, 16.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                         child: TextFormField(
                           controller: _model.addressFieldColoniaController,
                           onChanged: (_) => EasyDebounce.debounce(
@@ -450,53 +534,54 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                             labelText: 'Colonia o Barrio',
                             labelStyle: FlutterFlowTheme.of(context).labelLarge,
                             hintText: 'Las Lomas',
-                            hintStyle:
-                                FlutterFlowTheme.of(context).labelMedium.override(
-                                      fontFamily: 'Urbanist',
-                                      fontStyle: FontStyle.italic,
-                                    ),
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  fontFamily: 'Urbanist',
+                                  fontStyle: FontStyle.italic,
+                                ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FFAppState().ColoniaApplicationState
                                     ? FlutterFlowTheme.of(context).error
                                     : FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              borderRadius: BorderRadius.circular(42),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FFAppState().ColoniaApplicationState
                                     ? FlutterFlowTheme.of(context).error
                                     : FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              borderRadius: BorderRadius.circular(42),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              borderRadius: BorderRadius.circular(42),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              borderRadius: BorderRadius.circular(42),
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyMedium,
                           textAlign: TextAlign.center,
-                          validator: _model.addressFieldColoniaControllerValidator
+                          validator: _model
+                              .addressFieldColoniaControllerValidator
                               .asValidator(context),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 16.0, 16.0, 16.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                         child: TextFormField(
                           controller: _model.addressFieldCiudadController,
                           onChanged: (_) => EasyDebounce.debounce(
@@ -523,48 +608,104 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                             labelText: 'Ciudad',
                             labelStyle: FlutterFlowTheme.of(context).labelLarge,
                             hintText: 'Tegucigalpa',
-                            hintStyle:
-                                FlutterFlowTheme.of(context).labelMedium.override(
-                                      fontFamily: 'Urbanist',
-                                      fontStyle: FontStyle.italic,
-                                    ),
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  fontFamily: 'Urbanist',
+                                  fontStyle: FontStyle.italic,
+                                ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FFAppState().CiudadApplicationState
                                     ? FlutterFlowTheme.of(context).error
                                     : FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              borderRadius: BorderRadius.circular(42),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FFAppState().CiudadApplicationState
                                     ? FlutterFlowTheme.of(context).error
                                     : FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              borderRadius: BorderRadius.circular(42),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              borderRadius: BorderRadius.circular(42),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              borderRadius: BorderRadius.circular(42),
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyMedium,
                           textAlign: TextAlign.center,
-                          validator: _model.addressFieldCiudadControllerValidator
+                          validator: _model
+                              .addressFieldCiudadControllerValidator
                               .asValidator(context),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                        child: FlutterFlowDropDown<String>(
+                          controller: _model.dptoDropDownValueController ??=
+                              FormFieldController<String>(null),
+                          options: [
+                            'Francisco Morazán',
+                            'Cortés',
+                            'Yoro',
+                            'Atlántida',
+                            'Olancho',
+                            'Choluteca',
+                            'Comayagua',
+                            'El Paraíso',
+                            'Santa Bárbara',
+                            'Intibucá',
+                            'La Paz',
+                            'Lempira',
+                            'Copán',
+                            'Valle',
+                            'Ocotepeque',
+                            'Gracias a Dios',
+                            'Islas de la Bahía',
+                            'Colon'
+                          ],
+                          onChanged: (val) =>
+                              setState(() => _model.dptoDropDownValue = val),
+                          width: double.infinity,
+                          height: 50,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: 'Urbanist',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
+                          hintText: 'Departamento',
+                          icon: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            size: 24,
+                          ),
+                          fillColor:
+                              FlutterFlowTheme.of(context).primaryBackground,
+                          elevation: 2,
+                          borderColor: FlutterFlowTheme.of(context).alternate,
+                          borderWidth: 2,
+                          borderRadius: 42,
+                          margin: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 4),
+                          hidesUnderline: true,
+                          isSearchable: false,
+                          isMultiSelect: false,
                         ),
                       ),
                     ],
@@ -572,7 +713,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                       animationsMap['columnOnPageLoadAnimation']!),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       if (_model.addressFieldCasaCalleController.text != null &&
@@ -612,11 +753,16 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                           !_model.formKey.currentState!.validate()) {
                         return;
                       }
+                      if (_model.dptoDropDownValue == null) {
+                        return;
+                      }
 
                       await currentUserReference!.update(createUsersRecordData(
                         calle: _model.addressFieldCasaCalleController.text,
                         colonia: _model.addressFieldColoniaController.text,
                         ciudad: _model.addressFieldCiudadController.text,
+                        departamento: _model.dptoDropDownValue,
+                        residenceType: _model.choiceChipsValue,
                       ));
 
                       await widget.applicationRecieve!.update({
@@ -641,22 +787,22 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                     },
                     text: 'Continuar',
                     options: FFButtonOptions(
-                      width: 230.0,
-                      height: 50.0,
-                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      width: 230,
+                      height: 50,
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                       color: FlutterFlowTheme.of(context).primary,
-                      textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                            fontFamily: 'Urbanist',
-                            color: Colors.white,
-                          ),
-                      elevation: 3.0,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Urbanist',
+                                color: Colors.white,
+                              ),
+                      elevation: 3,
                       borderSide: BorderSide(
                         color: Colors.transparent,
-                        width: 1.0,
+                        width: 1,
                       ),
-                      borderRadius: BorderRadius.circular(48.0),
+                      borderRadius: BorderRadius.circular(48),
                     ),
                   ).animateOnPageLoad(
                       animationsMap['buttonOnPageLoadAnimation']!),
