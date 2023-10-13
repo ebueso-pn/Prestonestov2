@@ -75,7 +75,7 @@ dependencies:
   image_picker_ios: 0.8.6+1
   image_picker_platform_interface: 2.6.2
   internet_file: 1.1.0
-  intl: ^0.18.0
+  intl: ^0.18.1
   json_path: 0.4.1
   lottie: 1.2.1
   mapbox_search: 3.2.0

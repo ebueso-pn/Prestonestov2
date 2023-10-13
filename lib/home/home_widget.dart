@@ -396,7 +396,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               child: Text(
                                                 valueOrDefault<String>(
                                                   formatNumber(
-                                                    columnLoansRecord?.monto,
+                                                    columnLoansRecord?.balance,
                                                     formatType:
                                                         FormatType.decimal,
                                                     decimalType:
