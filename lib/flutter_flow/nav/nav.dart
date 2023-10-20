@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:prestonesto_v1/profile/begini/begini_widget.dart';
 import '/backend/backend.dart';
 
 import '../../auth/base_auth_user_provider.dart';
@@ -90,6 +91,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Onboarding',
           path: '/onboarding',
           builder: (context, params) => OnboardingWidget(),
+        ),
+        FFRoute(
+          name: 'Begini',
+          path: '/Begini',
+          requireAuth: true,
+          builder: (context, params) => BeginiWidget(),
         ),
         FFRoute(
           name: 'SMS_signup',
