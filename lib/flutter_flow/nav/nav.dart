@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:prestonesto_v1/profile/begini/begini_widget.dart';
+import 'package:prestonesto_v1/profile/begini/widgets/begini_success_widget.dart';
 import '/backend/backend.dart';
 
 import '../../auth/base_auth_user_provider.dart';
@@ -260,6 +261,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Profile_BankAccount',
           path: '/profileBankAccount',
           builder: (context, params) => ProfileBankAccountWidget(),
+        ),
+        FFRoute(
+          name: 'Begini_Success',
+          path: '/beginiSuccess',
+          builder: (context, params) => BeginiSuccessWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

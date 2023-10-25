@@ -44,15 +44,34 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <!-- Deep linking -->
-            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
+            <!-- <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="prestonesto" android:host="prestonesto.co" />
+            </intent-filter> -->
+
+            <intent-filter>
+                <data android:scheme="deeplink" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="prestonesto" android:host="open" />
             </intent-filter>
 
         </activity>
+
+        <!-- Note : Don’t forget to change value of io.branch.sdk.TestMode to false before going live. -->
+        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_owgEDjk9EMHLRaIiDnBsGjenDxa1BG3I" />
+        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_kFktvmgWCLSKNbLdzavz3dpdyyh1EO35" />
+        <meta-data android:name="io.branch.sdk.TestMode" android:value="true" />
 
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

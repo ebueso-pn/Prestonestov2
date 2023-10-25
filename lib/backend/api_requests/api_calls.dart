@@ -195,6 +195,35 @@ class ZapSIgnCreateDocumentFromTemplateCall {
   }
 }
 
+class ZapSignUpdateSignerCall {
+  static Future<ApiCallResponse> call({
+    String? signerToken = '',
+    String? redirectLink = '',
+  }) {
+    final ffApiRequestBody = '''
+{
+  "redirect_link": "${redirectLink}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'ZapSign Update Signer',
+      apiUrl: 'https://api.zapsign.com.br/api/v1/signers/${signerToken}/',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Bearer 0c004cad-963b-48be-a373-52968dca04864f6e7f46-0316-4c77-8af6-5275e9905625',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
 class GetAccessTokenCall {
   static Future<ApiCallResponse> call() {
     return ApiManager.instance.makeApiCall(

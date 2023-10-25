@@ -215,7 +215,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               ),
                               Text(
                                 formatNumber(
-                                  columnApplicationRecord!.cuotaAprobada,
+                                  columnApplicationRecord.cuotaAprobada,
                                   formatType: FormatType.decimal,
                                   decimalType: DecimalType.automatic,
                                   currency: 'L. ',
@@ -238,7 +238,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               ),
                               Text(
                                 formatNumber(
-                                  columnApplicationRecord!.tasaMensualAprobada,
+                                  columnApplicationRecord.tasaMensualAprobada,
                                   formatType: FormatType.percent,
                                 ),
                                 style: FlutterFlowTheme.of(context).bodyLarge,
@@ -259,7 +259,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               ),
                               Text(
                                 formatNumber(
-                                  columnApplicationRecord!.plazoAprobado,
+                                  columnApplicationRecord.plazoAprobado,
                                   formatType: FormatType.custom,
                                   format: '# meses',
                                   locale: '',
@@ -283,7 +283,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               Text(
                                 functions
                                     .numeroCuotas(
-                                        columnApplicationRecord!.plazoAprobado)
+                                        columnApplicationRecord.plazoAprobado)
                                     .toString(),
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
@@ -334,7 +334,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                                       dateTimeFromSecondsSinceEpoch(
                                           getCurrentTimestamp
                                               .secondsSinceEpoch),
-                                      columnApplicationRecord!.plazoAprobado),
+                                      columnApplicationRecord.plazoAprobado),
                                   locale:
                                       FFLocalizations.of(context).languageCode,
                                 ),
@@ -360,8 +360,8 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               ),
                               Text(
                                 formatNumber(
-                                  columnApplicationRecord!.cuotaAprobada *
-                                      columnApplicationRecord!.plazoAprobado *
+                                  columnApplicationRecord.cuotaAprobada *
+                                      columnApplicationRecord.plazoAprobado *
                                       2,
                                   formatType: FormatType.custom,
                                   currency: 'L ',
@@ -428,7 +428,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               functions.fechaFirmaMas15(getCurrentTimestamp),
                           fechaUltimoPago: functions.fechaUltimoPago(
                               getCurrentTimestamp,
-                              buttonApplicationRecord!.plazoMeses),
+                              buttonApplicationRecord.plazoMeses),
                           status: 'Aceptada',
                         ));
                         _model.zapSignAPIresponse =
@@ -440,11 +440,11 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           email: currentUserEmail,
                           dni: valueOrDefault(currentUserDocument?.dni, ''),
                           monto: functions.formatNumber(
-                              buttonApplicationRecord!.montoAprobado),
+                              buttonApplicationRecord.montoAprobado),
                           montoEnLetras: functions.montoEnLetras(
-                              buttonApplicationRecord!.montoAprobado),
+                              buttonApplicationRecord.montoAprobado),
                           numCuotas: functions.numeroCuotas(
-                              buttonApplicationRecord!.plazoAprobado),
+                              buttonApplicationRecord.plazoAprobado),
                           fechaFirmaDia: dateTimeFormat(
                             'd',
                             getCurrentTimestamp,
@@ -485,20 +485,20 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           fechaUltimoPagoMes: dateTimeFormat(
                             'M',
                             functions.fechaUltimoPago(getCurrentTimestamp,
-                                buttonApplicationRecord!.plazoAprobado),
+                                buttonApplicationRecord.plazoAprobado),
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaUltimoPagoAno: dateTimeFormat(
                             'y',
                             functions.fechaUltimoPago(getCurrentTimestamp,
-                                buttonApplicationRecord!.plazoAprobado),
+                                buttonApplicationRecord.plazoAprobado),
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           cuota: buttonApplicationRecord?.cuotaAprobada,
                           tasaEfectivaMensual: functions.decimaltoPercent(
-                              buttonApplicationRecord!.tasaMensualAprobada),
+                              buttonApplicationRecord.tasaMensualAprobada),
                           tasaEfectivaMensualL: functions.tasaEnLetras(
-                              buttonApplicationRecord!.tasaMensualAprobada),
+                              buttonApplicationRecord.tasaMensualAprobada),
                           fechaFirmaDiaL:
                               functions.diaEnLetras(getCurrentTimestamp),
                           fechaFrimaMesL:
@@ -506,22 +506,35 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           fechaFirmaAnoL:
                               functions.anoEnLetras(getCurrentTimestamp),
                           fechaPrimerPagoDiaL: functions.diaEnLetras(
-                              buttonApplicationRecord!.fechaPrimerPago!),
+                              buttonApplicationRecord.fechaPrimerPago!),
                           fechaPrimerPagoMesL: functions.mesEnLetras(
-                              buttonApplicationRecord!.fechaPrimerPago!),
+                              buttonApplicationRecord.fechaPrimerPago!),
                           fechaPrimerPagoAnoL: functions.anoEnLetras(
-                              buttonApplicationRecord!.fechaPrimerPago!),
+                              buttonApplicationRecord.fechaPrimerPago!),
                           fechaUltimoPagoDiaL: functions.diaEnLetras(
-                              buttonApplicationRecord!.fechaUltimoPago!),
+                              buttonApplicationRecord.fechaUltimoPago!),
                           fechaUltimoPagoMesL: functions.mesEnLetras(
-                              buttonApplicationRecord!.fechaUltimoPago!),
+                              buttonApplicationRecord.fechaUltimoPago!),
                           fechaUltimoPagoAnoL: functions.anoEnLetras(
-                              buttonApplicationRecord!.fechaUltimoPago!),
+                              buttonApplicationRecord.fechaUltimoPago!),
                           direccion:
                               '${valueOrDefault(currentUserDocument?.calle, '')} ${valueOrDefault(currentUserDocument?.colonia, '')} ${valueOrDefault(currentUserDocument?.ciudad, '')}',
                         );
                         _shouldSetState = true;
                         if ((_model.zapSignAPIresponse?.succeeded ?? true)) {
+                          //Update signer to add rediret_link
+                          await ZapSignUpdateSignerCall.call(
+                            signerToken: serializeParam(
+                              getJsonField(
+                                (_model.zapSignAPIresponse?.jsonBody ?? ''),
+                                r'''$.signers[:].token''',
+                              ).toString(),
+                              ParamType.String,
+                            ),
+                            redirectLink:
+                                'https://d8ypx.test-app.link/success_zapsign',
+                          );
+
                           context.pushNamed(
                             'LoanAcceptance_SuccessCopy',
                             queryParameters: {

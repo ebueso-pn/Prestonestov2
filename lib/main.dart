@@ -1,22 +1,19 @@
+import 'package:flutter/services.dart';
+
 import '/custom_code/actions/index.dart' as actions;
 import 'package:provider/provider.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
-
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'flutter_flow/firebase_app_check_util.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
+import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,6 +58,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    /*
+      Note : Make sure to remove FlutterBranchSdk.validateSDKIntegration() in your production build.
+    */
+    FlutterBranchSdk.validateSDKIntegration();
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
     userStream = prestonestoV1FirebaseUserStream()
@@ -70,6 +71,19 @@ class _MyAppState extends State<MyApp> {
       Duration(milliseconds: 1000),
       () => _appStateNotifier.stopShowingSplashImage(),
     );
+    FlutterBranchSdk.initSession().listen((data) {
+      if (data.containsKey('begini_success') &&
+          data['begini_success'] == 'true') {
+        _router.go('/beginiSuccess');
+      }
+      if (data.containsKey('zapsign_success') &&
+          data['zapsign_success'] == 'true') {
+        _router.go('/loanSignatureSuccess');
+      }
+    }, onError: (error) {
+      PlatformException platformException = error as PlatformException;
+      print('${platformException.code} - ${platformException.message}');
+    });
   }
 
   @override
