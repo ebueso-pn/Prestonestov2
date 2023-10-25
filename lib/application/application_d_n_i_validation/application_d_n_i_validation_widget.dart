@@ -75,6 +75,73 @@ class _ApplicationDNIValidationWidgetState
     "button_background_color": "#2fa77a"
   };
 
+  void _showErrorModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Center(
+                child: Icon(
+                  Icons.info,
+                  color: Colors.blue,
+                  size: 48, // Tamaño personalizado del icono
+                ),
+              ),
+              SizedBox(height: 10),
+              Center(
+                child: Text(
+                  'Lo sentimos, no fue posible verificar tu identidad en este momento, por lo que no podemos continuar con tu aplicación.',
+                  style: TextStyle(fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(height: 20),
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text:
+                            'Si crees que esto fue un error, por favor comunícate con nosotros vía\n',
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                      ),
+                      WidgetSpan(
+                        child: Icon(
+                          Icons.phone,
+                          color: Colors.green,
+                          size: 24, // Tamaño personalizado del icono
+                        ),
+                      ),
+                      TextSpan(
+                        text: ' WhatsApp al +504-3311-5751.',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Volver'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> initPlatformState() async {
     String response = '';
     try {
@@ -103,6 +170,7 @@ class _ApplicationDNIValidationWidgetState
           _model.buttonDisplay = true;
         });
       } else {
+        _showErrorModal(context);
         ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
           content: Text(
             verificationResponse.message.isNotEmpty
@@ -114,6 +182,7 @@ class _ApplicationDNIValidationWidgetState
         ));
       }
     } catch (e) {
+      _showErrorModal(context);
       ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
         content: Text(
           e.toString(),
