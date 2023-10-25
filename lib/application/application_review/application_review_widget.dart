@@ -619,6 +619,17 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                   child: FFButtonWidget(
                     onPressed: () async {
+                      if (_model.checkboxValue == false) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Debes aceptar la autorización para que PrestoNesto pueda revisar tu credito',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
+
                       await widget.applicationRecieve!
                           .update(createApplicationRecordData(
                         dateApplied: dateTimeFromSecondsSinceEpoch(
