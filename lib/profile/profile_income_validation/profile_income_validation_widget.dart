@@ -643,6 +643,7 @@ class _ProfileIncomeValidationWidgetState
                               );
                               setState(() {
                                 FFAppState().IngresosEnviados = true;
+                                FFAppState().userHasIncomeVerification = true;
                               });
                             },
                             text: 'Guardar y regresar',

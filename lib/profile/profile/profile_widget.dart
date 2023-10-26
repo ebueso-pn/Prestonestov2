@@ -1,3 +1,5 @@
+import 'package:prestonesto_v1/backend/backend.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_static_map.dart';
@@ -205,8 +207,6 @@ class _ProfileWidgetState extends State<ProfileWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => ProfileModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -320,21 +320,12 @@ class _ProfileWidgetState extends State<ProfileWidget>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 if ((valueOrDefault(
-                                                currentUserDocument?.nombres,
-                                                '') !=
-                                            null &&
-                                        valueOrDefault(
-                                                currentUserDocument?.nombres,
-                                                '') !=
-                                            '') &&
+                                            currentUserDocument?.nombres, '') !=
+                                        '') &&
                                     (valueOrDefault(
-                                                currentUserDocument?.apellidos,
-                                                '') !=
-                                            null &&
-                                        valueOrDefault(
-                                                currentUserDocument?.apellidos,
-                                                '') !=
-                                            ''))
+                                            currentUserDocument?.apellidos,
+                                            '') !=
+                                        ''))
                                   AuthUserStreamWidget(
                                     builder: (context) => AutoSizeText(
                                       '${valueOrDefault(currentUserDocument?.nombres, '')}${valueOrDefault(currentUserDocument?.apellidos, '')}',
@@ -368,11 +359,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                   ),
                                 ),
                                 if (valueOrDefault(
-                                            currentUserDocument?.dni, '') !=
-                                        null &&
-                                    valueOrDefault(
-                                            currentUserDocument?.dni, '') !=
-                                        '')
+                                        currentUserDocument?.dni, '') !=
+                                    '')
                                   AuthUserStreamWidget(
                                     builder: (context) => Text(
                                       valueOrDefault(
@@ -382,15 +370,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                     ),
                                   ),
                                 if (valueOrDefault(
-                                            currentUserDocument
-                                                ?.bankAccountNumber,
-                                            '') !=
-                                        null &&
-                                    valueOrDefault(
-                                            currentUserDocument
-                                                ?.bankAccountNumber,
-                                            '') !=
-                                        '')
+                                        currentUserDocument?.bankAccountNumber,
+                                        '') !=
+                                    '')
                                   AuthUserStreamWidget(
                                     builder: (context) => Text(
                                       valueOrDefault(
@@ -473,6 +455,26 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                 ),
                               ),
                             ),
+                            if (!FFAppState()
+                                .userHasPersonalEvaluationCompleted)
+                              Align(
+                                child: Icon(
+                                  Icons.info,
+                                  color: Colors.blue,
+                                  size: 25.0,
+                                ),
+                              ),
+                            if (FFAppState().userHasPersonalEvaluationCompleted)
+                              Align(
+                                child: Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                  size: 25.0,
+                                ),
+                              ),
+                            SizedBox(
+                              width: 15,
+                            ),
                             Align(
                               alignment: AlignmentDirectional(0.90, 0.00),
                               child: Icon(
@@ -542,6 +544,25 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                 ),
                               ),
                             ),
+                            if (!FFAppState().userHasIncomeVerification)
+                              Align(
+                                child: Icon(
+                                  Icons.info,
+                                  color: Colors.blue,
+                                  size: 25.0,
+                                ),
+                              ),
+                            if (FFAppState().userHasIncomeVerification)
+                              Align(
+                                child: Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                  size: 25.0,
+                                ),
+                              ),
+                            SizedBox(
+                              width: 15,
+                            ),
                             Align(
                               alignment: AlignmentDirectional(0.9, 0.0),
                               child: Icon(
@@ -604,6 +625,26 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                   style: FlutterFlowTheme.of(context).bodyLarge,
                                 ),
                               ),
+                            ),
+                            //Check if current user has bank account
+                            if (!FFAppState().userHasBankAccount)
+                              Align(
+                                child: Icon(
+                                  Icons.info,
+                                  color: Colors.blue,
+                                  size: 25.0,
+                                ),
+                              ),
+                            if (FFAppState().userHasBankAccount)
+                              Align(
+                                child: Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                  size: 25.0,
+                                ),
+                              ),
+                            SizedBox(
+                              width: 15,
                             ),
                             Align(
                               alignment: AlignmentDirectional(0.9, 0.0),

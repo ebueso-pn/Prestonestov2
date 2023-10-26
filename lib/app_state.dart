@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '/backend/backend.dart';
-import 'backend/api_requests/api_manager.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
@@ -126,6 +124,25 @@ class FFAppState extends ChangeNotifier {
   bool get ingresoss => _ingresoss;
   set ingresoss(bool _value) {
     _ingresoss = _value;
+  }
+
+  bool _userHasBankAccount = false;
+  bool get userHasBankAccount => _userHasBankAccount;
+  set userHasBankAccount(bool _value) {
+    _userHasBankAccount = _value;
+  }
+
+  bool _userHasIncomeVerification = false;
+  bool get userHasIncomeVerification => _userHasIncomeVerification;
+  set userHasIncomeVerification(bool _value) {
+    _userHasIncomeVerification = _value;
+  }
+
+  bool _userHasPersonalEvaluationCompleted = false;
+  bool get userHasPersonalEvaluationCompleted =>
+      _userHasPersonalEvaluationCompleted;
+  set userHasPersonalEvaluationCompleted(bool _value) {
+    _userHasPersonalEvaluationCompleted = _value;
   }
 }
 

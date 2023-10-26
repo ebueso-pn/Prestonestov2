@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:prestonesto_v1/backend/backend.dart';
 
 import '/custom_code/actions/index.dart' as actions;
 import 'package:provider/provider.dart';
@@ -65,7 +66,14 @@ class _MyAppState extends State<MyApp> {
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
     userStream = prestonestoV1FirebaseUserStream()
-      ..listen((user) => _appStateNotifier.update(user));
+      ..listen((user) async {
+        _appStateNotifier.update(user);
+        FFAppState().userHasIncomeVerification =
+            await checkUserHasIncomeVerification();
+        FFAppState().userHasBankAccount = await checkUserHasBankAccount();
+        FFAppState().userHasPersonalEvaluationCompleted =
+            await checkUserAlreadyCompletedPersonalEvaluation();
+      });
     jwtTokenStream.listen((_) {});
     Future.delayed(
       Duration(milliseconds: 1000),
@@ -74,6 +82,8 @@ class _MyAppState extends State<MyApp> {
     FlutterBranchSdk.initSession().listen((data) {
       if (data.containsKey('begini_success') &&
           data['begini_success'] == 'true') {
+        FFAppState().userHasPersonalEvaluationCompleted = true;
+        updateUserPersonalEvaluation(true);
         _router.go('/beginiSuccess');
       }
       if (data.containsKey('zapsign_success') &&
@@ -83,6 +93,15 @@ class _MyAppState extends State<MyApp> {
     }, onError: (error) {
       PlatformException platformException = error as PlatformException;
       print('${platformException.code} - ${platformException.message}');
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      FFAppState().userHasIncomeVerification =
+          await checkUserHasIncomeVerification();
+      FFAppState().userHasBankAccount = await checkUserHasBankAccount();
+      FFAppState().userHasPersonalEvaluationCompleted =
+          await checkUserAlreadyCompletedPersonalEvaluation();
+      setState(() {});
     });
   }
 

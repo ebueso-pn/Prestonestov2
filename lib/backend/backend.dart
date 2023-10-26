@@ -36,6 +36,55 @@ Future<int> queryUsersRecordCount({
       limit: limit,
     );
 
+Future<bool> checkUserHasIncomeVerification() async {
+  try {
+    final doc = await DocumentsRecord.collection
+        .where('UserDocReference', isEqualTo: currentUserReference)
+        .get();
+    if (doc.docs.isNotEmpty && doc.docs.first['income_verification'] != null) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    print(e);
+    return false;
+  }
+}
+
+Future<bool> checkUserHasBankAccount() async {
+  try {
+    final doc = await UsersRecord.collection.doc(currentUserUid).get();
+    if (doc.exists && doc['bank_account_number'] != null) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    print(e);
+    return false;
+  }
+}
+
+Future<bool> checkUserAlreadyCompletedPersonalEvaluation() async {
+  try {
+    final doc = await UsersRecord.collection.doc(currentUserUid).get();
+    if (doc.exists &&
+        doc['personal_evaluation'] != null &&
+        doc['personal_evaluation'] == true) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    print(e);
+    return false;
+  }
+}
+
+Future<void> updateUserPersonalEvaluation(bool personalEvaluation) async {
+  await UsersRecord.collection.doc(currentUserUid).update({
+    'personal_evaluation': personalEvaluation,
+  });
+}
+
 Stream<List<UsersRecord>> queryUsersRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,

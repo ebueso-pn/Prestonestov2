@@ -670,6 +670,8 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                           bankAccountNumber: _model.cuentaController.text,
                           bankAccountType: _model.choiceChipsValue,
                         ));
+
+                        FFAppState().userHasBankAccount = true;
                       },
                       text: 'Guardar y regresar',
                       options: FFButtonOptions(
