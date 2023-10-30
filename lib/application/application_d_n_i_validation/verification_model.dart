@@ -63,7 +63,13 @@ class VerificationResponse {
         email: json["email"],
         country: json["country"],
         event: json["event"],
-        info: json["info"] == null ? null : Info.fromJson(json["info"]),
+        info: json["info"] == null
+            ? null
+            : Platform.isAndroid
+                ? Info.fromJson(jsonDecode(json["info"]))
+                : Info.fromJson(
+                    json["verification_result"],
+                  ),
         reference: json["reference"],
         error: json["error"] ?? '',
         body: json["body"] == null
