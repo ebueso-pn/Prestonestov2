@@ -953,6 +953,37 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                               return Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Text(
+                                    'Tu préstamo está listo!',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Lottie.asset(
+                                    'assets/lottie_animations/approved-4246793.json',
+                                    width: 200.0,
+                                    height: 200.0,
+                                    animate: true,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Si aceptas tu oferta, y firmas el contrato, tu dinero estará en camino a tu cuenta!',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.black,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 50.0,
+                                  ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         16.0, 0.0, 16.0, 16.0),
@@ -1011,86 +1042,43 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               }.withoutNulls,
                                             );
                                           },
-                                          child: Container(
-                                            width: double.infinity,
-                                            constraints: BoxConstraints(
-                                              maxWidth: 500.0,
+                                          child: ElevatedButton(
+                                            onPressed: () async {
+                                              context.pushNamed(
+                                                'Loan_Signature',
+                                                queryParameters: {
+                                                  'signURL': serializeParam(
+                                                    0,
+                                                    ParamType.int,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Colors.white,
+                                              onPrimary: Color(0xFF2AAF7A),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        12.0), // Radio del borde
+                                              ),
                                             ),
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  blurRadius: 4.0,
-                                                  color: Color(0x33000000),
-                                                  offset: Offset(0.0, 2.0),
-                                                )
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Icon(Icons
+                                                    .create), // Icono de firma (puedes cambiar el icono según tus necesidades)
+                                                SizedBox(
+                                                    width:
+                                                        8), // Espacio entre el icono y el texto
+                                                Text('Firmar ahora'),
                                               ],
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                              border: Border.all(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryBackground,
-                                                width: 2.0,
-                                              ),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      12.0, 8.0, 12.0, 8.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Icon(
-                                                    Icons.local_offer_outlined,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    size: 36.0,
-                                                  ),
-                                                  Expanded(
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  12.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            'Acepta tu PrestoNesto',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyLarge,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
                                             ),
                                           ),
                                         ).animateOnPageLoad(animationsMap[
                                             'containerOnPageLoadAnimation7']!);
                                       },
                                     ),
-                                  ),
-                                  Lottie.asset(
-                                    'assets/lottie_animations/approved-4246793.json',
-                                    width: 150.0,
-                                    height: 130.0,
-                                    fit: BoxFit.cover,
-                                    animate: true,
                                   ),
                                 ],
                               );
@@ -1470,7 +1458,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 height: 16.0,
                                                 decoration: BoxDecoration(
                                                   color: valueOrDefault<Color>(
-                                                    FFAppState().IngresosEnviados ==
+                                                    FFAppState().userHasIncomeVerification ==
                                                             true
                                                         ? FlutterFlowTheme.of(
                                                                 context)
