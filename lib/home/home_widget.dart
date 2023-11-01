@@ -778,8 +778,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                         _buildPopUpPaymentHistory(),
                                                     text: 'Mostrar todo',
                                                     options: FFButtonOptions(
-                                                      width: 130.0,
-                                                      height: 25.0,
+                                                      width: 120.0,
+                                                      height: 20.0,
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
@@ -797,7 +797,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primary,
+                                                              .primaryBtnText,
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -805,10 +805,11 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                               .override(
                                                                 fontFamily:
                                                                     'Urbanist',
-                                                                color: Colors
-                                                                    .white,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
                                                               ),
-                                                      elevation: 2.0,
+                                                      elevation: 0.0,
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
