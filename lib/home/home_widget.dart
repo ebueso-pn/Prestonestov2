@@ -669,219 +669,10 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     ).animateOnPageLoad(animationsMap[
                                         'containerOnPageLoadAnimation3']!),
                                   ),
+                                  //ADDED A HISTORY LIST
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 16.0),
-                                    child:
-                                        StreamBuilder<List<ApplicationRecord>>(
-                                      stream: queryApplicationRecord(
-                                        parent: currentUserReference,
-                                        queryBuilder: (applicationRecord) =>
-                                            applicationRecord.where('status',
-                                                isEqualTo: 'Aprobada'),
-                                        singleRecord: true,
-                                      ),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 50.0,
-                                              height: 50.0,
-                                              child: CircularProgressIndicator(
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(
-                                                  Color(0xFF2AAF7A),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        List<ApplicationRecord>
-                                            containerApplicationRecordList =
-                                            snapshot.data!;
-                                        // Return an empty Container when the item does not exist.
-                                        if (snapshot.data!.isEmpty) {
-                                          return Container();
-                                        }
-                                        final containerApplicationRecord =
-                                            containerApplicationRecordList
-                                                    .isNotEmpty
-                                                ? containerApplicationRecordList
-                                                    .first
-                                                : null;
-                                        return InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            context.pushNamed(
-                                              'Loan_Signature',
-                                              queryParameters: {
-                                                'signURL': serializeParam(
-                                                  0,
-                                                  ParamType.int,
-                                                ),
-                                              }.withoutNulls,
-                                            );
-                                          },
-                                          child: Container(
-                                            width: double.infinity,
-                                            constraints: BoxConstraints(
-                                              maxWidth: 500.0,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  blurRadius: 4.0,
-                                                  color: Color(0x33000000),
-                                                  offset: Offset(0.0, 2.0),
-                                                )
-                                              ],
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                              border: Border.all(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryBackground,
-                                                width: 2.0,
-                                              ),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      12.0, 8.0, 12.0, 8.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Icon(
-                                                    Icons.local_offer_outlined,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    size: 36.0,
-                                                  ),
-                                                  Expanded(
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  12.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            'Acepta tu PrestoNesto',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyLarge,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ).animateOnPageLoad(animationsMap[
-                                            'containerOnPageLoadAnimation4']!);
-                                      },
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 16.0),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        context.pushNamed('Help');
-                                      },
-                                      child: Container(
-                                        width: double.infinity,
-                                        constraints: BoxConstraints(
-                                          maxWidth: 500.0,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 4.0,
-                                              color: Color(0x33000000),
-                                              offset: Offset(0.0, 2.0),
-                                            )
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 8.0, 12.0, 8.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Icon(
-                                                Icons.help_outline,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                size: 36.0,
-                                              ),
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          12.0, 0.0, 0.0, 0.0),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Contáctanos',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ).animateOnPageLoad(animationsMap[
-                                        'containerOnPageLoadAnimation5']!),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 16.0),
+                                        16.0, 0.0, 16.0, 0.0),
                                     child: Container(
                                       width: double.infinity,
                                       constraints: BoxConstraints(
@@ -907,45 +698,179 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       ),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            12.0, 8.0, 12.0, 8.0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Icon(
-                                              Icons.person_search_rounded,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              size: 36.0,
-                                            ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        12.0, 0.0, 0.0, 0.0),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      'Encuentra un Agente o Cajero',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyLarge,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                            12.0, 16.0, 12.0, 12.0),
+                                        child: FutureBuilder<List<Widget>>(
+                                          future: generateWidgets(),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return Center(
+                                                  child:
+                                                      CircularProgressIndicator());
+                                            } else if (snapshot.hasError) {
+                                              return Text(
+                                                  'Error: ${snapshot.error}');
+                                            } else {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: snapshot.data!,
+                                              );
+                                            }
+                                          },
                                         ),
                                       ),
-                                    ).animateOnPageLoad(animationsMap[
-                                        'containerOnPageLoadAnimation6']!),
-                                  ),
+                                    ),
+                                  ).animateOnPageLoad(animationsMap[
+                                      'containerOnPageLoadAnimation3']!),
+                                  // Padding(
+                                  //   padding: EdgeInsetsDirectional.fromSTEB(
+                                  //       16.0, 0.0, 16.0, 16.0),
+                                  //   child: InkWell(
+                                  //     splashColor: Colors.transparent,
+                                  //     focusColor: Colors.transparent,
+                                  //     hoverColor: Colors.transparent,
+                                  //     highlightColor: Colors.transparent,
+                                  //     onTap: () async {
+                                  //       context.pushNamed('Help');
+                                  //     },
+                                  //     child: Container(
+                                  //       width: double.infinity,
+                                  //       constraints: BoxConstraints(
+                                  //         maxWidth: 500.0,
+                                  //       ),
+                                  //       decoration: BoxDecoration(
+                                  //         color: FlutterFlowTheme.of(context)
+                                  //             .secondaryBackground,
+                                  //         boxShadow: [
+                                  //           BoxShadow(
+                                  //             blurRadius: 4.0,
+                                  //             color: Color(0x33000000),
+                                  //             offset: Offset(0.0, 2.0),
+                                  //           )
+                                  //         ],
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(12.0),
+                                  //         border: Border.all(
+                                  //           color: FlutterFlowTheme.of(context)
+                                  //               .primaryBackground,
+                                  //           width: 2.0,
+                                  //         ),
+                                  //       ),
+                                  //       child: Padding(
+                                  //         padding:
+                                  //             EdgeInsetsDirectional.fromSTEB(
+                                  //                 12.0, 8.0, 12.0, 8.0),
+                                  //         child: Row(
+                                  //           mainAxisSize: MainAxisSize.max,
+                                  //           children: [
+                                  //             Icon(
+                                  //               Icons.help_outline,
+                                  //               color:
+                                  //                   FlutterFlowTheme.of(context)
+                                  //                       .primary,
+                                  //               size: 36.0,
+                                  //             ),
+                                  //             Expanded(
+                                  //               child: Padding(
+                                  //                 padding: EdgeInsetsDirectional
+                                  //                     .fromSTEB(
+                                  //                         12.0, 0.0, 0.0, 0.0),
+                                  //                 child: Column(
+                                  //                   mainAxisSize:
+                                  //                       MainAxisSize.max,
+                                  //                   crossAxisAlignment:
+                                  //                       CrossAxisAlignment
+                                  //                           .start,
+                                  //                   children: [
+                                  //                     Text(
+                                  //                       'Contáctanos',
+                                  //                       style:
+                                  //                           FlutterFlowTheme.of(
+                                  //                                   context)
+                                  //                               .bodyLarge,
+                                  //                     ),
+                                  //                   ],
+                                  //                 ),
+                                  //               ),
+                                  //             ),
+                                  //           ],
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ).animateOnPageLoad(animationsMap[
+                                  //       'containerOnPageLoadAnimation5']!),
+                                  // ),
+                                  // Padding(
+                                  //   padding: EdgeInsetsDirectional.fromSTEB(
+                                  //       16.0, 0.0, 16.0, 16.0),
+                                  //   child: Container(
+                                  //     width: double.infinity,
+                                  //     constraints: BoxConstraints(
+                                  //       maxWidth: 500.0,
+                                  //     ),
+                                  //     decoration: BoxDecoration(
+                                  //       color: FlutterFlowTheme.of(context)
+                                  //           .secondaryBackground,
+                                  //       boxShadow: [
+                                  //         BoxShadow(
+                                  //           blurRadius: 4.0,
+                                  //           color: Color(0x33000000),
+                                  //           offset: Offset(0.0, 2.0),
+                                  //         )
+                                  //       ],
+                                  //       borderRadius:
+                                  //           BorderRadius.circular(12.0),
+                                  //       border: Border.all(
+                                  //         color: FlutterFlowTheme.of(context)
+                                  //             .primaryBackground,
+                                  //         width: 2.0,
+                                  //       ),
+                                  //     ),
+                                  //     child: Padding(
+                                  //       padding: EdgeInsetsDirectional.fromSTEB(
+                                  //           12.0, 8.0, 12.0, 8.0),
+                                  //       child: Row(
+                                  //         mainAxisSize: MainAxisSize.max,
+                                  //         children: [
+                                  //           Icon(
+                                  //             Icons.person_search_rounded,
+                                  //             color:
+                                  //                 FlutterFlowTheme.of(context)
+                                  //                     .primary,
+                                  //             size: 36.0,
+                                  //           ),
+                                  //           Expanded(
+                                  //             child: Padding(
+                                  //               padding: EdgeInsetsDirectional
+                                  //                   .fromSTEB(
+                                  //                       12.0, 0.0, 0.0, 0.0),
+                                  //               child: Column(
+                                  //                 mainAxisSize:
+                                  //                     MainAxisSize.max,
+                                  //                 crossAxisAlignment:
+                                  //                     CrossAxisAlignment.start,
+                                  //                 children: [
+                                  //                   Text(
+                                  //                     'Encuentra un Agente o Cajero',
+                                  //                     style:
+                                  //                         FlutterFlowTheme.of(
+                                  //                                 context)
+                                  //                             .bodyLarge,
+                                  //                   ),
+                                  //                 ],
+                                  //               ),
+                                  //             ),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //   ).animateOnPageLoad(animationsMap[
+                                  //       'containerOnPageLoadAnimation6']!),
+                                  // ),
                                 ],
                               );
                             } else if (homeApplicationRecord?.status ==
@@ -1550,5 +1475,139 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
         );
       },
     );
+  }
+
+  Future<List<Widget>> generateWidgets() async {
+    var payments = await userPaymentsShedule();
+    List<Widget> widgets = [];
+    widgets.add(Text(
+      'Historial de Pagos',
+      style: FlutterFlowTheme.of(context).titleLarge,
+    ));
+    widgets.add(SizedBox(
+      height: 10.0,
+    ));
+    for (int i = 0; i < payments.length; i++) {
+      widgets.add(
+        Padding(
+          padding: EdgeInsets.only(bottom: 8.0),
+          child: Container(
+            width: double.infinity,
+            constraints: BoxConstraints(
+              maxWidth: 500.0,
+            ),
+            decoration: BoxDecoration(
+              color: payments[i]['Mora'] == 0
+                  ? FlutterFlowTheme.of(context).primaryBtnText
+                  : const Color.fromARGB(255, 235, 118, 110),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4.0,
+                  color: Color(0x33000000),
+                  offset: Offset(0.0, 2.0),
+                )
+              ],
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(12.0, 16.0, 12.0, 12.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Fecha',
+                            style:
+                                FlutterFlowTheme.of(context).bodySmall.override(
+                                      fontFamily: 'Urbanist',
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                          ),
+                          Text(
+                            payments[i]['fecha']
+                                .toDate()
+                                .toString()
+                                .split(' ')[0],
+                            style: FlutterFlowTheme.of(context).labelMedium,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Monto',
+                            style:
+                                FlutterFlowTheme.of(context).bodySmall.override(
+                                      fontFamily: 'Urbanist',
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                          ),
+                          Text(
+                            formatNumber(
+                              payments[i]['Cuota'],
+                              formatType: FormatType.decimal,
+                              decimalType: DecimalType.automatic,
+                              currency: 'L ',
+                            ),
+                            style: FlutterFlowTheme.of(context).labelMedium,
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (payments[i]['Mora'] > 0)
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Mora',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .override(
+                                    fontFamily: 'Urbanist',
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                            Text(
+                              payments[i]['Mora'] > 0
+                                  ? formatNumber(
+                                      payments[i]['Mora'],
+                                      formatType: FormatType.decimal,
+                                      decimalType: DecimalType.automatic,
+                                      currency: 'L ',
+                                    )
+                                  : '0.00',
+                              style: FlutterFlowTheme.of(context).labelMedium,
+                            ),
+                          ],
+                        ),
+                      ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Status',
+                            style:
+                                FlutterFlowTheme.of(context).bodySmall.override(
+                                      fontFamily: 'Urbanist',
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                          ),
+                          Text(
+                            payments[i]['status'] == 'F' ? 'Pendiente' : 'Pago',
+                            style: FlutterFlowTheme.of(context).labelMedium,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                )),
+          ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation2']!),
+        ),
+      );
+    }
+    return widgets;
   }
 }

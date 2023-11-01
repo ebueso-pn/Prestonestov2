@@ -79,6 +79,25 @@ Future<bool> checkUserAlreadyCompletedPersonalEvaluation() async {
   }
 }
 
+Future<List<Map<String, dynamic>>> userPaymentsShedule() async {
+  try {
+    final doc = await LoansRecord.collection
+        .where('UserDocReference', isEqualTo: currentUserReference)
+        .get();
+    if (doc.docs.isNotEmpty) {
+      final payment = await doc.docs.first.data();
+      final schedule = await (payment as Map)['CalendarioPagos'];
+      if (schedule != null) {
+        return (schedule as List).cast<Map<String, dynamic>>();
+      }
+    }
+    return [];
+  } catch (e) {
+    print(e);
+    return [];
+  }
+}
+
 Future<void> updateUserPersonalEvaluation(bool personalEvaluation) async {
   await UsersRecord.collection.doc(currentUserUid).update({
     'personal_evaluation': personalEvaluation,
