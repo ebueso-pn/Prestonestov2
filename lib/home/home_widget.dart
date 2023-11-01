@@ -23,6 +23,8 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
   late HomeModel _model;
+  var payments = [];
+  int nextIndexPayment = 0;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -181,12 +183,20 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     ),
   };
 
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => HomeModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    userPaymentsShedule().then((value) {
+      setState(() {
+        payments = value;
+        nextIndexPayment =
+            payments.indexWhere((element) => element['status'] == 'F');
+        isLoading = false;
+      });
+    });
   }
 
   @override
@@ -209,7 +219,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
-        if (!snapshot.hasData) {
+        if (!snapshot.hasData || isLoading) {
           return Scaffold(
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: Center(
@@ -417,22 +427,130 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                         ),
                                               ),
                                             ),
-                                            if (columnLoansRecord
-                                                    ?.fechaUltimoPago !=
-                                                null)
-                                              Text(
-                                                'Primer Pago: ${dateTimeFormat(
-                                                  'd/M/y',
-                                                  columnLoansRecord
-                                                      ?.fechaPrimerPago,
-                                                  locale: FFLocalizations.of(
-                                                          context)
-                                                      .languageCode,
-                                                )}',
-                                                style:
+                                            FFButtonWidget(
+                                              onPressed: () async {
+                                                context
+                                                    .pushNamed('LoanDocument');
+                                              },
+                                              text: 'Ver Contrato de Prestamo',
+                                              options: FFButtonOptions(
+                                                width: 230.0,
+                                                height: 40.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 0.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color:
                                                     FlutterFlowTheme.of(context)
-                                                        .labelMedium,
+                                                        .primaryBtnText,
+                                                textStyle: FlutterFlowTheme.of(
+                                                        context)
+                                                    .titleSmall
+                                                    .override(
+                                                      fontFamily: 'Urbanist',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                    ),
+                                                elevation: 0.0,
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 1.0,
+                                                ),
                                               ),
+                                            ),
+                                            Text(
+                                              'Proximo Pago: ',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium,
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            if (payments.length != 0)
+                                              Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                          'Fecha',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodySmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Urbanist',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                        ),
+                                                        Text(
+                                                          DateFormat(
+                                                                  'dd/MM/yyyy')
+                                                              .format(DateTime.parse(
+                                                                  payments[nextIndexPayment]
+                                                                          [
+                                                                          'fecha']
+                                                                      .toDate()
+                                                                      .toString()
+                                                                      .split(
+                                                                          ' ')[0])),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .labelMedium,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                          'Monto',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodySmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Urbanist',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                        ),
+                                                        Text(
+                                                          formatNumber(
+                                                            double.parse((payments[
+                                                                            nextIndexPayment]
+                                                                        [
+                                                                        'Cuota']
+                                                                    as double)
+                                                                .toStringAsFixed(
+                                                                    2)),
+                                                            formatType:
+                                                                FormatType
+                                                                    .decimal,
+                                                            decimalType:
+                                                                DecimalType
+                                                                    .automatic,
+                                                            currency: 'L ',
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .labelMedium,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ]),
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
@@ -463,48 +581,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                         color: Colors.white,
                                                       ),
                                                   elevation: 2.0,
-                                                  borderSide: BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1.0,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 12.0, 0.0, 0.0),
-                                              child: FFButtonWidget(
-                                                onPressed: () async {
-                                                  context.pushNamed(
-                                                      'LoanDocument');
-                                                },
-                                                text:
-                                                    'Ver Contrato de Prestamo',
-                                                options: FFButtonOptions(
-                                                  width: 230.0,
-                                                  height: 40.0,
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 0.0, 0.0),
-                                                  iconPadding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(0.0, 0.0,
-                                                              0.0, 0.0),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryBtnText,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .titleSmall
-                                                      .override(
-                                                        fontFamily: 'Urbanist',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                      ),
-                                                  elevation: 0.0,
                                                   borderSide: BorderSide(
                                                     color: Colors.transparent,
                                                     width: 1.0,
@@ -559,26 +635,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .titleLarge,
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 4.0, 0.0, 4.0),
-                                              child: Text(
-                                                valueOrDefault<String>(
-                                                  columnLoansRecord
-                                                      ?.reference.id,
-                                                  '-',
-                                                ),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .override(
-                                                          fontFamily:
-                                                              'Urbanist',
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                              ),
                                             ),
                                             if (columnLoansRecord
                                                     ?.fechaUltimoPago !=
@@ -669,63 +725,103 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     ).animateOnPageLoad(animationsMap[
                                         'containerOnPageLoadAnimation3']!),
                                   ),
-                                  //ADDED A HISTORY LIST
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 0.0),
-                                    child: Container(
-                                      width: double.infinity,
-                                      constraints: BoxConstraints(
-                                        maxWidth: 500.0,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 4.0,
-                                            color: Color(0x33000000),
-                                            offset: Offset(0.0, 2.0),
-                                          )
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        border: Border.all(
+                                  if (payments.length != 0)
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 16.0),
+                                      child: Container(
+                                        width: double.infinity,
+                                        constraints: BoxConstraints(
+                                          maxWidth: 500.0,
+                                        ),
+                                        decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryBackground,
-                                          width: 2.0,
+                                              .secondaryBackground,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              blurRadius: 4.0,
+                                              color: Color(0x33000000),
+                                              offset: Offset(0.0, 2.0),
+                                            )
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                          border: Border.all(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBackground,
+                                            width: 2.0,
+                                          ),
                                         ),
+                                        child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    12.0, 16.0, 12.0, 12.0),
+                                            child: Column(
+                                              //Alinear al comienzo
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Historial de Pagos',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                _buildRowPayment(
+                                                    payments[0], false),
+                                                Center(
+                                                  child: FFButtonWidget(
+                                                    onPressed: () =>
+                                                        _buildPopUpPaymentHistory(),
+                                                    text: 'Mostrar todo',
+                                                    options: FFButtonOptions(
+                                                      width: 130.0,
+                                                      height: 25.0,
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Urbanist',
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                      elevation: 2.0,
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1.0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
                                       ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            12.0, 16.0, 12.0, 12.0),
-                                        child: FutureBuilder<List<Widget>>(
-                                          future: generateWidgets(),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return Center(
-                                                  child:
-                                                      CircularProgressIndicator());
-                                            } else if (snapshot.hasError) {
-                                              return Text(
-                                                  'Error: ${snapshot.error}');
-                                            } else {
-                                              return Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: snapshot.data!,
-                                              );
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ).animateOnPageLoad(animationsMap[
-                                      'containerOnPageLoadAnimation3']!),
+                                    ).animateOnPageLoad(animationsMap[
+                                        'containerOnPageLoadAnimation3']!),
                                   // Padding(
                                   //   padding: EdgeInsetsDirectional.fromSTEB(
                                   //       16.0, 0.0, 16.0, 16.0),
@@ -1477,137 +1573,182 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     );
   }
 
-  Future<List<Widget>> generateWidgets() async {
-    var payments = await userPaymentsShedule();
-    List<Widget> widgets = [];
-    widgets.add(Text(
-      'Historial de Pagos',
-      style: FlutterFlowTheme.of(context).titleLarge,
-    ));
-    widgets.add(SizedBox(
-      height: 10.0,
-    ));
-    for (int i = 0; i < payments.length; i++) {
-      widgets.add(
-        Padding(
-          padding: EdgeInsets.only(bottom: 8.0),
-          child: Container(
-            width: double.infinity,
-            constraints: BoxConstraints(
-              maxWidth: 500.0,
-            ),
-            decoration: BoxDecoration(
-              color: payments[i]['Mora'] == 0
-                  ? FlutterFlowTheme.of(context).primaryBtnText
-                  : const Color.fromARGB(255, 235, 118, 110),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 4.0,
-                  color: Color(0x33000000),
-                  offset: Offset(0.0, 2.0),
-                )
-              ],
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12.0, 16.0, 12.0, 12.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Text(
-                            'Fecha',
-                            style:
-                                FlutterFlowTheme.of(context).bodySmall.override(
-                                      fontFamily: 'Urbanist',
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                          ),
-                          Text(
-                            payments[i]['fecha']
+  Widget _buildRowPayment(Map<String, dynamic> payment, bool isNextPayment) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Container(
+        width: double.infinity,
+        constraints: BoxConstraints(
+          maxWidth: 500.0,
+        ),
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.of(context).primaryBtnText,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: !isNextPayment ? 4.0 : 6.0,
+              color: !isNextPayment ? Color(0x33000000) : Colors.black,
+              offset: Offset(0.0, 2.0),
+            )
+          ],
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(12.0, 16.0, 12.0, 12.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Fecha',
+                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                              fontFamily: 'Urbanist',
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      Text(
+                        DateFormat('dd/MM/yyyy').format(DateTime.parse(
+                            payments[nextIndexPayment]['fecha']
                                 .toDate()
                                 .toString()
-                                .split(' ')[0],
-                            style: FlutterFlowTheme.of(context).labelMedium,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Text(
-                            'Monto',
-                            style:
-                                FlutterFlowTheme.of(context).bodySmall.override(
-                                      fontFamily: 'Urbanist',
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                          ),
-                          Text(
-                            formatNumber(
-                              payments[i]['Cuota'],
-                              formatType: FormatType.decimal,
-                              decimalType: DecimalType.automatic,
-                              currency: 'L ',
+                                .split(' ')[0])),
+                        style: FlutterFlowTheme.of(context).labelSmall,
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Monto',
+                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                              fontFamily: 'Urbanist',
+                              fontWeight: FontWeight.bold,
                             ),
-                            style: FlutterFlowTheme.of(context).labelMedium,
-                          ),
-                        ],
                       ),
-                    ),
-                    if (payments[i]['Mora'] > 0)
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Mora',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .override(
+                      Text(
+                        formatNumber(
+                          double.parse(
+                              (payment['Cuota'] as double).toStringAsFixed(2)),
+                          formatType: FormatType.decimal,
+                          decimalType: DecimalType.automatic,
+                          currency: 'L ',
+                        ),
+                        style: FlutterFlowTheme.of(context).labelSmall,
+                      ),
+                    ],
+                  ),
+                ),
+                if (payment['Mora'] > 0)
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Mora',
+                          style:
+                              FlutterFlowTheme.of(context).bodySmall.override(
                                     fontFamily: 'Urbanist',
                                     fontWeight: FontWeight.bold,
                                   ),
-                            ),
-                            Text(
-                              payments[i]['Mora'] > 0
-                                  ? formatNumber(
-                                      payments[i]['Mora'],
-                                      formatType: FormatType.decimal,
-                                      decimalType: DecimalType.automatic,
-                                      currency: 'L ',
-                                    )
-                                  : '0.00',
-                              style: FlutterFlowTheme.of(context).labelMedium,
-                            ),
-                          ],
                         ),
-                      ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Text(
-                            'Status',
-                            style:
-                                FlutterFlowTheme.of(context).bodySmall.override(
-                                      fontFamily: 'Urbanist',
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                        Text(
+                          formatNumber(
+                            payment['Mora'] is double
+                                ? double.parse((payment['Mora'] as double)
+                                    .toStringAsFixed(2))
+                                : payment['Mora'],
+                            formatType: FormatType.decimal,
+                            decimalType: DecimalType.automatic,
+                            currency: 'L ',
                           ),
-                          Text(
-                            payments[i]['status'] == 'F' ? 'Pendiente' : 'Pago',
-                            style: FlutterFlowTheme.of(context).labelMedium,
-                          ),
-                        ],
+                          style: FlutterFlowTheme.of(context).labelSmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Status',
+                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                              fontFamily: 'Urbanist',
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
-                    )
-                  ],
-                )),
-          ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation2']!),
-        ),
-      );
+                      Text(
+                        payment['status'] == 'F' ? 'Pendiente' : 'Pago',
+                        style: FlutterFlowTheme.of(context).labelSmall,
+                      ),
+                    ],
+                  ),
+                ),
+                if (payment['Mora'] > 0)
+                  Icon(
+                    Icons.warning_amber_rounded,
+                    color: Colors.yellow,
+                    size: 25.0,
+                  ),
+              ],
+            )),
+      ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation2']!),
+    );
+  }
+
+  Future<List<Widget>> _buildPaymentHistory() async {
+    List<Widget> widgets = [];
+    for (int i = 0; i < payments.length; i++) {
+      widgets.add(_buildRowPayment(payments[i], false));
     }
     return widgets;
+  }
+
+  void _buildPopUpPaymentHistory() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Historial de Pagos',
+            style: FlutterFlowTheme.of(context).headlineMedium,
+          ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          content: FutureBuilder<List<Widget>>(
+            future: _buildPaymentHistory(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: snapshot.data!,
+                  ),
+                );
+              }
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Cerrar',
+                style: TextStyle(
+                  color: FlutterFlowTheme.of(context).primary,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
