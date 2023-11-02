@@ -1,5 +1,8 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:prestonesto_v1/backend/backend.dart';
+import 'package:prestonesto_v1/push_notifications_service.dart';
 
 import '/custom_code/actions/index.dart' as actions;
 import 'package:provider/provider.dart';
@@ -30,10 +33,25 @@ void main() async {
 
   await initializeFirebaseAppCheck();
 
+  await PushNotificationService().setupInteractedMessage();
+
   runApp(ChangeNotifierProvider(
     create: (context) => appState,
     child: MyApp(),
   ));
+  RemoteMessage? initialMessage =
+      await FirebaseMessaging.instance.getInitialMessage();
+  if (initialMessage != null) {
+    // App received a notification when it was killed
+  }
+  WidgetsFlutterBinding.ensureInitialized();
+  await Permission.notification.isDenied.then(
+    (bool value) {
+      if (value) {
+        Permission.notification.request();
+      }
+    },
+  );
 }
 
 class MyApp extends StatefulWidget {
