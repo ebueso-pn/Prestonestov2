@@ -971,7 +971,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                 ],
                               );
                             } else if (homeApplicationRecord?.status ==
-                                'Aprobada') {
+                                    'Aprobada' ||
+                                homeApplicationRecord?.status == 'Aceptada') {
                               return Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -1014,8 +1015,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       stream: queryApplicationRecord(
                                         parent: currentUserReference,
                                         queryBuilder: (applicationRecord) =>
-                                            applicationRecord.where('status',
-                                                isEqualTo: 'Aprobada'),
+                                            applicationRecord.whereIn('status',
+                                                ['Aprobada', 'Aceptada']),
                                         singleRecord: true,
                                       ),
                                       builder: (context, snapshot) {
@@ -1100,6 +1101,40 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         ).animateOnPageLoad(animationsMap[
                                             'containerOnPageLoadAnimation7']!);
                                       },
+                                    ),
+                                  ),
+                                ],
+                              );
+                            } else if (homeApplicationRecord?.status ==
+                                'Enviada') {
+                              return Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Align(
+                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    child: Lottie.asset(
+                                      'assets/lottie_animations/tmpo2dz_7be.json',
+                                      width: 350.0,
+                                      height: 350.0,
+                                      fit: BoxFit.cover,
+                                      animate: true,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: Text(
+                                        'Tu solicitud está completada y pasará a evaluación! \nTendrás una respuesta sobre tu crédito en las próximas 24 horas hábiles.',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -1480,8 +1515,12 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 height: 16.0,
                                                 decoration: BoxDecoration(
                                                   color: valueOrDefault<Color>(
-                                                    FFAppState().userHasIncomeVerification ==
-                                                            true
+                                                    FFAppState().userHasIncomeVerification &&
+                                                            FFAppState()
+                                                                .userHasBankAccount &&
+                                                            FFAppState()
+                                                                    .userHasPersonalEvaluationCompleted ==
+                                                                true
                                                         ? FlutterFlowTheme.of(
                                                                 context)
                                                             .primary
@@ -1509,7 +1548,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Text(
-                                                'Comprobar tus ingresos',
+                                                'Completar tu perfil',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyLarge,
@@ -1523,6 +1562,11 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 50.0, 0.0, 0.0),
                                       child: FFButtonWidget(
+                                        isEnable: FFAppState()
+                                                .userHasIncomeVerification &&
+                                            FFAppState().userHasBankAccount &&
+                                            FFAppState()
+                                                .userHasPersonalEvaluationCompleted,
                                         onPressed: () async {
                                           context.pushNamed(
                                               'Application_LoanCalculator');

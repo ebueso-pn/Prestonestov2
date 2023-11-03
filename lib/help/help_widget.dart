@@ -126,25 +126,37 @@ class _HelpWidgetState extends State<HelpWidget> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    primary: FlutterFlowTheme.of(context)
-                        .primary, // Cambia el color de fondo a verde
+                Center(
+                  child: Lottie.asset(
+                    'assets/lottie_animations/elearning-platform.json',
+                    width: 200.0,
+                    height: 200.0,
+                    animate: true,
                   ),
-                  onPressed: () {
-                    _launchWhatsApp();
-                  },
-                  icon: Icon(Icons.whatshot),
-                  label: Text('Contáctanos por WhatsApp'),
                 ),
-                ElevatedButton.icon(
+                Center(
+                  child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       primary: FlutterFlowTheme.of(context)
                           .primary, // Cambia el color de fondo a verde
                     ),
-                    onPressed: () => _launchFrequentQuestions(),
-                    icon: Icon(Icons.help),
-                    label: Text('Preguntas frecuentes')),
+                    onPressed: () {
+                      _launchWhatsApp();
+                    },
+                    icon: Icon(Icons.whatshot),
+                    label: Text('Contáctanos por WhatsApp'),
+                  ),
+                ),
+                Center(
+                  child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        primary: FlutterFlowTheme.of(context)
+                            .primary, // Cambia el color de fondo a verde
+                      ),
+                      onPressed: () => _launchFrequentQuestions(),
+                      icon: Icon(Icons.help),
+                      label: Text('Preguntas frecuentes')),
+                ),
               ],
             ),
           ),

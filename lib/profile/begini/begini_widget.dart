@@ -146,36 +146,24 @@ class _BeginiWidgetState extends State<BeginiWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).primaryBtnText,
-                            borderRadius: BorderRadius.circular(12.0),
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context).alternate,
-                              width: 2.0,
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0.0, 10.0, 0.0, 24.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              'A continuación pasarás a contestar algunas preguntas que nos ayudarán a conocerte un poco mejor. No tienes que prepararte de antemano.\n\n El cuestionario dura un máximo de 15 minutos, y es necesario que lo completes para poder evaluar tu aplicación.',
+                              style: FlutterFlowTheme.of(context).bodyMedium,
                             ),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Text(
-                                'A continuación pasarás a contestar algunas preguntas que nos ayudarán a conocerte un poco mejor. No tienes que prepararte de antemano.\n\n El cuestionario dura un máximo de 15 minutos, y es necesario que lo completes para poder evaluar tu aplicación.',
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 16.0, 0.0, 0.0),
+                              child: Text(
+                                'Asegurate de estar en un sitio con buena señal de internet, y procura que nadie te vaya interrumpir, para poder contestar de la mejor manera posible.',
                                 style: FlutterFlowTheme.of(context).bodyMedium,
                               ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
-                                child: Text(
-                                  'Asegurate de estar en un sitio con buena señal de internet, y procura que nadie te vaya interrumpir, para poder contestar de la mejor manera posible.',
-                                  style:
-                                      FlutterFlowTheme.of(context).bodyMedium,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                       FFButtonWidget(

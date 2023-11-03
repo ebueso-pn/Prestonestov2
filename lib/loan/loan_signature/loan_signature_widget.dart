@@ -128,8 +128,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                   stream: queryApplicationRecord(
                     parent: currentUserReference,
                     queryBuilder: (applicationRecord) => applicationRecord
-                        .where('status', isEqualTo: 'Aprobada')
-                        .orderBy('date_applied', descending: true),
+                        .whereIn('status', ['Aprobada', 'Aceptada']).orderBy(
+                            'date_applied',
+                            descending: true),
                     singleRecord: true,
                   ),
                   builder: (context, snapshot) {
@@ -389,8 +390,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                   stream: queryApplicationRecord(
                     parent: currentUserReference,
                     queryBuilder: (applicationRecord) => applicationRecord
-                        .where('status', isEqualTo: 'Aprobada')
-                        .orderBy('date_applied', descending: true),
+                        .whereIn('status', ['Aprobada', 'Aceptada']).orderBy(
+                            'date_applied',
+                            descending: true),
                     singleRecord: true,
                   ),
                   builder: (context, snapshot) {

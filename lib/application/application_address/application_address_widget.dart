@@ -163,11 +163,10 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                     size: 30,
                                   ),
                                   onPressed: () async {
-                                    context.pop();
-
                                     await widget.applicationRecieve!.update({
                                       'index': FieldValue.increment(-(1)),
                                     });
+                                    context.pop();
                                   },
                                 ),
                               ),
@@ -276,19 +275,15 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(16, 16, 0, 24),
-                            child: Text(
-                              'Necesitamos tu dirección para validar tu identidad. ',
-                              textAlign: TextAlign.start,
-                              style: FlutterFlowTheme.of(context).bodyLarge,
-                            ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 24),
+                        child: Wrap(children: [
+                          Text(
+                            'Necesitamos tu dirección para validar tu identidad. ',
+                            textAlign: TextAlign.start,
+                            style: FlutterFlowTheme.of(context).bodyLarge,
                           ),
-                        ],
+                        ]),
                       ).animateOnPageLoad(
                           animationsMap['rowOnPageLoadAnimation']!),
                       Align(

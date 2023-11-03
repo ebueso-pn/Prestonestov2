@@ -255,21 +255,18 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 16.0),
-                      child: Text(
-                        'Como esta escrito en tu DNI. \nNecesitamos tu nombre para verificar tu identidad.',
-                        textAlign: TextAlign.start,
-                        style: FlutterFlowTheme.of(context).bodyLarge,
-                      ).animateOnPageLoad(
-                          animationsMap['textOnPageLoadAnimation']!),
-                    ),
-                  ],
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+                  child:
+                      Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                    Text(
+                      'Como esta escrito en tu DNI. \nNecesitamos tu nombre para verificar tu identidad.',
+                      textAlign: TextAlign.start,
+                      style: FlutterFlowTheme.of(context).bodyLarge,
+                    ).animateOnPageLoad(
+                        animationsMap['textOnPageLoadAnimation']!),
+                  ]),
                 ),
                 Form(
                   key: _model.formKey,

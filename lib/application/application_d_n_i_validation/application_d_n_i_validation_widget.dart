@@ -369,25 +369,21 @@ class _ApplicationDNIValidationWidgetState
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 48.0, 0.0, 0.0),
-                  child: Text(
-                    'Hora de tomarnos fotos  ',
-                    style: FlutterFlowTheme.of(context).headlineMedium,
-                  ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  'Hora de tomarnos fotos  ',
+                  style: FlutterFlowTheme.of(context).headlineMedium,
                 ),
                 Align(
                   alignment: AlignmentDirectional(0.0, 0.0),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
-                    child: Lottie.asset(
-                      'assets/lottie_animations/tmpo2dz_7be.json',
-                      width: 350.0,
-                      height: 350.0,
-                      fit: BoxFit.cover,
-                      animate: true,
-                    ),
+                  child: Lottie.asset(
+                    'assets/lottie_animations/tmpo2dz_7be.json',
+                    width: 350.0,
+                    height: 350.0,
+                    fit: BoxFit.cover,
+                    animate: true,
                   ),
                 ),
                 Builder(
