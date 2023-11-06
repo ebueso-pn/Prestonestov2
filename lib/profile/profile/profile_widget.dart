@@ -990,6 +990,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                             },
                           ) ??
                           false;
+                      await removeFCMToken();
                       GoRouter.of(context).prepareAuthEvent();
                       await authManager.signOut();
                       GoRouter.of(context).clearRedirectLocation();

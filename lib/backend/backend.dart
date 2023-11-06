@@ -98,6 +98,18 @@ Future<List<Map<String, dynamic>>> userPaymentsShedule() async {
   }
 }
 
+Future<void> setFCMToken(String token) async {
+  await UsersRecord.collection.doc(currentUserUid).update({
+    'fcm_token': token,
+  });
+}
+
+Future<void> removeFCMToken() async {
+  await UsersRecord.collection.doc(currentUserUid).update({
+    'fcm_token': FieldValue.delete(),
+  });
+}
+
 Future<void> updateUserPersonalEvaluation(bool personalEvaluation) async {
   await UsersRecord.collection.doc(currentUserUid).update({
     'personal_evaluation': personalEvaluation,
