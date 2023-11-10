@@ -1,3 +1,5 @@
+import 'package:flutter/gestures.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -238,7 +240,51 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
         List<ApplicationRecord> homeApplicationRecordList = snapshot.data!;
         // Return an empty Container when the item does not exist.
         if (snapshot.data!.isEmpty) {
-          return Container();
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Lottie.asset(
+                'assets/lottie_animations/tmpzrejxg10.json',
+                width: 350.0,
+                height: 350.0,
+                fit: BoxFit.fill,
+                animate: true,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: DefaultTextStyle.of(context).style,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'No tienes ningún préstamo activo. ',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      TextSpan(
+                        text: 'Continua con tu solicitud ',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      TextSpan(
+                        text: 'aquí',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () =>
+                              context.pushNamed('Application_LoanCalculator'),
+                      ),
+                      TextSpan(
+                        text: '!',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
         }
         final homeApplicationRecord = homeApplicationRecordList.isNotEmpty
             ? homeApplicationRecordList.first
@@ -528,22 +574,28 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                               ),
                                                         ),
                                                         Text(
-                                                          formatNumber(
-                                                            double.parse((payments[
-                                                                            nextIndexPayment]
-                                                                        [
-                                                                        'Cuota']
-                                                                    as double)
-                                                                .toStringAsFixed(
-                                                                    2)),
-                                                            formatType:
-                                                                FormatType
-                                                                    .decimal,
-                                                            decimalType:
-                                                                DecimalType
-                                                                    .automatic,
-                                                            currency: 'L ',
-                                                          ),
+                                                          !(payments[nextIndexPayment]
+                                                                      ['Cuota']
+                                                                  is double)
+                                                              ? (payments[nextIndexPayment]
+                                                                      ['Cuota'])
+                                                                  .toString()
+                                                              : formatNumber(
+                                                                  double.parse((payments[nextIndexPayment]
+                                                                              [
+                                                                              'Cuota']
+                                                                          as double)
+                                                                      .toStringAsFixed(
+                                                                          2)),
+                                                                  formatType:
+                                                                      FormatType
+                                                                          .decimal,
+                                                                  decimalType:
+                                                                      DecimalType
+                                                                          .automatic,
+                                                                  currency:
+                                                                      'L ',
+                                                                ),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .labelMedium,
@@ -658,7 +710,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                       0.0, 12.0, 0.0, 12.0),
                                               child: LinearPercentIndicator(
                                                 percent: 0.1,
-                                                width: 310.0,
+                                                width: 300.0,
                                                 lineHeight: 16.0,
                                                 animation: true,
                                                 progressColor:
@@ -1673,13 +1725,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                             ),
                       ),
                       Text(
-                        formatNumber(
-                          double.parse(
-                              (payment['Cuota'] as double).toStringAsFixed(2)),
-                          formatType: FormatType.decimal,
-                          decimalType: DecimalType.automatic,
-                          currency: 'L ',
-                        ),
+                        !(payments[nextIndexPayment]['Cuota'] is double)
+                            ? (payments[nextIndexPayment]['Cuota']).toString()
+                            : formatNumber(
+                                double.parse((payments[nextIndexPayment]
+                                        ['Cuota'] as double)
+                                    .toStringAsFixed(2)),
+                                formatType: FormatType.decimal,
+                                decimalType: DecimalType.automatic,
+                                currency: 'L ',
+                              ),
                         style: FlutterFlowTheme.of(context).labelSmall,
                       ),
                     ],
@@ -1698,15 +1753,15 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                   ),
                         ),
                         Text(
-                          formatNumber(
-                            payment['Mora'] is double
-                                ? double.parse((payment['Mora'] as double)
-                                    .toStringAsFixed(2))
-                                : payment['Mora'],
-                            formatType: FormatType.decimal,
-                            decimalType: DecimalType.automatic,
-                            currency: 'L ',
-                          ),
+                          !(payment['Mora'] is double)
+                              ? (payment['Mora']).toString()
+                              : formatNumber(
+                                  double.parse((payment['Mora'] as double)
+                                      .toStringAsFixed(2)),
+                                  formatType: FormatType.decimal,
+                                  decimalType: DecimalType.automatic,
+                                  currency: 'L ',
+                                ),
                           style: FlutterFlowTheme.of(context).labelSmall,
                         ),
                       ],
