@@ -79,22 +79,24 @@ android {
             dimension "env"
             applicationId "com.prestonesto.dev"
             manifestPlaceholders = [
+                appName: "[Dev] PrestonestoV1",
                 uriScheme: "prestonesto",
                 linkDomain: "d8ypx.app.link",
                 linkDomainAlternate: "d8ypx-alternate.app.link",
                 branchKey: "key_test_kFktvmgWCLSKNbLdzavz3dpdyyh1EO35",
-                testMode: "false"
+                testMode: "true"
             ]   
         }
         prod {
             dimension "env"
             applicationId "com.prestonesto.prod"
             manifestPlaceholders = [
+                appName: "PrestonestoV1",
                 uriScheme: "prestonesto",
                 linkDomain: "d8ypx.test-app.link",
                 linkDomainAlternate: "d8ypx.test-alternate.app.link",
                 branchKey: "key_live_owgEDjk9EMHLRaIiDnBsGjenDxa1BG3I",
-                testMode: "true"
+                testMode: "false"
             ]
         }
     }

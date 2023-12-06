@@ -1,3 +1,5 @@
+import 'package:prestonesto_v1/utils/config_reader.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
@@ -534,7 +536,11 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               ParamType.String,
                             ),
                             redirectLink:
-                                'https://d8ypx.test-app.link/success_zapsign',
+                                //Depend on enviroment
+                                // 'https://prestonesto.web.app/loanSignatureSuccess',
+                                ConfigReader.isDevMode()
+                                    ? 'https://d8ypx.test-app.link/success_zapsign'
+                                    : 'https://d8ypx.app.link/success_zapsign',
                           );
 
                           context.pushNamed(
