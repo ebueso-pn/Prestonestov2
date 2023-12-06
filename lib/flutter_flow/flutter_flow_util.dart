@@ -7,17 +7,16 @@ import 'package:from_css_color/from_css_color.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:json_path/json_path.dart';
+import 'package:prestonesto_v1/app/app.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
-
-import '../main.dart';
 
 import 'lat_lng.dart';
 
 export 'lat_lng.dart';
 export 'place.dart';
 export 'uploaded_file.dart';
-export '../app_state.dart';
+export '../app/app_state.dart';
 export 'flutter_flow_model.dart';
 export 'dart:math' show min, max;
 export 'dart:typed_data' show Uint8List;

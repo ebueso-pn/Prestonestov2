@@ -1,22 +1,12 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:prestonesto_v1/app/nav_bar.dart';
 import 'package:prestonesto_v1/profile/begini/begini_widget.dart';
 import 'package:prestonesto_v1/profile/begini/widgets/begini_success_widget.dart';
-import '/backend/backend.dart';
-
 import '../../auth/base_auth_user_provider.dart';
-
 import '/index.dart';
-import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/lat_lng.dart';
-import '/flutter_flow/place.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'serialization_util.dart';
-
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "999162017072",
+    "project_id": "prestonesto-prod",
+    "storage_bucket": "prestonesto-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999162017072:android:a9c86f452fef7a08a804f5",
+        "android_client_info": {
+          "package_name": "com.prestonesto.prod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApw-vckKtluuR7U8qb7aLda_BugM0KKIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
