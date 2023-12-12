@@ -662,7 +662,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                             .update(createUsersRecordData(
                           nombres: _model.nombresController.text,
                           apellidos: _model.apellidosController.text,
-                          dni: _model.dniController.text,
+                          dni: (_model.dniController.text).replaceAll('-', ''),
                           ingresoMensual:
                               double.tryParse(_model.ingresosController.text),
                         ));
