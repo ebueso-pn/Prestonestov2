@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:prestonesto_v1/app/app.dart';
 import 'package:prestonesto_v1/app/push_notifications_service.dart';
@@ -12,6 +13,9 @@ import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/firebase_app_check_util.dart';
 
 Future<void> mainCommon(String env) async {
+  // Loading .env file from root directory.
+  await dotenv.load(fileName: ".env");
+
   WidgetsFlutterBinding.ensureInitialized();
 
   usePathUrlStrategy();

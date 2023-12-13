@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import '../../flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 
@@ -181,8 +183,7 @@ class ZapSIgnCreateDocumentFromTemplateCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer 0c004cad-963b-48be-a373-52968dca04864f6e7f46-0316-4c77-8af6-5275e9905625',
+        'Authorization': 'Bearer ${dotenv.env['ZAPSIGN_TOKEN']}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -210,8 +211,7 @@ class ZapSignUpdateSignerCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer 0c004cad-963b-48be-a373-52968dca04864f6e7f46-0316-4c77-8af6-5275e9905625',
+        'Authorization': 'Bearer ${dotenv.env['ZAPSIGN_TOKEN']}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -232,8 +232,7 @@ class GetAccessTokenCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Basic bzdQRnZLY0pNWktDSklXbEdCYjdEUkdxb0FmTTJreEVJZlBaUEtYSENzbVoxQ2hQcTUxNjg5MjExMTI1OjhNcWptU0hoNTBUMVVTekxPcmtNSm9pRVNyVGIxaHhu',
+        'Authorization': 'Bearer ${dotenv.env['SHUFTI_PRO_TOKEN']}',
       },
       params: {},
       bodyType: BodyType.JSON,
@@ -277,8 +276,7 @@ class ShuftiOnsiteWithOCRCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Basic bzdQRnZLY0pNWktDSklXbEdCYjdEUkdxb0FmTTJreEVJZlBaUEtYSENzbVoxQ2hQcTUxNjg5MjExMTI1OjhNcWptU0hoNTBUMVVTekxPcmtNSm9pRVNyVGIxaHhu',
+        'Authorization': 'Bearer ${dotenv.env['SHUFTI_PRO_TOKEN']}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -332,8 +330,7 @@ class ShuftiStatusRequestCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Basic bzdQRnZLY0pNWktDSklXbEdCYjdEUkdxb0FmTTJreEVJZlBaUEtYSENzbVoxQ2hQcTUxNjg5MjExMTI1OjhNcWptU0hoNTBUMVVTekxPcmtNSm9pRVNyVGIxaHhu',
+        'Authorization': 'Bearer ${dotenv.env['SHUFTI_PRO_TOKEN']}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -361,62 +358,11 @@ class ShuftiStatusRequestCall {
       );
 }
 
-class EquifaxAuthCall {
-  static Future<ApiCallResponse> call() {
-    final ffApiRequestBody = '''
-{
-    "user":"APIPRESTONE.FB01",
-    "password":"AjRpqZAR@5Px@Y7",
-    "key":"MTEyMzU4",
-    "application":"API360"
-}''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'Equifax Auth',
-      apiUrl: 'https://www.equifax.com.hn/efx-app-ws-api360/v1/hn/service/auth',
-      callType: ApiCallType.POST,
-      headers: {},
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-    );
-  }
-
-  static dynamic token(dynamic response) => getJsonField(
-        response,
-        r'''$.respuesta.token''',
-      );
-}
-
-class EquifaxCreditReportCall {
-  static Future<ApiCallResponse> call() {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Equifax Credit Report',
-      apiUrl:
-          'https://www.equifax.com.hn/efx-app-ws-api360/v1/hn/service/informacionBureau',
-      callType: ApiCallType.POST,
-      headers: {
-        'Content-type': 'application/json',
-      },
-      params: {},
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-    );
-  }
-}
-
 class BeginiTokenCall {
-  static Future<ApiCallResponse> call({
-    String? uid = 'test2',
-    String? integrationId = '65157cc8e8f64eeabc0dc3bd',
-    String? apiKey = 'fad1cf79-d889-4ea7-93a6-8e8590923c7c',
-  }) {
+  static Future<ApiCallResponse> call(
+      {String? uid = 'test2',
+      String? integrationId = '65157cc8e8f64eeabc0dc3bd',
+      String? apiKey = ''}) {
     final ffApiRequestBody = '''
 {
   "uid": "${uid}",
@@ -428,7 +374,7 @@ class BeginiTokenCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'api-key': '${apiKey}',
+        'api-key': dotenv.env['BEGINI_API_KEY'],
       },
       params: {},
       body: ffApiRequestBody,
