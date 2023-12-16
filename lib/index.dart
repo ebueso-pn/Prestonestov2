@@ -43,3 +43,4 @@ export '/profile/profile_income_validation/profile_income_validation_widget.dart
     show ProfileIncomeValidationWidget;
 export '/profile/profile_bank_account/profile_bank_account_widget.dart'
     show ProfileBankAccountWidget;
+export '/payment_details/payment_details_widget.dart' show PaymentDetailsWidget;

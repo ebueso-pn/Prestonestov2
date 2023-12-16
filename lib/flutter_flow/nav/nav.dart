@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:prestonesto_v1/app/nav_bar.dart';
+import 'package:prestonesto_v1/privacy_policy/privacy_policy_widget.dart';
 import 'package:prestonesto_v1/profile/begini/begini_widget.dart';
 import 'package:prestonesto_v1/profile/begini/widgets/begini_success_widget.dart';
 import '../../auth/base_auth_user_provider.dart';
@@ -253,9 +254,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ProfileBankAccountWidget(),
         ),
         FFRoute(
+          name: 'Payment_Details',
+          path: '/paymentDetails',
+          builder: (context, params) => PaymentDetailsWidget(),
+        ),
+        FFRoute(
           name: 'Begini_Success',
           path: '/beginiSuccess',
           builder: (context, params) => BeginiSuccessWidget(),
+        ),
+        FFRoute(
+          name: 'Privacy_Policy',
+          path: '/privacyPolicy',
+          builder: (context, params) => PrivacyPolicyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
