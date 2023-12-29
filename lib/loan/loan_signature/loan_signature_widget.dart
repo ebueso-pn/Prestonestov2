@@ -426,13 +426,16 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                       onPressed: () async {
                         var _shouldSetState = false;
 
-                        await buttonApplicationRecord!.reference
+                        final fechaPrimerPago =
+                            functions.fechaFirmaMas15(getCurrentTimestamp);
+                        final fechaUltimoPago = functions.fechaUltimoPago(
+                            getCurrentTimestamp,
+                            buttonApplicationRecord!.plazoMeses);
+
+                        await buttonApplicationRecord.reference
                             .update(createApplicationRecordData(
-                          fechaPrimerPago:
-                              functions.fechaFirmaMas15(getCurrentTimestamp),
-                          fechaUltimoPago: functions.fechaUltimoPago(
-                              getCurrentTimestamp,
-                              buttonApplicationRecord.plazoMeses),
+                          fechaPrimerPago: fechaPrimerPago,
+                          fechaUltimoPago: fechaUltimoPago,
                           status: 'Aceptada',
                         ));
                         _model.zapSignAPIresponse =
@@ -478,12 +481,12 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           ),
                           fechaPrimerPagoAno: dateTimeFormat(
                             'y',
-                            buttonApplicationRecord?.fechaPrimerPago,
+                            fechaPrimerPago,
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaUltimoPagoDia: dateTimeFormat(
                             'd',
-                            buttonApplicationRecord?.fechaUltimoPago,
+                            fechaUltimoPago,
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaUltimoPagoMes: dateTimeFormat(
@@ -509,18 +512,18 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               functions.mesEnLetras(getCurrentTimestamp),
                           fechaFirmaAnoL:
                               functions.anoEnLetras(getCurrentTimestamp),
-                          fechaPrimerPagoDiaL: functions.diaEnLetras(
-                              buttonApplicationRecord.fechaPrimerPago!),
-                          fechaPrimerPagoMesL: functions.mesEnLetras(
-                              buttonApplicationRecord.fechaPrimerPago!),
-                          fechaPrimerPagoAnoL: functions.anoEnLetras(
-                              buttonApplicationRecord.fechaPrimerPago!),
-                          fechaUltimoPagoDiaL: functions.diaEnLetras(
-                              buttonApplicationRecord.fechaUltimoPago!),
-                          fechaUltimoPagoMesL: functions.mesEnLetras(
-                              buttonApplicationRecord.fechaUltimoPago!),
-                          fechaUltimoPagoAnoL: functions.anoEnLetras(
-                              buttonApplicationRecord.fechaUltimoPago!),
+                          fechaPrimerPagoDiaL:
+                              functions.diaEnLetras(fechaPrimerPago),
+                          fechaPrimerPagoMesL:
+                              functions.mesEnLetras(fechaPrimerPago),
+                          fechaPrimerPagoAnoL:
+                              functions.anoEnLetras(fechaPrimerPago),
+                          fechaUltimoPagoDiaL:
+                              functions.diaEnLetras(fechaUltimoPago),
+                          fechaUltimoPagoMesL:
+                              functions.mesEnLetras(fechaUltimoPago),
+                          fechaUltimoPagoAnoL:
+                              functions.anoEnLetras(fechaUltimoPago),
                           direccion:
                               '${valueOrDefault(currentUserDocument?.calle, '')} ${valueOrDefault(currentUserDocument?.colonia, '')} ${valueOrDefault(currentUserDocument?.ciudad, '')}',
                         );
@@ -571,11 +574,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               cuota: buttonApplicationRecord?.cuotaAprobada,
                               monto: buttonApplicationRecord?.montoAprobado,
                               plazo: buttonApplicationRecord?.plazoAprobado,
-                              fechaUltimoPago:
-                                  buttonApplicationRecord?.fechaUltimoPago,
+                              fechaUltimoPago: fechaUltimoPago,
                               fechaCreado: getCurrentTimestamp,
-                              fechaPrimerPago:
-                                  buttonApplicationRecord?.fechaPrimerPago,
+                              fechaPrimerPago: fechaPrimerPago,
                               balance: buttonApplicationRecord?.montoAprobado,
                             ));
                         if (_shouldSetState) setState(() {});

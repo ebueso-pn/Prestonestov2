@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:prestonesto_v1/utils/config_reader.dart';
 
 import '../../flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
@@ -363,18 +364,23 @@ class BeginiTokenCall {
       {String? uid = 'test2',
       String? integrationId = '65157cc8e8f64eeabc0dc3bd',
       String? apiKey = ''}) {
+    if (!ConfigReader.isDevMode()) {
+      integrationId = '65157cc8e8f64eeabc0dc3bf';
+    }
     final ffApiRequestBody = '''
-{
-  "uid": "${uid}",
-  "integration_id": "${integrationId}"
-}''';
+    {
+      "uid": "${uid}",
+      "integration_id": "${integrationId}"
+    }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Begini Token',
       apiUrl: 'https://api.begini.co/v1/sessions-management/tokens',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'api-key': dotenv.env['BEGINI_API_KEY'],
+        'api-key': ConfigReader.isDevMode()
+            ? dotenv.env['BEGINI_API_KEY_DEV']
+            : dotenv.env['BEGINI_API_KEY_PROD'],
       },
       params: {},
       body: ffApiRequestBody,
