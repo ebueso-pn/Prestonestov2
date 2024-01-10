@@ -559,7 +559,15 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                             }.withoutNulls,
                           );
                         } else {
-                          if (_shouldSetState) setState(() {});
+                          print(_model.zapSignAPIresponse?.bodyText);
+                          //show error in bottom sheet
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                _model.zapSignAPIresponse?.bodyText ?? '',
+                              ),
+                            ),
+                          );
                           return;
                         }
 
