@@ -1706,7 +1706,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                       ),
                       Text(
                         DateFormat('dd/MM/yyyy').format(DateTime.parse(
-                            payments[nextIndexPayment]['fecha']
+                            payment['fecha']
                                 .toDate()
                                 .toString()
                                 .split(' ')[0])),
@@ -1726,11 +1726,10 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                             ),
                       ),
                       Text(
-                        !(payments[nextIndexPayment]['Cuota'] is double)
-                            ? (payments[nextIndexPayment]['Cuota']).toString()
+                        !(payment['Cuota'] is double)
+                            ? (payment['Cuota']).toString()
                             : formatNumber(
-                                double.parse((payments[nextIndexPayment]
-                                        ['Cuota'] as double)
+                                double.parse((payment['Cuota'] as double)
                                     .toStringAsFixed(2)),
                                 formatType: FormatType.decimal,
                                 decimalType: DecimalType.automatic,
