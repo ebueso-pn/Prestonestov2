@@ -293,24 +293,6 @@ class _ProfileIncomeValidationWidgetState
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {},
-                          child: Text(
-                            '¿Que documentos puedo subir?',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Urbanist',
-                                  color: FlutterFlowTheme.of(context).accent1,
-                                  lineHeight: 1.6,
-                                ),
-                          ),
-                        ).animateOnPageLoad(
-                            animationsMap['textOnPageLoadAnimation3']!),
                       ),
                       Padding(
                         padding:
@@ -572,10 +554,10 @@ class _ProfileIncomeValidationWidgetState
                           } else {
                             return ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
-                              child: Image.network(
-                                'https://picsum.photos/seed/979/600',
+                              child: Image.asset(
+                                'assets/images/income_validation.jpeg',
                                 width: double.infinity,
-                                height: 300.0,
+                                height: 325.0,
                                 fit: BoxFit.cover,
                               ),
                             );
@@ -586,7 +568,7 @@ class _ProfileIncomeValidationWidgetState
                         alignment: AlignmentDirectional(0.0, 0.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 48.0, 0.0, 0.0),
+                              0.0, 25.0, 0.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (_model.uploadedFileUrls2.length > 0) {

@@ -12,7 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mapbox_search/mapbox_search.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import 'application_review_model.dart';
 export 'application_review_model.dart';
 
@@ -252,8 +252,8 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                           2, 2, 2, 2),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
-                                        child: Image.network(
-                                          'https://picsum.photos/seed/313/600',
+                                        child: SvgPicture.asset(
+                                          'assets/images/astronaut.svg',
                                           width: 44,
                                           height: 44,
                                           fit: BoxFit.cover,
