@@ -38,6 +38,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
   late ApplicationAddressModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _showChipsError = false;
 
   final animationsMap = {
     'columnOnPageLoadAnimation': AnimationInfo(
@@ -314,8 +315,12 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                 ChipData('Alquiler', Icons.key),
                                 ChipData('Familiar', Icons.family_restroom)
                               ],
-                              onChanged: (val) => setState(
-                                  () => _model.choiceChipsValue = val?.first),
+                              onChanged: (val) {
+                                setState(() {
+                                  _model.choiceChipsValue = val?.first;
+                                  _showChipsError = false;
+                                });
+                              },
                               selectedChipStyle: ChipStyle(
                                 backgroundColor:
                                     FlutterFlowTheme.of(context).secondary,
@@ -360,6 +365,20 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                           ),
                         ],
                       ),
+                      if (_showChipsError)
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 30.0, bottom: 10),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '¿Tipo de Vivienda?',
+                              style: TextStyle(
+                                  color: FlutterFlowTheme.of(context).error,
+                                  fontSize: 12),
+                            ),
+                          ),
+                        ),
                       Align(
                         alignment: AlignmentDirectional(0, 0),
                         child: Padding(
@@ -745,9 +764,18 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                       }
 
                       if (_model.formKey.currentState == null ||
-                          !_model.formKey.currentState!.validate()) {
+                          !_model.formKey.currentState!.validate() ||
+                          _model.choiceChipsValue == null) {
+                        setState(() {
+                          _showChipsError = true;
+                        });
                         return;
+                      } else {
+                        setState(() {
+                          _showChipsError = false;
+                        });
                       }
+
                       if (_model.dptoDropDownValue == null) {
                         return;
                       }

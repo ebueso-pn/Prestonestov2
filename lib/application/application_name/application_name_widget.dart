@@ -549,7 +549,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           textCapitalization: TextCapitalization.none,
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText: 'Ingreso Mensual Promedio',
+                            labelText: 'Ingreso Mensual Promedio*',
                             labelStyle: FlutterFlowTheme.of(context).labelLarge,
                             hintText: 'L.  5,000',
                             hintStyle: FlutterFlowTheme.of(context)
