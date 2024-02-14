@@ -1,3 +1,5 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -466,6 +468,10 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                           .set(createDocumentsRecordData(
                             userDocReference: currentUserReference,
                           ));
+
+                      String? token =
+                          await FirebaseMessaging.instance.getToken();
+                      if (token != null) await setFCMToken(token);
 
                       context.goNamedAuth(
                           'Application_LoanCalculator', context.mounted);

@@ -10,6 +10,7 @@ import 'schema/application_record.dart';
 import 'schema/loans_record.dart';
 import 'schema/documents_record.dart';
 import 'schema/admin_record.dart';
+import 'schema/equifax_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,6 +23,7 @@ export 'schema/application_record.dart';
 export 'schema/loans_record.dart';
 export 'schema/documents_record.dart';
 export 'schema/admin_record.dart';
+export 'schema/equifax_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -33,6 +35,86 @@ Future<int> queryUsersRecordCount({
       queryBuilder: queryBuilder,
       limit: limit,
     );
+
+Future<bool> checkUserHasIncomeVerification() async {
+  try {
+    final doc = await DocumentsRecord.collection
+        .where('UserDocReference', isEqualTo: currentUserReference)
+        .get();
+    if (doc.docs.isNotEmpty && doc.docs.first['income_verification'] != null) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    print(e);
+    return false;
+  }
+}
+
+Future<bool> checkUserHasBankAccount() async {
+  try {
+    final doc = await UsersRecord.collection.doc(currentUserUid).get();
+    if (doc.exists && doc['bank_account_number'] != null) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    print(e);
+    return false;
+  }
+}
+
+Future<bool> checkUserAlreadyCompletedPersonalEvaluation() async {
+  try {
+    final doc = await UsersRecord.collection.doc(currentUserUid).get();
+    if (doc.exists &&
+        doc['personal_evaluation'] != null &&
+        doc['personal_evaluation'] == true) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    print(e);
+    return false;
+  }
+}
+
+Future<List<Map<String, dynamic>>> userPaymentsShedule() async {
+  try {
+    final doc = await LoansRecord.collection
+        .where('UserDocReference', isEqualTo: currentUserReference)
+        .get();
+    if (doc.docs.isNotEmpty) {
+      final payment = await doc.docs.first.data();
+      final schedule = await (payment as Map)['CalendarioPagos'];
+      if (schedule != null) {
+        return (schedule as List).cast<Map<String, dynamic>>();
+      }
+    }
+    return [];
+  } catch (e) {
+    print(e);
+    return [];
+  }
+}
+
+Future<void> setFCMToken(String token) async {
+  await UsersRecord.collection.doc(currentUserUid).update({
+    'fcm_token': token,
+  });
+}
+
+Future<void> removeFCMToken() async {
+  await UsersRecord.collection.doc(currentUserUid).update({
+    'fcm_token': FieldValue.delete(),
+  });
+}
+
+Future<void> updateUserPersonalEvaluation(bool personalEvaluation) async {
+  await UsersRecord.collection.doc(currentUserUid).update({
+    'personal_evaluation': personalEvaluation,
+  });
+}
 
 Stream<List<UsersRecord>> queryUsersRecord({
   Query Function(Query)? queryBuilder,
@@ -211,6 +293,43 @@ Future<List<AdminRecord>> queryAdminRecordOnce({
       singleRecord: singleRecord,
     );
 
+/// Functions to query EquifaxRecords (as a Stream and as a Future).
+Future<int> queryEquifaxRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      EquifaxRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<EquifaxRecord>> queryEquifaxRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      EquifaxRecord.collection,
+      EquifaxRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<EquifaxRecord>> queryEquifaxRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      EquifaxRecord.collection,
+      EquifaxRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
 Future<int> queryCollectionCount(
   Query collection, {
   Query Function(Query)? queryBuilder,
@@ -224,7 +343,7 @@ Future<int> queryCollectionCount(
 
   return query.count().get().catchError((err) {
     print('Error querying $collection: $err');
-  }).then((value) => value.count);
+  }).then((value) => value.count!);
 }
 
 Stream<List<T>> queryCollection<T>(

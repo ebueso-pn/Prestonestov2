@@ -84,6 +84,9 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
+                                  await widget.applicationRecieve!.update({
+                                    'index': FieldValue.increment(-(1)),
+                                  });
                                   context.pop();
                                 },
                               ),

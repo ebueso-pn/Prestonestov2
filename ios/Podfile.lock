@@ -680,21 +680,21 @@ PODS:
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - PromisesObjC (~> 2.1)
-  - FirebaseAppCheckInterop (10.11.0)
+  - FirebaseAppCheckInterop (10.15.0)
   - FirebaseAuth (10.9.0):
     - FirebaseAppCheckInterop (~> 10.0)
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
-  - FirebaseAuthInterop (10.11.0)
+  - FirebaseAuthInterop (10.15.0)
   - FirebaseCore (10.9.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreExtension (10.11.0):
+  - FirebaseCoreExtension (10.15.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseCoreInternal (10.11.0):
+  - FirebaseCoreInternal (10.15.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - FirebaseFirestore (10.9.0):
     - abseil/algorithm (~> 1.20211102.0)
@@ -736,20 +736,20 @@ PODS:
     - AppAuth (~> 1.5)
     - GTMAppAuth (~> 1.3)
     - GTMSessionFetcher/Core (< 3.0, >= 1.1)
-  - GoogleUtilities/AppDelegateSwizzler (7.11.1):
+  - GoogleUtilities/AppDelegateSwizzler (7.11.5):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.11.1):
+  - GoogleUtilities/Environment (7.11.5):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.11.1):
+  - GoogleUtilities/Logger (7.11.5):
     - GoogleUtilities/Environment
-  - GoogleUtilities/Network (7.11.1):
+  - GoogleUtilities/Network (7.11.5):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.11.1)"
-  - GoogleUtilities/Reachability (7.11.1):
+  - "GoogleUtilities/NSData+zlib (7.11.5)"
+  - GoogleUtilities/Reachability (7.11.5):
     - GoogleUtilities/Logger
   - "gRPC-C++ (1.44.0)":
     - "gRPC-C++/Implementation (= 1.44.0)"
@@ -815,7 +815,6 @@ PODS:
   - Libuv-gRPC/Implementation (0.0.10):
     - Libuv-gRPC/Interface (= 0.0.10)
   - Libuv-gRPC/Interface (0.0.10)
-  - lottie-ios (4.2.0)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -826,26 +825,25 @@ PODS:
     - FlutterMacOS
   - pdfx (1.0.0):
     - Flutter
-  - PromisesObjC (2.2.0)
-  - SDWebImage (5.16.0):
-    - SDWebImage/Core (= 5.16.0)
-  - SDWebImage/Core (5.16.0)
+  - PromisesObjC (2.3.1)
+  - SDWebImage (5.18.2):
+    - SDWebImage/Core (= 5.18.2)
+  - SDWebImage/Core (5.18.2)
   - shared_preferences_ios (0.0.1):
     - Flutter
-  - ShuftiPro (3.6.0):
-    - lottie-ios
+  - ShuftiPro (3.6.9):
     - Socket.IO-Client-Swift
-  - shuftipro_sdk (3.6.0):
+  - shuftipro_sdk (3.6.3):
     - Flutter
-    - ShuftiPro (~> 3.6.0)
+    - ShuftiPro (~> 3.6.3)
   - sign_in_with_apple (0.0.1):
     - Flutter
-  - Socket.IO-Client-Swift (16.0.1):
-    - Starscream (~> 4.0)
+  - Socket.IO-Client-Swift (16.1.0):
+    - Starscream (~> 4.0.6)
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
-  - Starscream (4.0.4)
+  - Starscream (4.0.6)
   - SwiftyGif (5.4.4)
   - url_launcher_ios (0.0.1):
     - Flutter
@@ -901,7 +899,6 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - Libuv-gRPC
-    - lottie-ios
     - nanopb
     - PromisesObjC
     - SDWebImage
@@ -967,12 +964,12 @@ SPEC CHECKSUMS:
   firebase_core: ce64b0941c6d87c6ef5022ae9116a158236c8c94
   firebase_storage: 7e99be67d69a310a307f7be32b93c7412ffc2282
   FirebaseAppCheck: ad3a99d0e14dd153eb54d11bdd7e702e396ee505
-  FirebaseAppCheckInterop: 255b6c0292fe5da995c8b2df0c02f6a3ca7f61b4
+  FirebaseAppCheckInterop: a8c555b1c2db1d9445e6c3a08a848167ddb7eb51
   FirebaseAuth: 21d5e902fcea44d0d961540fc4742966ae6118cc
-  FirebaseAuthInterop: 44e34efef7145776a107b9e7f79ed44beb4738fa
+  FirebaseAuthInterop: b566e21e2bc5e44a4d44babc56d05a7e5c10493b
   FirebaseCore: b68d3616526ec02e4d155166bbafb8eca64af557
-  FirebaseCoreExtension: cacdad57fdb60e0b86dcbcac058ec78237946759
-  FirebaseCoreInternal: 9e46c82a14a3b3a25be4e1e151ce6d21536b89c0
+  FirebaseCoreExtension: d3f1ea3725fb41f56e8fbfb29eeaff54e7ffb8f6
+  FirebaseCoreInternal: 2f4bee5ed00301b5e56da0849268797a2dd31fb4
   FirebaseFirestore: 584d0e1b0f7f1666c516c5157ff06e785bd8836f
   FirebaseStorage: 075a0c10ec43f24193018c539d65e991db65d9ef
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
@@ -982,7 +979,7 @@ SPEC CHECKSUMS:
   google_sign_in_ios: 1256ff9d941db546373826966720b0c24804bcdd
   GoogleMaps: 032f676450ba0779bd8ce16840690915f84e57ac
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
-  GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
+  GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
@@ -990,23 +987,22 @@ SPEC CHECKSUMS:
   image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
-  lottie-ios: 809ecf2d460ed650a6aed7aa88b2ec45fab4779c
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   pdfx: 7b876b09de8b7a0bf444a4f82b439ffcff4ee1ec
-  PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
-  SDWebImage: 2aea163b50bfcb569a2726b6a754c54a4506fcf6
+  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  SDWebImage: c0de394d7cf7f9838aed1fd6bb6037654a4572e4
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
-  ShuftiPro: 7decd074e3cbfbecc42836b77acc73bafb2ddcf3
-  shuftipro_sdk: 8d2c57c0490d779e4cb78e820b9b7ad2905be260
+  ShuftiPro: 360df4af90583cffda41ee44fb5db28fd0b8d02f
+  shuftipro_sdk: 53eefaf6672697bd6ea3a2543dad43f61cc71d22
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
-  Socket.IO-Client-Swift: c116d6dc9fd6be9c259bacfe143f8725bce7d79e
+  Socket.IO-Client-Swift: ee4b8f80a3db18dd7f32b266ddf273310609443c
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
+  Starscream: fb2c4510bebf908c62bd383bcf05e673720e91fd
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
 
-PODFILE CHECKSUM: a5b60bff974de69a0c904b2167b455402cc91d1c
+PODFILE CHECKSUM: e92e9de3117bbcadb4e43e25a3e03233637a1640
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

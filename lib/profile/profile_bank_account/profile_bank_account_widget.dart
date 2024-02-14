@@ -373,6 +373,7 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                                         16.0, 4.0, 16.0, 4.0),
                                     hidesUnderline: true,
                                     isSearchable: true,
+                                    isMultiSelect: false,
                                   );
                                 },
                               ),
@@ -466,7 +467,7 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                                         borderRadius:
                                             BorderRadius.circular(16.0),
                                       ),
-                                      chipSpacing: 12.0,
+                                      chipSpacing: 1.0,
                                       rowSpacing: 12.0,
                                       multiselect: false,
                                       alignment: WrapAlignment.start,
@@ -669,6 +670,8 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                           bankAccountNumber: _model.cuentaController.text,
                           bankAccountType: _model.choiceChipsValue,
                         ));
+
+                        FFAppState().userHasBankAccount = true;
                       },
                       text: 'Guardar y regresar',
                       options: FFButtonOptions(

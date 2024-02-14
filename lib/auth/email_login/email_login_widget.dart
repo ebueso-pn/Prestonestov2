@@ -1,3 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:prestonesto_v1/backend/backend.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -316,6 +319,10 @@ class _EmailLoginWidgetState extends State<EmailLoginWidget> {
                         if (user == null) {
                           return;
                         }
+
+                        String? token =
+                            await FirebaseMessaging.instance.getToken();
+                        if (token != null) await setFCMToken(token);
 
                         context.goNamedAuth(
                             'Application_LoanCalculator', context.mounted);

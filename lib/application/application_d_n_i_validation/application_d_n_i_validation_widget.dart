@@ -1,6 +1,5 @@
 import 'package:prestonesto_v1/application/application_d_n_i_validation/verification_model.dart';
 import 'package:shuftipro_sdk/shuftipro_sdk.dart';
-
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -16,7 +15,7 @@ export 'application_d_n_i_validation_model.dart';
 
 String clientId =
     "o7PFvKcJMZKCJIWlGBb7DRGqoAfM2kxEIfPZPKXHCsmZ1ChPq51689211125"; // enter client id here
-String secretKey = "8MqjmSHh50T1USzLOrkMJoiESrTb1hxn"; // enter secret key here
+String secretKey = "gIKH3kN6Gx53Fsr7bt0Lx9vb9fviWfft"; // enter secret key here
 
 class ApplicationDNIValidationWidget extends StatefulWidget {
   const ApplicationDNIValidationWidget({
@@ -73,8 +72,75 @@ class _ApplicationDNIValidationWidgetState
     "dark_mode": false,
     "font_color": "#263B54",
     "button_text_color": "#FFFFFF",
-    "button_background_color": "#1F5AF6"
+    "button_background_color": "#2fa77a"
   };
+
+  void _showErrorModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Center(
+                child: Icon(
+                  Icons.info,
+                  color: Colors.blue,
+                  size: 48, // Tamaño personalizado del icono
+                ),
+              ),
+              SizedBox(height: 10),
+              Center(
+                child: Text(
+                  'Lo sentimos, no fue posible verificar tu identidad en este momento, por lo que no podemos continuar con tu aplicación.',
+                  style: TextStyle(fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(height: 20),
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text:
+                            'Si crees que esto fue un error, por favor comunícate con nosotros vía\n',
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                      ),
+                      WidgetSpan(
+                        child: Icon(
+                          Icons.phone,
+                          color: Colors.green,
+                          size: 24, // Tamaño personalizado del icono
+                        ),
+                      ),
+                      TextSpan(
+                        text: ' WhatsApp al +504-3311-5751.',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Volver'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Future<void> initPlatformState() async {
     String response = '';
@@ -104,6 +170,7 @@ class _ApplicationDNIValidationWidgetState
           _model.buttonDisplay = true;
         });
       } else {
+        _showErrorModal(context);
         ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
           content: Text(
             verificationResponse.message.isNotEmpty
@@ -115,6 +182,7 @@ class _ApplicationDNIValidationWidgetState
         ));
       }
     } catch (e) {
+      _showErrorModal(context);
       ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
         content: Text(
           e.toString(),
@@ -301,25 +369,21 @@ class _ApplicationDNIValidationWidgetState
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 48.0, 0.0, 0.0),
-                  child: Text(
-                    'Hora de tomarnos fotos  ',
-                    style: FlutterFlowTheme.of(context).headlineMedium,
-                  ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  'Hora de tomarnos fotos  ',
+                  style: FlutterFlowTheme.of(context).headlineMedium,
                 ),
                 Align(
                   alignment: AlignmentDirectional(0.0, 0.0),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
-                    child: Lottie.asset(
-                      'assets/lottie_animations/tmpo2dz_7be.json',
-                      width: 350.0,
-                      height: 350.0,
-                      fit: BoxFit.cover,
-                      animate: true,
-                    ),
+                  child: Lottie.asset(
+                    'assets/lottie_animations/tmpo2dz_7be.json',
+                    width: 350.0,
+                    height: 350.0,
+                    fit: BoxFit.cover,
+                    animate: true,
                   ),
                 ),
                 Builder(

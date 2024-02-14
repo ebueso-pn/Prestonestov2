@@ -1,19 +1,13 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
-import '../flutter_flow_theme.dart';
-import '/backend/backend.dart';
-
+import 'package:prestonesto_v1/app/nav_bar.dart';
+import 'package:prestonesto_v1/privacy_policy/privacy_policy_widget.dart';
+import 'package:prestonesto_v1/profile/begini/begini_widget.dart';
+import 'package:prestonesto_v1/profile/begini/widgets/begini_success_widget.dart';
 import '../../auth/base_auth_user_provider.dart';
-
-import '../../index.dart';
-import '../../main.dart';
-import '../lat_lng.dart';
-import '../place.dart';
-import 'serialization_util.dart';
-
+import '/index.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
 
@@ -89,6 +83,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Onboarding',
           path: '/onboarding',
           builder: (context, params) => OnboardingWidget(),
+        ),
+        FFRoute(
+          name: 'Begini',
+          path: '/Begini',
+          requireAuth: true,
+          builder: (context, params) => BeginiWidget(),
         ),
         FFRoute(
           name: 'SMS_signup',
@@ -254,9 +254,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ProfileBankAccountWidget(),
         ),
         FFRoute(
-          name: 'OnboardingCopy',
-          path: '/onboardingCopy',
-          builder: (context, params) => OnboardingCopyWidget(),
+          name: 'Payment_Details',
+          path: '/paymentDetails',
+          builder: (context, params) => PaymentDetailsWidget(),
+        ),
+        FFRoute(
+          name: 'Begini_Success',
+          path: '/beginiSuccess',
+          builder: (context, params) => BeginiSuccessWidget(),
+        ),
+        FFRoute(
+          name: 'Privacy_Policy',
+          path: '/privacyPolicy',
+          builder: (context, params) => PrivacyPolicyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -436,15 +446,11 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Color(0xFF2AAF7A),
-                      ),
-                    ),
+              ? Container(
+                  color: FlutterFlowTheme.of(context).primary,
+                  child: Image.asset(
+                    'assets/images/PrestoNesto_Green_Color_2400x1800.jpg',
+                    fit: BoxFit.contain,
                   ),
                 )
               : page;

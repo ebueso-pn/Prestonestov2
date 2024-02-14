@@ -1,309 +1,232 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PrestonestoV1</string>
-    <string name="select_service">Por favor, selecciona uno o más métodos de verificación.</string>
-    <string name="provide_credentials">Por favor, proporciona clientId y secretKey o accessToken antes de continuar.</string>
-    <string name="ok">OK</string>
-    <string name="choose_your_n_method_of_verification">Elige tu \n Método de Verificación</string>
-    <string name="face_verification">Verificación Facial</string>
-    <string name="document_verification">Verificación de Documento</string>
-    <string name="document_two_verification">Verificación de Documento 2</string>
-    <string name="address_verification">Verificación de Dirección</string>
-    <string name="consent_verification">Verificación de Consentimiento</string>
-    <string name="phone_verification">Autenticación de 2 Factores</string>
-    <string name="background_verification">Verificación de Antecedentes</string>
-    <string name="continue_">Continuar</string>
-    <string name="start_verification">Iniciar Verificación</string>
-    <string name="verification_method">Selecciona tu Método de Verificación</string>
-    <string name="verification">Servicios de Verificación</string>
+//Consent Screen
+<string name="sp_help_us_consent_subheading"> Autorización de Verificación de Identidad</string>
+<string name="sp_agree">Estoy de acuerdo con estos términos, y he leído la política de Shufti Pro\'s <a color="#000000" href="https://shuftipro.com/privacy-policy">Privacy Policy</a></string>
 
 
-    <string name="yes_con">Sí, Continuar</string>
-    <string name="no_cancel">No, Cancelar</string>
-    <string name="agree">Acepto la declaración anterior y he leído la <a color="#000000" href="https://shuftipro.com/privacy-policy">Política de Privacidad</a> de Shufti Pro.</string>
-    <string name="decleration_of_consent">Declaro que tengo al menos 16 años de edad; acepto la recopilación, procesamiento o almacenamiento de mi información personal por Shufti Pro con fines de verificación de identidad; que la información que proporciono es verdadera y precisa según mi leal saber y entender; y seré plenamente responsable en caso de proporcionar información incorrecta o de que alguno de los documentos que utilice sea falso, falsificado, falsificado, etc.</string>
-    <string name="flash_status_on"> <font color="#EF5351">Encendido</font> </string>
-    <string name="face_verifications">Verificación Facial</string>
-    <string name="document_verifications">Verificación de Documentos</string>
-    <string name="document_two_verifications">Segunda Verificación de Documentos</string>
-    <string name="address_verifications">Verificación de Dirección</string>
-    <string name="consent_verifications">Verificación de Consentimiento</string>
-    <string name="supported_types">Tipos Soportados</string>
-    <string name="supported_doc">Documentos Soportados</string>
-    <string name="address_first_image">Tome una foto de su documento de dirección con la luz adecuada.</string>
-    <string name="address_second_image">Evite el brillo en su documento.</string>
-    <string name="address_third_image">Todo el documento debe ser visible en la foto.</string>
-    <string name="address_fourth_image">No oculte ni doble ninguna parte de su documento.</string>
-    <string name="address_first_video">Grabe un video claro de su documento de dirección con la luz adecuada.</string>
-    <string name="address_second_video">La información del documento debe ser legible en el video.</string>
-    <string name="address_third_video">Todo el documento debe ser visible en el video.</string>
-    <string name="address_fifth_image">El documento de dirección no debe tener más de tres meses de antigüedad.</string>
-    <string name="empty_client_id">El Id. de cliente no puede estar vacío. Por favor, proporcione su Id. de cliente.</string>
-    <string name="empty_secret_key">La clave secreta no puede estar vacía. Por favor, proporcione su clave secreta.</string>
-    <string name="empty_reference">El parámetro de referencia no puede estar vacío. Por favor, proporcione una referencia única.</string>
-    <string name="invalid_mood">El modo de verificación puede estar vacío o ser inválido.</string>
-    <string name="document_first_video">Grabe un video de su documento con la luz adecuada.</string>
-    <string name="document_third_video">Todo su documento debe ser visible en el video.</string>
-    <string name="document_fourth_video">La información del documento debe ser legible en el video.</string>
-    <string name="document_first_image">El documento completo debe estar dentro del cuadro.</string>
-    <string name="document_second_image">El documento debe estar iluminado sin ningún reflejo.</string>
-    <string name="document_third_image">La información del documento debe ser legible.</string>
-    <string name="document_fourth_image">La información debe ser legible.</string>
-    <string name="document_fifth_image">La información del documento debe ser legible.</string>
-    <string name="consent_first_video">Grabe un video con suficiente luz y evite el brillo.</string>
-    <string name="consent_second_video">Su cara completa y la nota de consentimiento deben aparecer en el video.</string>
-    <string name="consent_third_video">XYZ debe mencionarse en la nota de consentimiento.</string>
-    <string name="consent_fourth_video">Solo se aceptará la nota de consentimiento impresa.</string>
-    <string name="consent_fifth_video">No recorte, oculte o doble ninguna parte de la nota de consentimiento.</string>
-    <string name="consent_first_image">Tome la foto con suficiente luz y evite el brillo.</string>
-    <string name="consent_second_image">Su cara completa y la nota de consentimiento deben aparecer en la foto.</string>
-    <string name="consent_fourth_image">Solo se aceptará la nota de consentimiento escrita a mano.</string>
-    <string name="face_first_video">Grabe un video de toda su cara.</string>
-    <string name="face_second_video">Grabe un video con buena iluminación y evite el brillo.</string>
-    <string name="face_third_video">Quítese cualquier accesorio (por ejemplo, gafas, sombrero).</string>
-    <string name="face_first_image">Toda la cara debe estar dentro del óvalo.</string>
-    <string name="face_second_image">La selfie debe estar iluminada sin ningún reflejo.</string>
-    <string name="face_third_image">Quítese cualquier accesorio (por ejemplo, gafas, sombrero).</string>
-    <string name="please_wait">Por favor, espera...</string>
-    <string name="Verification_video_uploading">El video se está cargando</string>
-    <string name="Verification_image_uploading">La imagen se está cargando</string>
-    <string name="take_photo">Tomar una foto</string>
-    <string name="record_video">Grabar un video</string>
-    <string name="face_verifying"> Verificando su rostro </string>
-    <string name="doc_verifying"> Verificando su documento </string>
-    <string name="identity_verify"> Verificando su identidad </string>
-    <string name="cam_document_verification">Tome una foto clara de todo el documento.</string>
-    <string name="cam_address_verification">Tome una foto clara de todo el documento de dirección.</string>
-    <string name="cam_face_verification">Tome una foto clara de toda su cara. </string>
-    <string name="cam_consent_verification">Tome una foto de su cara con la nota de consentimiento. </string>
-    <string name="vid_document_verification">Cargue un video claro de todo el documento.</string>
-    <string name="vid_address_verification">Cargue un video claro de todo el documento de dirección. </string>
-    <string name="vid_face_verification">Cargue un video claro de toda su cara. </string>
-    <string name="vid_consent_verification">Cargue un video de su cara con la nota de consentimiento.</string>
-    <string name="camera_ok">OK</string>
-    <string name="ready_to_take_photo">¿Listo para tomar una foto?</string>
-    <string name="ready_to_take_video">¿Listo para grabar un video?</string>
-    <string name="ready_to_take_document_image">Tome una foto del lado frontal de su</string>
-    <string name="ready_to_take_document_video">Grabe un video del lado frontal de su</string>
-    <string name="ready_to_take_document_image_of_passport">Tome una foto de la página de la foto de su</string>
-    <string name="ready_to_take_document_video_of_passport">Grabe un video de la página de la foto de su</string>
-    <string name="confirmation">Confirmación</string>
-    <string name="ready_to_take_addressImage">Tome una foto de su</string>
-    <string name="ready_to_take_addressVideo">Grabe un video de su</string>
-    <string name="ready_to_take_document_image_backside">Tome una foto del lado posterior de su</string>
-    <string name="ready_to_take_document_video_backside">Grabe un video del lado posterior de su</string>
-    <string name="ready_to_take_document_image_backside_of_passport">Tome una foto de la segunda página de su</string>
-    <string name="ready_to_take_document_video_backside_of_passport">Grabe un video de la segunda página de su</string>
-    <string name="ready_to_take_consent_image">Tome una foto de la nota de consentimiento junto con su cara</string>
-    <string name="ready_to_take_consent_video">Grabe un video de la nota de consentimiento con su cara</string>
-    <string name="result_screen_text">Shufti Pro reconoce su derecho a solicitar acceso o eliminación de sus datos. Puede revisar nuestra <a href="https://shuftipro.com/privacy-policy">Política de privacidad</a> aquí o contactarnos en <a href="mailto:support@shuftipro.com">support@shuftipro.com</a>.</string>
-    <string name="contact_us"><u>support@shuftipro.com</u></string>
-    <string name="cam_face_verification_after">¿Puede ver claramente su cara completa en la foto?</string>
-    <string name="cam_document_verification_after">¿Puede ver claramente todo el documento en la foto?</string>
-    <string name="cam_address_verification_after">¿Puede ver claramente todo el documento de dirección en la foto?</string>
-    <string name="cam_consent_verification_after">¿Puede ver claramente su cara completa y la nota de consentimiento en la foto?</string>
-    <string name="confirm_face">¿Puede ver claramente su cara completa en la foto/video?</string>
-    <string name="confirm_doc">¿Puede ver claramente todo el documento en la foto/video?</string>
-    <string name="confirm_address">¿Puede ver claramente todo el documento de dirección en la foto/video?</string>
-    <string name="confirm_consent">¿Puede ver claramente su cara completa y la nota de consentimiento en la foto/video?</string>
-    <string name="consent_text_limit_exceed">El texto del consentimiento no debe tener menos de 6 o más de 100 caracteres</string>
-    <string name="Verified">Verificado</string>
-    <string name="Verification_Unsuccessful">Verificación No Exitosa</string>
-    <string name="Sorry_Your_Identity_is_not_verified">Lo siento, su identidad no ha sido verificada</string>
-    <string name="camera_confirm_video_face">¿Puede ver claramente su cara completa en el video?</string>
-    <string name="camera_confirm_video_doc">¿Puede ver claramente todo el documento en el video?</string>
-    <string name="camera_confirm_video_address">¿Puede ver claramente todo el documento de dirección en el video?</string>
-    <string name="camera_confirm_video_consent">¿Puede ver claramente su cara completa y la nota de consentimiento en el video?</string>
-    <string name="consent_select_doc_type">Elija el tipo de nota de consentimiento</string>
-    <string name="select_doc_type">Elija un tipo de documento para la verificación</string>
-    <string name="consent_heading">Declaración de Consentimiento</string>
-    <string name="help_us_consent_subheading">Ayúdenos tomando su consentimiento de identidad</string>
-    <string name="result_heading">Resultados de Verificación</string>
-    <string name="recording">Grabando</string>
-    <string name="_00_10">00:10</string>
-    <string name="powered_by">Proporcionado por</string>
-    <string name="retake">Volver a tomar</string>
-    <string name="yes_continue">Sí, Continuar</string>
-    <string name="cancel">Cancelar</string>
-    <string name="_0">0%</string>
-    <string name="your_request_has_been_received">Su solicitud ha sido recibida</string>
-    <string name="yes_i_m_ready">Sí, Estoy Listo</string>
-    <string name="skip">Omitir</string>
-    <string name="your_identity_has_been_verified">Su identidad ha sido verificada</string>
-    <string name="proceed">Continuar</string>
-    <string name="_4">4 </string>
-    <string name="_5">5 </string>
-    <string name="continue_str">Continuar</string>
-    <string name="_1">1 </string>
-    <string name="_2">2 </string>
-    <string name="instructions">Instrucciones</string>
-    <string name="make_sure_the_light_is_not_too_low_or_too_bright">Asegúrese de que la luz no sea demasiado baja ni demasiado brillante</string>
-    <string name="video_duration_10_seconds">Duración del video 10 segundos</string>
-    <string name="_3">3 </string>
-    <string name="are_you_sure_to_cancel_verification_process">¿Desea cancelar el proceso de verificación?</string>
-    <string name="go_back">Regresar</string>
-    <string name="cancel_verification">Cancelar Verificación</string>
-    <string name="grant_permissions">La aplicación no funcionará sin permisos. Por favor, reinicie la aplicación y otorgue acceso a los permisos.</string>
-    <string name="successfully_verified">Verificación Exitosa</string>
-    <string name="unauthorized_request">Solicitud No Autorizada</string>
-    <string name="id_card">Documento Nacional de Identidad (DNI)</string>
-    <string name="printed_note">Nota Impresa</string>
-    <string name="handwritten_note">Nota Escrita</string>
-    <string name="passport">Pasaporte</string>
-    <string name="tax_bill">Factura de Impuestos</string>
-    <string name="insurance_agreement">Contrato de Seguro</string>
-    <string name="employer_letter">Carta del Empleador</string>
-    <string name="rent_agreement">Contrato de Alquiler</string>
-    <string name="bank_statement">Estado de Cuenta Bancario</string>
-    <string name="utility_bill">Factura de Servicios Públicos</string>
-    <string name="lease_agreement">Contrato de Arrendamiento</string>
-    <string name="envelope">Sobre</string>
-    <string name="cpr_smart_card_reader_copy">Copia del Lector de Tarjetas Inteligentes CPR</string>
-    <string name="permanent_residence_permit">Permiso de Residencia Permanente</string>
-    <string name="credit_or_debit_card">Tarjeta de Crédito o Débito</string>
-    <string name="driving_license">Licencia de Conducir</string>
-    <string name="confirm_cancellation">Confirmar Cancelación</string>
-    <string name="confirm">Confirmar</string>
-    <string name="not_now">Ahora No</string>
-    <string name="no_internet_connection">Sin Conexión a Internet</string>
-    <string name="connect_your_phone_to_internet">Por favor, conecte su teléfono a Internet</string>
-    <string name="your_request_has_timed_out">Su solicitud ha expirado</string>
-    <string name="make_sure_internet_connection">Asegúrese de que su dispositivo esté conectado al Internet</string>
-    <string name="finish">Finalizar</string>
-    <string name="exit">Salir</string>
-    <string name="permission_denied">Permiso Denegado</string>
-    <string name="limit_exceeded">Límite de Texto Excedido</string>
-    <string name="success">Éxito</string>
-    <string name="failure">Error</string>
-    <string name="not_verified">No Verificado</string>
-    <string name="verification_completed">Verificación Completada</string>
-    <string name="forwarded_to_merchant">Los resultados de verificación serán enviados a Prestonesto</string>
-    <string name="error_occured">Ocurrió un Error</string>
-    <string name="invalid_request">Solicitud Inválida</string>
-    <string name="request_timeout">Tiempo de Espera de la Solicitud</string>
-    <string name="request_unauthorized">Solicitud No Autorizada</string>
-    <string name="error">Error</string>
-    <string name="take_from_your_camera">Tomar desde su cámara</string>
-    <string name="upload_from_your_device">Cargar desde su dispositivo</string>
-    <string name="how_will_you_submit_the_identity_proof">¿Cómo enviará la prueba de identidad?</string>
-    <string name="browes_file">Examinar para cargar su archivo</string>
-    <string name="max_photo">Tamaño máximo del archivo de foto 16 MB</string>
-    <string name="max_video">Tamaño máximo del archivo de video 20 MB</string>
-    <string name="after_upload">Cargue una foto/video de su documento.</string>
-    <string name="upload_face_image">Cargue una foto de toda su cara</string>
-    <string name="upload_face_any">Cargue una foto/video de toda su cara</string>
-    <string name="upload_face_video">Suba un video de toda su cara</string>
-    <string name="upload">Subir</string>
-    <string name="use_test_ids">Usar IDs de Prueba</string>
-    <string name="ready_to_upload_consent_image">Suba una foto de la nota de consentimiento junto con su cara</string>
-    <string name="ready_to_upload_consent_any">Suba una foto/video de la nota de consentimiento junto con su cara</string>
-    <string name="ready_to_upload_consent_video">Suba un video de la nota de consentimiento con su cara</string>
-    <string name="ready_to_upload_addressImage">Suba una foto de su</string>
-    <string name="ready_to_upload_address">Suba una foto/video de su</string>
-    <string name="ready_to_upload_addressVideo">Suba un video de su</string>
-    <string name="ready_to_upload_back_image">Suba una foto del reverso de su</string>
-    <string name="ready_to_upload_back_any">Suba una foto/video del reverso de su</string>
-    <string name="ready_to_upload_back_video">Suba un video del reverso de su</string>
-    <string name="ready_to_upload_front_image">Suba una foto del frente de su</string>
-    <string name="ready_to_upload_front_any">Suba una foto/video del frente de su</string>
-    <string name="ready_to_upload_front_video">Suba un video del frente de su</string>
-    <string name="ready_to_upload_photo">¿Listo para subir una foto?</string>
-    <string name="ready_to_upload_video">¿Listo para subir un video?</string>
-    <string name="ready_to_upload_document_image_backside_of_passport">Suba una foto de la segunda página de su</string>
-    <string name="ready_to_upload_document_video_backside_of_passport">Suba un video de la segunda página de su</string>
-    <string name="ready_to_upload_document_image_backside">Suba una foto del reverso de su</string>
-    <string name="ready_to_upload_document_video_backside">Suba un video del reverso de su</string>
-    <string name="ready_to_upload_document_image_of_passport">Suba una foto de la página de la foto de su</string>
-    <string name="ready_to_upload_document_video_of_passport">Suba un video de la página de la foto de su</string>
-    <string name="ready_to_upload_document_image">Suba una foto del frente de su</string>
-    <string name="ready_to_upload_document_video">Suba un video del frente de su</string>
-    <string name="no_front_camera">No se encontró cámara frontal.</string>
-    <string name="no_camera">Lo siento, ¡su teléfono no tiene cámara!</string>
-    <string name="the_document_does_not_match_selected_country">El documento no coincide con el país seleccionado.</string>
-    <string name="could_not_verify_document_in_selected_area">No se pudo verificar el documento en el área seleccionada.</string>
-    <string name="please_fit_your_face_in_the_oval">Por favor, ajuste su cara dentro del óvalo</string>
-    <string name="pref_key_camerax_rear_camera_target_resolution" translatable="false">crctas</string>
-    <string name="pref_key_camerax_front_camera_target_resolution" translatable="false">cfctas</string>
-    <string name="pref_key_rear_camera_preview_size" translatable="false">rcpvs</string>
-    <string name="pref_key_rear_camera_picture_size" translatable="false">rcpts</string>
-    <string name="pref_key_front_camera_preview_size" translatable="false">fcpvs</string>
-    <string name="pref_key_front_camera_picture_size" translatable="false">fcpts</string>
-    <string name="pref_key_still_image_object_detector_enable_classification" translatable="false">siodec</string>
-    <string name="pref_key_still_image_object_detector_enable_multiple_objects" translatable="false">siodemo</string>
-    <string name="pref_key_camera_live_viewport" translatable="false">clv</string>
-    <string name="pref_key_still_image_pose_detector_show_in_frame_likelihood" translatable="false">sipdsifl</string>
-    <string name="pref_key_live_preview_pose_detector_show_in_frame_likelihood" translatable="false">lppdsifl</string>
-    <string name="upload_picture_of_second_page">Suba una foto de la segunda página de su</string>
-    <string name="upload_any_of_second_page">Suba una foto/video de la segunda página de su</string>
-    <string name="upload_video_of_second_page">Suba un video de la segunda página de su</string>
-    <string name="upload_picture_of_photo_page">Suba una foto de la página de la foto de su</string>
-    <string name="upload_any_of_photo_page">Suba una foto/video de la página de la foto de su</string>
-    <string name="upload_a_video_of_photo_page">Suba un video de la página de la foto de su</string>
-    <string name="image_video_is_uploading">La imagen/video se está subiendo</string>
-    <string name="provide_valid">Por favor, proporcione un(a) válido(a)</string>
-    <string name="passport_photo">Página de la foto del pasaporte</string>
-    <string name="doc_front">Frente del documento</string>
-    <string name="doc_back">Reverso del documento</string>
-    <string name="passport_Second_page">Segunda página del pasaporte</string>
-    <string name="doc_position">Coloque su documento dentro del recuadro</string>
-    <string name="face_position">Coloque su cara dentro del óvalo</string>
-    <string name="consent_model_tv_text_img">Capture el consentimiento junto con su cara</string>
-    <string name="consent_model_tv_text_video">Grabe el consentimiento junto con su cara</string>
-    <string name="nfc_missing">Por favor, importe la dependencia NFC y reintente.</string>
-    <string name="auto_Capture_missing">Por favor, importe la dependencia Auto-Capture y reintente.</string>
-    <string name="select_country">Seleccione su país</string>
-    <string name="provide_front">Por favor, proporcione el frente del documento.</string>
-    <string name="provide_back">Por favor, proporcione el reverso del documento.</string>
-    <string name="missing_corners">Por favor, proporcione un documento válido con las cuatro esquinas visibles.</string>
-    <string name="blurred_document">Por favor, proporcione un documento válido y manténgalo quieto por un tiempo.</string>
-    <string name="document_too_far">Por favor, acerque el documento y colóquelo dentro del recuadro.</string>
-    <string name="time_out_string">Por favor, intente capturar manualmente</string>
-    <string name="face_not_in_oval">Por favor, coloque la cara dentro del óvalo.</string>
-    <string name="blurred_face">La imagen de la cara está borrosa, por favor, proporcione una cara clara.</string>
-    <string name="face_too_far">Por favor, acerque su cara y colóquela dentro del óvalo.</string>
-    <string name="face_forward">Por favor, mire hacia la cámara y coloque la cara dentro del óvalo.</string>
-    <string name="face_instructions"><![CDATA[<b>Instrucciones</b> para la Selfie]]></string>
-    <string name="doc_instructions"><![CDATA[<b>Instrucciones</b> para el Documento]]></string>
-    <string name="doc_two_instructions"><![CDATA[<b>Instrucciones</b> para el Documento Dos]]></string>
-    <string name="address_instructions"><![CDATA[<b>Instrucciones</b> para la Dirección]]></string>
-    <string name="consent_instructions"><![CDATA[<b>Instrucciones</b> para el Consentimiento]]></string>
-    <string name="camera_ins_top_face">Tome su selfie</string>
-    <string name="camera_ins_top_doc">Capture el documento</string>
-    <string name="camera_ins_top_doc2">Capture el Documento Dos</string>
-    <string name="camera_ins_top_address">Capture la dirección</string>
-    <string name="camera_ins_top_consent">Capture el consentimiento</string>
-    <string name="video_ins_top_face">Grabe su selfie</string>
-    <string name="video_ins_top_doc">Grabe el documento</string>
-    <string name="video_ins_top_doc2">Grabe el Documento Dos</string>
-    <string name="video_ins_top_address">Grabe la dirección</string>
-    <string name="video_ins_top_consent">Grabe el consentimiento</string>
-    <string name="progress_completed">completado</string>
-    <string name="retry">Reintentar</string>
-    <string name="capture_manually">Cancelar</string>
-    <string name="timeout"><b>Tiempo de Espera</b></string>
-    <string name="timeout_Subheading">¿Todavía desea continuar con la Captura Automática o capturar manualmente?</string>
-    <string name="doc_clear">¿El documento está claro?</string>
-    <string name="doc_preview_text"><b>Asegúrese de que todo el documento sea legible.</b></string>
-    <string name="face_clear"><b>¿La selfie está clara?</b></string>
-    <string name="face_preview_text"><b>Asegúrese de que toda la cara sea visible.</b></string>
-    <string name="continue_with_it">\n¿Desea continuar con esto o tomar otra?</string>
-    <string name="your_face_liveness_has_been_verified">Su autenticidad facial ha sido verificada</string>
-    <string name="your_document_has_been_verified">Su documento ha sido verificado</string>
-    <string name="_4_corners_shown_all_data_visible">4 Esquinas mostradas — Nombre y dirección son visibles</string>
-    <string name="avoid_glare">Evite los reflejos</string>
-    <string name="avoid_cropped">Evite el recorte</string>
-    <string name="avoid_blur">Evite el desenfoque</string>
-    <string name="keep_close">Manténgase cerca</string>
-    <string name="face_inside_oval_and_clear">Cara dentro del óvalo y clara</string>
-    <string name="use_proper_lighting">Use una iluminación adecuada</string>
-    <string name="remove_accessories">Quítese los accesorios</string>
-    <string name="your_document_isn_t_properly_visible_nplease_use_proper_lighting">Su documento no es visible adecuadamente.\nPor favor, use una iluminación adecuada.</string>
-    <string name="retry_auto_capture">Reintentar Captura Automática</string>
-    <string name="front_side_of_the_document">Frente del documento</string>
-    <string name="try_passport"><u>Pruebe con el pasaporte</u></string>
-    <string name="poweredByIcon">©</string>
-    <string name="reset"><u>Reiniciar</u></string>
-    <string name="id_card_or_driving_license_or_credit_debit_card">Cédula de Identidad/ Licencia de Conducir/ Pasaporte</string>
-    <string name="address_four_corners_shown"><![CDATA[4 Esquinas Mostradas — Nombre y Dirección Son Visibles]]></string>
+//Requirement Screen
+<string name="sp_requirement_heading">Requerimientos de Verificación</string>
+<string name="sp_requirement_sub_heading">Verifica tu identidad con uno de los metodos listados</string>
+<string name="sp_provide_any_of_these">Muestra cualquiera de estos documentos</string>
+<string name="sp_phone_requirement">Ten tu teléfono a mano para recibir un texto</string>
+<string name="sp_face_requirement">Tomate una selfie</string>
+<string name="sp_2fa">Telefono</string>
+<string name="sp_bg_checks">Revision de Antecedentes</string>
+<string name="sp_no_documents_on_hand">Porfavor ten los documentos mencionados a manos y proceder</string>
+
+
+//Supported Type Screen
+<string name="sp_supported_doc">Documentos aceptados</string>
+<string name="sp_select_country">Elige tu país</string>
+<string name="sp_select_doc_type">Elige un tipo de <b>documento</b> para verificación</string>
+<string name="sp_select_doc2_type"><![CDATA[<b>One more document</b> is required for verification]]></string>
+<string name="sp_select_address_type"><![CDATA[Choose a document type for <b>address</b> verification]]></string>
+<string name="sp_select_consent_type"><![CDATA[Choose a document type for <b>consent</b> verification]]></string>
+
+//Proof Selection Screen
+<string name="sp_take_from_your_camera">Toma una foto de tu Cámara</string>
+<string name="sp_upload_from_your_device">Sube una foto de tu dispositivo</string>
+<string name="sp_how_will_you_submit_the_identity_proof">¿Como vamos a enviar tu prueba de vida?</string>
+
+//Upload Screen
+<string name="sp_photo_upload_type">Sube una foto tipo .jpeg, .jpg, .pdf, o .png</string>
+<string name="sp_video_type">Sube un video .mp4, or .mov</string>
+<string name="sp_photo_video_type">Sube una foto .jpeg, .jpg, .pdf, .png, .mp4, or .mov</string>
+
+<string name="sp_browes_file"><u>Buscar</u></string>
+<string name="invalid_format">Tipo de archivo invalido</string>
+<string name="sp_max_photo">Tamaño máximo aceptado: 16MB</string>
+<string name="sp_max_video">Tamaño máximo aceptado: 20MB</string>
+<string name="sp_max_file">Tamaño máximo aceptado: 20MB</string>
+<string name="sp_after_upload">Sube una <b>photo/video</b> de tu documento.</string>
+<string name="sp_upload_face_image"><![CDATA[Subir una<b>foto</b> de su cara completa]]></string>
+<string name="sp_upload_face_any"><![CDATA[Subir una<b>foto/video</b> de su cara completa]]></string>
+<string name="sp_upload_face_video"><![CDATA[Subir un <b>video</b> de su cara completa]]></string>
+
+<string name="sp_ready_to_upload_consent_image"><![CDATA[Upload the <b>consent note</b> along with your face]]></string>
+<string name="sp_ready_to_upload_consent_image_without_face"><![CDATA[Upload the <b>consent note</b>]]></string>
+<string name="sp_ready_to_upload_back_image"><![CDATA[Subir la <b>parte trasera</b> de su]]></string>
+<string name="sp_ready_to_upload_front_image"><![CDATA[Subir la <b>parte delantera</b> de su]]></string>
+<string name="sp_upload_picture_of_photo_page"><![CDATA[Subir la <b>página de foto</b> de su]]></string>
+<string name="sp_confirmation">Confirmación</string>
+<string name="sp_consent_text">Texto de autorización: </string>
+
+
+//Camera Screen
+<string name="sp_doc_front">Frente del documento</string>
+<string name="sp_doc_back">Reves del documento</string>
+<string name="sp_face_position">Posiciona tu rostro dentro del ovalo</string>
+<string name="sp_consent_model_tv_text_img">Captura consentimiento y tu rostro</string>
+<string name="sp_consent_model_tv_text_video">Graba consentimiento y tu rostro</string>
+
+ <string name="sp_provide_front">Mostrar Parte de Enfrente del Documento </string>
+<string name="sp_provide_back">Mostrar Parte de Atrás del Documento </string>
+<string name="sp_missing_corners">Por favor alinear documento dentro del marco </string>
+<string name="sp_blurred_document"> Mantener sin moverse </string>
+<string name="sp_document_too_far"> Acercar el documento </string>
+
+<string name="sp_face_not_in_oval">Asegurar que cara está dentro del óvalo </string>
+<string name="sp_blurred_face"> Mantener sin moverse </string>
+<string name="sp_face_too_far"> Acercarse y posicionar cara dentro del óvalo </string>
+<string name="sp_face_forward"> Por favor mirar a la cámara y mantener cara dentro del óvalo.</string>
+
+<string name="sp_face_instructions"><![CDATA[<b>Selfie</b> Instrucciones]]></string>
+<string name="sp_doc_instructions"><![CDATA[<b>Documento</b> Instrucciones]]></string>
+<string name="sp_doc_two_instructions"><![CDATA[<b>Segundo Documento </b> Instrucciones]]></string>
+<string name="sp_address_instructions"><![CDATA[<b>Dirección</b> Instrucciones]]></string>
+<string name="sp_consent_instructions"><![CDATA[<b>Consentimiento</b> Instrucciones]]></string>
+
+<string name="sp_video_ins_top_face">Record your selfie</string>
+
+<string name="sp_camera_doc_front">Mostrar parte de enfrente de</string>
+<string name="sp_camera_doc_back">Mostrar parte trasera de</string>
+<string name="try_manual_capture_before">Teniendo problemas? Try <b>manual</b> capture</string>
+<string name="try_manual_capture_after">Captura automática suspendida! Intenta capturar <b>manualmente</b></string>
+
+///Document Instructions
+<string name="sp_document_first_image">Documento complete debe estar dentro del marco.</string>
+<string name="sp_document_second_image">Documento debe estar visible, sin resplandor.</string>
+<string name="sp_document_third_image">Información del documento debe ser legible.</string>
+
+///Facial Instructions
+<string name="sp_face_first_image">Cara complete debe estar dentro del óvalo.</string>
+<string name="sp_face_second_image">Foto debe estar bien Iluminada, sin resplandor.</string>
+<string name="sp_face_third_image">Quitarse accesorios (anteojos, sombrero, etc.).</string>
+
+<string name="sp_4_corners_shown_all_data_visible">4 esquinas visibles — Todos los datos visibles </string>
+<string name="sp_avoid_glare">Evitar resplandor</string>
+<string name="sp_avoid_cropped">Evitar cortar</string>
+<string name="sp_avoid_blur">Evitar que esté borroso</string>
+<string name="sp_keep_close">Mantener cerca</string>
+<string name="sp_face_inside_oval_and_clear">Cara Dentro del Óvalo y Clara</string>
+<string name="sp_use_proper_lighting">Usar Iluminación Apropiada</string>
+<string name="sp_remove_accessories">Quitarse Accesorios</string>
+<string name="sp_your_document_isnt_properly_visible">Su documento no es visible, favor usar iluminación apropiada.</string>
+<string name="sp_retry_auto_capture">Reintentar Auto-captura</string>
+<string name="sp_try_passport"><u>Intentar Pasaporte</u></string>
+<string name="sp_poweredByIcon">©</string>
+<string name="sp_reset"><u>Reset</u></string>
+<string name="sp_id_card_or_driving_license_or_credit_debit_card">DNI/Licencia/Pasaporte</string>
+<string name="sp_address_four_corners_shown"><![CDATA[4 esqiunas visibles — Nombre y dirección está visible]]></string>
+
+<string name="sp_doc_ins">Instrucciones de Documentos</string>
+<string name="sp_face_ins">Instrucciones de Cara</string>
+<string name="proof_of_address">Prueba de Dirección</string>
+
+<string name="sp_recording">Grabando</string>
+<string name="sp_00_10">00:10</string>
+<string name="sp_powered_by">Desarrollado por</string>
+<string name="sp_shuftipro">Shuftipro</string>
+<string name="sp_retake">Retomar</string>
+<string name="sp_cancel">Cancelar</string>
+<string name="sp_0">0%</string>
+<string name="sp_take_photo">Tomar foto </string>
+<string name="sp_record_video">Grabar video</string>
+
+///Image Preview Screen
+<string name="sp_doc_clear">Está claro el documento?</string>
+<string name="sp_doc_preview_text"><![CDATA[<b>Volver a tomar si el documento no está claro o legible.</b>]]></string>
+
+<string name="sp_face_clear"><![CDATA[<b>Está clara la foto?</b>]]></string>
+<string name="sp_face_preview_text"><![CDATA[<b>Por favor asegurar que toda la cara esté visible.</b>]]></string>
+
+///Video Preview Screen
+<string name="sp_camera_confirm_video_face">Puede ver su cara complete en el video?</string>
+<string name="sp_camera_confirm_video_doc">Puede ver el documento completo claramente en el video?</string>
+<string name="sp_camera_confirm_video_address">Puede ver la dirección complete claramente en el video?</string>
+<string name="sp_camera_confirm_video_consent">Puede ver su cara complete y nota de consentimiento claramente en el video?</string>
+
+///Loading Screen
+<string name="sp_face_verifying">Verificando la veracidad de su cara</string>
+<string name="sp_doc_verifying">Verificando su documento</string>
+<string name="sp_identity_verify">Verificando su identidad</string>
+<string name="sp_Verification_video_uploading">El video se está cargando</string>
+<string name="sp_Verification_image_uploading">La imagen se está cargando </string>
+<string name="sp_please_wait">Por favor esperar...</string>
+
+///Result Screen
+<string name="sp_success">Éxito</string>
+<string name="sp_failure">Error</string>
+<string name="sp_not_verified">No Verificado</string>
+<string name="sp_verification_completed">Verificación Completada</string>
+<string name="sp_error_occurred">Ocurrió un Error </string>
+<string name="sp_invalid_request">Solicitud Inválida </string>
+<string name="sp_request_timeout">Pausa </string>
+<string name="sp_request_unauthorized">Solicitud No Autorizada </string>
+<string name="sp_error">Error</string>
+<string name="sp_forwarded_to_merchant">Resultados de verificación serán remitidos a emisor </string>
+<string name="sp_verified">Verificado </string>
+<string name="sp_verification_unsuccessful">Verificación Falló</string>
+<string name="sp_successfully_verified">Verificado Exitosamente </string>
+<string name="sp_unauthorized_request">Solicitud No Autorizada </string>
+<string name="sp_your_request_has_been_received">Su solicitud ha sido recibida</string>
+<string name="sp_verification">Verificación </string>
+<string name="sp_your_identity_has_been_verified">Su identidad ha sido Verificada</string>
+
+<string name="sp_your_face_liveness_has_been_verified">La vivacidad de su cara ha sido verificada </string>
+<string name="sp_your_document_has_been_verified">Su documento ha sido verificado </string>
+<string name="sp_proceed">Proceder </string>
+<string name="sp_result_screen_text">Shufti Pro reconoce su derecho a solicitar acceso o la supresión de su data. Puede conocer nuestra <a href="https://shuftipro.com/privacy-policy">Política de Privacidad </a> aquí o contactarnos a<a href="mailto:support@shuftipro.com">support@shuftipro.com</a></string>
+
+///Supported Types
+<string name="sp_id_card">DNI</string>
+<string name="sp_printed_note">Nota impresa</string>
+<string name="sp_property_tax">Property Tax</string>
+<string name="sp_handwritten_note">Handwritten Note</string>
+<string name="sp_passport">Pasaporte</string>
+<string name="sp_tax_bill">Tax Bill</string>
+<string name="sp_insurance_agreement">Insurance Agreement</string>
+<string name="sp_insurance_card">Insurance Card</string>
+<string name="sp_employer_letter">Carta de Empleador</string>
+<string name="sp_rent_agreement">Rent Agreement</string>
+<string name="sp_bank_statement">Bank Statement</string>
+<string name="sp_utility_bill">Utility Bill</string>
+<string name="sp_lease_agreement">Lease Agreement</string>
+<string name="sp_envelope">Envelope</string>
+<string name="sp_cpr_smart_card_reader_copy">CPR Smart Card Reader Copy</string>
+<string name="sp_permanent_residence_permit">Permanent Residence Permit</string>
+<string name="sp_credit_or_debit_card">Credit or Debit Card</string>
+<string name="sp_driving_license">Licencia de Conducir</string>
+<string name="sp_credit_card_statement">Credit Card Statement</string>
+<string name="sp_insurance_policy">Insurance Policy</string>
+<string name="sp_e_commerce_receipt">E-Commerce Receipt</string>
+<string name="sp_bank_letter_receipt">Bank Letter Receipt</string>
+<string name="sp_birth_certificate">Birth Certificate</string>
+<string name="sp_salary_slip">Salary Slip</string>
+<string name="sp_any">Any</string>
+
+///Dialog Boxes
+<string name="sp_confirm_cancellation">Confirmar Cancelación</string>
+<string name="sp_confirm">Confirmar</string>
+<string name="sp_not_now">Ahorita No </string>
+
+<string name="sp_no_internet_connection">No hay Conexión a Internet</string>
+<string name="sp_connect_your_phone_to_internet">Por favor conectar su cellular al Internet </string>
+<string name="sp_your_request_has_timed_out">Su solicitud ha parado</string>
+<string name="sp_make_sure_internet_connection">Asegúrese que su dispositivo esté conectado al Internet</string>
+<string name="sp_finish">Terminar</string>
+<string name="sp_exit">Salir</string>
+<string name="sp_permission_denied">Permiso Denegado</string>
+<string name="sp_limit_exceeded">Límite de Texto Excedido</string>
+<string name="sp_are_you_sure_to_cancel_verification_process">Quiere cancelar el proceso de verificación?</string>
+<string name="sp_cancel_verification">Cancelar Verificación</string>
+<string name="sp_grant_permissions">App no funcionará sin permisos. Por favor reiniciar el app y otorgar los permisos solicitados.</string>
+<string name="sp_consent_text_limit_exceed">Texto de consentimiento debe ser entre 6 y 100 caracteres</string>
+
+///Service Names 
+<string name="sp_flash_status_on"> <font color="#EF5351">On</font> </string>
+<string name="sp_face_verifications">Verificación de Selfie</string>
+<string name="sp_document_verifications"> Verificación de Documento</string>
+<string name="sp_document_two_verifications">Verificación de Segundo Documento </string>
+<string name="sp_address_verifications">Verificación de Dirección </string>
+<string name="sp_consent_verifications">Verificación de Consentimiento </string>
+
+<string name="sp_face">Selfie</string>
+<string name="sp_selfie">Cara</string>
+<string name="sp_document">Documento</string>
+<string name="sp_document_two">Documento Dos</string>
+<string name="sp_address">Dirección </string>
+<string name="sp_consent">Consentimiento </string>
 
 </resources>

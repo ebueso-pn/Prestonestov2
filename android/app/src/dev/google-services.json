@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "984117236759",
+    "project_id": "prestonesto-af804",
+    "storage_bucket": "prestonesto-af804.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984117236759:android:d3a811c132e4360a223852",
+        "android_client_info": {
+          "package_name": "com.prestonesto.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984117236759-f5bt73ggq033lra43j4u71am38imfh78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyj9SiiiY4-XHbD9fAcKolPjTqm2vlLGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984117236759-f5bt73ggq033lra43j4u71am38imfh78.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "984117236759-3jq1901omon954n5gph74ucqjptl50hg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Prestonesto.V1"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

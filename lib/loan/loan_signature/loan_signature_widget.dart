@@ -1,3 +1,5 @@
+import 'package:prestonesto_v1/utils/config_reader.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
@@ -128,8 +130,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                   stream: queryApplicationRecord(
                     parent: currentUserReference,
                     queryBuilder: (applicationRecord) => applicationRecord
-                        .where('status', isEqualTo: 'Aprobada')
-                        .orderBy('date_applied', descending: true),
+                        .whereIn('status', ['Aprobada', 'Aceptada']).orderBy(
+                            'date_applied',
+                            descending: true),
                     singleRecord: true,
                   ),
                   builder: (context, snapshot) {
@@ -215,7 +218,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               ),
                               Text(
                                 formatNumber(
-                                  columnApplicationRecord!.cuotaAprobada,
+                                  columnApplicationRecord.cuotaAprobada,
                                   formatType: FormatType.decimal,
                                   decimalType: DecimalType.automatic,
                                   currency: 'L. ',
@@ -238,7 +241,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               ),
                               Text(
                                 formatNumber(
-                                  columnApplicationRecord!.tasaMensualAprobada,
+                                  columnApplicationRecord.tasaMensualAprobada,
                                   formatType: FormatType.percent,
                                 ),
                                 style: FlutterFlowTheme.of(context).bodyLarge,
@@ -259,7 +262,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               ),
                               Text(
                                 formatNumber(
-                                  columnApplicationRecord!.plazoAprobado,
+                                  columnApplicationRecord.plazoAprobado,
                                   formatType: FormatType.custom,
                                   format: '# meses',
                                   locale: '',
@@ -283,7 +286,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               Text(
                                 functions
                                     .numeroCuotas(
-                                        columnApplicationRecord!.plazoAprobado)
+                                        columnApplicationRecord.plazoAprobado)
                                     .toString(),
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
@@ -334,7 +337,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                                       dateTimeFromSecondsSinceEpoch(
                                           getCurrentTimestamp
                                               .secondsSinceEpoch),
-                                      columnApplicationRecord!.plazoAprobado),
+                                      columnApplicationRecord.plazoAprobado),
                                   locale:
                                       FFLocalizations.of(context).languageCode,
                                 ),
@@ -360,8 +363,8 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               ),
                               Text(
                                 formatNumber(
-                                  columnApplicationRecord!.cuotaAprobada *
-                                      columnApplicationRecord!.plazoAprobado *
+                                  columnApplicationRecord.cuotaAprobada *
+                                      columnApplicationRecord.plazoAprobado *
                                       2,
                                   formatType: FormatType.custom,
                                   currency: 'L ',
@@ -389,8 +392,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                   stream: queryApplicationRecord(
                     parent: currentUserReference,
                     queryBuilder: (applicationRecord) => applicationRecord
-                        .where('status', isEqualTo: 'Aprobada')
-                        .orderBy('date_applied', descending: true),
+                        .whereIn('status', ['Aprobada', 'Aceptada']).orderBy(
+                            'date_applied',
+                            descending: true),
                     singleRecord: true,
                   ),
                   builder: (context, snapshot) {
@@ -422,13 +426,16 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                       onPressed: () async {
                         var _shouldSetState = false;
 
-                        await buttonApplicationRecord!.reference
+                        final fechaPrimerPago =
+                            functions.fechaFirmaMas15(getCurrentTimestamp);
+                        final fechaUltimoPago = functions.fechaUltimoPago(
+                            getCurrentTimestamp,
+                            buttonApplicationRecord!.plazoMeses);
+
+                        await buttonApplicationRecord.reference
                             .update(createApplicationRecordData(
-                          fechaPrimerPago:
-                              functions.fechaFirmaMas15(getCurrentTimestamp),
-                          fechaUltimoPago: functions.fechaUltimoPago(
-                              getCurrentTimestamp,
-                              buttonApplicationRecord!.plazoMeses),
+                          fechaPrimerPago: fechaPrimerPago,
+                          fechaUltimoPago: fechaUltimoPago,
                           status: 'Aceptada',
                         ));
                         _model.zapSignAPIresponse =
@@ -440,11 +447,11 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           email: currentUserEmail,
                           dni: valueOrDefault(currentUserDocument?.dni, ''),
                           monto: functions.formatNumber(
-                              buttonApplicationRecord!.montoAprobado),
+                              buttonApplicationRecord.montoAprobado),
                           montoEnLetras: functions.montoEnLetras(
-                              buttonApplicationRecord!.montoAprobado),
+                              buttonApplicationRecord.montoAprobado),
                           numCuotas: functions.numeroCuotas(
-                              buttonApplicationRecord!.plazoAprobado),
+                              buttonApplicationRecord.plazoAprobado),
                           fechaFirmaDia: dateTimeFormat(
                             'd',
                             getCurrentTimestamp,
@@ -474,54 +481,71 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           ),
                           fechaPrimerPagoAno: dateTimeFormat(
                             'y',
-                            buttonApplicationRecord?.fechaPrimerPago,
+                            fechaPrimerPago,
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaUltimoPagoDia: dateTimeFormat(
                             'd',
-                            buttonApplicationRecord?.fechaUltimoPago,
+                            fechaUltimoPago,
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaUltimoPagoMes: dateTimeFormat(
                             'M',
                             functions.fechaUltimoPago(getCurrentTimestamp,
-                                buttonApplicationRecord!.plazoAprobado),
+                                buttonApplicationRecord.plazoAprobado),
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           fechaUltimoPagoAno: dateTimeFormat(
                             'y',
                             functions.fechaUltimoPago(getCurrentTimestamp,
-                                buttonApplicationRecord!.plazoAprobado),
+                                buttonApplicationRecord.plazoAprobado),
                             locale: FFLocalizations.of(context).languageCode,
                           ),
                           cuota: buttonApplicationRecord?.cuotaAprobada,
                           tasaEfectivaMensual: functions.decimaltoPercent(
-                              buttonApplicationRecord!.tasaMensualAprobada),
+                              buttonApplicationRecord.tasaMensualAprobada),
                           tasaEfectivaMensualL: functions.tasaEnLetras(
-                              buttonApplicationRecord!.tasaMensualAprobada),
+                              buttonApplicationRecord.tasaMensualAprobada),
                           fechaFirmaDiaL:
                               functions.diaEnLetras(getCurrentTimestamp),
                           fechaFrimaMesL:
                               functions.mesEnLetras(getCurrentTimestamp),
                           fechaFirmaAnoL:
                               functions.anoEnLetras(getCurrentTimestamp),
-                          fechaPrimerPagoDiaL: functions.diaEnLetras(
-                              buttonApplicationRecord!.fechaPrimerPago!),
-                          fechaPrimerPagoMesL: functions.mesEnLetras(
-                              buttonApplicationRecord!.fechaPrimerPago!),
-                          fechaPrimerPagoAnoL: functions.anoEnLetras(
-                              buttonApplicationRecord!.fechaPrimerPago!),
-                          fechaUltimoPagoDiaL: functions.diaEnLetras(
-                              buttonApplicationRecord!.fechaUltimoPago!),
-                          fechaUltimoPagoMesL: functions.mesEnLetras(
-                              buttonApplicationRecord!.fechaUltimoPago!),
-                          fechaUltimoPagoAnoL: functions.anoEnLetras(
-                              buttonApplicationRecord!.fechaUltimoPago!),
+                          fechaPrimerPagoDiaL:
+                              functions.diaEnLetras(fechaPrimerPago),
+                          fechaPrimerPagoMesL:
+                              functions.mesEnLetras(fechaPrimerPago),
+                          fechaPrimerPagoAnoL:
+                              functions.anoEnLetras(fechaPrimerPago),
+                          fechaUltimoPagoDiaL:
+                              functions.diaEnLetras(fechaUltimoPago),
+                          fechaUltimoPagoMesL:
+                              functions.mesEnLetras(fechaUltimoPago),
+                          fechaUltimoPagoAnoL:
+                              functions.anoEnLetras(fechaUltimoPago),
                           direccion:
                               '${valueOrDefault(currentUserDocument?.calle, '')} ${valueOrDefault(currentUserDocument?.colonia, '')} ${valueOrDefault(currentUserDocument?.ciudad, '')}',
                         );
                         _shouldSetState = true;
                         if ((_model.zapSignAPIresponse?.succeeded ?? true)) {
+                          //Update signer to add rediret_link
+                          await ZapSignUpdateSignerCall.call(
+                            signerToken: serializeParam(
+                              getJsonField(
+                                (_model.zapSignAPIresponse?.jsonBody ?? ''),
+                                r'''$.signers[:].token''',
+                              ).toString(),
+                              ParamType.String,
+                            ),
+                            redirectLink:
+                                //Depend on enviroment
+                                // 'https://prestonesto.web.app/loanSignatureSuccess',
+                                ConfigReader.isDevMode()
+                                    ? 'https://d8ypx.test-app.link/success_zapsign'
+                                    : 'https://d8ypx.app.link/success_zapsign',
+                          );
+
                           context.pushNamed(
                             'LoanAcceptance_SuccessCopy',
                             queryParameters: {
@@ -535,7 +559,15 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                             }.withoutNulls,
                           );
                         } else {
-                          if (_shouldSetState) setState(() {});
+                          print(_model.zapSignAPIresponse?.bodyText);
+                          //show error in bottom sheet
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                _model.zapSignAPIresponse?.bodyText ?? '',
+                              ),
+                            ),
+                          );
                           return;
                         }
 
@@ -550,11 +582,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               cuota: buttonApplicationRecord?.cuotaAprobada,
                               monto: buttonApplicationRecord?.montoAprobado,
                               plazo: buttonApplicationRecord?.plazoAprobado,
-                              fechaUltimoPago:
-                                  buttonApplicationRecord?.fechaUltimoPago,
+                              fechaUltimoPago: fechaUltimoPago,
                               fechaCreado: getCurrentTimestamp,
-                              fechaPrimerPago:
-                                  buttonApplicationRecord?.fechaPrimerPago,
+                              fechaPrimerPago: fechaPrimerPago,
                               balance: buttonApplicationRecord?.montoAprobado,
                             ));
                         if (_shouldSetState) setState(() {});

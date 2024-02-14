@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import '../../flutter_flow/flutter_flow_util.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:prestonesto_v1/utils/config_reader.dart';
 
+import '../../flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
@@ -43,7 +45,7 @@ class ZapSIgnCreateDocumentFromTemplateCall {
     String? direccion = '',
     String? documentReference = '',
   }) {
-    final body = '''
+    final ffApiRequestBody = '''
 {
   "template_id": "f204dcc3-38a1-4724-abcb-bc3818714531",
   "signer_name": "${name}",
@@ -182,11 +184,38 @@ class ZapSIgnCreateDocumentFromTemplateCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer 0c004cad-963b-48be-a373-52968dca04864f6e7f46-0316-4c77-8af6-5275e9905625',
+        'Authorization': 'Bearer ${dotenv.env['ZAPSIGN_TOKEN']}',
       },
       params: {},
-      body: body,
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
+class ZapSignUpdateSignerCall {
+  static Future<ApiCallResponse> call({
+    String? signerToken = '',
+    String? redirectLink = '',
+  }) {
+    final ffApiRequestBody = '''
+{
+  "redirect_link": "${redirectLink}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'ZapSign Update Signer',
+      apiUrl: 'https://api.zapsign.com.br/api/v1/signers/${signerToken}/',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${dotenv.env['ZAPSIGN_TOKEN']}',
+      },
+      params: {},
+      body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -204,8 +233,7 @@ class GetAccessTokenCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Basic bzdQRnZLY0pNWktDSklXbEdCYjdEUkdxb0FmTTJreEVJZlBaUEtYSENzbVoxQ2hQcTUxNjg5MjExMTI1OjhNcWptU0hoNTBUMVVTekxPcmtNSm9pRVNyVGIxaHhu',
+        'Authorization': 'Bearer ${dotenv.env['SHUFTI_PRO_TOKEN']}',
       },
       params: {},
       bodyType: BodyType.JSON,
@@ -226,7 +254,7 @@ class ShuftiOnsiteWithOCRCall {
   static Future<ApiCallResponse> call({
     String? shuftiReference = '777777',
   }) {
-    final body = '''
+    final ffApiRequestBody = '''
 {
   "reference": "${shuftiReference}",
   "language": "ES",
@@ -249,11 +277,10 @@ class ShuftiOnsiteWithOCRCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Basic bzdQRnZLY0pNWktDSklXbEdCYjdEUkdxb0FmTTJreEVJZlBaUEtYSENzbVoxQ2hQcTUxNjg5MjExMTI1OjhNcWptU0hoNTBUMVVTekxPcmtNSm9pRVNyVGIxaHhu',
+        'Authorization': 'Bearer ${dotenv.env['SHUFTI_PRO_TOKEN']}',
       },
       params: {},
-      body: body,
+      body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -294,7 +321,7 @@ class ShuftiStatusRequestCall {
   static Future<ApiCallResponse> call({
     String? shuftiReference = '210c8cGgadoTjrjZWOw4',
   }) {
-    final body = '''
+    final ffApiRequestBody = '''
 {
   "reference": "${shuftiReference}"
 }''';
@@ -304,11 +331,10 @@ class ShuftiStatusRequestCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Basic bzdQRnZLY0pNWktDSklXbEdCYjdEUkdxb0FmTTJreEVJZlBaUEtYSENzbVoxQ2hQcTUxNjg5MjExMTI1OjhNcWptU0hoNTBUMVVTekxPcmtNSm9pRVNyVGIxaHhu',
+        'Authorization': 'Bearer ${dotenv.env['SHUFTI_PRO_TOKEN']}',
       },
       params: {},
-      body: body,
+      body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -330,6 +356,49 @@ class ShuftiStatusRequestCall {
         response,
         r'''$.additional_data''',
         true,
+      );
+}
+
+class BeginiTokenCall {
+  static Future<ApiCallResponse> call(
+      {String? uid = 'test2',
+      String? integrationId = '65157cc8e8f64eeabc0dc3bd',
+      String? apiKey = ''}) {
+    if (!ConfigReader.isDevMode()) {
+      integrationId = '65157cc8e8f64eeabc0dc3bf';
+    }
+    final ffApiRequestBody = '''
+    {
+      "uid": "${uid}",
+      "integration_id": "${integrationId}"
+    }''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Begini Token',
+      apiUrl: 'https://api.begini.co/v1/sessions-management/tokens',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': ConfigReader.isDevMode()
+            ? dotenv.env['BEGINI_API_KEY_DEV']
+            : dotenv.env['BEGINI_API_KEY_PROD'],
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic accessToken(dynamic response) => getJsonField(
+        response,
+        r'''$.access_token''',
+      );
+  static dynamic url(dynamic response) => getJsonField(
+        response,
+        r'''$.url''',
       );
 }
 
