@@ -440,7 +440,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                         ));
                         _model.zapSignAPIresponse =
                             await ZapSIgnCreateDocumentFromTemplateCall.call(
-                          phone: currentPhoneNumber,
+                          phone: (currentPhoneNumber.startsWith("+504 ")
+                              ? currentPhoneNumber.substring(5)
+                              : currentPhoneNumber),
                           externalId: currentUserReference?.id,
                           name:
                               '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
