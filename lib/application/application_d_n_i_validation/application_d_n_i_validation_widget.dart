@@ -46,7 +46,7 @@ class _ApplicationDNIValidationWidgetState
     "language": "ES",
     "verification_mode": "image_only",
     "show_results": 1,
-    "face": {"allow_offline": "1"},
+    "face": {"allow_offline": "0"},
     "document": {
       "supported_types": [
         "id_card",
