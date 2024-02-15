@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
     FlutterBranchSdk.validateSDKIntegration();
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = prestonestoV1FirebaseUserStream()
+    userStream = prestonestoFirebaseUserStream()
       ..listen((user) async {
         _appStateNotifier.update(user);
         FFAppState().userHasIncomeVerification =
@@ -96,7 +96,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'PrestonestoV1',
+      title: 'Prestonesto',
       localizationsDelegates: [
         FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
