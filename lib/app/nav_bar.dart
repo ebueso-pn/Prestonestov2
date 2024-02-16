@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:prestonesto_v1/application/application_loan_calculator/application_loan_calculator_widget.dart';
-import 'package:prestonesto_v1/flutter_flow/flutter_flow_theme.dart';
-import 'package:prestonesto_v1/flutter_flow/flutter_flow_util.dart';
-import 'package:prestonesto_v1/home/home_widget.dart';
-import 'package:prestonesto_v1/profile/profile/profile_widget.dart';
+import 'package:prestonesto/application/application_loan_calculator/application_loan_calculator_widget.dart';
+import 'package:prestonesto/flutter_flow/flutter_flow_theme.dart';
+import 'package:prestonesto/flutter_flow/flutter_flow_util.dart';
+import 'package:prestonesto/home/home_widget.dart';
+import 'package:prestonesto/profile/profile/profile_widget.dart';
 
 class NavBarPage extends StatefulWidget {
   NavBarPage({Key? key, this.initialPage, this.page}) : super(key: key);

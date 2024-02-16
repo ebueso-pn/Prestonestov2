@@ -217,6 +217,7 @@ class _EmailForgotPasswordWidgetState extends State<EmailForgotPasswordWidget> {
                       email: _model.emailAddressController.text,
                       context: context,
                     );
+                    Navigator.pop(context);
                   },
                   text: 'Enviar Enlace',
                   options: FFButtonOptions(

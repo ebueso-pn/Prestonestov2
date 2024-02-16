@@ -1,4 +1,4 @@
-import 'package:prestonesto_v1/utils/config_reader.dart';
+import 'package:prestonesto/utils/config_reader.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';

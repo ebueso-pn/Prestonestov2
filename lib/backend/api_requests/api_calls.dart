@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:prestonesto_v1/utils/config_reader.dart';
+import 'package:prestonesto/utils/config_reader.dart';
 
 import '../../flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';

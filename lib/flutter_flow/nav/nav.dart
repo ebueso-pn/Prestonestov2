@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:prestonesto_v1/app/nav_bar.dart';
-import 'package:prestonesto_v1/privacy_policy/privacy_policy_widget.dart';
-import 'package:prestonesto_v1/profile/begini/begini_widget.dart';
-import 'package:prestonesto_v1/profile/begini/widgets/begini_success_widget.dart';
+import 'package:prestonesto/app/nav_bar.dart';
+import 'package:prestonesto/privacy_policy/privacy_policy_widget.dart';
+import 'package:prestonesto/profile/begini/begini_widget.dart';
+import 'package:prestonesto/profile/begini/widgets/begini_success_widget.dart';
 import '../../auth/base_auth_user_provider.dart';
 import '/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';

@@ -1,9 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:prestonesto_v1/app/app.dart';
-import 'package:prestonesto_v1/app/push_notifications_service.dart';
-import 'package:prestonesto_v1/utils/config_reader.dart';
+import 'package:prestonesto/app/app.dart';
+import 'package:prestonesto/app/push_notifications_service.dart';
+import 'package:prestonesto/utils/config_reader.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-import 'package:prestonesto_v1/application/application_d_n_i_validation/verification_model.dart';
+import 'package:prestonesto/application/application_d_n_i_validation/verification_model.dart';
 import 'package:shuftipro_sdk/shuftipro_sdk.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';

@@ -1,4 +1,4 @@
-import 'package:prestonesto_v1/application/applicaiton_success/applicaiton_success_model.dart';
+import 'package:prestonesto/application/applicaiton_success/applicaiton_success_model.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
