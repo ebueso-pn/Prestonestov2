@@ -51,8 +51,8 @@ android {
     applicationId "Prestonesto"
     minSdkVersion 23
     targetSdkVersion 33
-    versionCode 4
-    versionName "4.0.1"
+    versionCode 5
+    versionName "1.0.5"
 }
 
    signingConfigs {
