@@ -108,6 +108,12 @@
 @import permission_handler_apple;
 #endif
 
+#if __has_include(<prestonesto_shuftipro_sdk/ShuftiproSdk.h>)
+#import <prestonesto_shuftipro_sdk/ShuftiproSdk.h>
+#else
+@import prestonesto_shuftipro_sdk;
+#endif
+
 #if __has_include(<share_plus/FLTSharePlusPlugin.h>)
 #import <share_plus/FLTSharePlusPlugin.h>
 #else
@@ -118,12 +124,6 @@
 #import <shared_preferences_ios/FLTSharedPreferencesPlugin.h>
 #else
 @import shared_preferences_ios;
-#endif
-
-#if __has_include(<shuftipro_sdk/ShuftiproSdk.h>)
-#import <shuftipro_sdk/ShuftiproSdk.h>
-#else
-@import shuftipro_sdk;
 #endif
 
 #if __has_include(<sign_in_with_apple/SignInWithApplePlugin.h>)
@@ -170,9 +170,9 @@
   [PathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"PathProviderPlugin"]];
   [PdfxPlugin registerWithRegistrar:[registry registrarForPlugin:@"PdfxPlugin"]];
   [PermissionHandlerPlugin registerWithRegistrar:[registry registrarForPlugin:@"PermissionHandlerPlugin"]];
+  [ShuftiproSdk registerWithRegistrar:[registry registrarForPlugin:@"ShuftiproSdk"]];
   [FLTSharePlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharePlusPlugin"]];
   [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];
-  [ShuftiproSdk registerWithRegistrar:[registry registrarForPlugin:@"ShuftiproSdk"]];
   [SignInWithApplePlugin registerWithRegistrar:[registry registrarForPlugin:@"SignInWithApplePlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
   [FLTURLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTURLLauncherPlugin"]];

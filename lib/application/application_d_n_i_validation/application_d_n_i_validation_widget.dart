@@ -1,5 +1,5 @@
 import 'package:prestonesto/application/application_d_n_i_validation/verification_model.dart';
-import 'package:shuftipro_sdk/shuftipro_sdk.dart';
+import 'package:prestonesto_shuftipro_sdk/prestonesto_shuftipro_sdk.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -45,6 +45,7 @@ class _ApplicationDNIValidationWidgetState
     // please send the Application Document reference available under the application receive parameter,
     "language": "ES",
     "verification_mode": "image_only",
+    "allow_offline": "0",
     "show_results": 1,
     "face": {"allow_offline": "0"},
     "document": {
