@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -168,6 +170,9 @@ class _BeginiWidgetState extends State<BeginiWidget> {
                       ),
                       FFButtonWidget(
                         onPressed: () async {
+                          FirebaseAnalytics.instance
+                              .logEvent(name: 'app_2_iniciar_prueba_begini');
+
                           var _shouldSetState = false;
                           _model.apiResultwum = await BeginiTokenCall.call(
                             uid: currentUserUid,

@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -119,6 +121,8 @@ class _LoanAcceptanceSuccessCopyWidgetState
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () async {
+                    FirebaseAnalytics.instance
+                        .logEvent(name: 'app_3_firmar_Pagare');
                     await launchURL(widget.signURL!);
                   },
                   text: '¡Firmar Ahora!',

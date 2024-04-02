@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_google_map.dart';
@@ -274,6 +276,13 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                             .update(createUsersRecordData(
                           latLong: _model.googleMapsCenter,
                         ));
+
+                        if (currentUserDocument?.latLong !=
+                            currentUserLocationValue) {
+                          FirebaseAnalytics.instance.logEvent(
+                            name: 'app_direccion_en_mapa',
+                          );
+                        }
 
                         await widget.applicationRecieve!.update({
                           'index': FieldValue.increment(1),

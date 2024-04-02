@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:prestonesto/application/application_d_n_i_validation/verification_model.dart';
 import 'package:prestonesto_shuftipro_sdk/prestonesto_shuftipro_sdk.dart';
 import '/backend/backend.dart';
@@ -396,6 +397,10 @@ class _ApplicationDNIValidationWidgetState
                         child: FFButtonWidget(
                           onPressed: () {
                             print('Button pressed ...');
+
+                            FirebaseAnalytics.instance
+                                .logEvent(name: 'app_validar_identidad');
+
                             continueFun();
                           },
                           text: 'Verificar mi identidad',

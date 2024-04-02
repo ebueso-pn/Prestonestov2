@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -671,6 +673,9 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                           bankAccountType: _model.choiceChipsValue,
                         ));
 
+                        FirebaseAnalytics.instance.logEvent(
+                          name: 'app_2_ingresar_cuenta_bancaria',
+                        );
                         FFAppState().userHasBankAccount = true;
                       },
                       text: 'Guardar y regresar',

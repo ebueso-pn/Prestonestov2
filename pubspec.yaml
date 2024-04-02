@@ -127,6 +127,7 @@ dependencies:
   aligned_tooltip: ^0.0.1
   flutter_svg: ^2.0.9
   share_plus: ^6.3.4
+  firebase_analytics: ^10.8.0
 
 dependency_overrides:
   device_info_plus: 8.0.0

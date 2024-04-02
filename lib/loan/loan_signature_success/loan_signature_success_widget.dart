@@ -1,3 +1,6 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -175,6 +178,16 @@ class _LoanSignatureSuccessWidgetState
                         EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        FirebaseAnalytics.instance.logEvent(
+                            name: 'app_3_confirmacion_Pagare_firmado');
+
+                        // When a new pagare is signed, we need to reset the counter
+                        SharedPreferences.getInstance().then((prefs) {
+                          prefs.setBool('loanScreenCounterBlock', false);
+                        });
+                        SharedPreferences.getInstance().then((prefs) {
+                          prefs.setInt('loanScreenCounter', 0);
+                        });
                         context.pushNamed('Home');
                       },
                       text: 'Continuar',

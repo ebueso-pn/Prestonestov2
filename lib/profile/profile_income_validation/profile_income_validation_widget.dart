@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
@@ -605,6 +607,9 @@ class _ProfileIncomeValidationWidgetState
                                 );
                                 return;
                               }
+
+                              FirebaseAnalytics.instance.logEvent(
+                                  name: 'app_2_ingresar_verificacion_ingresos');
 
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
