@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:prestonesto/application/application_loan_calculator/application_loan_calculator_widget.dart';
 import 'package:prestonesto/auth/firebase_auth/auth_util.dart';
@@ -23,10 +24,12 @@ class _NavBarPageState extends State<NavBarPage> {
   String _currentPageName = 'Application_LoanCalculator';
   late Widget? _currentPage;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   @override
   void initState() {
     super.initState();
+    analytics.setAnalyticsCollectionEnabled(true);
     _currentPageName = widget.initialPage ?? _currentPageName;
     _currentPage = widget.page;
   }

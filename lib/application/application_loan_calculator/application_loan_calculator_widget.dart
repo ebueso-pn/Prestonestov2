@@ -638,10 +638,10 @@ class _ApplicationLoanCalculatorWidgetState
                             }, applicationRecordReference);
                             _shouldSetState = true;
 
-                            FirebaseAnalytics.instance.logEvent(
+                            await FirebaseAnalytics.instance.logEvent(
                                 name: 'app_calcular_monto_y_plazo',
                                 parameters: {
-                                  'clicks-en-monto': counter,
+                                  'clicks_en_monto': counter,
                                 });
                             counter = 0;
 
