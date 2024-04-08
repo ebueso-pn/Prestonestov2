@@ -1,4 +1,6 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:prestonesto/utils/config_reader.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
@@ -31,6 +33,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
   late LoanSignatureModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   void initState() {
@@ -590,6 +593,14 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               balance: buttonApplicationRecord?.montoAprobado,
                             ));
                         if (_shouldSetState) setState(() {});
+
+                        final counter = await _prefs.then(
+                            (value) => value.getInt('userLoanCounter') ?? 0);
+                        FirebaseAnalytics.instance.logEvent(
+                            name: 'app_3_aceptar_oferta',
+                            parameters: {
+                              'ingresos-a-pantalla': counter,
+                            });
                       },
                       text: 'Aceptar',
                       options: FFButtonOptions(

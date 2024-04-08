@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -392,6 +394,8 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                 ),
                 FFButtonWidget(
                   onPressed: () async {
+                    FirebaseAnalytics.instance
+                        .logEvent(name: 'app_visualizar_proceso_aplicacion');
                     context.pushNamed(
                       'Application_Name',
                       queryParameters: {

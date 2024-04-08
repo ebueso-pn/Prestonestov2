@@ -1,4 +1,6 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/gestures.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
@@ -186,18 +188,48 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
   };
 
   bool isLoading = true;
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  late Future<int> _loanScreenCounter;
+  late Future<int> _calendarScreenCounter;
 
   @override
   void initState() {
     super.initState();
+    _prefs.then((SharedPreferences prefs) {
+      return (prefs.getInt('userLoanCounter') ?? 0);
+    });
+    _loanScreenCounter = _prefs.then((SharedPreferences prefs) {
+      return (prefs.getInt('loanScreenCounter') ?? 0);
+    });
+    _calendarScreenCounter = _prefs.then((SharedPreferences prefs) {
+      return (prefs.getInt('calendarScreenCounter') ?? 0);
+    });
+
     _model = createModel(context, () => HomeModel());
-    userPaymentsShedule().then((value) {
+    userPaymentsShedule().then((value) async {
       setState(() {
         payments = value;
         nextIndexPayment =
             payments.indexWhere((element) => element['status'] == 'F');
         isLoading = false;
       });
+      // If user paid last payment send Analytics event with counter
+      if (payments.lastIndexOf((element) => element['status'] == 'P') ==
+          payments.length - 1) {
+        FirebaseAnalytics.instance.logEvent(name: 'loan_perfil', parameters: {
+          'loan_screen_counter': await _loanScreenCounter,
+        });
+        FirebaseAnalytics.instance
+            .logEvent(name: 'loan_calendario_pagos', parameters: {
+          'loan_calendar_counter': await _calendarScreenCounter,
+        });
+        // Block counter until a new Pagare is signed
+        _prefs.then((prefs) {
+          prefs.setBool('loanScreenCounterBlock', true);
+          prefs.setInt('loanScreenCounter', 0);
+          prefs.setInt('calendarScreenCounter', 0);
+        });
+      }
     });
   }
 
@@ -206,6 +238,24 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     _model.dispose();
 
     super.dispose();
+  }
+
+  Future<void> _incrementCounter() async {
+    final SharedPreferences prefs = await _prefs;
+    final int counter = (prefs.getInt('userLoanCounter') ?? 0) + 1;
+
+    setState(() {
+      prefs.setInt('userLoanCounter', counter);
+    });
+  }
+
+  Future<void> _incrementCounterPaymentHistory() async {
+    final SharedPreferences prefs = await _prefs;
+    final int counter = (prefs.getInt('calendarScreenCounter') ?? 0) + 1;
+
+    setState(() {
+      prefs.setInt('calendarScreenCounter', counter);
+    });
   }
 
   @override
@@ -609,6 +659,11 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                       0.0, 12.0, 0.0, 0.0),
                                               child: FFButtonWidget(
                                                 onPressed: () async {
+                                                  FirebaseAnalytics.instance
+                                                      .logEvent(
+                                                    name:
+                                                        'loan_opciones_repago',
+                                                  );
                                                   context.pushNamed(
                                                       'Payment_Details');
                                                 },
@@ -827,8 +882,10 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                     payments[0], false),
                                                 Center(
                                                   child: FFButtonWidget(
-                                                    onPressed: () =>
-                                                        _buildPopUpPaymentHistory(),
+                                                    onPressed: () async {
+                                                      _incrementCounterPaymentHistory();
+                                                      _buildPopUpPaymentHistory();
+                                                    },
                                                     text: 'Mostrar todo',
                                                     options: FFButtonOptions(
                                                       width: 120.0,
@@ -1108,6 +1165,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           hoverColor: Colors.transparent,
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
+                                            _incrementCounter();
                                             context.pushNamed(
                                               'Loan_Signature',
                                               queryParameters: {

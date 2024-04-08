@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -26,6 +28,7 @@ class _ApplicationLoanCalculatorWidgetState
     extends State<ApplicationLoanCalculatorWidget>
     with TickerProviderStateMixin {
   late ApplicationLoanCalculatorModel _model;
+  int counter = 0;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -382,8 +385,10 @@ class _ApplicationLoanCalculatorWidgetState
                                   onChanged: (newValue) {
                                     newValue = double.parse(
                                         newValue.toStringAsFixed(0));
-                                    setState(
-                                        () => _model.loanAmtValue = newValue);
+                                    setState(() {
+                                      _model.loanAmtValue = newValue;
+                                      counter++;
+                                    });
                                   },
                                 ),
                               ),
@@ -632,6 +637,13 @@ class _ApplicationLoanCalculatorWidgetState
                               'date_applied': DateTime.now(),
                             }, applicationRecordReference);
                             _shouldSetState = true;
+
+                            await FirebaseAnalytics.instance.logEvent(
+                                name: 'app_calcular_monto_y_plazo',
+                                parameters: {
+                                  'clicks_en_monto': counter,
+                                });
+                            counter = 0;
 
                             context.pushNamed(
                               'Applicaiton_Summary',

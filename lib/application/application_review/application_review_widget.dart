@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -31,12 +33,17 @@ class ApplicationReviewWidget extends StatefulWidget {
 
 class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
   late ApplicationReviewModel _model;
+  late DateTime start;
+  late DateTime end;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+
+    start = DateTime.now();
+
     _model = createModel(context, () => ApplicationReviewModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -645,6 +652,16 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             applicationDocReference: widget.applicationRecieve,
                           ));
                       FFAppState().ApplicationEnviada = true;
+
+                      end = DateTime.now();
+                      final diff = end.difference(start);
+
+                      FirebaseAnalytics.instance.logEvent(
+                        name: 'app_ingresar_applicacion',
+                        parameters: {
+                          'tiempo_en_pantalla_en_minutos': diff.inMinutes,
+                        },
+                      );
 
                       context.pushNamed(
                         'Applicaiton_Success',

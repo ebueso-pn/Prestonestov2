@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -670,6 +672,9 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                         await widget.applicationRecieve!.update({
                           'index': FieldValue.increment(1),
                         });
+
+                        FirebaseAnalytics.instance
+                            .logEvent(name: 'app_ingresar_datos_basicos');
 
                         context.pushNamed(
                           'Application_DNI_Validation',

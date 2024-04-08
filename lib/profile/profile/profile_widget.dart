@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:prestonesto/backend/backend.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -418,6 +419,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
+                      FirebaseAnalytics.instance
+                          .logEvent(name: 'app_2_verificar_campos_adicionales');
                       context.pushNamed('Begini');
                     },
                     child: Container(
@@ -501,6 +504,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
+                      FirebaseAnalytics.instance
+                          .logEvent(name: 'app_2_verificar_campos_adicionales');
+
                       context.pushNamed('Profile_IncomeValidation');
                     },
                     child: Container(
@@ -589,6 +595,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
+                      FirebaseAnalytics.instance
+                          .logEvent(name: 'app_2_verificar_campos_adicionales');
+
                       context.pushNamed('Profile_BankAccount');
                     },
                     child: Container(
