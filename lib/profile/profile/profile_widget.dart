@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:prestonesto/backend/backend.dart';
 
@@ -421,6 +422,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                     onTap: () async {
                       FirebaseAnalytics.instance
                           .logEvent(name: 'app_2_verificar_campos_adicionales');
+                      FacebookAppEvents().logEvent(
+                        name: 'app_2_verificar_campos_adicionales',
+                      );
                       context.pushNamed('Begini');
                     },
                     child: Container(
@@ -506,6 +510,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                     onTap: () async {
                       FirebaseAnalytics.instance
                           .logEvent(name: 'app_2_verificar_campos_adicionales');
+                      FacebookAppEvents().logEvent(
+                        name: 'app_2_verificar_campos_adicionales',
+                      );
 
                       context.pushNamed('Profile_IncomeValidation');
                     },
@@ -596,6 +603,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                     highlightColor: Colors.transparent,
                     onTap: () async {
                       FirebaseAnalytics.instance
+                          .logEvent(name: 'app_2_verificar_campos_adicionales');
+                      FacebookAppEvents()
                           .logEvent(name: 'app_2_verificar_campos_adicionales');
 
                       context.pushNamed('Profile_BankAccount');

@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -171,6 +172,8 @@ class _BeginiWidgetState extends State<BeginiWidget> {
                       FFButtonWidget(
                         onPressed: () async {
                           FirebaseAnalytics.instance
+                              .logEvent(name: 'app_2_iniciar_prueba_begini');
+                          FacebookAppEvents()
                               .logEvent(name: 'app_2_iniciar_prueba_begini');
 
                           var _shouldSetState = false;

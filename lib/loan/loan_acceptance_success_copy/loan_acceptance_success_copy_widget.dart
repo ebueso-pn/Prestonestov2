@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -123,6 +124,9 @@ class _LoanAcceptanceSuccessCopyWidgetState
                   onPressed: () async {
                     FirebaseAnalytics.instance
                         .logEvent(name: 'app_3_firmar_Pagare');
+                    FacebookAppEvents().logEvent(
+                      name: 'app_3_firmar_Pagare',
+                    );
                     await launchURL(widget.signURL!);
                   },
                   text: '¡Firmar Ahora!',

@@ -128,6 +128,7 @@ dependencies:
   flutter_svg: ^2.0.9
   share_plus: ^6.3.4
   firebase_analytics: ^10.8.0
+  facebook_app_events: ^0.19.2
 
 dependency_overrides:
   device_info_plus: 8.0.0

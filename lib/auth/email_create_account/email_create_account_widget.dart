@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -475,6 +476,9 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                       if (token != null) await setFCMToken(token);
 
                       FirebaseAnalytics.instance.logEvent(name: 'crear_cuenta');
+                      FacebookAppEvents().logEvent(
+                        name: 'crear_cuenta',
+                      );
 
                       context.goNamedAuth(
                           'Application_LoanCalculator', context.mounted);

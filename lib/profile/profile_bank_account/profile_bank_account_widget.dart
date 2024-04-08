@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -674,6 +675,9 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                         ));
 
                         FirebaseAnalytics.instance.logEvent(
+                          name: 'app_2_ingresar_cuenta_bancaria',
+                        );
+                        FacebookAppEvents().logEvent(
                           name: 'app_2_ingresar_cuenta_bancaria',
                         );
                         FFAppState().userHasBankAccount = true;

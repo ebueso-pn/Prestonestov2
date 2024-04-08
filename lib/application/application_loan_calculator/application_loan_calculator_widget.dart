@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -643,6 +644,12 @@ class _ApplicationLoanCalculatorWidgetState
                                 parameters: {
                                   'clicks_en_monto': counter,
                                 });
+                            FacebookAppEvents().logEvent(
+                              name: 'app_calcular_monto_y_plazo',
+                              parameters: {
+                                'clicks_en_monto': counter,
+                              },
+                            );
                             counter = 0;
 
                             context.pushNamed(

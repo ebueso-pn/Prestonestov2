@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -796,6 +797,9 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
 
                       FirebaseAnalytics.instance
                           .logEvent(name: 'app_ingresar_direccion');
+                      FacebookAppEvents().logEvent(
+                        name: 'app_ingresar_direccion',
+                      );
 
                       context.pushNamed(
                         'Application_Map',

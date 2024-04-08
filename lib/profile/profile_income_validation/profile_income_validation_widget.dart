@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -610,6 +611,9 @@ class _ProfileIncomeValidationWidgetState
 
                               FirebaseAnalytics.instance.logEvent(
                                   name: 'app_2_ingresar_verificacion_ingresos');
+                              FacebookAppEvents().logEvent(
+                                name: 'app_2_ingresar_verificacion_ingresos',
+                              );
 
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

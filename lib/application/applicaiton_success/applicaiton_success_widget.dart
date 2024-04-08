@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -137,6 +138,9 @@ class _ApplicaitonSuccessWidgetState extends State<ApplicaitonSuccessWidget> {
                   onPressed: () async {
                     FirebaseAnalytics.instance
                         .logEvent(name: 'app_confirmar_applicacion_ingresada');
+                    FacebookAppEvents().logEvent(
+                      name: 'app_confirmar_applicacion_ingresada',
+                    );
 
                     context.pushNamed(
                       'Profile',

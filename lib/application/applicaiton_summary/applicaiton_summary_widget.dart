@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -395,6 +396,8 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                 FFButtonWidget(
                   onPressed: () async {
                     FirebaseAnalytics.instance
+                        .logEvent(name: 'app_visualizar_proceso_aplicacion');
+                    FacebookAppEvents()
                         .logEvent(name: 'app_visualizar_proceso_aplicacion');
                     context.pushNamed(
                       'Application_Name',
