@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -180,6 +181,9 @@ class _LoanSignatureSuccessWidgetState
                       onPressed: () async {
                         FirebaseAnalytics.instance.logEvent(
                             name: 'app_3_confirmacion_Pagare_firmado');
+                        FacebookAppEvents().logEvent(
+                          name: 'app_3_confirmacion_Pagare_firmado',
+                        );
 
                         // When a new pagare is signed, we need to reset the counter
                         SharedPreferences.getInstance().then((prefs) {

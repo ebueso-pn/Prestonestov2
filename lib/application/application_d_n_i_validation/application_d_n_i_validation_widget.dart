@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:prestonesto/application/application_d_n_i_validation/verification_model.dart';
 import 'package:prestonesto_shuftipro_sdk/prestonesto_shuftipro_sdk.dart';
@@ -400,6 +401,9 @@ class _ApplicationDNIValidationWidgetState
 
                             FirebaseAnalytics.instance
                                 .logEvent(name: 'app_validar_identidad');
+                            FacebookAppEvents().logEvent(
+                              name: 'app_validar_identidad',
+                            );
 
                             continueFun();
                           },

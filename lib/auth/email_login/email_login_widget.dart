@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:prestonesto/backend/backend.dart';
@@ -327,6 +328,9 @@ class _EmailLoginWidgetState extends State<EmailLoginWidget> {
 
                         FirebaseAnalytics.instance
                             .logEvent(name: 'login_ingresar_a_cuenta');
+                        FacebookAppEvents().logEvent(
+                          name: 'login_ingresar_a_cuenta',
+                        );
 
                         context.goNamedAuth(
                             'Application_LoanCalculator', context.mounted);

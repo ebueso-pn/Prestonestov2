@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:prestonesto/utils/config_reader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -599,8 +600,14 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                         FirebaseAnalytics.instance.logEvent(
                             name: 'app_3_aceptar_oferta',
                             parameters: {
-                              'ingresos-a-pantalla': counter,
+                              'ingresos_a_pantalla': counter,
                             });
+                        FacebookAppEvents().logEvent(
+                          name: 'app_3_aceptar_oferta',
+                          parameters: {
+                            'ingresos_a_pantalla': counter,
+                          },
+                        );
                       },
                       text: 'Aceptar',
                       options: FFButtonOptions(

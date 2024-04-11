@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -222,6 +223,9 @@ class _EmailForgotPasswordWidgetState extends State<EmailForgotPasswordWidget> {
 
                     FirebaseAnalytics.instance
                         .logEvent(name: 'login_recuperar_contrasena');
+                    FacebookAppEvents().logEvent(
+                      name: 'login_recuperar_contrasena',
+                    );
 
                     Navigator.pop(context);
                   },

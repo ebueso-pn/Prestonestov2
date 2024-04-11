@@ -1,6 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/gestures.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:facebook_app_events/facebook_app_events.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
@@ -219,7 +220,14 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
         FirebaseAnalytics.instance.logEvent(name: 'loan_perfil', parameters: {
           'loan_screen_counter': await _loanScreenCounter,
         });
+        FacebookAppEvents().logEvent(name: 'loan_perfil', parameters: {
+          'loan_screen_counter': await _loanScreenCounter,
+        });
         FirebaseAnalytics.instance
+            .logEvent(name: 'loan_calendario_pagos', parameters: {
+          'loan_calendar_counter': await _calendarScreenCounter,
+        });
+        FacebookAppEvents()
             .logEvent(name: 'loan_calendario_pagos', parameters: {
           'loan_calendar_counter': await _calendarScreenCounter,
         });
@@ -661,6 +669,10 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 onPressed: () async {
                                                   FirebaseAnalytics.instance
                                                       .logEvent(
+                                                    name:
+                                                        'loan_opciones_repago',
+                                                  );
+                                                  FacebookAppEvents().logEvent(
                                                     name:
                                                         'loan_opciones_repago',
                                                   );

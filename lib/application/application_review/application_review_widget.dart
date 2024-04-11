@@ -1,3 +1,4 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -657,6 +658,12 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                       final diff = end.difference(start);
 
                       FirebaseAnalytics.instance.logEvent(
+                        name: 'app_ingresar_applicacion',
+                        parameters: {
+                          'tiempo_en_pantalla_en_minutos': diff.inMinutes,
+                        },
+                      );
+                      FacebookAppEvents().logEvent(
                         name: 'app_ingresar_applicacion',
                         parameters: {
                           'tiempo_en_pantalla_en_minutos': diff.inMinutes,
