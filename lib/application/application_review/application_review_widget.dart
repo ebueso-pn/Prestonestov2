@@ -588,7 +588,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'PrestoNesto puede revisar mi credito',
+                                'Autorizo a Prestonesto S.A. a que revise mi historial crediticio en la Central de Riesgo',
                                 style: FlutterFlowTheme.of(context).labelMedium,
                               ),
                               Theme(

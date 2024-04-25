@@ -527,18 +527,27 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                             16.0, 16.0, 16.0, 16.0),
                         child: TextFormField(
                           controller: _model.ingresosController,
+                          keyboardType: TextInputType.number,
                           onChanged: (_) => EasyDebounce.debounce(
                             '_model.ingresosController',
                             Duration(milliseconds: 100),
                             () async {
                               if (_model.ingresosController.text != null &&
-                                  _model.ingresosController.text != '') {
-                                setState(() {
-                                  FFAppState().DNIapplicationState = false;
-                                });
+                                  _model.ingresosController.text != '' &&
+                                  _model.ingresosController.text.length > 3) {
+                                try {
+                                  double.parse(_model.ingresosController.text);
+                                  setState(() {
+                                    FFAppState().ingresoss = false;
+                                  });
+                                } catch (e) {
+                                  setState(() {
+                                    FFAppState().ingresoss = true;
+                                  });
+                                }
                               } else {
                                 setState(() {
-                                  FFAppState().DNIapplicationState = true;
+                                  FFAppState().ingresoss = true;
                                 });
                               }
                             },
@@ -596,7 +605,6 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           ),
                           style: FlutterFlowTheme.of(context).bodyMedium,
                           textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
                           validator: _model.ingresosControllerValidator
                               .asValidator(context),
                         ),
@@ -646,13 +654,24 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                         }
 
                         if (_model.ingresosController.text != null &&
-                            _model.ingresosController.text != '') {
+                            _model.ingresosController.text != '' &&
+                            _model.ingresosController.text.length > 3) {
+                          try {
+                            double.parse(_model.ingresosController.text);
+                            setState(() {
+                              FFAppState().ingresoss = false;
+                            });
+                          } catch (e) {
+                            setState(() {
+                              FFAppState().ingresoss = true;
+                            });
+                          }
                           setState(() {
-                            FFAppState().DNIapplicationState = false;
+                            FFAppState().ingresoss = false;
                           });
                         } else {
                           setState(() {
-                            FFAppState().DNIapplicationState = true;
+                            FFAppState().ingresoss = true;
                           });
                         }
 
