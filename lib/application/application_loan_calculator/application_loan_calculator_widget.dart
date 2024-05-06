@@ -155,7 +155,6 @@ class _ApplicationLoanCalculatorWidgetState
         parent: currentUserReference,
         queryBuilder: (applicationRecord) =>
             applicationRecord.orderBy('date_applied', descending: true),
-        singleRecord: true,
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
@@ -177,10 +176,12 @@ class _ApplicationLoanCalculatorWidgetState
         }
         List<ApplicationRecord> applicationLoanCalculatorApplicationRecordList =
             snapshot.data!;
-        final applicationLoanCalculatorApplicationRecord =
-            applicationLoanCalculatorApplicationRecordList.isNotEmpty
-                ? applicationLoanCalculatorApplicationRecordList.first
-                : null;
+        final hasApplied = applicationLoanCalculatorApplicationRecordList
+                .isNotEmpty
+            ? applicationLoanCalculatorApplicationRecordList.any((element) =>
+                (element.status == 'Enviada' || element.status == 'Denegada') &&
+                (functions.appIneligible(element.dateApplied!) == true))
+            : false;
         return GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(
@@ -559,13 +560,7 @@ class _ApplicationLoanCalculatorWidgetState
                         child: FFButtonWidget(
                           onPressed: () async {
                             var _shouldSetState = false;
-                            if ((applicationLoanCalculatorApplicationRecord
-                                        ?.status ==
-                                    'Enviada') &&
-                                (functions.appIneligible(
-                                        applicationLoanCalculatorApplicationRecord!
-                                            .dateApplied!) ==
-                                    true)) {
+                            if (hasApplied) {
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
