@@ -443,7 +443,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                         ).animateOnPageLoad(
                             animationsMap['containerOnPageLoadAnimation1']!),
                       ),
-                      !hasApplicationEnviada
+                      hasApplicationEnviada
                           ? Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 16.0, 0.0, 0.0),
@@ -453,7 +453,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                               ),
                             )
                           : Container(),
-                      !hasApplicationEnviada
+                      hasApplicationEnviada
                           ? Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 12.0, 16.0, 0.0),
@@ -551,7 +551,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                   'containerOnPageLoadAnimation2']!),
                             )
                           : Container(),
-                      !hasApplicationEnviada
+                      hasApplicationEnviada
                           ? Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 12.0, 16.0, 0.0),
@@ -658,7 +658,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                   'containerOnPageLoadAnimation2']!),
                             )
                           : Container(),
-                      !hasApplicationEnviada
+                      hasApplicationEnviada
                           ? Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 12.0, 16.0, 0.0),
