@@ -207,6 +207,10 @@ Map<String, dynamic> createUsersRecordData({
   String? departamento,
   String? residenceType,
   double? ingresoMensual,
+  List<String>? earningTypes,
+  bool? hasBankAccount,
+  bool?
+      hasGrantedCreditHistory, //Autorizacion para revisar el historial crediticio
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -232,6 +236,9 @@ Map<String, dynamic> createUsersRecordData({
       'departamento': departamento,
       'residence_type': residenceType,
       'ingreso_mensual': ingresoMensual,
+      'fuentes_ingreso': earningTypes,
+      'tiene_cuenta_bancaria': hasBankAccount,
+      'autorizacion_historial_crediticio': hasGrantedCreditHistory,
     }.withoutNulls,
   );
 

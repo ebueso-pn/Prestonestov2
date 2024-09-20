@@ -309,6 +309,76 @@ class _ApplicationLoanCalculatorWidgetState
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
+                          12.0, 24.0, 12.0, 12.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 75.0,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5.0,
+                              color: Color(0x3416202A),
+                              offset: Offset(0.0, 2.0),
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              12.0, 24.0, 12.0, 24.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment: AlignmentDirectional(0.0, 0.0),
+                                child: Text(
+                                  'Total a repagar al mes: ',
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleLarge
+                                      .override(
+                                        fontFamily: 'Urbanist',
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
+                              ),
+                              Text(
+                                formatNumber(
+                                  functions.loanCalculator(
+                                          valueOrDefault<double>(
+                                            _model.loanAmtValue,
+                                            1000.0,
+                                          ),
+                                          .033,
+                                          valueOrDefault<double>(
+                                            _model.loanTermValue,
+                                            3.0,
+                                          )) *
+                                      2,
+                                  formatType: FormatType.custom,
+                                  currency: 'L ',
+                                  format: '#,###.#',
+                                  locale: '',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .titleLarge
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      color:
+                                          FlutterFlowTheme.of(context).accent1,
+                                      fontSize: 18.0,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ).animateOnPageLoad(
+                          animationsMap['containerOnPageLoadAnimation1']!),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
                           12.0, 12.0, 12.0, 12.0),
                       child: Container(
                         width: double.infinity,
@@ -357,7 +427,7 @@ class _ApplicationLoanCalculatorWidgetState
                                           decimalType: DecimalType.automatic,
                                           currency: 'L ',
                                         ),
-                                        '1000',
+                                        '4000',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -379,9 +449,9 @@ class _ApplicationLoanCalculatorWidgetState
                                       FlutterFlowTheme.of(context).primary,
                                   inactiveColor:
                                       FlutterFlowTheme.of(context).alternate,
-                                  min: 0.0,
+                                  min: 4000.0,
                                   max: 25000.0,
-                                  value: _model.loanAmtValue ??= 0.0,
+                                  value: _model.loanAmtValue ??= 4000.0,
                                   label: _model.loanAmtValue.toString(),
                                   divisions: 25,
                                   onChanged: (newValue) {

@@ -29,6 +29,9 @@ class EmailCreateAccountModel extends FlutterFlowModel {
   TextEditingController? confirmPasswordController;
   late bool confirmPasswordVisibility;
   String? Function(BuildContext, String?)? confirmPasswordControllerValidator;
+  // State field(s) for emailAddress widget.
+  TextEditingController? dniController;
+  String? Function(BuildContext, String?)? dniControllerValidator;
 
   /// Initialization and disposal methods.
 
@@ -43,6 +46,7 @@ class EmailCreateAccountModel extends FlutterFlowModel {
     phoneNumberController?.dispose();
     passwordController?.dispose();
     confirmPasswordController?.dispose();
+    dniController?.dispose();
   }
 
   /// Action blocks are added here.

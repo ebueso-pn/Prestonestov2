@@ -38,6 +38,7 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
     _model.phoneNumberController ??= TextEditingController();
     _model.passwordController ??= TextEditingController();
     _model.confirmPasswordController ??= TextEditingController();
+    _model.dniController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -434,6 +435,68 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                   ),
                 ),
                 Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(24.0, 14.0, 24.0, 0.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 60.0,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _model.dniController,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'DNI',
+                        labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                        hintText: '',
+                        hintStyle:
+                            FlutterFlowTheme.of(context).labelMedium.override(
+                                  fontFamily: 'Urbanist',
+                                  fontStyle: FontStyle.italic,
+                                ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFF7A8087),
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primary,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).error,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).error,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        filled: true,
+                        fillColor:
+                            FlutterFlowTheme.of(context).secondaryBackground,
+                        contentPadding: EdgeInsetsDirectional.fromSTEB(
+                            24.0, 24.0, 20.0, 24.0),
+                      ),
+                      style: FlutterFlowTheme.of(context).bodyMedium,
+                      validator:
+                          _model.dniControllerValidator.asValidator(context),
+                    ),
+                  ),
+                ),
+                Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
@@ -444,6 +507,19 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                           SnackBar(
                             content: Text(
                               'Passwords don\'t match!',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
+                      final userSnapshot = await UsersRecord.collection
+                          .where('DNI', isEqualTo: _model.dniController.text)
+                          .get();
+                      if (userSnapshot.docs.isNotEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Algo salio mal, intenta de nuevo.',
                             ),
                           ),
                         );
@@ -465,6 +541,11 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                             phoneNumber: _model.phoneNumberController.text,
                           ));
 
+                      await UsersRecord.collection
+                          .doc()
+                          .set(createUsersRecordData(
+                            dni: _model.dniController.text,
+                          ));
                       await DocumentsRecord.collection
                           .doc()
                           .set(createDocumentsRecordData(

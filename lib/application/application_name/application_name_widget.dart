@@ -98,6 +98,27 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
     ),
   };
 
+  final List<DropdownMenuItem> ingresoMenusal = List.generate(
+      46,
+      (index) => DropdownMenuItem(
+          value: 5000 + index * 1000,
+          child: index == 45
+              ? Text('+${5000 + index * 1000}')
+              : Text('${5000 + index * 1000}')));
+  int selectedValue = 5000;
+
+  final Map<String, bool> earningTypes = {
+    'Salario': false,
+    'Negocio propio': false,
+    'Remesas': false,
+    'Otros': false,
+  };
+  String? earningTypeError;
+
+  bool hasBankAccount = false;
+  bool hasGrantedCreditHistory = false;
+  String? hasGrantedCreditHistoryError;
+
   @override
   void initState() {
     super.initState();
@@ -107,8 +128,29 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
     _model.apellidosController ??= TextEditingController();
     _model.dniController ??= TextEditingController();
     _model.ingresosController ??= TextEditingController();
+    _model.ingresosController.text = selectedValue.toString();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final userData =
+          await UsersRecord.collection.doc(currentUserReference!.id).get();
+      try {
+        _model.dniController.text = userData.get('DNI');
+      } catch (e) {
+        _model.dniController.text = '';
+      }
+      try {
+        _model.apellidosController.text = userData.get('apellidos');
+      } catch (e) {
+        _model.apellidosController.text = '';
+      }
+      try {
+        _model.nombresController.text = userData.get('nombres');
+      } catch (e) {
+        _model.nombresController.text = '';
+      }
+
+      setState(() {});
+    });
   }
 
   @override
@@ -276,6 +318,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                   autovalidateMode: AutovalidateMode.disabled,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
                         alignment: AlignmentDirectional(0.0, 0.0),
@@ -523,92 +566,283 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                         ),
                       ),
                       Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(16.0, 0, 16.0, 0),
+                          child: Text('Ingreso promedio mensual',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w400))),
+                      Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 0, 16.0, 16.0),
+                          child: Text(
+                            'El cual nos pueda comprobar',
+                            style: TextStyle(
+                                color: Color(0xFF757575), fontSize: 12),
+                          )),
+                      Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 16.0, 16.0, 16.0),
-                        child: TextFormField(
-                          controller: _model.ingresosController,
-                          keyboardType: TextInputType.number,
-                          onChanged: (_) => EasyDebounce.debounce(
-                            '_model.ingresosController',
-                            Duration(milliseconds: 100),
-                            () async {
-                              if (_model.ingresosController.text != null &&
-                                  _model.ingresosController.text != '' &&
-                                  _model.ingresosController.text.length > 3) {
-                                try {
-                                  double.parse(_model.ingresosController.text);
-                                  setState(() {
-                                    FFAppState().ingresoss = false;
-                                  });
-                                } catch (e) {
-                                  setState(() {
-                                    FFAppState().ingresoss = true;
-                                  });
-                                }
-                              } else {
-                                setState(() {
-                                  FFAppState().ingresoss = true;
-                                });
-                              }
-                            },
-                          ),
-                          onFieldSubmitted: (_) async {
-                            await currentUserReference!
-                                .update(createUsersRecordData(
-                              dni: '',
-                            ));
-                          },
-                          textCapitalization: TextCapitalization.none,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelText: 'Ingreso Mensual Promedio*',
-                            labelStyle: FlutterFlowTheme.of(context).labelLarge,
-                            hintText: 'L.  5,000',
-                            hintStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Urbanist',
-                                  fontStyle: FontStyle.italic,
+                        child: SizedBox(
+                          height: 60,
+                          child: InputDecorator(
+                            decoration: InputDecoration(
+                              isDense: true,
+                              labelText: 'Selecciona un valor',
+                              labelStyle:
+                                  FlutterFlowTheme.of(context).labelMedium,
+                              hintText: selectedValue.toString(),
+                              hintStyle: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Urbanist',
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  width: 2.0,
                                 ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FFAppState().ingresoss == true
-                                    ? FlutterFlowTheme.of(context).error
-                                    : FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
+                                borderRadius: BorderRadius.circular(42.0),
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(42.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).error,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(42.0),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).error,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(42.0),
+                              ),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FFAppState().ingresoss == true
-                                    ? FlutterFlowTheme.of(context).error
-                                    : FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<dynamic>(
+                                padding: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                            0.5 -
+                                        60),
+                                isExpanded: true,
+                                value: selectedValue,
+                                items: ingresoMenusal,
+                                hint: Text(
+                                  selectedValue.toString(),
+                                  textAlign: TextAlign.center,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                onChanged: (dynamic value) {
+                                  setState(() {
+                                    selectedValue = value;
+                                    _model.ingresosController.text =
+                                        selectedValue.toString();
+                                  });
+                                },
                               ),
-                              borderRadius: BorderRadius.circular(42.0),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(42.0),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(42.0),
                             ),
                           ),
-                          style: FlutterFlowTheme.of(context).bodyMedium,
-                          textAlign: TextAlign.center,
-                          validator: _model.ingresosControllerValidator
-                              .asValidator(context),
                         ),
                       ),
+                      Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(16.0, 0, 16.0, 0),
+                          child: Text('Fuente principal de ingresos',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w400))),
+                      Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 0, 16.0, 16.0),
+                          child: Text(
+                            'Seleccione las que apliquen',
+                            style: TextStyle(
+                                color: Color(0xFF757575), fontSize: 12),
+                          )),
+                      SizedBox(
+                        height: 120,
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2, childAspectRatio: 4),
+                          itemCount: 4,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0, 16.0, 16.0),
+                              child: FFButtonWidget(
+                                onPressed: () {
+                                  setState(() {
+                                    earningTypes[
+                                        earningTypes.keys
+                                            .elementAt(index)] = !earningTypes[
+                                        earningTypes.keys.elementAt(index)]!;
+                                    earningTypeError = null;
+                                  });
+                                },
+                                text: earningTypes.keys.elementAt(index),
+                                options: FFButtonOptions(
+                                  width: 80.0,
+                                  color: earningTypes[
+                                          earningTypes.keys.elementAt(index)]!
+                                      ? FlutterFlowTheme.of(context).primary
+                                      : Colors.black,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Urbanist',
+                                        color: Colors.white,
+                                      ),
+                                  elevation: 3.0,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      earningTypeError != null
+                          ? Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0, 16.0, 16.0),
+                              child: Text(
+                                earningTypeError!,
+                                style: TextStyle(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    fontSize: 12),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                      Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 0, 16.0, 16.0),
+                          child: Text('Tiene una cuenta bancaria a su nombre?',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w400))),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FFButtonWidget(
+                              text: 'Si',
+                              onPressed: () {
+                                setState(() {
+                                  hasBankAccount = true;
+                                });
+                              },
+                              options: FFButtonOptions(
+                                width: MediaQuery.of(context).size.width * 0.5 -
+                                    32,
+                                color: hasBankAccount
+                                    ? FlutterFlowTheme.of(context).primary
+                                    : Colors.black,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      color: Colors.white,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                              )),
+                          const SizedBox(width: 32),
+                          FFButtonWidget(
+                              text: 'No',
+                              onPressed: () {
+                                setState(() {
+                                  hasBankAccount = false;
+                                });
+                              },
+                              options: FFButtonOptions(
+                                width: MediaQuery.of(context).size.width * 0.5 -
+                                    32,
+                                color: !hasBankAccount
+                                    ? FlutterFlowTheme.of(context).primary
+                                    : Colors.black,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      color: Colors.white,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                              )),
+                        ],
+                      ),
+                      Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 16.0, 16.0, 16.0),
+                          child: Text(
+                              'Autoriza a Prestonesto a revisar su historial crediticio en el Buró de Crédito?',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w400))),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(16.0, 0, 16.0, 16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            FFButtonWidget(
+                                text: 'Si',
+                                onPressed: () {
+                                  setState(() {
+                                    hasGrantedCreditHistory =
+                                        !hasGrantedCreditHistory;
+
+                                    hasGrantedCreditHistoryError = null;
+                                  });
+                                },
+                                options: FFButtonOptions(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.5 -
+                                          32,
+                                  color: hasGrantedCreditHistory
+                                      ? FlutterFlowTheme.of(context).primary
+                                      : Colors.black,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Urbanist',
+                                        color: Colors.white,
+                                      ),
+                                  elevation: 3.0,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
+                                )),
+                          ],
+                        ),
+                      ),
+                      hasGrantedCreditHistoryError != null
+                          ? Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0, 16.0, 16.0),
+                              child: Text(
+                                hasGrantedCreditHistoryError!,
+                                style: TextStyle(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    fontSize: 12),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
                     ],
                   ).animateOnPageLoad(
                       animationsMap['columnOnPageLoadAnimation']!),
@@ -679,6 +913,27 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                             !_model.formKey.currentState!.validate()) {
                           return;
                         }
+                        bool allFalse = true;
+                        earningTypes.forEach((key, value) {
+                          if (value) {
+                            allFalse = false;
+                          }
+                        });
+                        if (allFalse) {
+                          setState(() {
+                            earningTypeError =
+                                'Debes seleccionar al menos una fuente de ingresos';
+                          });
+                          return;
+                        }
+
+                        if (!hasGrantedCreditHistory) {
+                          setState(() {
+                            hasGrantedCreditHistoryError =
+                                'Debes autorizar a Prestonesto a revisar tu historial crediticio para continuar';
+                          });
+                          return;
+                        }
 
                         await currentUserReference!
                             .update(createUsersRecordData(
@@ -687,6 +942,11 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           dni: (_model.dniController.text).replaceAll('-', ''),
                           ingresoMensual:
                               double.tryParse(_model.ingresosController.text),
+                          hasBankAccount: hasBankAccount,
+                          earningTypes: earningTypes.keys
+                              .where((element) => earningTypes[element]!)
+                              .toList(),
+                          hasGrantedCreditHistory: hasGrantedCreditHistory,
                         ));
 
                         await widget.applicationRecieve!.update({
