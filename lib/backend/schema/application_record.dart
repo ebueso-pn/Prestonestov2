@@ -214,6 +214,9 @@ Map<String, dynamic> createApplicationRecordData({
   int? index,
   bool? bureauConsent,
   String? idVerifcationResult,
+  String? shuftiAdditional,
+  Map<String, dynamic>? shuftiData,
+  Map<String, dynamic>? verificationResult,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -237,6 +240,9 @@ Map<String, dynamic> createApplicationRecordData({
       'index': index,
       'bureau_consent': bureauConsent,
       'id_verifcation_result': idVerifcationResult,
+      'shufti_data': shuftiData,
+      'id_verification_result': verificationResult,
+      'shufti_addtional': shuftiAdditional,
     }.withoutNulls,
   );
 

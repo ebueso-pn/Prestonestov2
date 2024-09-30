@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:prestonesto/app/nav_bar.dart';
+import 'package:prestonesto/application/application_carrousel/application_carrousel_screen.dart';
 import 'package:prestonesto/privacy_policy/privacy_policy_widget.dart';
 import 'package:prestonesto/profile/begini/begini_widget.dart';
 import 'package:prestonesto/profile/begini/widgets/begini_success_widget.dart';
@@ -112,9 +113,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/applicationName',
           requireAuth: true,
           builder: (context, params) => ApplicationNameWidget(
-            applicationRecieve: params.getParam('applicationRecieve',
-                ParamType.DocumentReference, false, ['users', 'application']),
-          ),
+              //applicationRecieve: params.getParam('applicationRecieve',
+              //ParamType.DocumentReference, false, ['users', 'application']),
+              ),
         ),
         FFRoute(
           name: 'Help',
@@ -128,8 +129,28 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           requireAuth: true,
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'Application_LoanCalculator')
-              : ApplicationLoanCalculatorWidget(),
+              : ApplicationLoanCalculatorWidget(
+                  applicationRecieve: params.getParam(
+                      'applicationRecieve',
+                      ParamType.DocumentReference,
+                      false,
+                      ['users', 'application']),
+                  equifaxStatus:
+                      params.getParam('equifaxStatus', ParamType.String),
+                ),
         ),
+        FFRoute(
+            name: 'Application_Carrousel',
+            path: '/ApplicationCarrousel',
+            builder: (context, params) => ApplicationCarrouselWidget(
+                  applicationRecieve: params.getParam(
+                      'applicationRecieve',
+                      ParamType.DocumentReference,
+                      false,
+                      ['users', 'application']),
+                  equifaxStatus:
+                      params.getParam('equifaxStatus', ParamType.String),
+                )),
         FFRoute(
           name: 'Application_Address',
           path: '/applicationAddress',
@@ -178,10 +199,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Applicaiton_Summary',
           path: '/applicaitonSummary',
-          builder: (context, params) => ApplicaitonSummaryWidget(
-            applicationRecieve: params.getParam('applicationRecieve',
-                ParamType.DocumentReference, false, ['users', 'application']),
-          ),
+          builder: (context, params) => ApplicaitonSummaryWidget(),
         ),
         FFRoute(
           name: 'Application_Map',
@@ -195,9 +213,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Application_DNI_Validation',
           path: '/Application_DNI_Validation',
           builder: (context, params) => ApplicationDNIValidationWidget(
-            applicationRecieve: params.getParam('applicationRecieve',
-                ParamType.DocumentReference, false, ['users', 'application']),
-          ),
+              //applicationRecieve: params.getParam('applicationRecieve',
+              //ParamType.DocumentReference, false, ['users', 'application']),
+              ),
         ),
         FFRoute(
           name: 'Profile_Edit',

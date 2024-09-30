@@ -646,12 +646,13 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                         bureauConsent: _model.checkboxValue,
                       ));
 
-                      await EquifaxRecord.collection
+                      /*await EquifaxRecord.collection
                           .doc()
                           .set(createEquifaxRecordData(
                             userDocReference: currentUserReference,
                             applicationDocReference: widget.applicationRecieve,
                           ));
+                          */
                       FFAppState().ApplicationEnviada = true;
 
                       end = DateTime.now();

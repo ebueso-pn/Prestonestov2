@@ -8,13 +8,9 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_name_model.dart';
@@ -23,10 +19,7 @@ export 'application_name_model.dart';
 class ApplicationNameWidget extends StatefulWidget {
   const ApplicationNameWidget({
     Key? key,
-    required this.applicationRecieve,
   }) : super(key: key);
-
-  final DocumentReference? applicationRecieve;
 
   @override
   _ApplicationNameWidgetState createState() => _ApplicationNameWidgetState();
@@ -134,7 +127,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
       final userData =
           await UsersRecord.collection.doc(currentUserReference!.id).get();
       try {
-        _model.dniController.text = userData.get('DNI');
+        _model.dniController.text = toDniFormat(userData.get('DNI'));
       } catch (e) {
         _model.dniController.text = '';
       }
@@ -151,6 +144,13 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
 
       setState(() {});
     });
+  }
+
+  String toDniFormat(String dni) {
+    final firstFour = dni.substring(0, 4);
+    final secondFour = dni.substring(4, 8);
+    final lastFive = dni.substring(8);
+    return '$firstFour-$secondFour-$lastFive';
   }
 
   @override
@@ -203,9 +203,10 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
-                                  await widget.applicationRecieve!.update({
-                                    'index': FieldValue.increment(-(1)),
-                                  });
+                                  //@TODO: revisar index
+                                  //await widget.applicationRecieve!.update({
+                                  //  'index': FieldValue.increment(-(1)),
+                                  //});
                                   context.pop();
                                 },
                               ),
@@ -250,7 +251,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Expanded(
+                      /*Expanded(
                         child: Container(
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
@@ -296,7 +297,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                             },
                           ),
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),
@@ -575,7 +576,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 0, 16.0, 16.0),
                           child: Text(
-                            'El cual nos pueda comprobar',
+                            'El cual nos puedas comprobar',
                             style: TextStyle(
                                 color: Color(0xFF757575), fontSize: 12),
                           )),
@@ -662,7 +663,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 0, 16.0, 16.0),
                           child: Text(
-                            'Seleccione las que apliquen',
+                            'Seleccionar las que apliquen',
                             style: TextStyle(
                                 color: Color(0xFF757575), fontSize: 12),
                           )),
@@ -727,7 +728,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                       Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 0, 16.0, 16.0),
-                          child: Text('Tiene una cuenta bancaria a su nombre?',
+                          child: Text('Tienes una cuenta bancaria a tu nombre?',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w400))),
                       Row(
@@ -790,7 +791,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 16.0, 16.0, 16.0),
                           child: Text(
-                              'Autoriza a Prestonesto a revisar su historial crediticio en el Buró de Crédito?',
+                              'Autorizas a Prestonesto a revisar su historial crediticio en el Buró de Crédito?',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w400))),
                       Padding(
@@ -949,9 +950,10 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           hasGrantedCreditHistory: hasGrantedCreditHistory,
                         ));
 
-                        await widget.applicationRecieve!.update({
-                          'index': FieldValue.increment(1),
-                        });
+                        //@TODO: revisar index
+                        //await widget.applicationRecieve!.update({
+                        //  'index': FieldValue.increment(1),
+                        //});
 
                         FirebaseAnalytics.instance
                             .logEvent(name: 'app_ingresar_datos_basicos');
@@ -961,12 +963,13 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
 
                         context.pushNamed(
                           'Application_DNI_Validation',
-                          queryParameters: {
+                          /*queryParameters: {
                             'applicationRecieve': serializeParam(
                               widget.applicationRecieve,
                               ParamType.DocumentReference,
                             ),
                           }.withoutNulls,
+                          */
                         );
                       },
                       text: 'Continuar',

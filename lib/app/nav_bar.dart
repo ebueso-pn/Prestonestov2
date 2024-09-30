@@ -1,12 +1,10 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:prestonesto/application/application_loan_calculator/application_loan_calculator_widget.dart';
 import 'package:prestonesto/auth/firebase_auth/auth_util.dart';
 import 'package:prestonesto/backend/backend.dart';
 import 'package:prestonesto/flutter_flow/flutter_flow_theme.dart';
 import 'package:prestonesto/flutter_flow/flutter_flow_util.dart';
-import 'package:prestonesto/home/home_widget.dart';
-import 'package:prestonesto/profile/profile/profile_widget.dart';
+import 'package:prestonesto/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NavBarPage extends StatefulWidget {
@@ -21,7 +19,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'Application_LoanCalculator';
+  String _currentPageName = 'Applicaiton_Summary';
   late Widget? _currentPage;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
@@ -38,7 +36,8 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'Home': HomeWidget(),
-      'Application_LoanCalculator': ApplicationLoanCalculatorWidget(),
+      //'Application_LoanCalculator': ApplicationLoanCalculatorWidget(),
+      'Applicaiton_Summary': ApplicaitonSummaryWidget(),
       'Profile': ProfileWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);

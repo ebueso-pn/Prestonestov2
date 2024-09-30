@@ -29,6 +29,9 @@ class ApplicationDNIValidationModel extends FlutterFlowModel {
 
   final unfocusNode = FocusNode();
 
+  // Stores action output result for [Backend Call - Create Document] action in Button widget.
+  ApplicationRecord? createdAppVar;
+
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}

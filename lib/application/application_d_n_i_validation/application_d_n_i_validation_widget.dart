@@ -1,6 +1,8 @@
+import 'package:http/http.dart' as http;
 import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:prestonesto/application/application_d_n_i_validation/verification_model.dart';
+import 'package:prestonesto/auth/firebase_auth/auth_util.dart';
 import 'package:prestonesto_shuftipro_sdk/prestonesto_shuftipro_sdk.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -22,10 +24,7 @@ String secretKey = "gIKH3kN6Gx53Fsr7bt0Lx9vb9fviWfft"; // enter secret key here
 class ApplicationDNIValidationWidget extends StatefulWidget {
   const ApplicationDNIValidationWidget({
     Key? key,
-    required this.applicationRecieve,
   }) : super(key: key);
-
-  final DocumentReference? applicationRecieve;
 
   @override
   _ApplicationDNIValidationWidgetState createState() =>
@@ -162,13 +161,29 @@ class _ApplicationDNIValidationWidgetState
             "Verification Success",
           ),
         ));
-        await widget.applicationRecieve!.update({
-          'shufti_data': verificationResponse.verificationData!.toJson(),
-          'id_verification_result':
-              verificationResponse.verificationResult!.toJson(),
-          'shufti_addtional': '',
-          'index': FieldValue.increment((1)),
+        var applicationRecordReference =
+            ApplicationRecord.createDoc(currentUserReference!);
+        await applicationRecordReference.set({
+          ...createApplicationRecordData(
+            shuftiData: verificationResponse.verificationData!.toJson(),
+            verificationResult:
+                verificationResponse.verificationResult!.toJson(),
+            shuftiAdditional: '',
+            index: 1,
+          ),
+          'date_applied': DateTime.now(),
         });
+
+        _model.createdAppVar = ApplicationRecord.getDocumentFromData({
+          ...createApplicationRecordData(
+            shuftiData: verificationResponse.verificationData!.toJson(),
+            verificationResult:
+                verificationResponse.verificationResult!.toJson(),
+            shuftiAdditional: '',
+            index: 1,
+          ),
+          'date_applied': DateTime.now(),
+        }, applicationRecordReference);
         setState(() {
           _model.buttonDisplay = true;
         });
@@ -270,9 +285,10 @@ class _ApplicationDNIValidationWidgetState
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
-                                  await widget.applicationRecieve!.update({
-                                    'index': FieldValue.increment(-(1)),
-                                  });
+                                  //@TODO: revisar index
+                                  //await widget.applicationRecieve!.update({
+                                  //  'index': FieldValue.increment(-(1)),
+                                  //});
                                   context.pop();
                                 },
                               ),
@@ -317,6 +333,7 @@ class _ApplicationDNIValidationWidgetState
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      /*
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
@@ -368,7 +385,7 @@ class _ApplicationDNIValidationWidgetState
                             ),
                           ),
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),
@@ -436,13 +453,49 @@ class _ApplicationDNIValidationWidgetState
                             0.0, 100.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            await EquifaxRecord.collection
+                                .doc()
+                                .set(createEquifaxRecordData(
+                                  userDocReference: currentUserReference,
+                                  applicationDocReference:
+                                      _model.createdAppVar?.reference,
+                                ));
+                            final equifaxData = await EquifaxRecord.collection
+                                .where('UserDocReference',
+                                    isEqualTo: currentUserReference)
+                                .where('ApplicationDocReference',
+                                    isEqualTo: _model.createdAppVar?.reference)
+                                .get();
+                            final id = equifaxData.docs.first.id;
+
+                            final body = {
+                              'equifaxId': id,
+                            };
+                            String appStatus = '';
+                            try {
+                              final response = await http.post(
+                                  Uri.https(
+                                      'equifaxintegration-if22ukzoiq-uc.a.run.app',
+                                      ''),
+                                  body: body);
+                              if (response.statusCode == 200) {
+                                appStatus =
+                                    jsonDecode(response.body)['app_status'];
+                              } else {
+                                appStatus = 'DENEGADA';
+                              }
+                            } catch (e) {
+                              appStatus = 'DENEGADA';
+                              print(e);
+                            }
                             dynamic returnResult = await context.pushNamed(
-                              'Application_Address',
+                              'Application_Carrousel',
                               queryParameters: {
                                 'applicationRecieve': serializeParam(
-                                  widget.applicationRecieve,
+                                  _model.createdAppVar?.reference,
                                   ParamType.DocumentReference,
                                 ),
+                                'equifaxStatus': appStatus,
                               }.withoutNulls,
                             );
                             if (returnResult == "Refresh") {

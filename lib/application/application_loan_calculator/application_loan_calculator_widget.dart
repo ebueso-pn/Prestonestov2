@@ -17,8 +17,32 @@ import 'package:provider/provider.dart';
 import 'application_loan_calculator_model.dart';
 export 'application_loan_calculator_model.dart';
 
+enum EquifaxStatus {
+  CONTINUE,
+  CONTINUE_NO_SCORE,
+  DENEGADA;
+
+  static EquifaxStatus fromString(String value) {
+    switch (value) {
+      case 'CONTINUE':
+        return EquifaxStatus.CONTINUE;
+      case 'CONTINUE_NO_SCORE':
+        return EquifaxStatus.CONTINUE_NO_SCORE;
+      case 'DENEGADA':
+        return EquifaxStatus.DENEGADA;
+      default:
+        return EquifaxStatus.DENEGADA;
+    }
+  }
+}
+
 class ApplicationLoanCalculatorWidget extends StatefulWidget {
-  const ApplicationLoanCalculatorWidget({Key? key}) : super(key: key);
+  const ApplicationLoanCalculatorWidget(
+      {Key? key, required this.applicationRecieve, required this.equifaxStatus})
+      : super(key: key);
+
+  final DocumentReference? applicationRecieve;
+  final String equifaxStatus;
 
   @override
   _ApplicationLoanCalculatorWidgetState createState() =>
@@ -149,6 +173,16 @@ class _ApplicationLoanCalculatorWidgetState
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
+
+    if (EquifaxStatus.fromString(widget.equifaxStatus) ==
+        EquifaxStatus.DENEGADA) {
+      return Scaffold(
+        body: Container(),
+      );
+    }
+
+    final bool isEquifaxCero = EquifaxStatus.fromString(widget.equifaxStatus) ==
+        EquifaxStatus.CONTINUE_NO_SCORE;
 
     return StreamBuilder<List<ApplicationRecord>>(
       stream: queryApplicationRecord(
@@ -282,7 +316,7 @@ class _ApplicationLoanCalculatorWidgetState
                                         _model.loanAmtValue,
                                         1000.0,
                                       ),
-                                      .033,
+                                      .055,
                                       valueOrDefault<double>(
                                         _model.loanTermValue,
                                         3.0,
@@ -351,7 +385,7 @@ class _ApplicationLoanCalculatorWidgetState
                                             _model.loanAmtValue,
                                             1000.0,
                                           ),
-                                          .033,
+                                          .055,
                                           valueOrDefault<double>(
                                             _model.loanTermValue,
                                             3.0,
@@ -427,7 +461,7 @@ class _ApplicationLoanCalculatorWidgetState
                                           decimalType: DecimalType.automatic,
                                           currency: 'L ',
                                         ),
-                                        '4000',
+                                        isEquifaxCero ? '2000' : '4000',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -449,8 +483,8 @@ class _ApplicationLoanCalculatorWidgetState
                                       FlutterFlowTheme.of(context).primary,
                                   inactiveColor:
                                       FlutterFlowTheme.of(context).alternate,
-                                  min: 4000.0,
-                                  max: 25000.0,
+                                  min: isEquifaxCero ? 2000.0 : 4000.0,
+                                  max: isEquifaxCero ? 5000.0 : 25000.0,
                                   value: _model.loanAmtValue ??= 4000.0,
                                   label: _model.loanAmtValue.toString(),
                                   divisions: 25,
@@ -540,7 +574,7 @@ class _ApplicationLoanCalculatorWidgetState
                                 inactiveColor:
                                     FlutterFlowTheme.of(context).alternate,
                                 min: 3.0,
-                                max: 12.0,
+                                max: isEquifaxCero ? 6.0 : 12.0,
                                 value: _model.loanTermValue ??= 3.0,
                                 label: _model.loanTermValue.toString(),
                                 divisions: 3,
@@ -585,7 +619,7 @@ class _ApplicationLoanCalculatorWidgetState
                               Align(
                                 alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: Text(
-                                  'Tasa de Interes: 3.3% mensual',
+                                  'Tasa de Interes: 5.5% mensual',
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
                                 ),
@@ -674,6 +708,16 @@ class _ApplicationLoanCalculatorWidgetState
                               return;
                             }
 
+                            await widget.applicationRecieve!.update({
+                              'monto': _model.loanAmtValue,
+                              'plazo_meses': _model.loanTermValue,
+                              'cuota': functions.loanCalculator(
+                                  _model.loanAmtValue!,
+                                  .055,
+                                  _model.loanTermValue!),
+                              'index': FieldValue.increment((1)),
+                            });
+                            /*
                             var applicationRecordReference =
                                 ApplicationRecord.createDoc(
                                     currentUserReference!);
@@ -683,7 +727,7 @@ class _ApplicationLoanCalculatorWidgetState
                                 plazoMeses: _model.loanTermValue,
                                 cuota: functions.loanCalculator(
                                     _model.loanAmtValue!,
-                                    .033,
+                                    .055,
                                     _model.loanTermValue!),
                                 index: 1,
                               ),
@@ -696,12 +740,13 @@ class _ApplicationLoanCalculatorWidgetState
                                 plazoMeses: _model.loanTermValue,
                                 cuota: functions.loanCalculator(
                                     _model.loanAmtValue!,
-                                    .033,
+                                    .055,
                                     _model.loanTermValue!),
                                 index: 1,
                               ),
                               'date_applied': DateTime.now(),
                             }, applicationRecordReference);
+                                */
                             _shouldSetState = true;
 
                             await FirebaseAnalytics.instance.logEvent(
@@ -718,10 +763,10 @@ class _ApplicationLoanCalculatorWidgetState
                             counter = 0;
 
                             context.pushNamed(
-                              'Applicaiton_Summary',
+                              'Application_Address',
                               queryParameters: {
                                 'applicationRecieve': serializeParam(
-                                  _model.createdAppVar?.reference,
+                                  widget.applicationRecieve,
                                   ParamType.DocumentReference,
                                 ),
                               }.withoutNulls,

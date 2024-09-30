@@ -443,6 +443,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                         ).animateOnPageLoad(
                             animationsMap['containerOnPageLoadAnimation1']!),
                       ),
+                      /* Mover a ultimos pasos applicacion enviada
                       hasApplicationEnviada
                           ? Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -756,6 +757,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                   'containerOnPageLoadAnimation3']!),
                             )
                           : Container(),
+                          */
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 16.0, 0.0, 0.0),
@@ -993,6 +995,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                   },
                                 ) ??
                                 false;
+                            if (!confirmDialogResponse) {
+                              return;
+                            }
                             await removeFCMToken();
                             GoRouter.of(context).prepareAuthEvent();
                             await authManager.signOut();

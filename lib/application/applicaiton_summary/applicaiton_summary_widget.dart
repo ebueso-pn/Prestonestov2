@@ -15,10 +15,10 @@ export 'applicaiton_summary_model.dart';
 class ApplicaitonSummaryWidget extends StatefulWidget {
   const ApplicaitonSummaryWidget({
     Key? key,
-    required this.applicationRecieve,
+    //required this.applicationRecieve,
   }) : super(key: key);
 
-  final DocumentReference? applicationRecieve;
+  //final DocumentReference? applicationRecieve;
 
   @override
   _ApplicaitonSummaryWidgetState createState() =>
@@ -87,9 +87,9 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
-                                  await widget.applicationRecieve!.update({
-                                    'index': FieldValue.increment(-(1)),
-                                  });
+                                  //await widget.applicationRecieve!.update({
+                                  //  'index': FieldValue.increment(-(1)),
+                                  //});
                                   context.pop();
                                 },
                               ),
@@ -191,7 +191,7 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'Elegir un monto y plazo',
+                              'Ingresa tus datos personales',
                               style: FlutterFlowTheme.of(context).bodyLarge,
                             ),
                           ],
@@ -245,6 +245,53 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                         children: [
                           Text(
                             'Tomarle foto a tu DNI y una selfie',
+                            style: FlutterFlowTheme.of(context).bodyLarge,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 16.0,
+                            height: 16.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).alternate,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          Container(
+                            width: 2.0,
+                            height: 50.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).alternate,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * 0.85,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            'Elegir un monto y plazo',
                             style: FlutterFlowTheme.of(context).bodyLarge,
                           ),
                         ],
@@ -401,12 +448,6 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                         .logEvent(name: 'app_visualizar_proceso_aplicacion');
                     context.pushNamed(
                       'Application_Name',
-                      queryParameters: {
-                        'applicationRecieve': serializeParam(
-                          widget.applicationRecieve,
-                          ParamType.DocumentReference,
-                        ),
-                      }.withoutNulls,
                     );
                   },
                   text: 'Continuar',
