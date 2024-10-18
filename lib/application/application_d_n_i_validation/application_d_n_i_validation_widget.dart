@@ -166,6 +166,7 @@ class _ApplicationDNIValidationWidgetState
         await applicationRecordReference.set({
           ...createApplicationRecordData(
             shuftiData: verificationResponse.verificationData!.toJson(),
+            status: 'Iniciada',
             verificationResult:
                 verificationResponse.verificationResult!.toJson(),
             shuftiAdditional: '',
@@ -177,6 +178,7 @@ class _ApplicationDNIValidationWidgetState
         _model.createdAppVar = ApplicationRecord.getDocumentFromData({
           ...createApplicationRecordData(
             shuftiData: verificationResponse.verificationData!.toJson(),
+            status: 'Iniciada',
             verificationResult:
                 verificationResponse.verificationResult!.toJson(),
             shuftiAdditional: '',
@@ -489,7 +491,7 @@ class _ApplicationDNIValidationWidgetState
                               print(e);
                             }
                             dynamic returnResult = await context.pushNamed(
-                              'Application_Carrousel',
+                              'Application_LoanCalculator',
                               queryParameters: {
                                 'applicationRecieve': serializeParam(
                                   _model.createdAppVar?.reference,

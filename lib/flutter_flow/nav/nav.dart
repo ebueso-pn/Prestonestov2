@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:prestonesto/app/nav_bar.dart';
 import 'package:prestonesto/application/application_carrousel/application_carrousel_screen.dart';
+import 'package:prestonesto/application/application_documents/application_documents_screen.dart';
 import 'package:prestonesto/privacy_policy/privacy_policy_widget.dart';
 import 'package:prestonesto/profile/begini/begini_widget.dart';
 import 'package:prestonesto/profile/begini/widgets/begini_success_widget.dart';
@@ -150,6 +151,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                       ['users', 'application']),
                   equifaxStatus:
                       params.getParam('equifaxStatus', ParamType.String),
+                )),
+        FFRoute(
+            name: 'Application_UploadDocs',
+            path: '/ApplicationUploadDocs',
+            builder: (context, params) => ApplicationDocuments(
+                  applicationRecieve: params.getParam(
+                      'applicationRecieve',
+                      ParamType.DocumentReference,
+                      false,
+                      ['users', 'application']),
                 )),
         FFRoute(
           name: 'Application_Address',

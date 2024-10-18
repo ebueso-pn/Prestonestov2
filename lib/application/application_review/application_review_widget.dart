@@ -572,52 +572,6 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             thickness: 2,
                             color: FlutterFlowTheme.of(context).alternate,
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                              child: Text(
-                                'Autorización',
-                                style: FlutterFlowTheme.of(context).labelLarge,
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Autorizo a Prestonesto S.A. a que revise mi historial crediticio en la Central de Riesgo',
-                                style: FlutterFlowTheme.of(context).labelMedium,
-                              ),
-                              Theme(
-                                data: ThemeData(
-                                  checkboxTheme: CheckboxThemeData(
-                                    visualDensity: VisualDensity.compact,
-                                    materialTapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                  ),
-                                  unselectedWidgetColor:
-                                      FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                ),
-                                child: Checkbox(
-                                  value: _model.checkboxValue ??= true,
-                                  onChanged: (newValue) async {
-                                    setState(
-                                        () => _model.checkboxValue = newValue!);
-                                  },
-                                  activeColor:
-                                      FlutterFlowTheme.of(context).primary,
-                                  checkColor: FlutterFlowTheme.of(context).info,
-                                ),
-                              ),
-                            ],
-                          ),
                         ],
                       );
                     },

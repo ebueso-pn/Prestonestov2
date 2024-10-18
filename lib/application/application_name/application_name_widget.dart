@@ -695,7 +695,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                                   color: earningTypes[
                                           earningTypes.keys.elementAt(index)]!
                                       ? FlutterFlowTheme.of(context).primary
-                                      : Colors.black,
+                                      : Colors.grey,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
@@ -746,7 +746,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                                     32,
                                 color: hasBankAccount
                                     ? FlutterFlowTheme.of(context).primary
-                                    : Colors.black,
+                                    : Colors.grey,
                                 textStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
@@ -772,7 +772,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                                     32,
                                 color: !hasBankAccount
                                     ? FlutterFlowTheme.of(context).primary
-                                    : Colors.black,
+                                    : Colors.grey,
                                 textStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
@@ -816,7 +816,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                                           32,
                                   color: hasGrantedCreditHistory
                                       ? FlutterFlowTheme.of(context).primary
-                                      : Colors.black,
+                                      : Colors.grey,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(

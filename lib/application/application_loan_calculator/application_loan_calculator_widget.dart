@@ -170,15 +170,62 @@ class _ApplicationLoanCalculatorWidgetState
     super.dispose();
   }
 
+  Widget _buildEquifaxDenegada(BuildContext context) {
+    return Scaffold(
+      appBar: responsiveVisibility(
+        context: context,
+        desktop: false,
+      )
+          ? PreferredSize(
+              preferredSize: Size.fromHeight(100.0),
+              child: AppBar(
+                backgroundColor: FlutterFlowTheme.of(context).primary,
+                automaticallyImplyLeading: false,
+                actions: [],
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(-1.0, 0.0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 0.0, 24.0),
+                          child: Text(
+                            'Calculadora Prestonesto',
+                            style: FlutterFlowTheme.of(context)
+                                .titleLarge
+                                .override(
+                                  fontFamily: 'Urbanist',
+                                  color: FlutterFlowTheme.of(context).info,
+                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  centerTitle: true,
+                  expandedTitleScale: 1.0,
+                ),
+                elevation: 2.0,
+              ),
+            )
+          : null,
+      body: Container(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
     if (EquifaxStatus.fromString(widget.equifaxStatus) ==
         EquifaxStatus.DENEGADA) {
-      return Scaffold(
-        body: Container(),
-      );
+      return _buildEquifaxDenegada(context);
     }
 
     final bool isEquifaxCero = EquifaxStatus.fromString(widget.equifaxStatus) ==

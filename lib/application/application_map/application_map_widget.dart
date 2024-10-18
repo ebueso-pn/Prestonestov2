@@ -54,6 +54,17 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
+
+    List<ApplicationRecord> applicationRecord = [];
+    queryApplicationRecord(
+      parent: currentUserReference,
+      queryBuilder: (applicationRecord) {
+        return applicationRecord;
+      },
+    ).listen((event) {
+      applicationRecord.addAll(event);
+    });
+
     if (currentUserLocationValue == null) {
       return Container(
         color: FlutterFlowTheme.of(context).primaryBackground,
@@ -271,59 +282,92 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    FFButtonWidget(
-                      onPressed: () async {
-                        await currentUserReference!
-                            .update(createUsersRecordData(
-                          latLong: _model.googleMapsCenter,
-                        ));
-
-                        if (currentUserDocument?.latLong !=
-                            currentUserLocationValue) {
-                          FirebaseAnalytics.instance.logEvent(
-                            name: 'app_direccion_en_mapa',
-                          );
-                          FacebookAppEvents().logEvent(
-                            name: 'app_direccion_en_mapa',
-                          );
-                        }
-
-                        await widget.applicationRecieve!.update({
-                          'index': FieldValue.increment(1),
-                        });
-
-                        context.pushNamed(
-                          'Application_Review',
-                          queryParameters: {
-                            'applicationRecieve': serializeParam(
-                              widget.applicationRecieve,
-                              ParamType.DocumentReference,
-                            ),
-                          }.withoutNulls,
-                        );
-                      },
-                      text: 'Fijar Dirección',
-                      options: FFButtonOptions(
-                        width: 230.0,
-                        height: 50.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primary,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Urbanist',
-                                  color: Colors.white,
-                                ),
-                        elevation: 3.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
+                    StreamBuilder(
+                        initialData: applicationRecord,
+                        stream: queryApplicationRecord(
+                          parent: currentUserReference,
+                          queryBuilder: (applicationRecord) {
+                            return applicationRecord;
+                            //return applicationRecord.where('status', isEqualTo: 'Enviada');
+                          },
                         ),
-                        borderRadius: BorderRadius.circular(48.0),
-                      ),
-                    ),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<ApplicationRecord>> snapshot) {
+                          if (snapshot.connectionState ==
+                                  ConnectionState.waiting ||
+                              snapshot.data == null) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          bool hasApplicationEnviada =
+                              snapshot.data!.any((e) => e.status == 'Enviada');
+                          return FFButtonWidget(
+                            onPressed: () async {
+                              await currentUserReference!
+                                  .update(createUsersRecordData(
+                                latLong: _model.googleMapsCenter,
+                              ));
+
+                              if (currentUserDocument?.latLong !=
+                                  currentUserLocationValue) {
+                                FirebaseAnalytics.instance.logEvent(
+                                  name: 'app_direccion_en_mapa',
+                                );
+                                FacebookAppEvents().logEvent(
+                                  name: 'app_direccion_en_mapa',
+                                );
+                              }
+
+                              await widget.applicationRecieve!.update({
+                                'index': FieldValue.increment(1),
+                              });
+                              if (hasApplicationEnviada) {
+                                context.pushNamed(
+                                  'Application_Review',
+                                  queryParameters: {
+                                    'applicationRecieve': serializeParam(
+                                      widget.applicationRecieve,
+                                      ParamType.DocumentReference,
+                                    ),
+                                  }.withoutNulls,
+                                );
+                                return;
+                              }
+                              context.pushNamed(
+                                'Application_Carrousel',
+                                queryParameters: {
+                                  'applicationRecieve': serializeParam(
+                                    widget.applicationRecieve,
+                                    ParamType.DocumentReference,
+                                  ),
+                                }.withoutNulls,
+                              );
+                            },
+                            text: 'Fijar Dirección',
+                            options: FFButtonOptions(
+                              width: 230.0,
+                              height: 50.0,
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Urbanist',
+                                    color: Colors.white,
+                                  ),
+                              elevation: 3.0,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(48.0),
+                            ),
+                          );
+                        }),
                   ],
                 ),
               ),
