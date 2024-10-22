@@ -488,7 +488,13 @@ class _ApplicationDNIValidationWidgetState
                               }
                             } catch (e) {
                               appStatus = 'DENEGADA';
-                              print(e);
+                            }
+
+                            if (appStatus == 'DENEGADA') {
+                              _model.createdAppVar?.reference.set(
+                                {'status': 'Denegada'},
+                                SetOptions(merge: true),
+                              );
                             }
                             dynamic returnResult = await context.pushNamed(
                               'Application_LoanCalculator',

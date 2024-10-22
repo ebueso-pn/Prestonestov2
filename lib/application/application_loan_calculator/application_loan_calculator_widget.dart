@@ -8,11 +8,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'application_loan_calculator_model.dart';
 export 'application_loan_calculator_model.dart';
@@ -194,7 +191,7 @@ class _ApplicationLoanCalculatorWidgetState
                           padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 0.0, 0.0, 24.0),
                           child: Text(
-                            'Calculadora Prestonesto',
+                            '',
                             style: FlutterFlowTheme.of(context)
                                 .titleLarge
                                 .override(
@@ -215,7 +212,47 @@ class _ApplicationLoanCalculatorWidgetState
               ),
             )
           : null,
-      body: Container(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            padding: EdgeInsets.all(24),
+            child: Center(
+                child: Text('Lo sentimos, tu solicitud no ha sido aprobada',
+                    style: FlutterFlowTheme.of(context).headlineSmall)),
+          ),
+          Align(
+            alignment: AlignmentDirectional(0.0, 0.0),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
+              child: FFButtonWidget(
+                onPressed: () {
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                },
+                text: 'Volver al inicio',
+                options: FFButtonOptions(
+                  width: 230.0,
+                  height: 50.0,
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  color: FlutterFlowTheme.of(context).primary,
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Urbanist',
+                        color: Colors.white,
+                      ),
+                  elevation: 3.0,
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(42.0),
+                ),
+              ).animateOnPageLoad(animationsMap['buttonOnPageLoadAnimation']!),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

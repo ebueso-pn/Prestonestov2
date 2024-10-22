@@ -450,7 +450,7 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                       'Application_Name',
                     );
                   },
-                  text: 'Continuar',
+                  text: 'Comenzar',
                   options: FFButtonOptions(
                     width: 230.0,
                     height: 50.0,
