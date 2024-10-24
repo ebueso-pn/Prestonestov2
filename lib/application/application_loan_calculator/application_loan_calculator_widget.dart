@@ -748,28 +748,6 @@ class _ApplicationLoanCalculatorWidgetState
                         child: FFButtonWidget(
                           onPressed: () async {
                             var _shouldSetState = false;
-                            if (hasApplied) {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text(
-                                        '¡Has aplicado en los últimos 3 meses!'),
-                                    content: Text(
-                                        'Recuerda que debes esperar 3 meses antes de volver a aplicar a un crédito con nosotros.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                              if (_shouldSetState) setState(() {});
-                              return;
-                            }
                             if (_model.loanAmtValue! <= 0.0) {
                               await showDialog(
                                 context: context,

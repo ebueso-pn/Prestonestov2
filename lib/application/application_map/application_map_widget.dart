@@ -323,6 +323,9 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                 'index': FieldValue.increment(1),
                               });
                               if (hasApplicationEnviada) {
+                                await widget.applicationRecieve!.update({
+                                  'index': FieldValue.increment(1),
+                                });
                                 context.pushNamed(
                                   'Application_Review',
                                   queryParameters: {

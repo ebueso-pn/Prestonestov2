@@ -540,16 +540,15 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                           .update(createUsersRecordData(
                             phoneNumber: _model.phoneNumberController.text,
                           ));
-
-                      await UsersRecord.collection
-                          .doc()
-                          .set(createUsersRecordData(
-                            dni: _model.dniController.text,
-                          ));
                       await DocumentsRecord.collection
                           .doc()
                           .set(createDocumentsRecordData(
                             userDocReference: currentUserReference,
+                          ));
+                      await UsersRecord.collection
+                          .doc(user.uid)
+                          .update(createUsersRecordData(
+                            dni: _model.dniController.text,
                           ));
 
                       String? token =

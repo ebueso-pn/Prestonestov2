@@ -129,7 +129,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/applicationLoanCalculator',
           requireAuth: true,
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'Application_LoanCalculator')
+              ? NavBarPage(initialPage: 'Applicaiton_Summary')
               : ApplicationLoanCalculatorWidget(
                   applicationRecieve: params.getParam(
                       'applicationRecieve',

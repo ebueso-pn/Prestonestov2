@@ -681,6 +681,8 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                           name: 'app_2_ingresar_cuenta_bancaria',
                         );
                         FFAppState().userHasBankAccount = true;
+
+                        context.pop();
                       },
                       text: 'Guardar y regresar',
                       options: FFButtonOptions(

@@ -18,6 +18,12 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  DocumentReference<Object?>? _currentApplication = null;
+  DocumentReference<Object?>? get currentApplication => _currentApplication;
+  set currentApplication(DocumentReference<Object?>? _value) {
+    _currentApplication = _value;
+  }
+
   bool _nombresApplicationState = false;
   bool get nombresApplicationState => _nombresApplicationState;
   set nombresApplicationState(bool _value) {

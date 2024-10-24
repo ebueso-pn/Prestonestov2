@@ -215,6 +215,8 @@ class _ProfileIncomeValidationWidgetState
         singleRecord: true,
       ),
       builder: (context, snapshot) {
+        print('snapshot: ${snapshot.data}');
+        print('currentUserReference: $currentUserReference');
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
@@ -636,6 +638,8 @@ class _ProfileIncomeValidationWidgetState
                                 FFAppState().IngresosEnviados = true;
                                 FFAppState().userHasIncomeVerification = true;
                               });
+
+                              context.pop();
                             },
                             text: 'Guardar y regresar',
                             options: FFButtonOptions(

@@ -9,9 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class BeginiSuccessWidget extends StatefulWidget {
-  const BeginiSuccessWidget({
-    Key? key,
-  }) : super(key: key);
+  const BeginiSuccessWidget({Key? key}) : super(key: key);
 
   @override
   _BeginiSuccessWidgetState createState() => _BeginiSuccessWidgetState();
@@ -114,7 +112,13 @@ class _BeginiSuccessWidgetState extends State<BeginiSuccessWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     context.pushNamed(
-                      'Profile',
+                      'Application_UploadDocs',
+                      queryParameters: {
+                        'applicationRecieve': serializeParam(
+                          FFAppState().currentApplication,
+                          ParamType.DocumentReference,
+                        ),
+                      }.withoutNulls,
                       extra: <String, dynamic>{
                         kTransitionInfoKey: TransitionInfo(
                           hasTransition: true,

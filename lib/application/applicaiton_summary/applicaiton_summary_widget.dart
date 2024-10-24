@@ -1,10 +1,13 @@
 import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:prestonesto/auth/firebase_auth/auth_util.dart';
+import 'package:prestonesto/backend/backend.dart';
 
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -70,32 +73,6 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 0.0, 0.0, 0.0),
-                              child: FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30.0,
-                                borderWidth: 1.0,
-                                buttonSize: 50.0,
-                                icon: Icon(
-                                  Icons.arrow_back_rounded,
-                                  color: Colors.white,
-                                  size: 30.0,
-                                ),
-                                onPressed: () async {
-                                  //await widget.applicationRecieve!.update({
-                                  //  'index': FieldValue.increment(-(1)),
-                                  //});
-                                  context.pop();
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 0.0, 0.0, 0.0),
@@ -440,36 +417,98 @@ class _ApplicaitonSummaryWidgetState extends State<ApplicaitonSummaryWidget> {
                     ),
                   ],
                 ),
-                FFButtonWidget(
-                  onPressed: () async {
-                    FirebaseAnalytics.instance
-                        .logEvent(name: 'app_visualizar_proceso_aplicacion');
-                    FacebookAppEvents()
-                        .logEvent(name: 'app_visualizar_proceso_aplicacion');
-                    context.pushNamed(
-                      'Application_Name',
-                    );
-                  },
-                  text: 'Comenzar',
-                  options: FFButtonOptions(
-                    width: 230.0,
-                    height: 50.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Urbanist',
-                          color: Colors.white,
-                        ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+                StreamBuilder<List<ApplicationRecord>>(
+                    stream: queryApplicationRecord(
+                      parent: currentUserReference,
+                      queryBuilder: (applicationRecord) => applicationRecord
+                          .orderBy('date_applied', descending: true),
                     ),
-                    borderRadius: BorderRadius.circular(48.0),
-                  ),
-                ),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Scaffold(
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).primaryBackground,
+                          body: Center(
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xFF2AAF7A),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      List<ApplicationRecord>
+                          applicationLoanCalculatorApplicationRecordList =
+                          snapshot.data!;
+                      final hasApplied =
+                          applicationLoanCalculatorApplicationRecordList
+                                  .isNotEmpty
+                              ? applicationLoanCalculatorApplicationRecordList
+                                  .any((element) =>
+                                      (element.status == 'Enviada' ||
+                                          element.status == 'Denegada') &&
+                                      (functions.appIneligible(
+                                              element.dateApplied!) ==
+                                          true))
+                              : false;
+                      return FFButtonWidget(
+                        onPressed: () async {
+                          if (hasApplied) {
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: Text(
+                                      '¡Has aplicado en los últimos 3 meses!'),
+                                  content: Text(
+                                      'Recuerda que debes esperar 3 meses antes de volver a aplicar a un crédito con nosotros.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            return;
+                          }
+                          FirebaseAnalytics.instance.logEvent(
+                              name: 'app_visualizar_proceso_aplicacion');
+                          FacebookAppEvents().logEvent(
+                              name: 'app_visualizar_proceso_aplicacion');
+                          context.pushNamed(
+                            'Application_Name',
+                          );
+                        },
+                        text: 'Comenzar',
+                        options: FFButtonOptions(
+                          width: 230.0,
+                          height: 50.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Urbanist',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(48.0),
+                        ),
+                      );
+                    }),
               ],
             ),
           ),
