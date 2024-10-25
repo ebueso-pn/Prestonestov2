@@ -91,13 +91,8 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
     ),
   };
 
-  final List<DropdownMenuItem> ingresoMenusal = List.generate(
-      46,
-      (index) => DropdownMenuItem(
-          value: 5000 + index * 1000,
-          child: index == 45
-              ? Text('+${5000 + index * 1000}')
-              : Text('${5000 + index * 1000}')));
+  final format = NumberFormat("###,###.###", "tr_TR");
+  List<DropdownMenuItem> ingresoMenusal = [];
   int selectedValue = 5000;
 
   final Map<String, bool> earningTypes = {
@@ -122,6 +117,14 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
     _model.dniController ??= TextEditingController();
     _model.ingresosController ??= TextEditingController();
     _model.ingresosController.text = selectedValue.toString();
+
+    ingresoMenusal = List.generate(
+        46,
+        (index) => DropdownMenuItem(
+            value: 5000 + index * 1000,
+            child: index == 45
+                ? Text('L +${format.format(5000 + index * 1000)}')
+                : Text('HNL ${format.format(5000 + index * 1000)}')));
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final userData =
@@ -245,62 +248,6 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      /*Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 5.0,
-                                color: Color(0x3416202A),
-                                offset: Offset(0.0, 2.0),
-                              )
-                            ],
-                          ),
-                          child: StreamBuilder<ApplicationRecord>(
-                            stream: ApplicationRecord.getDocument(
-                                widget.applicationRecieve!),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        Color(0xFF2AAF7A),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }
-                              final progressBarApplicationRecord =
-                                  snapshot.data!;
-                              return LinearPercentIndicator(
-                                percent: progressBarApplicationRecord.index / 5,
-                                lineHeight: 7.0,
-                                animation: true,
-                                progressColor:
-                                    FlutterFlowTheme.of(context).primary,
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
-                                padding: EdgeInsets.zero,
-                              );
-                            },
-                          ),
-                        ),
-                      ),*/
-                    ],
-                  ),
-                ),
                 Padding(
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
@@ -852,7 +799,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                   alignment: AlignmentDirectional(0.0, 0.0),
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         if (_model.nombresController.text != null &&

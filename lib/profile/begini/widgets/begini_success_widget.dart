@@ -118,6 +118,7 @@ class _BeginiSuccessWidgetState extends State<BeginiSuccessWidget> {
                           FFAppState().currentApplication,
                           ParamType.DocumentReference,
                         ),
+                        'equifaxStatus': FFAppState().currentEquifaxStatus
                       }.withoutNulls,
                       extra: <String, dynamic>{
                         kTransitionInfoKey: TransitionInfo(

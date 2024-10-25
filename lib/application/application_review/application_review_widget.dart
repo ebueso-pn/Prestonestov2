@@ -23,9 +23,11 @@ class ApplicationReviewWidget extends StatefulWidget {
   const ApplicationReviewWidget({
     Key? key,
     required this.applicationRecieve,
+    required this.equifaxStatus,
   }) : super(key: key);
 
   final DocumentReference? applicationRecieve;
+  final String equifaxStatus;
 
   @override
   _ApplicationReviewWidgetState createState() =>
@@ -102,7 +104,20 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                   await widget.applicationRecieve!.update({
                                     'index': FieldValue.increment(-(1)),
                                   });
-                                  context.pop();
+                                  if (context.canPop()) {
+                                    context.pop();
+                                  } else {
+                                    context.goNamed(
+                                      'Application_UploadDocs',
+                                      queryParameters: {
+                                        'applicationRecieve': serializeParam(
+                                          widget.applicationRecieve,
+                                          ParamType.DocumentReference,
+                                        ),
+                                        'equifaxStatus': widget.equifaxStatus,
+                                      }.withoutNulls,
+                                    );
+                                  }
                                 },
                               ),
                             ),
@@ -184,7 +199,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                     snapshot.data!;
                                 return LinearPercentIndicator(
                                   percent:
-                                      progressBarApplicationRecord.index / 5,
+                                      progressBarApplicationRecord.index / 6,
                                   lineHeight: 7,
                                   animation: true,
                                   progressColor:

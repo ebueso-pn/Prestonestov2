@@ -12,9 +12,13 @@ import 'package:prestonesto/flutter_flow/flutter_flow_util.dart';
 import 'package:prestonesto/flutter_flow/flutter_flow_widgets.dart';
 
 class ApplicationDocuments extends StatefulWidget {
-  ApplicationDocuments({super.key, required this.applicationRecieve});
+  ApplicationDocuments(
+      {super.key,
+      required this.applicationRecieve,
+      required this.equifaxStatus});
 
   final DocumentReference? applicationRecieve;
+  final String equifaxStatus;
 
   @override
   ApplicationDocumentsState createState() => ApplicationDocumentsState();
@@ -202,6 +206,7 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
   void initState() {
     super.initState();
     FFAppState().currentApplication = widget.applicationRecieve;
+    FFAppState().currentEquifaxStatus = widget.equifaxStatus;
   }
 
   @override
@@ -244,7 +249,20 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                           await widget.applicationRecieve!.update({
                             'index': FieldValue.increment(-(1)),
                           });
-                          context.pop();
+                          if (context.canPop()) {
+                            context.pop();
+                          } else {
+                            context.goNamed(
+                              'Application_Carrousel',
+                              queryParameters: {
+                                'applicationRecieve': serializeParam(
+                                  widget.applicationRecieve,
+                                  ParamType.DocumentReference,
+                                ),
+                                'equifaxStatus': widget.equifaxStatus,
+                              }.withoutNulls,
+                            );
+                          }
                         },
                       ),
                     ),
@@ -292,7 +310,7 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                         }
                         final progressBarApplicationRecord = snapshot.data!;
                         return LinearPercentIndicator(
-                          percent: progressBarApplicationRecord.index / 5,
+                          percent: progressBarApplicationRecord.index / 6,
                           lineHeight: 7,
                           animation: true,
                           progressColor: FlutterFlowTheme.of(context).primary,
@@ -606,6 +624,7 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                           widget.applicationRecieve,
                           ParamType.DocumentReference,
                         ),
+                        'equifaxStatus': widget.equifaxStatus,
                       }.withoutNulls,
                     );
                   },

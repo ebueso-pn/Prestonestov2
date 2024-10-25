@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:prestonesto/backend/backend.dart';
 import 'package:prestonesto/flutter_flow/flutter_flow_icon_button.dart';
 
@@ -19,7 +22,7 @@ class ApplicationCarrouselWidget extends StatefulWidget {
       : super(key: key);
 
   final DocumentReference? applicationRecieve;
-  final String? equifaxStatus;
+  final String equifaxStatus;
 
   @override
   _ApplicationCarrouselWidgetState createState() =>
@@ -72,15 +75,21 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
       ],
     ),
   };
+  late Timer _pageChangeTimer;
+  int _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
+    _startAutoPageSwitch();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _step1PageViewController.dispose();
+    _pageViewController.dispose();
+    _pageChangeTimer.cancel();
     super.dispose();
   }
 
@@ -119,7 +128,20 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
                         await widget.applicationRecieve!.update({
                           'index': FieldValue.increment(-(1)),
                         });
-                        context.pop();
+                        if (context.canPop()) {
+                          context.pop();
+                        } else {
+                          context.goNamed(
+                            'Application_Map',
+                            queryParameters: {
+                              'applicationRecieve': serializeParam(
+                                widget.applicationRecieve,
+                                ParamType.DocumentReference,
+                              ),
+                              'equifaxStatus': widget.equifaxStatus,
+                            }.withoutNulls,
+                          );
+                        }
                       },
                     ),
                   ),
@@ -130,14 +152,61 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
             : null,
         key: scaffoldKey,
         body: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+          padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 2.0),
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             children: [
-              Flexible(
+              Container(
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 5,
+                      color: Color(0x3416202A),
+                      offset: Offset(0, 2),
+                    )
+                  ],
+                ),
+                child: Align(
+                  alignment: AlignmentDirectional(0, -1),
+                  child: StreamBuilder<ApplicationRecord>(
+                    stream: ApplicationRecord.getDocument(
+                        widget.applicationRecieve!),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Color(0xFF2AAF7A),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      final progressBarApplicationRecord = snapshot.data!;
+                      return LinearPercentIndicator(
+                        percent: progressBarApplicationRecord.index / 6,
+                        lineHeight: 7,
+                        animation: true,
+                        progressColor: FlutterFlowTheme.of(context).secondary,
+                        backgroundColor: FlutterFlowTheme.of(context).primary,
+                        padding: EdgeInsets.zero,
+                      );
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Expanded(
                 child: PageView(
                   controller: _pageViewController,
                   scrollDirection: Axis.horizontal,
+                  onPageChanged: (index) {
+                    setState(() => _currentPage = index);
+                  },
                   children: [
                     _buildStep0(context),
                     _buildStep1(context),
@@ -149,7 +218,7 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
               Align(
                 alignment: AlignmentDirectional(0.0, 0.7),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 80.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                   child: smooth_page_indicator.SmoothPageIndicator(
                     controller: _pageViewController,
                     count: 4,
@@ -174,69 +243,94 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
                   ),
                 ),
               ),
-              Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 20.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 0.0, 10.0, 10.0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                context.pushNamed(
-                                  'Application_UploadDocs',
-                                  queryParameters: {
-                                    'applicationRecieve': serializeParam(
-                                      widget.applicationRecieve,
-                                      ParamType.DocumentReference,
-                                    ),
-                                  }.withoutNulls,
-                                );
-                              },
-                              text: 'Continuar',
-                              options: FFButtonOptions(
-                                width: 190.0,
-                                height: 40.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: Colors.white,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Urbanist',
-                                      color: Colors.black,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
+              if (_currentPage == 3)
+                Align(
+                  alignment: AlignmentDirectional(0.0, 0.0),
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 10.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Align(
+                            alignment: AlignmentDirectional(0.0, 0.0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 0.0, 10.0, 10.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  await widget.applicationRecieve!.update({
+                                    'index': FieldValue.increment(1),
+                                  });
+                                  context.pushNamed(
+                                    'Application_UploadDocs',
+                                    queryParameters: {
+                                      'applicationRecieve': serializeParam(
+                                        widget.applicationRecieve,
+                                        ParamType.DocumentReference,
+                                      ),
+                                      'equifaxStatus': widget.equifaxStatus,
+                                    }.withoutNulls,
+                                  );
+                                },
+                                text: 'Continuar',
+                                options: FFButtonOptions(
+                                  width: 190.0,
+                                  height: 40.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: Colors.white,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Urbanist',
+                                        color: Colors.black,
+                                      ),
+                                  elevation: 3.0,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(48.0),
                                 ),
-                                borderRadius: BorderRadius.circular(48.0),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
+              if (_currentPage != 3)
+                SizedBox(
+                  height: 70.0,
+                ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _startAutoPageSwitch() {
+    _pageChangeTimer = Timer.periodic(Duration(seconds: 2), (timer) {
+      if (_currentPage == 1) {
+        int nextPage = _step1PageViewController.page!.toInt() + 1;
+
+        if (nextPage >= 3) nextPage = 0;
+
+        _step1PageViewController.animateToPage(
+          nextPage,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.ease,
+        );
+      }
+    });
   }
 
   Widget _buildStep0(BuildContext context) {
@@ -341,14 +435,13 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
                     curve: Curves.ease,
                   );
                 },
-                effect: smooth_page_indicator.SlideEffect(
+                effect: smooth_page_indicator.ExpandingDotsEffect(
                   spacing: 8.0,
-                  radius: 16.0,
-                  dotWidth: 35.0,
-                  dotHeight: 8.0,
+                  radius: 8.0,
+                  dotWidth: 12.0,
+                  dotHeight: 12.0,
                   dotColor: Color(0xFFBDBDBD),
                   activeDotColor: Colors.white,
-                  paintStyle: PaintingStyle.fill,
                 ),
               ),
             ),

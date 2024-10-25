@@ -8,9 +8,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_map_model.dart';
@@ -20,9 +18,11 @@ class ApplicationMapWidget extends StatefulWidget {
   const ApplicationMapWidget({
     Key? key,
     required this.applicationRecieve,
+    required this.equifaxStatus,
   }) : super(key: key);
 
   final DocumentReference? applicationRecieve;
+  final String equifaxStatus;
 
   @override
   _ApplicationMapWidgetState createState() => _ApplicationMapWidgetState();
@@ -124,7 +124,20 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                   await widget.applicationRecieve!.update({
                                     'index': FieldValue.increment(-(1)),
                                   });
-                                  context.pop();
+                                  if (context.canPop()) {
+                                    context.pop();
+                                  } else {
+                                    context.goNamed(
+                                      'Application_Address',
+                                      queryParameters: {
+                                        'applicationRecieve': serializeParam(
+                                          widget.applicationRecieve,
+                                          ParamType.DocumentReference,
+                                        ),
+                                        'equifaxStatus': widget.equifaxStatus,
+                                      }.withoutNulls,
+                                    );
+                                  }
                                 },
                               ),
                             ),
@@ -241,7 +254,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                         return LinearPercentIndicator(
                                           percent: progressBarApplicationRecord
                                                   .index /
-                                              5,
+                                              6,
                                           lineHeight: 7.0,
                                           animation: true,
                                           progressColor:
@@ -333,6 +346,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                       widget.applicationRecieve,
                                       ParamType.DocumentReference,
                                     ),
+                                    'equifaxStatus': widget.equifaxStatus,
                                   }.withoutNulls,
                                 );
                                 return;
@@ -344,6 +358,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                     widget.applicationRecieve,
                                     ParamType.DocumentReference,
                                   ),
+                                  'equifaxStatus': widget.equifaxStatus,
                                 }.withoutNulls,
                               );
                             },

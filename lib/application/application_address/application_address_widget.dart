@@ -11,12 +11,9 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
@@ -27,9 +24,11 @@ class ApplicationAddressWidget extends StatefulWidget {
   const ApplicationAddressWidget({
     Key? key,
     required this.applicationRecieve,
+    required this.equifaxStatus,
   }) : super(key: key);
 
   final DocumentReference? applicationRecieve;
+  final String? equifaxStatus;
 
   @override
   _ApplicationAddressWidgetState createState() =>
@@ -170,7 +169,20 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                     await widget.applicationRecieve!.update({
                                       'index': FieldValue.increment(-(1)),
                                     });
-                                    context.pop();
+                                    if (context.canPop()) {
+                                      context.pop();
+                                    } else {
+                                      context.goNamed(
+                                        'Application_LoanCalculator',
+                                        queryParameters: {
+                                          'applicationRecieve': serializeParam(
+                                            widget.applicationRecieve,
+                                            ParamType.DocumentReference,
+                                          ),
+                                          'equifaxStatus': widget.equifaxStatus,
+                                        }.withoutNulls,
+                                      );
+                                    }
                                   },
                                 ),
                               ),
@@ -256,7 +268,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                     snapshot.data!;
                                 return LinearPercentIndicator(
                                   percent:
-                                      progressBarApplicationRecord.index / 5,
+                                      progressBarApplicationRecord.index / 6,
                                   lineHeight: 7,
                                   animation: true,
                                   progressColor:
@@ -808,6 +820,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                             widget.applicationRecieve,
                             ParamType.DocumentReference,
                           ),
+                          'equifaxStatus': widget.equifaxStatus,
                         }.withoutNulls,
                         extra: <String, dynamic>{
                           kTransitionInfoKey: TransitionInfo(

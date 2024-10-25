@@ -24,6 +24,12 @@ class FFAppState extends ChangeNotifier {
     _currentApplication = _value;
   }
 
+  String? _currentEquifaxStatus = null;
+  String? get currentEquifaxStatus => _currentEquifaxStatus;
+  set currentEquifaxStatus(String? _value) {
+    _currentEquifaxStatus = _value;
+  }
+
   bool _nombresApplicationState = false;
   bool get nombresApplicationState => _nombresApplicationState;
   set nombresApplicationState(bool _value) {

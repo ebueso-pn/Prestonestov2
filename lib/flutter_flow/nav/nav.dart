@@ -161,6 +161,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                       ParamType.DocumentReference,
                       false,
                       ['users', 'application']),
+                  equifaxStatus:
+                      params.getParam('equifaxStatus', ParamType.String),
                 )),
         FFRoute(
           name: 'Application_Address',
@@ -169,6 +171,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ApplicationAddressWidget(
             applicationRecieve: params.getParam('applicationRecieve',
                 ParamType.DocumentReference, false, ['users', 'application']),
+            equifaxStatus: params.getParam('equifaxStatus', ParamType.String),
           ),
         ),
         FFRoute(
@@ -198,6 +201,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ApplicationReviewWidget(
             applicationRecieve: params.getParam('applicationRecieve',
                 ParamType.DocumentReference, false, ['users', 'application']),
+            equifaxStatus: params.getParam('equifaxStatus', ParamType.String),
           ),
         ),
         FFRoute(
@@ -218,6 +222,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ApplicationMapWidget(
             applicationRecieve: params.getParam('applicationRecieve',
                 ParamType.DocumentReference, false, ['users', 'application']),
+            equifaxStatus: params.getParam('equifaxStatus', ParamType.String),
           ),
         ),
         FFRoute(
