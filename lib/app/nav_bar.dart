@@ -68,8 +68,13 @@ class _NavBarPageState extends State<NavBarPage> {
           .get();
       if (data.docs.isNotEmpty) {
         final equifaxData = data.docs.first.data() as Map<String, dynamic>;
-        final score = int.tryParse(
-            equifaxData['infoCrediticia']['ScoreActual'][0]['SCORE']);
+        int? score;
+        try {
+          score = int.tryParse(
+              equifaxData['infoCrediticia']['ScoreActual'][0]['SCORE']);
+        } catch (e) {
+          return;
+        }
         if (score == null) {
           return;
         }

@@ -3,6 +3,7 @@ import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:prestonesto/application/application_d_n_i_validation/verification_model.dart';
 import 'package:prestonesto/auth/firebase_auth/auth_util.dart';
+import 'package:prestonesto/backend/api_requests/api_calls.dart';
 import 'package:prestonesto_shuftipro_sdk/prestonesto_shuftipro_sdk.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -407,25 +408,18 @@ class _ApplicationDNIValidationWidgetState
                                     isEqualTo: _model.createdAppVar?.reference)
                                 .get();
                             final id = equifaxData.docs.first.id;
-
-                            final body = {
-                              'equifaxId': id,
-                            };
                             String appStatus = '';
                             try {
-                              final response = await http.post(
-                                  Uri.https(
-                                      'equifaxintegration-if22ukzoiq-uc.a.run.app',
-                                      ''),
-                                  body: body);
+                              final response =
+                                  await ApiEquifaxCall.call(equifaxId: id);
                               if (response.statusCode == 200) {
-                                appStatus =
-                                    jsonDecode(response.body)['app_status'];
+                                appStatus = ApiEquifaxCall.equifaxStatus(
+                                    response.jsonBody);
                               } else {
-                                appStatus = 'DENEGADA';
+                                appStatus = 'CONTINUE_NO_SCORE';
                               }
                             } catch (e) {
-                              appStatus = 'DENEGADA';
+                              appStatus = 'CONTINUE_NO_SCORE';
                             }
 
                             if (appStatus == 'DENEGADA') {

@@ -530,7 +530,8 @@ class _ApplicationLoanCalculatorWidgetState
                                   FlutterFlowTheme.of(context).alternate,
                               min: isEquifaxCero ? 2000.0 : 4000.0,
                               max: isEquifaxCero ? 5000.0 : 25000.0,
-                              value: _model.loanAmtValue ??= 4000.0,
+                              value: _model.loanAmtValue ??=
+                                  (isEquifaxCero ? 2000.0 : 4000.0),
                               label: _model.loanAmtValue.toString(),
                               divisions: 25,
                               onChanged: (newValue) {
