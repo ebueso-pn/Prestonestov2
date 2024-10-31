@@ -31,6 +31,7 @@ class _NavBarPageState extends State<NavBarPage> {
   String appStatus = 'CONTINUE_NO_SCORE';
   ApplicationRecord? applicationIniciada;
   int _applicationIndex = 0;
+  bool useInitialPage = true;
 
   @override
   void initState() {
@@ -136,7 +137,8 @@ class _NavBarPageState extends State<NavBarPage> {
         applicationIniciada != null) {
       _currentPageName = _applicationTabsNames[_applicationIndex]!;
     }
-    _currentPageName = widget.initialPage ?? _currentPageName;
+    if (useInitialPage)
+      _currentPageName = widget.initialPage ?? _currentPageName;
 
     final Map<String, Widget> tabs = {
       'Home': HomeWidget(),
@@ -186,6 +188,7 @@ class _NavBarPageState extends State<NavBarPage> {
             setState(() {
               _currentPage = null;
               _currentPageName = tabs.keys.toList()[i];
+              useInitialPage = false;
             });
             if (_currentPageName == 'Home' && await _hasActiveLoans()) {
               print('Incrementing counter');

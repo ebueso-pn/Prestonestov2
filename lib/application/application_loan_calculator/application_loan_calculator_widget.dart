@@ -14,25 +14,6 @@ import 'package:provider/provider.dart';
 import 'application_loan_calculator_model.dart';
 export 'application_loan_calculator_model.dart';
 
-enum EquifaxStatus {
-  CONTINUE,
-  CONTINUE_NO_SCORE,
-  DENEGADA;
-
-  static EquifaxStatus fromString(String value) {
-    switch (value) {
-      case 'CONTINUE':
-        return EquifaxStatus.CONTINUE;
-      case 'CONTINUE_NO_SCORE':
-        return EquifaxStatus.CONTINUE_NO_SCORE;
-      case 'DENEGADA':
-        return EquifaxStatus.DENEGADA;
-      default:
-        return EquifaxStatus.DENEGADA;
-    }
-  }
-}
-
 class ApplicationLoanCalculatorWidget extends StatefulWidget {
   const ApplicationLoanCalculatorWidget(
       {Key? key, required this.applicationRecieve, required this.equifaxStatus})
@@ -167,106 +148,11 @@ class _ApplicationLoanCalculatorWidgetState
     super.dispose();
   }
 
-  Widget _buildEquifaxDenegada(BuildContext context) {
-    return Scaffold(
-      appBar: responsiveVisibility(
-        context: context,
-        desktop: false,
-      )
-          ? PreferredSize(
-              preferredSize: Size.fromHeight(100.0),
-              child: AppBar(
-                backgroundColor: FlutterFlowTheme.of(context).primary,
-                automaticallyImplyLeading: false,
-                actions: [],
-                flexibleSpace: FlexibleSpaceBar(
-                  title: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional(-1.0, 0.0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 0.0, 24.0),
-                          child: Text(
-                            '',
-                            style: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .override(
-                                  fontFamily: 'Urbanist',
-                                  color: FlutterFlowTheme.of(context).info,
-                                  fontSize: 22.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  centerTitle: true,
-                  expandedTitleScale: 1.0,
-                ),
-                elevation: 2.0,
-              ),
-            )
-          : null,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            padding: EdgeInsets.all(24),
-            child: Center(
-                child: Text('Lo sentimos, tu solicitud no ha sido aprobada',
-                    style: FlutterFlowTheme.of(context).headlineSmall)),
-          ),
-          Align(
-            alignment: AlignmentDirectional(0.0, 0.0),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
-              child: FFButtonWidget(
-                onPressed: () {
-                  Navigator.popUntil(context, (route) => route.isFirst);
-                },
-                text: 'Volver al inicio',
-                options: FFButtonOptions(
-                  width: 230.0,
-                  height: 50.0,
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).primary,
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Urbanist',
-                        color: Colors.white,
-                      ),
-                  elevation: 3.0,
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                    width: 1.0,
-                  ),
-                  borderRadius: BorderRadius.circular(42.0),
-                ),
-              ).animateOnPageLoad(animationsMap['buttonOnPageLoadAnimation']!),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    if (EquifaxStatus.fromString(widget.equifaxStatus) ==
-        EquifaxStatus.DENEGADA) {
-      return _buildEquifaxDenegada(context);
-    }
-
-    final bool isEquifaxCero = EquifaxStatus.fromString(widget.equifaxStatus) ==
-        EquifaxStatus.CONTINUE_NO_SCORE;
+    final bool isEquifaxCero = widget.equifaxStatus == 'CONTINUE_NO_SCORE';
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
@@ -533,7 +419,7 @@ class _ApplicationLoanCalculatorWidgetState
                               value: _model.loanAmtValue ??=
                                   (isEquifaxCero ? 2000.0 : 4000.0),
                               label: _model.loanAmtValue.toString(),
-                              divisions: 25,
+                              divisions: isEquifaxCero ? 3 : 10,
                               onChanged: (newValue) {
                                 newValue =
                                     double.parse(newValue.toStringAsFixed(0));

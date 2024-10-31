@@ -227,6 +227,7 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                     actions: [],
                     title: Text(
                       'Requisitos para Completar tu Aplicación',
+                      maxLines: 2,
                       style: FlutterFlowTheme.of(context).bodyLarge.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -428,101 +429,6 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                       }
                       FirebaseAnalytics.instance
                           .logEvent(name: 'app_2_verificar_campos_adicionales');
-                      FacebookAppEvents().logEvent(
-                        name: 'app_2_verificar_campos_adicionales',
-                      );
-                      context.pushNamed('Begini');
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 60.0,
-                      decoration: BoxDecoration(
-                        color: FFAppState().userHasIncomeVerification
-                            ? FlutterFlowTheme.of(context).secondaryBackground
-                            : FlutterFlowTheme.of(context)
-                                .secondaryBackground
-                                .withOpacity(0.5),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 5.0,
-                            color: Color(0x3416202A),
-                            offset: Offset(0.0, 2.0),
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(12.0),
-                        shape: BoxShape.rectangle,
-                      ),
-                      child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Icon(
-                              Icons.account_circle_outlined,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              size: 24.0,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  'Completar Evaluación Personal',
-                                  style: FlutterFlowTheme.of(context).bodyLarge,
-                                ),
-                              ),
-                            ),
-                            if (!FFAppState()
-                                .userHasPersonalEvaluationCompleted)
-                              Align(
-                                child: Icon(
-                                  Icons.info,
-                                  color: Colors.blue,
-                                  size: 25.0,
-                                ),
-                              ),
-                            if (FFAppState().userHasPersonalEvaluationCompleted)
-                              Align(
-                                child: Icon(
-                                  Icons.check,
-                                  color: Colors.green,
-                                  size: 25.0,
-                                ),
-                              ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(0.90, 0.00),
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                size: 18.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ).animateOnPageLoad(
-                      animationsMap['containerOnPageLoadAnimation2']!),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      if (!FFAppState().userHasIncomeVerification ||
-                          !FFAppState().userHasPersonalEvaluationCompleted) {
-                        return;
-                      }
-                      FirebaseAnalytics.instance
-                          .logEvent(name: 'app_2_verificar_campos_adicionales');
                       FacebookAppEvents()
                           .logEvent(name: 'app_2_verificar_campos_adicionales');
 
@@ -532,8 +438,7 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                       width: double.infinity,
                       height: 60.0,
                       decoration: BoxDecoration(
-                        color: (FFAppState().userHasIncomeVerification &&
-                                FFAppState().userHasPersonalEvaluationCompleted)
+                        color: (FFAppState().userHasIncomeVerification)
                             ? FlutterFlowTheme.of(context).secondaryBackground
                             : FlutterFlowTheme.of(context)
                                 .secondaryBackground
@@ -605,6 +510,102 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                   ).animateOnPageLoad(
                       animationsMap['containerOnPageLoadAnimation3']!),
                 ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      if (!FFAppState().userHasIncomeVerification ||
+                          !FFAppState().userHasBankAccount) {
+                        return;
+                      }
+                      FirebaseAnalytics.instance
+                          .logEvent(name: 'app_2_verificar_campos_adicionales');
+                      FacebookAppEvents().logEvent(
+                        name: 'app_2_verificar_campos_adicionales',
+                      );
+                      context.pushNamed('Begini');
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        color: (FFAppState().userHasIncomeVerification &&
+                                FFAppState().userHasBankAccount)
+                            ? FlutterFlowTheme.of(context).secondaryBackground
+                            : FlutterFlowTheme.of(context)
+                                .secondaryBackground
+                                .withOpacity(0.5),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            color: Color(0x3416202A),
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(12.0),
+                        shape: BoxShape.rectangle,
+                      ),
+                      child: Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.account_circle_outlined,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 24.0,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  'Completar Evaluación Personal',
+                                  style: FlutterFlowTheme.of(context).bodyLarge,
+                                ),
+                              ),
+                            ),
+                            if (!FFAppState()
+                                .userHasPersonalEvaluationCompleted)
+                              Align(
+                                child: Icon(
+                                  Icons.info,
+                                  color: Colors.blue,
+                                  size: 25.0,
+                                ),
+                              ),
+                            if (FFAppState().userHasPersonalEvaluationCompleted)
+                              Align(
+                                child: Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                  size: 25.0,
+                                ),
+                              ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0.90, 0.00),
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 18.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation2']!),
+                ),
                 const Spacer(),
                 FFButtonWidget(
                   onPressed: () async {
@@ -613,6 +614,21 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                         !FFAppState().userHasBankAccount) {
                       return;
                     }
+
+                    try {
+                      final userRecord = await UsersRecord.getDocumentOnce(
+                          currentUserDocument!.reference);
+                      final data = userRecord.beginiScore;
+
+                      if (data != null && data['score'] < 60) {
+                        widget.applicationRecieve!.update({
+                          'status': 'Denegada',
+                        });
+                        context.pushNamed('Application_Denied');
+                        return;
+                      }
+                    } catch (e) {}
+
                     await widget.applicationRecieve!.update({
                       'index': FieldValue.increment(1),
                     });

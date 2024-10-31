@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:prestonesto/app/nav_bar.dart';
 import 'package:prestonesto/application/application_carrousel/application_carrousel_screen.dart';
+import 'package:prestonesto/application/application_denied/application_denied_screen.dart';
 import 'package:prestonesto/application/application_documents/application_documents_screen.dart';
 import 'package:prestonesto/privacy_policy/privacy_policy_widget.dart';
 import 'package:prestonesto/profile/begini/begini_widget.dart';
@@ -232,6 +233,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               //applicationRecieve: params.getParam('applicationRecieve',
               //ParamType.DocumentReference, false, ['users', 'application']),
               ),
+        ),
+        FFRoute(
+          name: 'Application_Denied',
+          path: '/Application_Denied',
+          builder: (context, params) => ApplicationDeniedScreen(),
         ),
         FFRoute(
           name: 'Profile_Edit',

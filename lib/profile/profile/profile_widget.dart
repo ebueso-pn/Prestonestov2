@@ -658,28 +658,28 @@ class _ProfileWidgetState extends State<ProfileWidget>
                           highlightColor: Colors.transparent,
                           onTap: () async {
                             var confirmDialogResponse = await showDialog<bool>(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text('Cerrar Sesión'),
-                                      content: Text(
-                                          '¿Estas seguro que quieres salirte?'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () => Navigator.pop(
-                                              alertDialogContext, false),
-                                          child: Text('Cancelar'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () => Navigator.pop(
-                                              alertDialogContext, true),
-                                          child: Text('Confirmar'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ) ??
-                                false;
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: Text('Cerrar Sesión'),
+                                  content: Text(
+                                      '¿Estas seguro que quieres salirte?'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(
+                                          alertDialogContext, false),
+                                      child: Text('Cancelar'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(
+                                          alertDialogContext, true),
+                                      child: Text('Confirmar'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            confirmDialogResponse ??= false;
                             if (!confirmDialogResponse) {
                               return;
                             }
@@ -687,7 +687,6 @@ class _ProfileWidgetState extends State<ProfileWidget>
                             GoRouter.of(context).prepareAuthEvent();
                             await authManager.signOut();
                             GoRouter.of(context).clearRedirectLocation();
-
                             context.goNamedAuth('Onboarding', context.mounted);
                           },
                           child: Container(

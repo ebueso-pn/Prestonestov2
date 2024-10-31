@@ -1250,7 +1250,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Center(
                                       child: Text(
-                                        'Tu solicitud está completada y pasará a evaluación! \nTendrás una respuesta sobre tu crédito en las próximas 24 horas hábiles.',
+                                        'Tu solicitud está completada y pasará a evaluación! \nTendrás una respuesta sobre tu crédito en las próximas 72 horas hábiles.',
                                         style: TextStyle(
                                           fontSize: 15,
                                           color: Colors.black,

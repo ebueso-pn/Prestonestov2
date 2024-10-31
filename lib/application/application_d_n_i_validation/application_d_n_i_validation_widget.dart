@@ -427,6 +427,8 @@ class _ApplicationDNIValidationWidgetState
                                 {'status': 'Denegada'},
                                 SetOptions(merge: true),
                               );
+                              context.pushNamed('Application_Denied');
+                              return;
                             }
                             dynamic returnResult = await context.pushNamed(
                               'Application_LoanCalculator',

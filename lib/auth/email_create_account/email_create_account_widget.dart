@@ -447,10 +447,12 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                     child: TextFormField(
                       controller: _model.dniController,
                       obscureText: false,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [_model.dniMask],
                       decoration: InputDecoration(
                         labelText: 'DNI',
                         labelStyle: FlutterFlowTheme.of(context).labelMedium,
-                        hintText: '',
+                        hintText: '0801-1792-20114',
                         hintStyle:
                             FlutterFlowTheme.of(context).labelMedium.override(
                                   fontFamily: 'Urbanist',

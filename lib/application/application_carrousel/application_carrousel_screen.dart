@@ -380,17 +380,18 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
             padding: EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
             child: AutoSizeText(
               'Documentación para comprobar tus ingresos',
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.start,
               maxLines: 2,
               style: FlutterFlowTheme.of(context).displayMedium.override(
                     fontFamily: 'Urbanist',
                     color: Colors.white,
                     fontSize: 30.0,
+                    lineHeight: 0.8,
                   ),
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 15.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
             child: Text(
               'Estos pueden ser:',
               style: FlutterFlowTheme.of(context).displayMedium.override(
@@ -462,7 +463,7 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
     );
   }
 
-  Widget _buildStep2(BuildContext context) {
+  Widget _buildStep3(BuildContext context) {
     return Align(
       alignment: AlignmentDirectional(0.0, 0.0),
       child: Column(
@@ -509,7 +510,7 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
     );
   }
 
-  Widget _buildStep3(BuildContext context) {
+  Widget _buildStep2(BuildContext context) {
     return Align(
       alignment: AlignmentDirectional(0.0, 0.0),
       child: Column(

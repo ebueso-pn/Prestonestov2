@@ -11,7 +11,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_name_model.dart';
 export 'application_name_model.dart';
@@ -103,9 +102,10 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
   };
   String? earningTypeError;
 
-  bool hasBankAccount = false;
+  bool? hasBankAccount;
   bool hasGrantedCreditHistory = false;
   String? hasGrantedCreditHistoryError;
+  String? hasSelectedBankAccountError;
 
   @override
   void initState() {
@@ -220,7 +220,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 0.0, 0.0, 0.0),
                           child: Text(
-                            'Nombre',
+                            'Datos para tu Solicitud',
                             style: FlutterFlowTheme.of(context)
                                 .headlineLarge
                                 .override(
@@ -305,7 +305,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                               labelText: 'Nombres',
                               labelStyle:
                                   FlutterFlowTheme.of(context).labelLarge,
-                              hintText: 'Juan Pablo',
+                              hintText: 'Jose Francisco',
                               hintStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
@@ -386,7 +386,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           decoration: InputDecoration(
                             labelText: 'Apellidos',
                             labelStyle: FlutterFlowTheme.of(context).labelLarge,
-                            hintText: 'Perez Gomez',
+                            hintText: 'Morazán Quesada',
                             hintStyle: FlutterFlowTheme.of(context)
                                 .labelMedium
                                 .override(
@@ -686,12 +686,13 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                               onPressed: () {
                                 setState(() {
                                   hasBankAccount = true;
+                                  hasSelectedBankAccountError = null;
                                 });
                               },
                               options: FFButtonOptions(
                                 width: MediaQuery.of(context).size.width * 0.5 -
                                     32,
-                                color: hasBankAccount
+                                color: hasBankAccount == true
                                     ? FlutterFlowTheme.of(context).primary
                                     : Colors.grey,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -712,12 +713,13 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                               onPressed: () {
                                 setState(() {
                                   hasBankAccount = false;
+                                  hasSelectedBankAccountError = null;
                                 });
                               },
                               options: FFButtonOptions(
                                 width: MediaQuery.of(context).size.width * 0.5 -
                                     32,
-                                color: !hasBankAccount
+                                color: hasBankAccount == false
                                     ? FlutterFlowTheme.of(context).primary
                                     : Colors.grey,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -734,6 +736,18 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                               )),
                         ],
                       ),
+                      hasSelectedBankAccountError != null
+                          ? Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 16, 16.0, 16.0),
+                              child: Text(
+                                hasSelectedBankAccountError!,
+                                style: TextStyle(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    fontSize: 12),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
                       Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 16.0, 16.0, 16.0),
@@ -745,7 +759,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(16.0, 0, 16.0, 16.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             FFButtonWidget(
                                 text: 'Si',
@@ -871,6 +885,14 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
                           setState(() {
                             earningTypeError =
                                 'Debes seleccionar al menos una fuente de ingresos';
+                          });
+                          return;
+                        }
+
+                        if (hasBankAccount == null) {
+                          setState(() {
+                            hasSelectedBankAccountError =
+                                'Debes seleccionar una opcion para continuar';
                           });
                           return;
                         }
