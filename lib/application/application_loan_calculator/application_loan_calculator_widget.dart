@@ -1,7 +1,6 @@
 import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -419,7 +418,7 @@ class _ApplicationLoanCalculatorWidgetState
                               value: _model.loanAmtValue ??=
                                   (isEquifaxCero ? 2000.0 : 4000.0),
                               label: _model.loanAmtValue.toString(),
-                              divisions: isEquifaxCero ? 3 : 10,
+                              divisions: isEquifaxCero ? 3 : 21,
                               onChanged: (newValue) {
                                 newValue =
                                     double.parse(newValue.toStringAsFixed(0));
