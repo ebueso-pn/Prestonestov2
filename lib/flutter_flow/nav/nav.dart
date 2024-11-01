@@ -129,17 +129,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Application_LoanCalculator',
           path: '/applicationLoanCalculator',
           requireAuth: true,
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'Applicaiton_Summary')
-              : ApplicationLoanCalculatorWidget(
-                  applicationRecieve: params.getParam(
-                      'applicationRecieve',
-                      ParamType.DocumentReference,
-                      false,
-                      ['users', 'application']),
-                  equifaxStatus:
-                      params.getParam('equifaxStatus', ParamType.String),
-                ),
+          builder: (context, params) {
+            return params.isEmpty
+                ? NavBarPage(initialPage: 'Applicaiton_Summary')
+                : ApplicationLoanCalculatorWidget(
+                    applicationRecieve: params.getParam(
+                        'applicationRecieve',
+                        ParamType.DocumentReference,
+                        false,
+                        ['users', 'application']),
+                    equifaxStatus:
+                        params.getParam('equifaxStatus', ParamType.String),
+                  );
+          },
         ),
         FFRoute(
             name: 'Application_Carrousel',

@@ -7,7 +7,6 @@ import 'package:prestonesto/backend/backend.dart';
 import 'package:prestonesto/flutter_flow/flutter_flow_theme.dart';
 import 'package:prestonesto/flutter_flow/flutter_flow_util.dart';
 import 'package:prestonesto/index.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NavBarPage extends StatefulWidget {
@@ -137,16 +136,29 @@ class _NavBarPageState extends State<NavBarPage> {
         applicationIniciada != null) {
       _currentPageName = _applicationTabsNames[_applicationIndex]!;
     }
-    if (useInitialPage)
+    if (useInitialPage &&
+        !_applicationTabsNames.containsValue(widget.initialPage))
       _currentPageName = widget.initialPage ?? _currentPageName;
+
+    print('Current page: $_currentPageName');
+    print('Initial page: ${widget.initialPage}');
+    print('Current index: $_applicationIndex');
+    print('Current status: $appStatus');
+    print('Current application: $applicationIniciada');
+    print('Current application tabs: $_applicationTabs');
+    print('Current application tabs names: $_applicationTabsNames');
 
     final Map<String, Widget> tabs = {
       'Home': HomeWidget(),
-      _applicationTabsNames[_applicationIndex]!:
-          _applicationTabs[_applicationIndex]!,
+      (_applicationTabsNames[_applicationIndex] ?? 'Applicaiton_Summary'):
+          (_applicationTabs[_applicationIndex] ?? ApplicaitonSummaryWidget()),
       'Profile': ProfileWidget(),
     };
+
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
+    print('TABS: $tabs');
+    print('Current index: $currentIndex');
+    print('Current page: ${tabs.keys.toList()[currentIndex]}');
 
     Future<bool> _hasActiveLoans() async {
       final loans = queryLoansRecord(
