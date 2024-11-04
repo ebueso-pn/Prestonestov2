@@ -199,7 +199,6 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
               Expanded(
                 child: PageView(
                   controller: _pageViewController,
@@ -342,19 +341,33 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Align(
-            alignment: AlignmentDirectional(0.0, 0.0),
+            alignment: Alignment.center,
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
               child: AutoSizeText(
-                'Estás a tres pasos de completar tu solicitud!',
+                '¡Ya casi terminamos!',
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 style: FlutterFlowTheme.of(context).displayMedium.override(
                       fontFamily: 'Urbanist',
                       fontSize: 30.0,
                       color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
               ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
+            child: Text(
+              'Verifiquemos tu información para completar el proceso',
+              textAlign: TextAlign.center,
+              style: FlutterFlowTheme.of(context).displayMedium.override(
+                    fontFamily: 'Urbanist',
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
             ),
           ),
           Image.asset(
@@ -379,81 +392,45 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
             child: AutoSizeText(
-              'Documentación para comprobar tus ingresos',
-              textAlign: TextAlign.start,
-              maxLines: 2,
+              'Compártenos documentación para comprobar tus ingresos',
+              textAlign: TextAlign.center,
+              maxLines: 3,
               style: FlutterFlowTheme.of(context).displayMedium.override(
                     fontFamily: 'Urbanist',
                     color: Colors.white,
+                    fontWeight: FontWeight.bold,
                     fontSize: 30.0,
                     lineHeight: 0.8,
                   ),
             ),
           ),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
-            child: Text(
-              'Estos pueden ser:',
-              style: FlutterFlowTheme.of(context).displayMedium.override(
-                    fontFamily: 'Urbanist',
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
+          Center(
+            child: Lottie.asset(
+              'assets/lottie_animations/comprobante_ingresos_lottie.json',
+              width: 300.0,
+              height: 300.0,
+              fit: BoxFit.fill,
+              animate: true,
             ),
           ),
-          SizedBox(
-            height: 350.0,
-            child: PageView(
-              controller: _step1PageViewController,
-              children: [
-                Image.asset(
-                  'assets/images/Paso_1_carousel_1.png',
-                  fit: BoxFit.fill,
-                ),
-                Image.asset(
-                  'assets/images/Paso_1_carousel_2.png',
-                  fit: BoxFit.fill,
-                ),
-                Image.asset(
-                  'assets/images/Paso_1_carousel_3.png',
-                  fit: BoxFit.fill,
-                ),
-              ],
-            ),
-          ),
-          Align(
-            alignment: AlignmentDirectional(0.0, 0.7),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 20.0),
-              child: smooth_page_indicator.SmoothPageIndicator(
-                controller: _step1PageViewController,
-                count: 3,
-                axisDirection: Axis.horizontal,
-                onDotClicked: (i) async {
-                  await _step1PageViewController.animateToPage(
-                    i,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.ease,
-                  );
-                },
-                effect: smooth_page_indicator.ExpandingDotsEffect(
-                  spacing: 8.0,
-                  radius: 8.0,
-                  dotWidth: 12.0,
-                  dotHeight: 12.0,
-                  dotColor: Color(0xFFBDBDBD),
-                  activeDotColor: Colors.white,
-                ),
-              ),
-            ),
-          ),
+          const SizedBox(height: 10.0),
+          _buildInfoImage(context, 'assets/images/constancia_de_trabajo.png',
+              'Constancia de trabajo'),
+          const SizedBox(height: 13.0),
+          _buildInfoImage(
+              context, 'assets/images/voucher_de_pago.png', 'Voucher de pago'),
+          const SizedBox(height: 13.0),
+          _buildInfoImage(context, 'assets/images/extracto_bancario.png',
+              'Extracto bancario'),
+          const SizedBox(height: 40.0),
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 15.0, 0.0),
             child: Text(
-              'Para cualquiera de estos, es necesario que su nombre completo sea legible en el documento.',
+              'U otra documentación que nos permita verificar tus ingresos mensuales',
               style: FlutterFlowTheme.of(context).displayMedium.override(
                     fontFamily: 'Urbanist',
                     color: Colors.white,
+                    fontWeight: FontWeight.bold,
                     fontSize: 16.0,
                   ),
             ),
@@ -480,7 +457,7 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
               style: FlutterFlowTheme.of(context).displayMedium.override(
                     fontFamily: 'Urbanist',
                     fontSize: 30.0,
-                    fontWeight: FontWeight.normal,
+                    fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
             ),
@@ -500,7 +477,7 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
               style: FlutterFlowTheme.of(context).displayMedium.override(
                     fontFamily: 'Urbanist',
                     fontSize: 16.0,
-                    fontWeight: FontWeight.normal,
+                    fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
             ),
@@ -521,25 +498,14 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
             child: AutoSizeText(
-              'Compártenos el número de tu cuenta de banco',
+              'Compártenos el número de tu cuenta bancaria',
               textAlign: TextAlign.center,
               maxLines: 3,
               style: FlutterFlowTheme.of(context).displayMedium.override(
                     fontFamily: 'Urbanist',
                     fontSize: 30.0,
                     color: Colors.white,
-                    fontWeight: FontWeight.normal,
-                  ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 15.0, 0.0),
-            child: Text(
-              '(donde desenbolsaremos tu crédito si eres aprobado)',
-              style: FlutterFlowTheme.of(context).displayMedium.override(
-                    fontFamily: 'Urbanist',
-                    color: Colors.white,
-                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
                   ),
             ),
           ),
@@ -553,16 +519,58 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 15.0, 0.0),
             child: Text(
-              'Y Listo! \n Una vez termines estos 3 pasos, tendrás respuesta a tu solicitud en menos de 24 horas hábiles.',
+              'Si todo se ve bien y tu prestamo es aprobado, tu desembolso se enviará a tu cuenta',
+              textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).displayMedium.override(
                     fontFamily: 'Urbanist',
                     color: Colors.white,
+                    fontWeight: FontWeight.bold,
                     fontSize: 16.0,
                   ),
             ),
           ),
         ],
       ).animateOnPageLoad(animationsMap['columnOnPageLoadAnimation3']!),
+    );
+  }
+
+  Widget _buildInfoImage(BuildContext context, String imagePath, String title) {
+    return InkWell(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(title),
+                content: Image.asset(imagePath),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Cerrar'),
+                  ),
+                ],
+              );
+            });
+      },
+      child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 250.0,
+              child: Text(
+                title,
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white),
+              ),
+            ),
+            const SizedBox(width: 10.0),
+            Icon(Icons.info_outline, color: Colors.white, size: 20.0),
+          ]),
     );
   }
 }
