@@ -514,14 +514,15 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                         );
                         return;
                       }
+                      final dni = _model.dniController.text.replaceAll('-', '');
                       final userSnapshot = await UsersRecord.collection
-                          .where('DNI', isEqualTo: _model.dniController.text)
+                          .where('DNI', isEqualTo: dni)
                           .get();
                       if (userSnapshot.docs.isNotEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Algo salio mal, intenta de nuevo.',
+                              'Tu DNI ya está registrado con otro usuario',
                             ),
                           ),
                         );
@@ -550,7 +551,7 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                       await UsersRecord.collection
                           .doc(user.uid)
                           .update(createUsersRecordData(
-                            dni: _model.dniController.text,
+                            dni: dni,
                           ));
 
                       String? token =

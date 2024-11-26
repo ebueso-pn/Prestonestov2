@@ -122,8 +122,8 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
         46,
         (index) => DropdownMenuItem(
             value: 5000 + index * 1000,
-            child: index == 45
-                ? Text('L +${format.format(5000 + index * 1000)}')
+            child: (index == 45)
+                ? Text('HNL +${format.format(5000 + index * 1000)}')
                 : Text('HNL ${format.format(5000 + index * 1000)}')));
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -150,6 +150,7 @@ class _ApplicationNameWidgetState extends State<ApplicationNameWidget>
   }
 
   String toDniFormat(String dni) {
+    dni = dni.replaceAll('-', '');
     final firstFour = dni.substring(0, 4);
     final secondFour = dni.substring(4, 8);
     final lastFive = dni.substring(8);
