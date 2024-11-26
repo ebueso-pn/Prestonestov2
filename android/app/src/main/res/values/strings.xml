@@ -126,7 +126,7 @@
 
 ///Image Preview Screen
 <string name="sp_doc_clear">Está claro el documento?</string>
-<string name="sp_doc_preview_text"><![CDATA[<b>Volver a tomar si el documento no está claro o legible.</b>]]></string>
+<string name="sp_doc_preview_text"><b>Volver a tomar si el documento no está claro o legible.</b></string>
 
 <string name="sp_face_clear"><b>Está clara la foto?</b></string>
 <string name="sp_face_preview_text"><b>Por favor asegurar que toda la cara esté visible.</b></string>

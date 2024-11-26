@@ -422,7 +422,7 @@ class _ApplicationDNIValidationWidgetState
                               appStatus = 'CONTINUE_NO_SCORE';
                             }
 
-                            if (appStatus == 'DENEGADA') {
+                            if (appStatus == 'DENEGATE') {
                               _model.createdAppVar?.reference.set(
                                 {'status': 'Denegada'},
                                 SetOptions(merge: true),
