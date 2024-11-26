@@ -660,6 +660,18 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                         EdgeInsetsDirectional.fromSTEB(0.0, 48.0, 0.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        if (_model.cuentaController.text.isEmpty ||
+                            _model.cuentaController.text !=
+                                _model.cuentaConfirmarController.text) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'La cuenta ingresada no es la misma o no se ingresó un número de cuenta.',
+                              ),
+                            ),
+                          );
+                          return;
+                        }
                         await queryDocumentsRecordOnce(
                           queryBuilder: (documentsRecord) =>
                               documentsRecord.where('UserDocReference',

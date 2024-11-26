@@ -515,6 +515,16 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                         return;
                       }
                       final dni = _model.dniController.text.replaceAll('-', '');
+                      if (dni.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Por favor ingresa tu DNI',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
                       final userSnapshot = await UsersRecord.collection
                           .where('DNI', isEqualTo: dni)
                           .get();
