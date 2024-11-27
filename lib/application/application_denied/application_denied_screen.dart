@@ -109,6 +109,7 @@ class ApplicationDeniedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FlutterFlowTheme.of(context).primary,
       appBar: responsiveVisibility(
         context: context,
         desktop: false,
@@ -148,19 +149,29 @@ class ApplicationDeniedScreen extends StatelessWidget {
                   centerTitle: true,
                   expandedTitleScale: 1.0,
                 ),
-                elevation: 2.0,
+                elevation: 0,
               ),
             )
           : null,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
             padding: EdgeInsets.all(24),
             child: Center(
                 child: Text('Lo sentimos, tu solicitud no ha sido aprobada',
-                    style: FlutterFlowTheme.of(context).headlineSmall)),
+                    style: FlutterFlowTheme.of(context).headlineLarge.copyWith(
+                        color: FlutterFlowTheme.of(context).secondary))),
           ),
+          Container(
+            padding: EdgeInsets.all(24),
+            child: Center(
+                child: Text(
+                    'Sabemos que esto puede ser una noticia frustrante. Te invitamos a volver a solicitar un crédito con nosotros en 3 meses. Te deseamos todo lo mejor. ',
+                    style: FlutterFlowTheme.of(context).bodyLarge.copyWith(
+                        color: FlutterFlowTheme.of(context).secondary,
+                        fontWeight: FontWeight.bold))),
+          ),
+          const Spacer(),
           Align(
             alignment: AlignmentDirectional(0.0, 0.0),
             child: Padding(
@@ -176,10 +187,10 @@ class ApplicationDeniedScreen extends StatelessWidget {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).primary,
+                  color: FlutterFlowTheme.of(context).secondary,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Urbanist',
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                   elevation: 3.0,
                   borderSide: BorderSide(
