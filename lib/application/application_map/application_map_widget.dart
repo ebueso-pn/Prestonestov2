@@ -314,7 +314,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                             );
                           }
                           bool hasApplicationEnviada =
-                              snapshot.data!.any((e) => e.status == 'Enviada');
+                              snapshot.data!.any((e) => e.status == 'Enviada' || e.status == 'Aceptada');
                           return FFButtonWidget(
                             onPressed: () async {
                               await currentUserReference!
@@ -337,7 +337,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                               });
                               if (hasApplicationEnviada) {
                                 await widget.applicationRecieve!.update({
-                                  'index': FieldValue.increment(1),
+                                  'index': FieldValue.increment(2),
                                 });
                                 context.pushNamed(
                                   'Application_Review',

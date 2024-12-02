@@ -1,4 +1,3 @@
-import 'package:http/http.dart' as http;
 import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:prestonesto/application/application_d_n_i_validation/verification_model.dart';
@@ -13,7 +12,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_d_n_i_validation_model.dart';
 export 'application_d_n_i_validation_model.dart';
@@ -288,10 +286,6 @@ class _ApplicationDNIValidationWidgetState
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
-                                  //@TODO: revisar index
-                                  //await widget.applicationRecieve!.update({
-                                  //  'index': FieldValue.increment(-(1)),
-                                  //});
                                   context.pop();
                                 },
                               ),

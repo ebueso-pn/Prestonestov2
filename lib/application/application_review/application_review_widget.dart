@@ -8,10 +8,7 @@ import '/flutter_flow/flutter_flow_static_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/lat_lng.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mapbox_search/mapbox_search.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -91,22 +88,19 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30,
-                                borderWidth: 1,
-                                buttonSize: 50,
-                                icon: Icon(
-                                  Icons.arrow_back_rounded,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                                onPressed: () async {
-                                  await widget.applicationRecieve!.update({
-                                    'index': FieldValue.increment(-(1)),
-                                  });
-                                  if (context.canPop()) {
-                                    context.pop();
-                                  } else {
+                                  borderColor: Colors.transparent,
+                                  borderRadius: 30,
+                                  borderWidth: 1,
+                                  buttonSize: 50,
+                                  icon: Icon(
+                                    Icons.arrow_back_rounded,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                  onPressed: () async {
+                                    await widget.applicationRecieve!.update({
+                                      'index': FieldValue.increment(-(1)),
+                                    });
                                     context.goNamed(
                                       'Application_UploadDocs',
                                       queryParameters: {
@@ -117,9 +111,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                         'equifaxStatus': widget.equifaxStatus,
                                       }.withoutNulls,
                                     );
-                                  }
-                                },
-                              ),
+                                  }),
                             ),
                           ],
                         ),
