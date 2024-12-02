@@ -41,6 +41,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   bool _showChipsError = false;
+  bool _loading = false;
 
   final animationsMap = {
     'columnOnPageLoadAnimation': AnimationInfo(
@@ -166,6 +167,8 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                     size: 30,
                                   ),
                                   onPressed: () async {
+                                    if (_loading) return;
+                                    setState(() => _loading = true);
                                     await widget.applicationRecieve!.update({
                                       'index': FieldValue.increment(-(1)),
                                     });
@@ -183,6 +186,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                         }.withoutNulls,
                                       );
                                     }
+                                    setState(() => _loading = false);
                                   },
                                 ),
                               ),
@@ -744,7 +748,10 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                   child: FFButtonWidget(
+                    isEnable: !_loading,
                     onPressed: () async {
+                      if (_loading) return;
+                      setState(() => _loading = true);
                       if (_model.addressFieldCasaCalleController.text != null &&
                           _model.addressFieldCasaCalleController.text != '') {
                         setState(() {
@@ -784,6 +791,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                         setState(() {
                           _showChipsError = true;
                         });
+                        setState(() => _loading = false);
                         return;
                       } else {
                         setState(() {
@@ -792,6 +800,9 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                       }
 
                       if (_model.dptoDropDownValue == null) {
+                        setState(() {
+                          _loading = false;
+                        });
                         return;
                       }
 
@@ -829,6 +840,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                           ),
                         },
                       );
+                      setState(() => _loading = false);
                     },
                     text: 'Continuar',
                     options: FFButtonOptions(

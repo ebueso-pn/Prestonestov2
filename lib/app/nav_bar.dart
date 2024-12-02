@@ -91,9 +91,10 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     if (applicationIniciada != null) {
       _applicationIndex =
-          (0 > applicationIniciada!.index && applicationIniciada!.index > 5)
+          (0 > applicationIniciada!.index || applicationIniciada!.index > 6)
               ? 0
               : applicationIniciada!.index;
+
       _applicationTabs = {
         0: ApplicaitonSummaryWidget(),
         1: ApplicationLoanCalculatorWidget(
@@ -140,14 +141,6 @@ class _NavBarPageState extends State<NavBarPage> {
         !_applicationTabsNames.containsValue(widget.initialPage))
       _currentPageName = widget.initialPage ?? _currentPageName;
 
-    print('Current page: $_currentPageName');
-    print('Initial page: ${widget.initialPage}');
-    print('Current index: $_applicationIndex');
-    print('Current status: $appStatus');
-    print('Current application: $applicationIniciada');
-    print('Current application tabs: $_applicationTabs');
-    print('Current application tabs names: $_applicationTabsNames');
-
     final Map<String, Widget> tabs = {
       'Home': HomeWidget(),
       (_applicationTabsNames[_applicationIndex] ?? 'Applicaiton_Summary'):
@@ -156,9 +149,6 @@ class _NavBarPageState extends State<NavBarPage> {
     };
 
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
-    print('TABS: $tabs');
-    print('Current index: $currentIndex');
-    print('Current page: ${tabs.keys.toList()[currentIndex]}');
 
     Future<bool> _hasActiveLoans() async {
       final loans = queryLoansRecord(

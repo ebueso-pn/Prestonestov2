@@ -37,6 +37,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
   late DateTime end;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _loading = false;
 
   @override
   void initState() {
@@ -98,6 +99,8 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () async {
+                                    if (_loading) return;
+                                    setState(() => _loading = true);
                                     await widget.applicationRecieve!.update({
                                       'index': FieldValue.increment(-(1)),
                                     });
@@ -111,6 +114,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                         'equifaxStatus': widget.equifaxStatus,
                                       }.withoutNulls,
                                     );
+                                    setState(() => _loading = false);
                                   }),
                             ),
                           ],

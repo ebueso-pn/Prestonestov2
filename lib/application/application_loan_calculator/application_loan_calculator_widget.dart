@@ -31,6 +31,7 @@ class _ApplicationLoanCalculatorWidgetState
     with TickerProviderStateMixin {
   late ApplicationLoanCalculatorModel _model;
   int counter = 0;
+  bool _loading = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -588,7 +589,10 @@ class _ApplicationLoanCalculatorWidgetState
                     padding:
                         EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
                     child: FFButtonWidget(
+                      isEnable: !_loading,
                       onPressed: () async {
+                        if (_loading) return;
+                        setState(() => _loading = true);
                         var _shouldSetState = false;
                         if (_model.loanAmtValue! <= 0.0) {
                           await showDialog(
@@ -620,36 +624,6 @@ class _ApplicationLoanCalculatorWidgetState
                               _model.loanTermValue!),
                           'index': FieldValue.increment((1)),
                         });
-                        /*
-                            var applicationRecordReference =
-                                ApplicationRecord.createDoc(
-                                    currentUserReference!);
-                            await applicationRecordReference.set({
-                              ...createApplicationRecordData(
-                                monto: _model.loanAmtValue,
-                                plazoMeses: _model.loanTermValue,
-                                cuota: functions.loanCalculator(
-                                    _model.loanAmtValue!,
-                                    .055,
-                                    _model.loanTermValue!),
-                                index: 1,
-                              ),
-                              'date_applied': FieldValue.serverTimestamp(),
-                            });
-                            _model.createdAppVar =
-                                ApplicationRecord.getDocumentFromData({
-                              ...createApplicationRecordData(
-                                monto: _model.loanAmtValue,
-                                plazoMeses: _model.loanTermValue,
-                                cuota: functions.loanCalculator(
-                                    _model.loanAmtValue!,
-                                    .055,
-                                    _model.loanTermValue!),
-                                index: 1,
-                              ),
-                              'date_applied': DateTime.now(),
-                            }, applicationRecordReference);
-                                */
                         _shouldSetState = true;
 
                         await FirebaseAnalytics.instance.logEvent(
@@ -677,6 +651,10 @@ class _ApplicationLoanCalculatorWidgetState
                         );
 
                         if (_shouldSetState) setState(() {});
+
+                        setState(() {
+                          _loading = false;
+                        });
                       },
                       text: 'Aplicar',
                       options: FFButtonOptions(

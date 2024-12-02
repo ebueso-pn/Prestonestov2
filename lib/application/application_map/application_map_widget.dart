@@ -33,6 +33,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng? currentUserLocationValue;
+  bool _loading = false;
 
   @override
   void initState() {
@@ -121,6 +122,8 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
+                                  if (_loading) return;
+                                  setState(() => _loading = true);
                                   await widget.applicationRecieve!.update({
                                     'index': FieldValue.increment(-(1)),
                                   });
@@ -138,6 +141,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                       }.withoutNulls,
                                     );
                                   }
+                                  setState(() => _loading = false);
                                 },
                               ),
                             ),
@@ -313,10 +317,14 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                               child: CircularProgressIndicator(),
                             );
                           }
-                          bool hasApplicationEnviada =
-                              snapshot.data!.any((e) => e.status == 'Enviada' || e.status == 'Aceptada');
+                          bool hasApplicationEnviada = snapshot.data!.any((e) =>
+                              e.status == 'Enviada' || e.status == 'Aceptada');
                           return FFButtonWidget(
+                            isEnable: !_loading,
                             onPressed: () async {
+                              if (_loading) return;
+                              setState(() => _loading = true);
+
                               await currentUserReference!
                                   .update(createUsersRecordData(
                                 latLong: _model.googleMapsCenter,
@@ -349,6 +357,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                     'equifaxStatus': widget.equifaxStatus,
                                   }.withoutNulls,
                                 );
+                                setState(() => _loading = false);
                                 return;
                               }
                               context.pushNamed(
@@ -361,6 +370,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                   'equifaxStatus': widget.equifaxStatus,
                                 }.withoutNulls,
                               );
+                              setState(() => _loading = false);
                             },
                             text: 'Fijar Dirección',
                             options: FFButtonOptions(

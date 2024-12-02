@@ -36,6 +36,7 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
   PageController _step1PageViewController = PageController();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _loading = false;
 
   final animationsMap = {
     'columnOnPageLoadAnimation1': AnimationInfo(
@@ -125,6 +126,10 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
                         size: 30.0,
                       ),
                       onPressed: () async {
+                        if (_loading) return;
+                        setState(() {
+                          _loading = true;
+                        });
                         await widget.applicationRecieve!.update({
                           'index': FieldValue.increment(-(1)),
                         });
@@ -142,6 +147,9 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
                             }.withoutNulls,
                           );
                         }
+                        setState(() {
+                          _loading = false;
+                        });
                       },
                     ),
                   ),
@@ -260,7 +268,12 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   10.0, 0.0, 10.0, 10.0),
                               child: FFButtonWidget(
+                                isEnable: !_loading,
                                 onPressed: () async {
+                                  if (_loading) return;
+                                  setState(() {
+                                    _loading = true;
+                                  });
                                   await widget.applicationRecieve!.update({
                                     'index': FieldValue.increment(1),
                                   });
@@ -274,6 +287,9 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
                                       'equifaxStatus': widget.equifaxStatus,
                                     }.withoutNulls,
                                   );
+                                  setState(() {
+                                    _loading = false;
+                                  });
                                 },
                                 text: 'Continuar',
                                 options: FFButtonOptions(

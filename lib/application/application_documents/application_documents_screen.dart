@@ -27,6 +27,7 @@ class ApplicationDocuments extends StatefulWidget {
 class ApplicationDocumentsState extends State<ApplicationDocuments> {
   final FocusNode _focusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _loading = false;
 
   final animationsMap = {
     'containerOnPageLoadAnimation1': AnimationInfo(
@@ -250,6 +251,9 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                                       size: 30,
                                     ),
                                     onPressed: () async {
+                                      if (_loading) return;
+                                      setState(() => _loading = true);
+
                                       await widget.applicationRecieve!.update({
                                         'index': FieldValue.increment(-(1)),
                                       });
@@ -269,6 +273,7 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                                           }.withoutNulls,
                                         );
                                       }
+                                      setState(() => _loading = false);
                                     },
                                   ),
                                 ),
@@ -644,6 +649,7 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                 ),
                 const Spacer(),
                 FFButtonWidget(
+                  isEnable: !_loading,
                   onPressed: () async {
                     if (!FFAppState().userHasIncomeVerification ||
                         !FFAppState().userHasPersonalEvaluationCompleted ||
@@ -651,6 +657,8 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                       return;
                     }
 
+                    if (_loading) return;
+                    setState(() => _loading = true);
                     try {
                       final userRecord = await UsersRecord.getDocumentOnce(
                           currentUserDocument!.reference);
@@ -661,9 +669,12 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                           'status': 'Denegada',
                         });
                         context.pushNamed('Application_Denied');
+                        setState(() => _loading = false);
                         return;
                       }
-                    } catch (e) {}
+                    } catch (e) {
+                      setState(() => _loading = false);
+                    }
 
                     await widget.applicationRecieve!.update({
                       'index': FieldValue.increment(1),
@@ -679,6 +690,7 @@ class ApplicationDocumentsState extends State<ApplicationDocuments> {
                         'equifaxStatus': widget.equifaxStatus,
                       }.withoutNulls,
                     );
+                    setState(() => _loading = false);
                   },
                   text: 'Continuar',
                   options: FFButtonOptions(
