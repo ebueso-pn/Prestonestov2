@@ -1640,10 +1640,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                   color: valueOrDefault<Color>(
                                                     FFAppState().userHasIncomeVerification &&
                                                             FFAppState()
-                                                                .userHasBankAccount &&
-                                                            FFAppState()
-                                                                    .userHasPersonalEvaluationCompleted ==
-                                                                true
+                                                                .userHasBankAccount
+                                                            
                                                         ? FlutterFlowTheme.of(
                                                                 context)
                                                             .primary
@@ -1687,9 +1685,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       child: FFButtonWidget(
                                         isEnable: FFAppState()
                                                 .userHasIncomeVerification &&
-                                            FFAppState().userHasBankAccount &&
-                                            FFAppState()
-                                                .userHasPersonalEvaluationCompleted,
+                                            FFAppState().userHasBankAccount ,
                                         onPressed: () async {
                                           context.pushNamed(
                                               'Application_LoanCalculator');

@@ -149,13 +149,6 @@ class FFAppState extends ChangeNotifier {
   set userHasIncomeVerification(bool _value) {
     _userHasIncomeVerification = _value;
   }
-
-  bool _userHasPersonalEvaluationCompleted = false;
-  bool get userHasPersonalEvaluationCompleted =>
-      _userHasPersonalEvaluationCompleted;
-  set userHasPersonalEvaluationCompleted(bool _value) {
-    _userHasPersonalEvaluationCompleted = _value;
-  }
 }
 
 LatLng? _latLngFromString(String? val) {

@@ -5,8 +5,6 @@ import 'package:prestonesto/application/application_carrousel/application_carrou
 import 'package:prestonesto/application/application_denied/application_denied_screen.dart';
 import 'package:prestonesto/application/application_documents/application_documents_screen.dart';
 import 'package:prestonesto/privacy_policy/privacy_policy_widget.dart';
-import 'package:prestonesto/profile/begini/begini_widget.dart';
-import 'package:prestonesto/profile/begini/widgets/begini_success_widget.dart';
 import '../../auth/base_auth_user_provider.dart';
 import '/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -86,12 +84,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Onboarding',
           path: '/onboarding',
           builder: (context, params) => OnboardingWidget(),
-        ),
-        FFRoute(
-          name: 'Begini',
-          path: '/Begini',
-          requireAuth: true,
-          builder: (context, params) => BeginiWidget(),
         ),
         FFRoute(
           name: 'SMS_signup',
@@ -299,11 +291,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Payment_Details',
           path: '/paymentDetails',
           builder: (context, params) => PaymentDetailsWidget(),
-        ),
-        FFRoute(
-          name: 'Begini_Success',
-          path: '/beginiSuccess',
-          builder: (context, params) => BeginiSuccessWidget(),
         ),
         FFRoute(
           name: 'Privacy_Policy',

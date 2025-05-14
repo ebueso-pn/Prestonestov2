@@ -44,8 +44,7 @@ class _MyAppState extends State<MyApp> {
         FFAppState().userHasIncomeVerification =
             await checkUserHasIncomeVerification();
         FFAppState().userHasBankAccount = await checkUserHasBankAccount();
-        FFAppState().userHasPersonalEvaluationCompleted =
-            await checkUserAlreadyCompletedPersonalEvaluation();
+       
       });
     jwtTokenStream.listen((_) {});
     Future.delayed(
@@ -53,12 +52,6 @@ class _MyAppState extends State<MyApp> {
       () => _appStateNotifier.stopShowingSplashImage(),
     );
     FlutterBranchSdk.initSession().listen((data) {
-      if (data.containsKey('begini_success') &&
-          data['begini_success'] == 'true') {
-        FFAppState().userHasPersonalEvaluationCompleted = true;
-        updateUserPersonalEvaluation(true);
-        _router.go('/beginiSuccess');
-      }
       if (data.containsKey('zapsign_success') &&
           data['zapsign_success'] == 'true') {
         _router.go('/loanSignatureSuccess');
@@ -72,8 +65,7 @@ class _MyAppState extends State<MyApp> {
       FFAppState().userHasIncomeVerification =
           await checkUserHasIncomeVerification();
       FFAppState().userHasBankAccount = await checkUserHasBankAccount();
-      FFAppState().userHasPersonalEvaluationCompleted =
-          await checkUserAlreadyCompletedPersonalEvaluation();
+      
       setState(() {});
     });
   }
