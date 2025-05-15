@@ -218,7 +218,6 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
                     _buildStep0(context),
                     _buildStep1(context),
                     _buildStep2(context),
-                    _buildStep3(context),
                   ],
                 ),
               ),
@@ -250,7 +249,7 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
                   ),
                 ),
               ),
-              if (_currentPage == 3)
+              if (_currentPage == 2)
                 Align(
                   alignment: AlignmentDirectional(0.0, 0.0),
                   child: Padding(
@@ -337,7 +336,7 @@ class _ApplicationCarrouselWidgetState extends State<ApplicationCarrouselWidget>
       if (_currentPage == 1) {
         int nextPage = _step1PageViewController.page!.toInt() + 1;
 
-        if (nextPage >= 3) nextPage = 0;
+        if (nextPage >= 2) nextPage = 0;
 
         _step1PageViewController.animateToPage(
           nextPage,
