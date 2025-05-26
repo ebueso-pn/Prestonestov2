@@ -1,3 +1,6 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_google_map.dart';
@@ -5,9 +8,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_map_model.dart';
@@ -17,9 +18,11 @@ class ApplicationMapWidget extends StatefulWidget {
   const ApplicationMapWidget({
     Key? key,
     required this.applicationRecieve,
+    required this.equifaxStatus,
   }) : super(key: key);
 
   final DocumentReference? applicationRecieve;
+  final String equifaxStatus;
 
   @override
   _ApplicationMapWidgetState createState() => _ApplicationMapWidgetState();
@@ -30,6 +33,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng? currentUserLocationValue;
+  bool _loading = false;
 
   @override
   void initState() {
@@ -51,6 +55,17 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
+
+    List<ApplicationRecord> applicationRecord = [];
+    queryApplicationRecord(
+      parent: currentUserReference,
+      queryBuilder: (applicationRecord) {
+        return applicationRecord;
+      },
+    ).listen((event) {
+      applicationRecord.addAll(event);
+    });
+
     if (currentUserLocationValue == null) {
       return Container(
         color: FlutterFlowTheme.of(context).primaryBackground,
@@ -107,10 +122,26 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
+                                  if (_loading) return;
+                                  setState(() => _loading = true);
                                   await widget.applicationRecieve!.update({
                                     'index': FieldValue.increment(-(1)),
                                   });
-                                  context.pop();
+                                  if (context.canPop()) {
+                                    context.pop();
+                                  } else {
+                                    context.goNamed(
+                                      'Application_Address',
+                                      queryParameters: {
+                                        'applicationRecieve': serializeParam(
+                                          widget.applicationRecieve,
+                                          ParamType.DocumentReference,
+                                        ),
+                                        'equifaxStatus': widget.equifaxStatus,
+                                      }.withoutNulls,
+                                    );
+                                  }
+                                  setState(() => _loading = false);
                                 },
                               ),
                             ),
@@ -227,7 +258,7 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                                         return LinearPercentIndicator(
                                           percent: progressBarApplicationRecord
                                                   .index /
-                                              5,
+                                              6,
                                           lineHeight: 7.0,
                                           animation: true,
                                           progressColor:
@@ -268,49 +299,103 @@ class _ApplicationMapWidgetState extends State<ApplicationMapWidget> {
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    FFButtonWidget(
-                      onPressed: () async {
-                        await currentUserReference!
-                            .update(createUsersRecordData(
-                          latLong: _model.googleMapsCenter,
-                        ));
-
-                        await widget.applicationRecieve!.update({
-                          'index': FieldValue.increment(1),
-                        });
-
-                        context.pushNamed(
-                          'Application_Review',
-                          queryParameters: {
-                            'applicationRecieve': serializeParam(
-                              widget.applicationRecieve,
-                              ParamType.DocumentReference,
-                            ),
-                          }.withoutNulls,
-                        );
-                      },
-                      text: 'Fijar Dirección',
-                      options: FFButtonOptions(
-                        width: 230.0,
-                        height: 50.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primary,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Urbanist',
-                                  color: Colors.white,
-                                ),
-                        elevation: 3.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
+                    StreamBuilder(
+                        initialData: applicationRecord,
+                        stream: queryApplicationRecord(
+                          parent: currentUserReference,
+                          queryBuilder: (applicationRecord) {
+                            return applicationRecord;
+                            //return applicationRecord.where('status', isEqualTo: 'Enviada');
+                          },
                         ),
-                        borderRadius: BorderRadius.circular(48.0),
-                      ),
-                    ),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<ApplicationRecord>> snapshot) {
+                          if (snapshot.connectionState ==
+                                  ConnectionState.waiting ||
+                              snapshot.data == null) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          bool hasApplicationEnviada = snapshot.data!.any((e) =>
+                              e.status == 'Enviada' || e.status == 'Aceptada');
+                          return FFButtonWidget(
+                            isEnable: !_loading,
+                            onPressed: () async {
+                              if (_loading) return;
+                              setState(() => _loading = true);
+
+                              await currentUserReference!
+                                  .update(createUsersRecordData(
+                                latLong: _model.googleMapsCenter,
+                              ));
+
+                              if (currentUserDocument?.latLong !=
+                                  currentUserLocationValue) {
+                                FirebaseAnalytics.instance.logEvent(
+                                  name: 'app_direccion_en_mapa',
+                                );
+                                FacebookAppEvents().logEvent(
+                                  name: 'app_direccion_en_mapa',
+                                );
+                              }
+
+                              await widget.applicationRecieve!.update({
+                                'index': FieldValue.increment(1),
+                              });
+                              if (hasApplicationEnviada) {
+                                await widget.applicationRecieve!.update({
+                                  'index': FieldValue.increment(2),
+                                });
+                                context.pushNamed(
+                                  'Application_Review',
+                                  queryParameters: {
+                                    'applicationRecieve': serializeParam(
+                                      widget.applicationRecieve,
+                                      ParamType.DocumentReference,
+                                    ),
+                                    'equifaxStatus': widget.equifaxStatus,
+                                  }.withoutNulls,
+                                );
+                                setState(() => _loading = false);
+                                return;
+                              }
+                              context.pushNamed(
+                                'Application_Carrousel',
+                                queryParameters: {
+                                  'applicationRecieve': serializeParam(
+                                    widget.applicationRecieve,
+                                    ParamType.DocumentReference,
+                                  ),
+                                  'equifaxStatus': widget.equifaxStatus,
+                                }.withoutNulls,
+                              );
+                              setState(() => _loading = false);
+                            },
+                            text: 'Fijar Dirección',
+                            options: FFButtonOptions(
+                              width: 230.0,
+                              height: 50.0,
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Urbanist',
+                                    color: Colors.white,
+                                  ),
+                              elevation: 3.0,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(48.0),
+                            ),
+                          );
+                        }),
                   ],
                 ),
               ),

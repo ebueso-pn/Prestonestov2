@@ -1,3 +1,6 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -5,10 +8,7 @@ import '/flutter_flow/flutter_flow_static_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/lat_lng.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mapbox_search/mapbox_search.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -20,9 +20,11 @@ class ApplicationReviewWidget extends StatefulWidget {
   const ApplicationReviewWidget({
     Key? key,
     required this.applicationRecieve,
+    required this.equifaxStatus,
   }) : super(key: key);
 
   final DocumentReference? applicationRecieve;
+  final String equifaxStatus;
 
   @override
   _ApplicationReviewWidgetState createState() =>
@@ -31,12 +33,18 @@ class ApplicationReviewWidget extends StatefulWidget {
 
 class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
   late ApplicationReviewModel _model;
+  late DateTime start;
+  late DateTime end;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _loading = false;
 
   @override
   void initState() {
     super.initState();
+
+    start = DateTime.now();
+
     _model = createModel(context, () => ApplicationReviewModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -81,22 +89,33 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30,
-                                borderWidth: 1,
-                                buttonSize: 50,
-                                icon: Icon(
-                                  Icons.arrow_back_rounded,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                                onPressed: () async {
-                                  await widget.applicationRecieve!.update({
-                                    'index': FieldValue.increment(-(1)),
-                                  });
-                                  context.pop();
-                                },
-                              ),
+                                  borderColor: Colors.transparent,
+                                  borderRadius: 30,
+                                  borderWidth: 1,
+                                  buttonSize: 50,
+                                  icon: Icon(
+                                    Icons.arrow_back_rounded,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                  onPressed: () async {
+                                    if (_loading) return;
+                                    setState(() => _loading = true);
+                                    await widget.applicationRecieve!.update({
+                                      'index': FieldValue.increment(-(1)),
+                                    });
+                                    context.goNamed(
+                                      'Application_UploadDocs',
+                                      queryParameters: {
+                                        'applicationRecieve': serializeParam(
+                                          widget.applicationRecieve,
+                                          ParamType.DocumentReference,
+                                        ),
+                                        'equifaxStatus': widget.equifaxStatus,
+                                      }.withoutNulls,
+                                    );
+                                    setState(() => _loading = false);
+                                  }),
                             ),
                           ],
                         ),
@@ -176,7 +195,7 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                                     snapshot.data!;
                                 return LinearPercentIndicator(
                                   percent:
-                                      progressBarApplicationRecord.index / 5,
+                                      progressBarApplicationRecord.index / 6,
                                   lineHeight: 7,
                                   animation: true,
                                   progressColor:
@@ -564,52 +583,6 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                             thickness: 2,
                             color: FlutterFlowTheme.of(context).alternate,
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                              child: Text(
-                                'Autorización',
-                                style: FlutterFlowTheme.of(context).labelLarge,
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'PrestoNesto puede revisar mi credito',
-                                style: FlutterFlowTheme.of(context).labelMedium,
-                              ),
-                              Theme(
-                                data: ThemeData(
-                                  checkboxTheme: CheckboxThemeData(
-                                    visualDensity: VisualDensity.compact,
-                                    materialTapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                  ),
-                                  unselectedWidgetColor:
-                                      FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                ),
-                                child: Checkbox(
-                                  value: _model.checkboxValue ??= true,
-                                  onChanged: (newValue) async {
-                                    setState(
-                                        () => _model.checkboxValue = newValue!);
-                                  },
-                                  activeColor:
-                                      FlutterFlowTheme.of(context).primary,
-                                  checkColor: FlutterFlowTheme.of(context).info,
-                                ),
-                              ),
-                            ],
-                          ),
                         ],
                       );
                     },
@@ -638,13 +611,30 @@ class _ApplicationReviewWidgetState extends State<ApplicationReviewWidget> {
                         bureauConsent: _model.checkboxValue,
                       ));
 
-                      await EquifaxRecord.collection
+                      /*await EquifaxRecord.collection
                           .doc()
                           .set(createEquifaxRecordData(
                             userDocReference: currentUserReference,
                             applicationDocReference: widget.applicationRecieve,
                           ));
+                          */
                       FFAppState().ApplicationEnviada = true;
+
+                      end = DateTime.now();
+                      final diff = end.difference(start);
+
+                      FirebaseAnalytics.instance.logEvent(
+                        name: 'app_ingresar_applicacion',
+                        parameters: {
+                          'tiempo_en_pantalla_en_minutos': diff.inMinutes,
+                        },
+                      );
+                      FacebookAppEvents().logEvent(
+                        name: 'app_ingresar_applicacion',
+                        parameters: {
+                          'tiempo_en_pantalla_en_minutos': diff.inMinutes,
+                        },
+                      );
 
                       context.pushNamed(
                         'Applicaiton_Success',

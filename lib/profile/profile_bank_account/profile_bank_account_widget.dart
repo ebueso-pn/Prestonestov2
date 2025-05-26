@@ -1,3 +1,6 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -657,6 +660,18 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                         EdgeInsetsDirectional.fromSTEB(0.0, 48.0, 0.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        if (_model.cuentaController.text.isEmpty ||
+                            _model.cuentaController.text !=
+                                _model.cuentaConfirmarController.text) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'La cuenta ingresada no es la misma o no se ingresó un número de cuenta.',
+                              ),
+                            ),
+                          );
+                          return;
+                        }
                         await queryDocumentsRecordOnce(
                           queryBuilder: (documentsRecord) =>
                               documentsRecord.where('UserDocReference',
@@ -671,7 +686,15 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                           bankAccountType: _model.choiceChipsValue,
                         ));
 
+                        FirebaseAnalytics.instance.logEvent(
+                          name: 'app_2_ingresar_cuenta_bancaria',
+                        );
+                        FacebookAppEvents().logEvent(
+                          name: 'app_2_ingresar_cuenta_bancaria',
+                        );
                         FFAppState().userHasBankAccount = true;
+
+                        context.pop();
                       },
                       text: 'Guardar y regresar',
                       options: FFButtonOptions(

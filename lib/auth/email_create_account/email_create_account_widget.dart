@@ -1,3 +1,5 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -36,6 +38,7 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
     _model.phoneNumberController ??= TextEditingController();
     _model.passwordController ??= TextEditingController();
     _model.confirmPasswordController ??= TextEditingController();
+    _model.dniController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -432,6 +435,70 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                   ),
                 ),
                 Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(24.0, 14.0, 24.0, 0.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 60.0,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _model.dniController,
+                      obscureText: false,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [_model.dniMask],
+                      decoration: InputDecoration(
+                        labelText: 'DNI',
+                        labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                        hintText: '0801-1792-20114',
+                        hintStyle:
+                            FlutterFlowTheme.of(context).labelMedium.override(
+                                  fontFamily: 'Urbanist',
+                                  fontStyle: FontStyle.italic,
+                                ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFF7A8087),
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primary,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).error,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).error,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        filled: true,
+                        fillColor:
+                            FlutterFlowTheme.of(context).secondaryBackground,
+                        contentPadding: EdgeInsetsDirectional.fromSTEB(
+                            24.0, 24.0, 20.0, 24.0),
+                      ),
+                      style: FlutterFlowTheme.of(context).bodyMedium,
+                      validator:
+                          _model.dniControllerValidator.asValidator(context),
+                    ),
+                  ),
+                ),
+                Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
@@ -442,6 +509,30 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                           SnackBar(
                             content: Text(
                               'Passwords don\'t match!',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
+                      final dni = _model.dniController.text.replaceAll('-', '');
+                      if (dni.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Por favor ingresa tu DNI',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
+                      final userSnapshot = await UsersRecord.collection
+                          .where('DNI', isEqualTo: dni)
+                          .get();
+                      if (userSnapshot.docs.isNotEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Tu DNI ya está registrado con otro usuario',
                             ),
                           ),
                         );
@@ -462,16 +553,25 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                           .update(createUsersRecordData(
                             phoneNumber: _model.phoneNumberController.text,
                           ));
-
                       await DocumentsRecord.collection
                           .doc()
                           .set(createDocumentsRecordData(
                             userDocReference: currentUserReference,
                           ));
+                      await UsersRecord.collection
+                          .doc(user.uid)
+                          .update(createUsersRecordData(
+                            dni: dni,
+                          ));
 
                       String? token =
                           await FirebaseMessaging.instance.getToken();
                       if (token != null) await setFCMToken(token);
+
+                      FirebaseAnalytics.instance.logEvent(name: 'crear_cuenta');
+                      FacebookAppEvents().logEvent(
+                        name: 'crear_cuenta',
+                      );
 
                       context.goNamedAuth(
                           'Application_LoanCalculator', context.mounted);

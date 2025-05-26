@@ -1,4 +1,4 @@
-import 'package:prestonesto_v1/application/applicaiton_success/applicaiton_success_model.dart';
+import 'package:prestonesto/application/applicaiton_success/applicaiton_success_model.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -9,9 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class BeginiSuccessWidget extends StatefulWidget {
-  const BeginiSuccessWidget({
-    Key? key,
-  }) : super(key: key);
+  const BeginiSuccessWidget({Key? key}) : super(key: key);
 
   @override
   _BeginiSuccessWidgetState createState() => _BeginiSuccessWidgetState();
@@ -114,7 +112,14 @@ class _BeginiSuccessWidgetState extends State<BeginiSuccessWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     context.pushNamed(
-                      'Profile',
+                      'Application_UploadDocs',
+                      queryParameters: {
+                        'applicationRecieve': serializeParam(
+                          FFAppState().currentApplication,
+                          ParamType.DocumentReference,
+                        ),
+                        'equifaxStatus': FFAppState().currentEquifaxStatus
+                      }.withoutNulls,
                       extra: <String, dynamic>{
                         kTransitionInfoKey: TransitionInfo(
                           hasTransition: true,

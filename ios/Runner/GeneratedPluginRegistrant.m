@@ -18,10 +18,22 @@
 @import device_info_plus;
 #endif
 
+#if __has_include(<facebook_app_events/FacebookAppEventsPlugin.h>)
+#import <facebook_app_events/FacebookAppEventsPlugin.h>
+#else
+@import facebook_app_events;
+#endif
+
 #if __has_include(<file_picker/FilePickerPlugin.h>)
 #import <file_picker/FilePickerPlugin.h>
 #else
 @import file_picker;
+#endif
+
+#if __has_include(<firebase_analytics/FLTFirebaseAnalyticsPlugin.h>)
+#import <firebase_analytics/FLTFirebaseAnalyticsPlugin.h>
+#else
+@import firebase_analytics;
 #endif
 
 #if __has_include(<firebase_app_check/FLTFirebaseAppCheckPlugin.h>)
@@ -108,6 +120,12 @@
 @import permission_handler_apple;
 #endif
 
+#if __has_include(<prestonesto_shuftipro_sdk/ShuftiproSdk.h>)
+#import <prestonesto_shuftipro_sdk/ShuftiproSdk.h>
+#else
+@import prestonesto_shuftipro_sdk;
+#endif
+
 #if __has_include(<share_plus/FLTSharePlusPlugin.h>)
 #import <share_plus/FLTSharePlusPlugin.h>
 #else
@@ -118,12 +136,6 @@
 #import <shared_preferences_ios/FLTSharedPreferencesPlugin.h>
 #else
 @import shared_preferences_ios;
-#endif
-
-#if __has_include(<shuftipro_sdk/ShuftiproSdk.h>)
-#import <shuftipro_sdk/ShuftiproSdk.h>
-#else
-@import shuftipro_sdk;
 #endif
 
 #if __has_include(<sign_in_with_apple/SignInWithApplePlugin.h>)
@@ -155,7 +167,9 @@
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [FLTFirebaseFirestorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseFirestorePlugin"]];
   [FLTDeviceInfoPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTDeviceInfoPlusPlugin"]];
+  [FacebookAppEventsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FacebookAppEventsPlugin"]];
   [FilePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FilePickerPlugin"]];
+  [FLTFirebaseAnalyticsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAnalyticsPlugin"]];
   [FLTFirebaseAppCheckPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAppCheckPlugin"]];
   [FLTFirebaseAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAuthPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
@@ -170,9 +184,9 @@
   [PathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"PathProviderPlugin"]];
   [PdfxPlugin registerWithRegistrar:[registry registrarForPlugin:@"PdfxPlugin"]];
   [PermissionHandlerPlugin registerWithRegistrar:[registry registrarForPlugin:@"PermissionHandlerPlugin"]];
+  [ShuftiproSdk registerWithRegistrar:[registry registrarForPlugin:@"ShuftiproSdk"]];
   [FLTSharePlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharePlusPlugin"]];
   [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];
-  [ShuftiproSdk registerWithRegistrar:[registry registrarForPlugin:@"ShuftiproSdk"]];
   [SignInWithApplePlugin registerWithRegistrar:[registry registrarForPlugin:@"SignInWithApplePlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
   [FLTURLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTURLLauncherPlugin"]];

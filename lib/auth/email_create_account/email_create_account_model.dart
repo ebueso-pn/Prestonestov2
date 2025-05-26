@@ -29,6 +29,24 @@ class EmailCreateAccountModel extends FlutterFlowModel {
   TextEditingController? confirmPasswordController;
   late bool confirmPasswordVisibility;
   String? Function(BuildContext, String?)? confirmPasswordControllerValidator;
+  // State field(s) for emailAddress widget.
+  TextEditingController? dniController;
+  final dniMask = MaskTextInputFormatter(mask: '####-####-#####');
+  String? Function(BuildContext, String?)? dniControllerValidator;
+  String? _dniControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Necesitamos el numero de tu DNI';
+    }
+
+    if (val.length < 15) {
+      return '¡Te hacen falta un par de numeros!';
+    }
+    if (val.length > 15) {
+      return '¡Muchos numeros!';
+    }
+
+    return null;
+  }
 
   /// Initialization and disposal methods.
 
@@ -43,6 +61,7 @@ class EmailCreateAccountModel extends FlutterFlowModel {
     phoneNumberController?.dispose();
     passwordController?.dispose();
     confirmPasswordController?.dispose();
+    dniController?.dispose();
   }
 
   /// Action blocks are added here.

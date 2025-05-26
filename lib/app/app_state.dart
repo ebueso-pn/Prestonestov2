@@ -18,6 +18,18 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  DocumentReference<Object?>? _currentApplication = null;
+  DocumentReference<Object?>? get currentApplication => _currentApplication;
+  set currentApplication(DocumentReference<Object?>? _value) {
+    _currentApplication = _value;
+  }
+
+  String? _currentEquifaxStatus = null;
+  String? get currentEquifaxStatus => _currentEquifaxStatus;
+  set currentEquifaxStatus(String? _value) {
+    _currentEquifaxStatus = _value;
+  }
+
   bool _nombresApplicationState = false;
   bool get nombresApplicationState => _nombresApplicationState;
   set nombresApplicationState(bool _value) {
@@ -136,13 +148,6 @@ class FFAppState extends ChangeNotifier {
   bool get userHasIncomeVerification => _userHasIncomeVerification;
   set userHasIncomeVerification(bool _value) {
     _userHasIncomeVerification = _value;
-  }
-
-  bool _userHasPersonalEvaluationCompleted = false;
-  bool get userHasPersonalEvaluationCompleted =>
-      _userHasPersonalEvaluationCompleted;
-  set userHasPersonalEvaluationCompleted(bool _value) {
-    _userHasPersonalEvaluationCompleted = _value;
   }
 }
 

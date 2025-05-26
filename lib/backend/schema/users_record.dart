@@ -126,6 +126,9 @@ class UsersRecord extends FirestoreRecord {
   double get ingresoMensual => _ingresoMensual ?? 0.0;
   bool hasIngresoMensual() => _ingresoMensual != null;
 
+  Map<String, dynamic>? _beginiScore;
+  Map<String, dynamic>? get beginiScore => _beginiScore;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -149,6 +152,7 @@ class UsersRecord extends FirestoreRecord {
     _departamento = snapshotData['departamento'] as String?;
     _residenceType = snapshotData['residence_type'] as String?;
     _ingresoMensual = castToType<double>(snapshotData['ingreso_mensual']);
+    _beginiScore = snapshotData['begini_score'] as Map<String, dynamic>?;
   }
 
   static CollectionReference get collection =>
@@ -207,6 +211,11 @@ Map<String, dynamic> createUsersRecordData({
   String? departamento,
   String? residenceType,
   double? ingresoMensual,
+  List<String>? earningTypes,
+  bool? hasBankAccount,
+  bool?
+      hasGrantedCreditHistory, //Autorizacion para revisar el historial crediticio
+  Map<String, dynamic>? beginiScore,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -232,6 +241,10 @@ Map<String, dynamic> createUsersRecordData({
       'departamento': departamento,
       'residence_type': residenceType,
       'ingreso_mensual': ingresoMensual,
+      'fuentes_ingreso': earningTypes,
+      'tiene_cuenta_bancaria': hasBankAccount,
+      'autorizacion_historial_crediticio': hasGrantedCreditHistory,
+      'begini_score': beginiScore,
     }.withoutNulls,
   );
 

@@ -21,7 +21,7 @@ class ApplicationLoanCalculatorModel extends FlutterFlowModel {
   // State field(s) for Loan_Term widget.
   double? loanTermValue;
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
-  ApplicationRecord? createdAppVar;
+  // ApplicationRecord? createdAppVar;
 
   /// Initialization and disposal methods.
 

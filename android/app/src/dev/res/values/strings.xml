@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">[Dev] Prestonesto</string>
+
+/// Facebook Pixel
+<string name="facebook_app_id">1133454377845542</string>
+<string name="facebook_client_token">220b960373deb3b2a6c84512fa2a783f</string>
 </resources>

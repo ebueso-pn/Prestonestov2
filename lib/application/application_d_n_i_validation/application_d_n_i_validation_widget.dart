@@ -1,5 +1,9 @@
-import 'package:prestonesto_v1/application/application_d_n_i_validation/verification_model.dart';
-import 'package:shuftipro_sdk/shuftipro_sdk.dart';
+import 'package:facebook_app_events/facebook_app_events.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:prestonesto/application/application_d_n_i_validation/verification_model.dart';
+import 'package:prestonesto/auth/firebase_auth/auth_util.dart';
+import 'package:prestonesto/backend/api_requests/api_calls.dart';
+import 'package:prestonesto_shuftipro_sdk/prestonesto_shuftipro_sdk.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -8,7 +12,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'application_d_n_i_validation_model.dart';
 export 'application_d_n_i_validation_model.dart';
@@ -20,10 +23,7 @@ String secretKey = "gIKH3kN6Gx53Fsr7bt0Lx9vb9fviWfft"; // enter secret key here
 class ApplicationDNIValidationWidget extends StatefulWidget {
   const ApplicationDNIValidationWidget({
     Key? key,
-    required this.applicationRecieve,
   }) : super(key: key);
-
-  final DocumentReference? applicationRecieve;
 
   @override
   _ApplicationDNIValidationWidgetState createState() =>
@@ -45,8 +45,9 @@ class _ApplicationDNIValidationWidgetState
     // please send the Application Document reference available under the application receive parameter,
     "language": "ES",
     "verification_mode": "image_only",
+    "allow_offline": "0",
     "show_results": 1,
-    "face": {"allow_offline": "1"},
+    "face": {"allow_offline": "0"},
     "document": {
       "supported_types": [
         "id_card",
@@ -159,13 +160,31 @@ class _ApplicationDNIValidationWidgetState
             "Verification Success",
           ),
         ));
-        await widget.applicationRecieve!.update({
-          'shufti_data': verificationResponse.verificationData!.toJson(),
-          'id_verification_result':
-              verificationResponse.verificationResult!.toJson(),
-          'shufti_addtional': '',
-          'index': FieldValue.increment((1)),
+        var applicationRecordReference =
+            ApplicationRecord.createDoc(currentUserReference!);
+        await applicationRecordReference.set({
+          ...createApplicationRecordData(
+            shuftiData: verificationResponse.verificationData!.toJson(),
+            status: 'Iniciada',
+            verificationResult:
+                verificationResponse.verificationResult!.toJson(),
+            shuftiAdditional: '',
+            index: 1,
+          ),
+          'date_applied': DateTime.now(),
         });
+
+        _model.createdAppVar = ApplicationRecord.getDocumentFromData({
+          ...createApplicationRecordData(
+            shuftiData: verificationResponse.verificationData!.toJson(),
+            status: 'Iniciada',
+            verificationResult:
+                verificationResponse.verificationResult!.toJson(),
+            shuftiAdditional: '',
+            index: 1,
+          ),
+          'date_applied': DateTime.now(),
+        }, applicationRecordReference);
         setState(() {
           _model.buttonDisplay = true;
         });
@@ -267,9 +286,6 @@ class _ApplicationDNIValidationWidgetState
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
-                                  await widget.applicationRecieve!.update({
-                                    'index': FieldValue.increment(-(1)),
-                                  });
                                   context.pop();
                                 },
                               ),
@@ -308,67 +324,6 @@ class _ApplicationDNIValidationWidgetState
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 5.0,
-                                color: Color(0x3416202A),
-                                offset: Offset(0.0, 2.0),
-                              )
-                            ],
-                          ),
-                          child: Align(
-                            alignment: AlignmentDirectional(0.0, -1.0),
-                            child: StreamBuilder<ApplicationRecord>(
-                              stream: ApplicationRecord.getDocument(
-                                  widget.applicationRecieve!),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          Color(0xFF2AAF7A),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                                final progressBarApplicationRecord =
-                                    snapshot.data!;
-                                return LinearPercentIndicator(
-                                  percent:
-                                      progressBarApplicationRecord.index / 5,
-                                  lineHeight: 7.0,
-                                  animation: true,
-                                  progressColor:
-                                      FlutterFlowTheme.of(context).primary,
-                                  backgroundColor: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
-                                  padding: EdgeInsets.zero,
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -395,6 +350,13 @@ class _ApplicationDNIValidationWidgetState
                         child: FFButtonWidget(
                           onPressed: () {
                             print('Button pressed ...');
+
+                            FirebaseAnalytics.instance
+                                .logEvent(name: 'app_validar_identidad');
+                            FacebookAppEvents().logEvent(
+                              name: 'app_validar_identidad',
+                            );
+
                             continueFun();
                           },
                           text: 'Verificar mi identidad',
@@ -426,13 +388,50 @@ class _ApplicationDNIValidationWidgetState
                             0.0, 100.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            await EquifaxRecord.collection
+                                .doc()
+                                .set(createEquifaxRecordData(
+                                  userDocReference: currentUserReference,
+                                  applicationDocReference:
+                                      _model.createdAppVar?.reference,
+                                ));
+                            final equifaxData = await EquifaxRecord.collection
+                                .where('UserDocReference',
+                                    isEqualTo: currentUserReference)
+                                .where('ApplicationDocReference',
+                                    isEqualTo: _model.createdAppVar?.reference)
+                                .get();
+                            final id = equifaxData.docs.first.id;
+                            String appStatus = '';
+                            try {
+                              final response =
+                                  await ApiEquifaxCall.call(equifaxId: id);
+                              if (response.statusCode == 200) {
+                                appStatus = ApiEquifaxCall.equifaxStatus(
+                                    response.jsonBody);
+                              } else {
+                                appStatus = 'CONTINUE_NO_SCORE';
+                              }
+                            } catch (e) {
+                              appStatus = 'CONTINUE_NO_SCORE';
+                            }
+
+                            if (appStatus == 'DENEGATE') {
+                              _model.createdAppVar?.reference.set(
+                                {'status': 'Denegada'},
+                                SetOptions(merge: true),
+                              );
+                              context.pushNamed('Application_Denied');
+                              return;
+                            }
                             dynamic returnResult = await context.pushNamed(
-                              'Application_Address',
+                              'Application_LoanCalculator',
                               queryParameters: {
                                 'applicationRecieve': serializeParam(
-                                  widget.applicationRecieve,
+                                  _model.createdAppVar?.reference,
                                   ParamType.DocumentReference,
                                 ),
+                                'equifaxStatus': appStatus,
                               }.withoutNulls,
                             );
                             if (returnResult == "Refresh") {

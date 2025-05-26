@@ -1,4 +1,7 @@
-import 'package:prestonesto_v1/utils/config_reader.dart';
+import 'package:facebook_app_events/facebook_app_events.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:prestonesto/utils/config_reader.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
@@ -31,6 +34,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
   late LoanSignatureModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   void initState() {
@@ -440,7 +444,9 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                         ));
                         _model.zapSignAPIresponse =
                             await ZapSIgnCreateDocumentFromTemplateCall.call(
-                          phone: currentPhoneNumber,
+                          phone: (currentPhoneNumber.startsWith("+504 ")
+                              ? currentPhoneNumber.substring(5)
+                              : currentPhoneNumber),
                           externalId: currentUserReference?.id,
                           name:
                               '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
@@ -588,6 +594,20 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               balance: buttonApplicationRecord?.montoAprobado,
                             ));
                         if (_shouldSetState) setState(() {});
+
+                        final counter = await _prefs.then(
+                            (value) => value.getInt('userLoanCounter') ?? 0);
+                        FirebaseAnalytics.instance.logEvent(
+                            name: 'app_3_aceptar_oferta',
+                            parameters: {
+                              'ingresos_a_pantalla': counter,
+                            });
+                        FacebookAppEvents().logEvent(
+                          name: 'app_3_aceptar_oferta',
+                          parameters: {
+                            'ingresos_a_pantalla': counter,
+                          },
+                        );
                       },
                       text: 'Aceptar',
                       options: FFButtonOptions(

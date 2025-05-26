@@ -1,3 +1,6 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -8,12 +11,9 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
@@ -24,9 +24,11 @@ class ApplicationAddressWidget extends StatefulWidget {
   const ApplicationAddressWidget({
     Key? key,
     required this.applicationRecieve,
+    required this.equifaxStatus,
   }) : super(key: key);
 
   final DocumentReference? applicationRecieve;
+  final String? equifaxStatus;
 
   @override
   _ApplicationAddressWidgetState createState() =>
@@ -38,6 +40,8 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
   late ApplicationAddressModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _showChipsError = false;
+  bool _loading = false;
 
   final animationsMap = {
     'columnOnPageLoadAnimation': AnimationInfo(
@@ -163,10 +167,26 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                     size: 30,
                                   ),
                                   onPressed: () async {
+                                    if (_loading) return;
+                                    setState(() => _loading = true);
                                     await widget.applicationRecieve!.update({
                                       'index': FieldValue.increment(-(1)),
                                     });
-                                    context.pop();
+                                    if (context.canPop()) {
+                                      context.pop();
+                                    } else {
+                                      context.goNamed(
+                                        'Application_LoanCalculator',
+                                        queryParameters: {
+                                          'applicationRecieve': serializeParam(
+                                            widget.applicationRecieve,
+                                            ParamType.DocumentReference,
+                                          ),
+                                          'equifaxStatus': widget.equifaxStatus,
+                                        }.withoutNulls,
+                                      );
+                                    }
+                                    setState(() => _loading = false);
                                   },
                                 ),
                               ),
@@ -252,7 +272,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                     snapshot.data!;
                                 return LinearPercentIndicator(
                                   percent:
-                                      progressBarApplicationRecord.index / 5,
+                                      progressBarApplicationRecord.index / 6,
                                   lineHeight: 7,
                                   animation: true,
                                   progressColor:
@@ -314,8 +334,12 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                                 ChipData('Alquiler', Icons.key),
                                 ChipData('Familiar', Icons.family_restroom)
                               ],
-                              onChanged: (val) => setState(
-                                  () => _model.choiceChipsValue = val?.first),
+                              onChanged: (val) {
+                                setState(() {
+                                  _model.choiceChipsValue = val?.first;
+                                  _showChipsError = false;
+                                });
+                              },
                               selectedChipStyle: ChipStyle(
                                 backgroundColor:
                                     FlutterFlowTheme.of(context).secondary,
@@ -360,6 +384,20 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                           ),
                         ],
                       ),
+                      if (_showChipsError)
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 30.0, bottom: 10),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '¿Tipo de Vivienda?',
+                              style: TextStyle(
+                                  color: FlutterFlowTheme.of(context).error,
+                                  fontSize: 12),
+                            ),
+                          ),
+                        ),
                       Align(
                         alignment: AlignmentDirectional(0, 0),
                         child: Padding(
@@ -710,7 +748,10 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                   child: FFButtonWidget(
+                    isEnable: !_loading,
                     onPressed: () async {
+                      if (_loading) return;
+                      setState(() => _loading = true);
                       if (_model.addressFieldCasaCalleController.text != null &&
                           _model.addressFieldCasaCalleController.text != '') {
                         setState(() {
@@ -745,10 +786,23 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                       }
 
                       if (_model.formKey.currentState == null ||
-                          !_model.formKey.currentState!.validate()) {
+                          !_model.formKey.currentState!.validate() ||
+                          _model.choiceChipsValue == null) {
+                        setState(() {
+                          _showChipsError = true;
+                        });
+                        setState(() => _loading = false);
                         return;
+                      } else {
+                        setState(() {
+                          _showChipsError = false;
+                        });
                       }
+
                       if (_model.dptoDropDownValue == null) {
+                        setState(() {
+                          _loading = false;
+                        });
                         return;
                       }
 
@@ -764,6 +818,12 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                         'index': FieldValue.increment(1),
                       });
 
+                      FirebaseAnalytics.instance
+                          .logEvent(name: 'app_ingresar_direccion');
+                      FacebookAppEvents().logEvent(
+                        name: 'app_ingresar_direccion',
+                      );
+
                       context.pushNamed(
                         'Application_Map',
                         queryParameters: {
@@ -771,6 +831,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                             widget.applicationRecieve,
                             ParamType.DocumentReference,
                           ),
+                          'equifaxStatus': widget.equifaxStatus,
                         }.withoutNulls,
                         extra: <String, dynamic>{
                           kTransitionInfoKey: TransitionInfo(
@@ -779,6 +840,7 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                           ),
                         },
                       );
+                      setState(() => _loading = false);
                     },
                     text: 'Continuar',
                     options: FFButtonOptions(

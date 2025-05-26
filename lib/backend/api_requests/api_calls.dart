@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:prestonesto_v1/utils/config_reader.dart';
+import 'package:prestonesto/utils/config_reader.dart';
 
 import '../../flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
@@ -434,4 +434,38 @@ String _serializeJson(dynamic jsonVar, [bool isList = false]) {
   } catch (_) {
     return isList ? '[]' : '{}';
   }
+}
+
+class ApiEquifaxCall {
+  static Future<ApiCallResponse> call({
+    String? equifaxId = '',
+  }) {
+    final body = '''
+    {
+      "equifaxId": "$equifaxId"
+    }''';
+    //@TODO ADD PROD URL
+    return ApiManager.instance.makeApiCall(
+      callName: 'Equifax Status',
+      apiUrl: ConfigReader.isDevMode()
+          ? 'equifaxintegration-if22ukzoiq-uc.a.run.app'
+          : '',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic equifaxStatus(dynamic response) => getJsonField(
+        response,
+        r'''$.app_status''',
+      );
 }

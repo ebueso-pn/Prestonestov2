@@ -26,9 +26,19 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin device_info_plus, dev.fluttercommunity.plus.device_info.DeviceInfoPlusPlugin", e);
     }
     try {
+      flutterEngine.getPlugins().add(new id.oddbit.flutter.facebook_app_events.FacebookAppEventsPlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin facebook_app_events, id.oddbit.flutter.facebook_app_events.FacebookAppEventsPlugin", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new com.mr.flutter.plugin.filepicker.FilePickerPlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin file_picker, com.mr.flutter.plugin.filepicker.FilePickerPlugin", e);
+    }
+    try {
+      flutterEngine.getPlugins().add(new io.flutter.plugins.firebase.analytics.FlutterFirebaseAnalyticsPlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin firebase_analytics, io.flutter.plugins.firebase.analytics.FlutterFirebaseAnalyticsPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.firebase.appcheck.FlutterFirebaseAppCheckPlugin());
@@ -106,6 +116,11 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin permission_handler_android, com.baseflow.permissionhandler.PermissionHandlerPlugin", e);
     }
     try {
+      flutterEngine.getPlugins().add(new com.example.shuftipro_sdk.ShuftiproSdk());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin prestonesto_shuftipro_sdk, com.example.shuftipro_sdk.ShuftiproSdk", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new dev.fluttercommunity.plus.share.SharePlusPlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin share_plus, dev.fluttercommunity.plus.share.SharePlusPlugin", e);
@@ -114,11 +129,6 @@ public final class GeneratedPluginRegistrant {
       flutterEngine.getPlugins().add(new io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin shared_preferences_android, io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin", e);
-    }
-    try {
-      flutterEngine.getPlugins().add(new com.example.shuftipro_sdk.ShuftiproSdk());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin shuftipro_sdk, com.example.shuftipro_sdk.ShuftiproSdk", e);
     }
     try {
       flutterEngine.getPlugins().add(new com.aboutyou.dart_packages.sign_in_with_apple.SignInWithApplePlugin());

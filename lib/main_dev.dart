@@ -1,5 +1,5 @@
-import 'package:prestonesto_v1/main_common.dart';
-import 'package:prestonesto_v1/utils/enviroment.dart';
+import 'package:prestonesto/main_common.dart';
+import 'package:prestonesto/utils/enviroment.dart';
 
 Future<void> main() async {
   await mainCommon(Environment.dev);

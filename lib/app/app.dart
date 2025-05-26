@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:prestonesto_v1/app/app_state.dart';
-import 'package:prestonesto_v1/auth/firebase_auth/auth_util.dart';
-import 'package:prestonesto_v1/auth/firebase_auth/firebase_user_provider.dart';
-import 'package:prestonesto_v1/backend/backend.dart';
-import 'package:prestonesto_v1/flutter_flow/internationalization.dart';
-import 'package:prestonesto_v1/flutter_flow/nav/nav.dart';
+import 'package:prestonesto/app/app_state.dart';
+import 'package:prestonesto/auth/firebase_auth/auth_util.dart';
+import 'package:prestonesto/auth/firebase_auth/firebase_user_provider.dart';
+import 'package:prestonesto/backend/backend.dart';
+import 'package:prestonesto/flutter_flow/internationalization.dart';
+import 'package:prestonesto/flutter_flow/nav/nav.dart';
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
@@ -38,14 +38,13 @@ class _MyAppState extends State<MyApp> {
     FlutterBranchSdk.validateSDKIntegration();
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = prestonestoV1FirebaseUserStream()
+    userStream = prestonestoFirebaseUserStream()
       ..listen((user) async {
         _appStateNotifier.update(user);
         FFAppState().userHasIncomeVerification =
             await checkUserHasIncomeVerification();
         FFAppState().userHasBankAccount = await checkUserHasBankAccount();
-        FFAppState().userHasPersonalEvaluationCompleted =
-            await checkUserAlreadyCompletedPersonalEvaluation();
+       
       });
     jwtTokenStream.listen((_) {});
     Future.delayed(
@@ -53,12 +52,6 @@ class _MyAppState extends State<MyApp> {
       () => _appStateNotifier.stopShowingSplashImage(),
     );
     FlutterBranchSdk.initSession().listen((data) {
-      if (data.containsKey('begini_success') &&
-          data['begini_success'] == 'true') {
-        FFAppState().userHasPersonalEvaluationCompleted = true;
-        updateUserPersonalEvaluation(true);
-        _router.go('/beginiSuccess');
-      }
       if (data.containsKey('zapsign_success') &&
           data['zapsign_success'] == 'true') {
         _router.go('/loanSignatureSuccess');
@@ -72,8 +65,7 @@ class _MyAppState extends State<MyApp> {
       FFAppState().userHasIncomeVerification =
           await checkUserHasIncomeVerification();
       FFAppState().userHasBankAccount = await checkUserHasBankAccount();
-      FFAppState().userHasPersonalEvaluationCompleted =
-          await checkUserAlreadyCompletedPersonalEvaluation();
+      
       setState(() {});
     });
   }

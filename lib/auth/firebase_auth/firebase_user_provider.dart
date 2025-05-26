@@ -5,8 +5,8 @@ import '../base_auth_user_provider.dart';
 
 export '../base_auth_user_provider.dart';
 
-class PrestonestoV1FirebaseUser extends BaseAuthUser {
-  PrestonestoV1FirebaseUser(this.user);
+class PrestonestoFirebaseUser extends BaseAuthUser {
+  PrestonestoFirebaseUser(this.user);
   User? user;
   bool get loggedIn => user != null;
 
@@ -48,17 +48,17 @@ class PrestonestoV1FirebaseUser extends BaseAuthUser {
   static BaseAuthUser fromUserCredential(UserCredential userCredential) =>
       fromFirebaseUser(userCredential.user);
   static BaseAuthUser fromFirebaseUser(User? user) =>
-      PrestonestoV1FirebaseUser(user);
+      PrestonestoFirebaseUser(user);
 }
 
-Stream<BaseAuthUser> prestonestoV1FirebaseUserStream() => FirebaseAuth.instance
+Stream<BaseAuthUser> prestonestoFirebaseUserStream() => FirebaseAuth.instance
         .authStateChanges()
         .debounce((user) => user == null && !loggedIn
             ? TimerStream(true, const Duration(seconds: 1))
             : Stream.value(user))
         .map<BaseAuthUser>(
       (user) {
-        currentUser = PrestonestoV1FirebaseUser(user);
+        currentUser = PrestonestoFirebaseUser(user);
         return currentUser!;
       },
     );

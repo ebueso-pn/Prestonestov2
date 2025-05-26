@@ -1,3 +1,6 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
@@ -212,6 +215,8 @@ class _ProfileIncomeValidationWidgetState
         singleRecord: true,
       ),
       builder: (context, snapshot) {
+        print('snapshot: ${snapshot.data}');
+        print('currentUserReference: $currentUserReference');
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
@@ -606,6 +611,12 @@ class _ProfileIncomeValidationWidgetState
                                 return;
                               }
 
+                              FirebaseAnalytics.instance.logEvent(
+                                  name: 'app_2_ingresar_verificacion_ingresos');
+                              FacebookAppEvents().logEvent(
+                                name: 'app_2_ingresar_verificacion_ingresos',
+                              );
+
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
@@ -627,6 +638,8 @@ class _ProfileIncomeValidationWidgetState
                                 FFAppState().IngresosEnviados = true;
                                 FFAppState().userHasIncomeVerification = true;
                               });
+
+                              context.pop();
                             },
                             text: 'Guardar y regresar',
                             options: FFButtonOptions(

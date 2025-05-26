@@ -1,5 +1,7 @@
+import 'package:facebook_app_events/facebook_app_events.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:prestonesto_v1/backend/backend.dart';
+import 'package:prestonesto/backend/backend.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -323,6 +325,12 @@ class _EmailLoginWidgetState extends State<EmailLoginWidget> {
                         String? token =
                             await FirebaseMessaging.instance.getToken();
                         if (token != null) await setFCMToken(token);
+
+                        FirebaseAnalytics.instance
+                            .logEvent(name: 'login_ingresar_a_cuenta');
+                        FacebookAppEvents().logEvent(
+                          name: 'login_ingresar_a_cuenta',
+                        );
 
                         context.goNamedAuth(
                             'Application_LoanCalculator', context.mounted);
