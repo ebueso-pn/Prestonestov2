@@ -1,24 +1,18 @@
-import 'package:facebook_app_events/facebook_app_events.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:provider/provider.dart';
+
+import 'package:prestonesto/services/auth_service.dart';
+import '../api_auth/models/api_auth_user.dart';
 import 'email_create_account_model.dart';
 export 'email_create_account_model.dart';
 
 class EmailCreateAccountWidget extends StatefulWidget {
-  const EmailCreateAccountWidget({Key? key}) : super(key: key);
-
   @override
   _EmailCreateAccountWidgetState createState() =>
       _EmailCreateAccountWidgetState();
@@ -81,19 +75,18 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 0.0),
                               child: FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30.0,
-                                borderWidth: 1.0,
-                                buttonSize: 50.0,
-                                icon: Icon(
-                                  Icons.arrow_back_rounded,
-                                  color: Colors.white,
-                                  size: 30.0,
-                                ),
-                                onPressed: () async {
-                                  context.pop();
-                                },
-                              ),
+                                  borderColor: Colors.transparent,
+                                  borderRadius: 30.0,
+                                  borderWidth: 1.0,
+                                  buttonSize: 50.0,
+                                  icon: Icon(
+                                    Icons.arrow_back_rounded,
+                                    color: Colors.white,
+                                    size: 30.0,
+                                  ),
+                                  onPressed: () async {
+                                    context.pop();
+                                  }),
                             ),
                           ],
                         ),
@@ -501,81 +494,7 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                   child: FFButtonWidget(
-                    onPressed: () async {
-                      GoRouter.of(context).prepareAuthEvent();
-                      if (_model.passwordController.text !=
-                          _model.confirmPasswordController.text) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Passwords don\'t match!',
-                            ),
-                          ),
-                        );
-                        return;
-                      }
-                      final dni = _model.dniController.text.replaceAll('-', '');
-                      if (dni.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Por favor ingresa tu DNI',
-                            ),
-                          ),
-                        );
-                        return;
-                      }
-                      final userSnapshot = await UsersRecord.collection
-                          .where('DNI', isEqualTo: dni)
-                          .get();
-                      if (userSnapshot.docs.isNotEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Tu DNI ya está registrado con otro usuario',
-                            ),
-                          ),
-                        );
-                        return;
-                      }
-
-                      final user = await authManager.createAccountWithEmail(
-                        context,
-                        _model.emailAddressController.text,
-                        _model.passwordController.text,
-                      );
-                      if (user == null) {
-                        return;
-                      }
-
-                      await UsersRecord.collection
-                          .doc(user.uid)
-                          .update(createUsersRecordData(
-                            phoneNumber: _model.phoneNumberController.text,
-                          ));
-                      await DocumentsRecord.collection
-                          .doc()
-                          .set(createDocumentsRecordData(
-                            userDocReference: currentUserReference,
-                          ));
-                      await UsersRecord.collection
-                          .doc(user.uid)
-                          .update(createUsersRecordData(
-                            dni: dni,
-                          ));
-
-                      String? token =
-                          await FirebaseMessaging.instance.getToken();
-                      if (token != null) await setFCMToken(token);
-
-                      FirebaseAnalytics.instance.logEvent(name: 'crear_cuenta');
-                      FacebookAppEvents().logEvent(
-                        name: 'crear_cuenta',
-                      );
-
-                      context.goNamedAuth(
-                          'Application_LoanCalculator', context.mounted);
-                    },
+                    onPressed: _handleCreateAccount,
                     text: 'Crear Cuenta',
                     options: FFButtonOptions(
                       width: 270.0,
@@ -607,5 +526,69 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
         ),
       ),
     );
+  }
+
+  Future<void> _handleCreateAccount() async {
+    if (_model.passwordController.text !=
+        _model.confirmPasswordController.text) {
+      _showError('¡Las contraseñas no coinciden!');
+      return;
+    }
+    final dni = _model.dniController.text.replaceAll('-', '');
+    if (dni.isEmpty) {
+      _showError('Por favor ingresa tu DNI');
+      return;
+    }
+
+    final phoneNumber = sanitizePhoneNumber(_model.phoneNumberController.text);
+
+    final result = await AuthService.registerUser(
+      email: _model.emailAddressController.text,
+      phoneNumber: phoneNumber,
+      password: _model.passwordController.text,
+      idType: "dni",
+      idNumber: dni,
+    );
+
+    if (result['success']) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('access_token', result['access_token']);
+      await prefs.setString('refresh_token', result['refresh_token']);
+
+      // Set user as logged in for navigation to work
+      AppStateNotifier.instance.user = ApiAuthUser(
+        email: _model.emailAddressController.text,
+        phoneNumber: phoneNumber,
+      );
+
+      if (mounted) {
+        context.goNamedAuth('Application_LoanCalculator', mounted);
+      }
+    } else {
+      final error = result['error'] ?? '';
+      if (error.contains('email')) {
+        _showError('El correo ya está registrado con otro usuario');
+      } else if (error.contains('DNI')) {
+        _showError('Tu DNI ya está registrado con otro usuario');
+      } else if (error == 'network') {
+        _showError('Error de red. Intenta de nuevo.');
+      } else {
+        _showError('No se pudo crear la cuenta. Intenta de nuevo.');
+      }
+    }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
+  String sanitizePhoneNumber(String input) {
+    String digits = input.replaceAll(RegExp(r'[^0-9]'), '');
+    if (digits.startsWith('504')) {
+      return '+504' + digits.substring(3);
+    }
+    return '+504' + digits;
   }
 }

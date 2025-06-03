@@ -19,7 +19,7 @@ Future<void> mainCommon(String env) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   usePathUrlStrategy();
-  await initFirebase();
+
 
   await ConfigReader.initialize(env);
   // Start initial custom actions code
@@ -29,7 +29,7 @@ Future<void> mainCommon(String env) async {
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
 
-  await initializeFirebaseAppCheck();
+
 
   await PushNotificationService().setupInteractedMessage();
 

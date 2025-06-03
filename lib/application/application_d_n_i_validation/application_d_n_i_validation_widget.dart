@@ -143,73 +143,79 @@ class _ApplicationDNIValidationWidgetState
     );
   }
 
-  Future<void> initPlatformState() async {
-    String response = '';
-    try {
-      response = await ShuftiproSdk.sendRequest(
-        authObject: authObject,
-        createdPayload: createdPayload,
-        configObject: configObj,
-      );
-      VerificationResponse verificationResponse =
-          verificationResponseFromJson(response);
-      print('Event::: ' + '${verificationResponse.event}');
-      if (verificationResponse.event == 'verification.accepted') {
-        ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
-          content: Text(
-            "Verification Success",
-          ),
-        ));
-        var applicationRecordReference =
-            ApplicationRecord.createDoc(currentUserReference!);
-        await applicationRecordReference.set({
-          ...createApplicationRecordData(
-            shuftiData: verificationResponse.verificationData!.toJson(),
-            status: 'Iniciada',
-            verificationResult:
-                verificationResponse.verificationResult!.toJson(),
-            shuftiAdditional: '',
-            index: 1,
-          ),
-          'date_applied': DateTime.now(),
-        });
+ Future<void> startDniVerificationProcess() async {
+   debugPrint('[DNI Validation] Starting ShuftiPro verification process...');
+   String shuftiProRawResponse = '';
+   try {
+     debugPrint('[DNI Validation] Sending request to ShuftiPro...');
+     shuftiProRawResponse = await ShuftiproSdk.sendRequest(
+       authObject: authObject,
+       createdPayload: createdPayload,
+       configObject: configObj,
+     );
+     debugPrint('[DNI Validation] Response received: $shuftiProRawResponse');
+     VerificationResponse parsedVerificationResponse =
+         verificationResponseFromJson(shuftiProRawResponse);
+     debugPrint('[DNI Validation] Event: ${parsedVerificationResponse.event}');
 
-        _model.createdAppVar = ApplicationRecord.getDocumentFromData({
-          ...createApplicationRecordData(
-            shuftiData: verificationResponse.verificationData!.toJson(),
-            status: 'Iniciada',
-            verificationResult:
-                verificationResponse.verificationResult!.toJson(),
-            shuftiAdditional: '',
-            index: 1,
-          ),
-          'date_applied': DateTime.now(),
-        }, applicationRecordReference);
-        setState(() {
-          _model.buttonDisplay = true;
-        });
-      } else {
-        _showErrorModal(context);
-        ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
-          content: Text(
-            verificationResponse.message.isNotEmpty
-                ? verificationResponse.message
-                : verificationResponse.error.isNotEmpty
-                    ? verificationResponse.error
-                    : verificationResponse.declinedReason,
-          ),
-        ));
-      }
-    } catch (e) {
-      _showErrorModal(context);
-      ScaffoldMessenger.of(this.context).showSnackBar(SnackBar(
-        content: Text(
-          e.toString(),
-        ),
-      ));
-    }
-    if (!mounted) return;
-  }
+     if (parsedVerificationResponse.event == 'verification.accepted') {
+       debugPrint('[DNI Validation] Verification accepted.');
+       ScaffoldMessenger.of(this.context).showSnackBar(
+         const SnackBar(content: Text("Verification Success")),
+       );
+       var applicationRecordDocRef =
+           ApplicationRecord.createDoc(currentUserReference!);
+
+       final applicationRecordData = {
+         ...createApplicationRecordData(
+           shuftiData: parsedVerificationResponse.verificationData!.toJson(),
+           status: 'Iniciada',
+           verificationResult: parsedVerificationResponse.verificationResult!.toJson(),
+           shuftiAdditional: '',
+           index: 1,
+         ),
+         'date_applied': DateTime.now(),
+       };
+
+       debugPrint('[DNI Validation] Saving application record: $applicationRecordData');
+       await applicationRecordDocRef.set(applicationRecordData);
+
+       _model.createdAppVar = ApplicationRecord.getDocumentFromData(
+         applicationRecordData,
+         applicationRecordDocRef,
+       );
+
+       setState(() {
+         _model.buttonDisplay = true;
+       });
+       debugPrint('[DNI Validation] UI updated: buttonDisplay set to true.');
+     } else {
+       debugPrint('[DNI Validation] Verification not accepted. Showing error modal.');
+       _showErrorModal(context);
+       final verificationErrorMessage = parsedVerificationResponse.message.isNotEmpty
+           ? parsedVerificationResponse.message
+           : parsedVerificationResponse.error.isNotEmpty
+               ? parsedVerificationResponse.error
+               : parsedVerificationResponse.declinedReason;
+       debugPrint('[DNI Validation] Error message: $verificationErrorMessage');
+       ScaffoldMessenger.of(this.context).showSnackBar(
+         SnackBar(content: Text(verificationErrorMessage)),
+       );
+     }
+   } catch (e, stack) {
+     debugPrint('[DNI Validation] Exception occurred: $e');
+     debugPrint('[DNI Validation] Stack trace: $stack');
+     _showErrorModal(context);
+     ScaffoldMessenger.of(this.context).showSnackBar(
+       SnackBar(content: Text(e.toString())),
+     );
+   }
+   if (!mounted) {
+     debugPrint('[DNI Validation] Widget no longer mounted. Exiting.');
+     return;
+   }
+   debugPrint('[DNI Validation] ShuftiPro verification process completed.');
+ }
 
   void continueFun() async {
     // createdPayload["reference"] = widget.applicationRecieve?.path ?? '';
@@ -217,7 +223,7 @@ class _ApplicationDNIValidationWidgetState
     var v = DateTime.now();
     var reference = "package_sample_Flutter_$v";
     createdPayload["reference"] = reference;
-    initPlatformState();
+    startDniVerificationProcess();
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
