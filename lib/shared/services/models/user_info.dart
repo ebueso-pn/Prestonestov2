@@ -7,6 +7,7 @@ class UserInfo {
   final bool hasFinancials;
   final bool hasApplication;
   final bool hasActiveLoans;
+  final bool hasKYC;
 
   UserInfo({
     required this.id_number,
@@ -17,6 +18,7 @@ class UserInfo {
     this.lastName,
     this.phoneNumber,
     this.hasActiveLoans = false,
+    this.hasKYC = false,
   });
 
   factory UserInfo.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class UserInfo {
       email: json['user']['email'] as String,
       hasFinancials: json['financials'] != null,
       hasApplication: json['application'] != null,
+      hasKYC: false, // Assuming KYC is not part of the JSON response
     );
   }
 }

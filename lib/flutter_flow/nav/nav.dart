@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:prestonesto/app/nav_bar.dart';
+import 'package:prestonesto/features/application/views/kyc/view.dart';
 
 import 'package:prestonesto/privacy_policy/privacy_policy_widget.dart';
 import '../../auth/base_auth_user_provider.dart';
@@ -104,6 +105,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           requireAuth: true,
           builder: (context, params) => BasicInformationWidget()
         ),
+        FFRoute(
+          name: 'KYCValidation',
+          path: '/kyc',
+          builder: (context, params) => KYCPage( ),
+        ),
         /*
         FFRoute(
           name: 'Help',
@@ -196,14 +202,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             equifaxStatus: params.getParam('equifaxStatus', ParamType.String),
           ),
         ),
-        FFRoute(
-          name: 'Application_DNI_Validation',
-          path: '/Application_DNI_Validation',
-          builder: (context, params) => ApplicationDNIValidationWidget(
-              //applicationRecieve: params.getParam('applicationRecieve',
-              //ParamType.DocumentReference, false, ['users', 'application']),
-              ),
-        ),
+
         FFRoute(
           name: 'Application_Denied',
           path: '/Application_Denied',

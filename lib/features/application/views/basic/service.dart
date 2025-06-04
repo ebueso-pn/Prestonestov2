@@ -2,27 +2,28 @@ import 'package:flutter/material.dart';
 
 import '/shared/services/user_api.dart';
 import '/shared/services/models/user_financials_info.dart';
+import 'model.dart';
 
 class BasicInformationService {
   static Future<bool> processApplication({
-    required TextEditingController ingresosController,
-    required GlobalKey<FormState> formKey,
+    required BasicInformationModel model,
+    required TextEditingController? ingresosController,
     required Map<String, bool> earningTypes,
+    required bool? hasBankAccount,
     required void Function(bool) setIngresosError,
     required void Function(String?) setEarningTypeError,
     required void Function(String?) setBankAccountError,
     required void Function(String?) setCreditHistoryError,
-    required bool? hasBankAccount,
     required bool hasGrantedCreditHistory,
   }) async {
-    // Validate ingresosController
-    final ingresosText = ingresosController.text;
+    // Validate ingresosController (use the one passed from view.dart)
+    final ingresosText = ingresosController?.text ?? '';
     bool ingresosValid = ingresosText.isNotEmpty && ingresosText.length > 3;
     bool ingresosParseError = false;
 
     if (ingresosValid) {
       try {
-        double.parse(ingresosText);
+        double.parse(ingresosText.replaceAll(',', ''));
         setIngresosError(false);
       } catch (e) {
         setIngresosError(true);
@@ -36,26 +37,23 @@ class BasicInformationService {
     }
 
     // Validate form
-    if (formKey.currentState == null || !formKey.currentState!.validate()) {
+    if (model.formKey.currentState == null ||
+        !model.formKey.currentState!.validate()) {
       return false;
     }
-    // Validate earning types
-    // Map Spanish earning types to accepted English values
-    final Map<String, String> earningTypesMap = {
-      'Salario': 'salary',
-      'Negocio propio': 'own_business',
-      'Otros': 'others',
-      'Remesas': 'remittances',
+
+    final Map<String, String> earningTypeTranslations = {
+      "salario": "salary",
+      "negocio propio": "own_business",
+      "otros": "others",
+      "remesas": "remittances",
     };
-
-    // Filter selected earning types and map to English
     final selectedEarningTypes = earningTypes.entries
-        .where((e) => e.value)
-        .map((e) => earningTypesMap[e.key])
-        .where((e) => e != null)
-        .cast<String>()
+        .where((entry) => entry.value)
+        .map((entry) =>
+            earningTypeTranslations[entry.key.toLowerCase()] ??
+            entry.key.toLowerCase())
         .toList();
-
     if (selectedEarningTypes.isEmpty) {
       setEarningTypeError('Debes seleccionar al menos una fuente de ingresos');
       return false;
@@ -64,7 +62,7 @@ class BasicInformationService {
     }
 
     // Validate bank account selection
-    if (hasBankAccount == null) {
+    if (model.ownBankAccount == null || hasBankAccount == null) {
       setBankAccountError('Debes seleccionar una opcion para continuar');
       return false;
     } else {
@@ -83,23 +81,22 @@ class BasicInformationService {
 
     try {
       final userApi = await UserApi.create();
-      // TODO: Replace with actual user first and last name from your context or model
       final incomeInfo = IncomeInfoSchemaRequest(
-        firstName: '', // Provide actual value
-        lastName: '', // Provide actual value
-        monthlyAverageIncome: double.parse(ingresosController.text),
+        firstName: model.nombresController?.text ?? '',
+        lastName: model.apellidosController?.text ?? '',
+        monthlyAverageIncome: double.tryParse(
+                ingresosController?.text.replaceAll(',', '') ?? '') ??
+            0,
         mainIncomeSource: selectedEarningTypes
             .map((e) => MainIncomeSourceEnumExtension.fromString(e))
             .toList(),
         ownBankAccount: hasBankAccount,
         hasGrantedCreditHistory: hasGrantedCreditHistory,
       );
-      final user = await userApi.updateFinancials(incomeInfo);
-      return true;
+      return await userApi.updateFinancials(incomeInfo);
     } catch (e) {
       print('Error fetching user info after login: $e');
       return false;
     }
-    return true;
   }
 }

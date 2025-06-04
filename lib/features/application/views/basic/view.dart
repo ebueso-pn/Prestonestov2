@@ -78,6 +78,49 @@ class _BasicInformationWidgetState extends State<BasicInformationWidget>
     super.dispose();
   }
 
+  Future<void> _onSumbitPressed() async {
+    final result = await BasicInformationService.processApplication(
+      model: _model,
+      ingresosController: _model.ingresosController,
+      earningTypes: earningTypes,
+      hasBankAccount: hasBankAccount,
+      setIngresosError: (bool hasError) {
+        setState(() {
+          FFAppState().ingresoss = hasError;
+        });
+      },
+      setEarningTypeError: (String? error) {
+        setState(() {
+          earningTypeError = error;
+        });
+      },
+      setBankAccountError: (String? error) {
+        setState(() {
+          hasSelectedBankAccountError = error;
+        });
+      },
+      setCreditHistoryError: (String? error) {
+        setState(() {
+          hasGrantedCreditHistoryError = error;
+        });
+      },
+      hasGrantedCreditHistory: hasGrantedCreditHistory,
+    );
+
+    if (result) {
+      context.pushNamed(
+        'KYCValidation',
+        /*queryParameters: {
+          'applicationRecieve': serializeParam(
+            widget.applicationRecieve,
+            ParamType.DocumentReference,
+          ),
+        }.withoutNulls,
+        */
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
@@ -104,7 +147,8 @@ class _BasicInformationWidgetState extends State<BasicInformationWidget>
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
                   child:
                       Wrap(alignment: WrapAlignment.start, children: <Widget>[
                     Text(
@@ -590,49 +634,7 @@ class _BasicInformationWidgetState extends State<BasicInformationWidget>
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
                     child: FFButtonWidget(
-                      onPressed: () async {
-                        final result =
-                            await BasicInformationService.processApplication(
-                          ingresosController: _model.ingresosController!,
-                          formKey: _model.formKey,
-                          earningTypes: earningTypes,
-                          setIngresosError: (bool hasError) {
-                            setState(() {
-                              FFAppState().ingresoss = hasError;
-                            });
-                          },
-                          setEarningTypeError: (String? error) {
-                            setState(() {
-                              earningTypeError = error;
-                            });
-                          },
-                          setBankAccountError: (String? error) {
-                            setState(() {
-                              hasSelectedBankAccountError = error;
-                            });
-                          },
-                          setCreditHistoryError: (String? error) {
-                            setState(() {
-                              hasGrantedCreditHistoryError = error;
-                            });
-                          },
-                          hasBankAccount: hasBankAccount,
-                          hasGrantedCreditHistory: hasGrantedCreditHistory,
-                        );
-
-                        if (result) {
-                          context.pushNamed(
-                            'Application_DNI_Validation',
-                            /*queryParameters: {
-                              'applicationRecieve': serializeParam(
-                                widget.applicationRecieve,
-                                ParamType.DocumentReference,
-                              ),
-                            }.withoutNulls,
-                            */
-                          );
-                        }
-                      },
+                      onPressed: _onSumbitPressed,
                       text: 'Continuar',
                       options: FFButtonOptions(
                         width: 230.0,

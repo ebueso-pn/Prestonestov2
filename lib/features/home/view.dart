@@ -35,30 +35,36 @@ class _HomePageState extends State<HomePage> {
           body: SafeArea(
             top: true,
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 24),
-                  Center(
-                    child: Text(
-                      'Pasos para aplicar',
-                      style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey[700],
-                              ),
+              padding: const EdgeInsets.all(6.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 24),
+                    Center(
+                      child: Text(
+                        'Pasos para aplicar',
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey[700],
+                                ),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 48),
-                  _buildStepper(context, currentStep),
-                  const SizedBox(height: 24),
-                  _buildComenzarButton(context, currentStep, hasApplied),
-                ],
+                    const SizedBox(height: 48),
+                    _buildStepper(context, currentStep),
+                    const SizedBox(height: 24),
+                    // Button moved to bottomNavigationBar
+                  ],
+                ),
               ),
             ),
+          ),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.only(bottom: 24.0, left: 24.0, right: 24.0),
+            child: _buildComenzarButton(context, currentStep, hasApplied),
           ),
         ));
   }
@@ -191,7 +197,7 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return 'BasicInformation';
       case 1:
-        return 'DniSelfiePage';
+        return 'KYCValidation';
       case 2:
         return 'AmountTermPage';
       case 3:
@@ -220,7 +226,9 @@ class _HomePageState extends State<HomePage> {
   int getUserCurrentStep(UserInfo user) {
     if (!user.hasFinancials) return 0;
 
-    if (user.hasFinancials) return 1;
+    if (user.hasFinancials && !user.hasKYC) return 1;
+
+    if (user.hasKYC) return 2;
     return 6;
   }
 }
