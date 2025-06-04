@@ -132,7 +132,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(36.0, 24.0, 36.0, 24.0),
                 child: StreamBuilder<List<ApplicationRecord>>(
                   stream: queryApplicationRecord(
-                    parent: currentUserReference,
+                    parent: null,
                     queryBuilder: (applicationRecord) => applicationRecord
                         .whereIn('status', ['Aprobada', 'Aceptada']).orderBy(
                             'date_applied',
@@ -394,7 +394,7 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                 child: StreamBuilder<List<ApplicationRecord>>(
                   stream: queryApplicationRecord(
-                    parent: currentUserReference,
+                    parent: null,
                     queryBuilder: (applicationRecord) => applicationRecord
                         .whereIn('status', ['Aprobada', 'Aceptada']).orderBy(
                             'date_applied',
@@ -447,11 +447,10 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                           phone: (currentPhoneNumber.startsWith("+504 ")
                               ? currentPhoneNumber.substring(5)
                               : currentPhoneNumber),
-                          externalId: currentUserReference?.id,
-                          name:
-                              '${valueOrDefault(currentUserDocument?.nombres, '')} ${valueOrDefault(currentUserDocument?.apellidos, '')}',
-                          email: currentUserEmail,
-                          dni: valueOrDefault(currentUserDocument?.dni, ''),
+                          externalId: 'STATIC_EXTERNAL_ID',
+                          name: 'Juan Perez',
+                          email: 'juan.perez@email.com',
+                          dni: '0801199912345',
                           monto: functions.formatNumber(
                               buttonApplicationRecord.montoAprobado),
                           montoEnLetras: functions.montoEnLetras(
@@ -530,9 +529,8 @@ class _LoanSignatureWidgetState extends State<LoanSignatureWidget> {
                               functions.mesEnLetras(fechaUltimoPago),
                           fechaUltimoPagoAnoL:
                               functions.anoEnLetras(fechaUltimoPago),
-                          direccion:
-                              '${valueOrDefault(currentUserDocument?.calle, '')} ${valueOrDefault(currentUserDocument?.colonia, '')} ${valueOrDefault(currentUserDocument?.ciudad, '')}',
-                        );
+                              direccion: 'Direccion Fija 123, Colonia Centro, Ciudad Ejemplo',
+                            );
                         _shouldSetState = true;
                         if ((_model.zapSignAPIresponse?.succeeded ?? true)) {
                           //Update signer to add rediret_link

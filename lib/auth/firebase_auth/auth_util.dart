@@ -1,73 +1,42 @@
-import 'dart:async';
-
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import '../auth_manager.dart';
 import '../base_auth_user_provider.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
+import 'package:prestonesto/flutter_flow/nav/nav.dart';
 
-import '/backend/backend.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:stream_transform/stream_transform.dart';
-import 'firebase_auth_manager.dart';
+// Access the current user from AppStateNotifier
+BaseAuthUser? get currentUser => AppStateNotifier.instance.user;
 
-export 'firebase_auth_manager.dart';
+// Dummy user document for migration purposes
+final currentUserDocument = DummyUserDocument();
 
-final _authManager = FirebaseAuthManager();
-FirebaseAuthManager get authManager => _authManager;
+class DummyUserDocument {
+  String get email => 'dummy@example.com';
+  String get displayName => 'Dummy User';
+  String get photoUrl => '';
+  String get phoneNumber => '+10000000000';
+  // Add any other fields your app expects
+}
 
-String get currentUserEmail =>
-    currentUserDocument?.email ?? currentUser?.email ?? '';
+// Example: get current user's email
+String get currentUserEmail => currentUser?.email ?? '';
 
+// Example: get current user's UID (if you store it)
 String get currentUserUid => currentUser?.uid ?? '';
 
-String get currentUserDisplayName =>
-    currentUserDocument?.displayName ?? currentUser?.displayName ?? '';
+// Example: get current user's display name
+String get currentUserDisplayName => currentUser?.displayName ?? '';
 
-String get currentUserPhoto =>
-    currentUserDocument?.photoUrl ?? currentUser?.photoUrl ?? '';
+// Example: get current user's photo URL
+String get currentUserPhoto => currentUser?.photoUrl ?? '';
 
-String get currentPhoneNumber =>
-    currentUserDocument?.phoneNumber ?? currentUser?.phoneNumber ?? '';
+// Example: get current user's phone number
+String get currentPhoneNumber => currentUser?.phoneNumber ?? '';
 
-String get currentJwtToken => _currentJwtToken ?? '';
+// Example: get current JWT token (implement as needed)
+String get currentJwtToken => ''; // Implement retrieval if you store it
 
+// Example: check if current user's email is verified
 bool get currentUserEmailVerified => currentUser?.emailVerified ?? false;
 
-/// Create a Stream that listens to the current user's JWT Token, since Firebase
-/// generates a new token every hour.
-String? _currentJwtToken;
-final jwtTokenStream = FirebaseAuth.instance
-    .idTokenChanges()
-    .map((user) async => _currentJwtToken = await user?.getIdToken())
-    .asBroadcastStream();
+// Add any other helpers you need, but do NOT use Firebase
 
-DocumentReference? get currentUserReference =>
-    loggedIn ? UsersRecord.collection.doc(currentUser!.uid) : null;
-
-UsersRecord? currentUserDocument;
-final authenticatedUserStream = FirebaseAuth.instance
-    .authStateChanges()
-    .map<String>((user) => user?.uid ?? '')
-    .switchMap(
-      (uid) => uid.isEmpty
-          ? Stream.value(null)
-          : UsersRecord.getDocument(UsersRecord.collection.doc(uid))
-              .handleError((_) {}),
-    )
-    .map((user) => currentUserDocument = user)
-    .asBroadcastStream();
-
-class AuthUserStreamWidget extends StatelessWidget {
-  const AuthUserStreamWidget({Key? key, required this.builder})
-      : super(key: key);
-
-  final WidgetBuilder builder;
-
-  @override
-  Widget build(BuildContext context) => StreamBuilder(
-        stream: authenticatedUserStream,
-        builder: (context, _) => builder(context),
-      );
-}
+// No Streams, FirebaseAuth, Firestore, etc. All user info comes from AppStateNotifier.

@@ -806,13 +806,6 @@ class _ApplicationAddressWidgetState extends State<ApplicationAddressWidget>
                         return;
                       }
 
-                      await currentUserReference!.update(createUsersRecordData(
-                        calle: _model.addressFieldCasaCalleController.text,
-                        colonia: _model.addressFieldColoniaController.text,
-                        ciudad: _model.addressFieldCiudadController.text,
-                        departamento: _model.dptoDropDownValue,
-                        residenceType: _model.choiceChipsValue,
-                      ));
 
                       await widget.applicationRecieve!.update({
                         'index': FieldValue.increment(1),

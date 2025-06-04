@@ -142,7 +142,7 @@ class _ApplicationDNIValidationWidgetState
       },
     );
   }
-
+/**
  Future<void> startDniVerificationProcess() async {
    debugPrint('[DNI Validation] Starting ShuftiPro verification process...');
    String shuftiProRawResponse = '';
@@ -163,8 +163,7 @@ class _ApplicationDNIValidationWidgetState
        ScaffoldMessenger.of(this.context).showSnackBar(
          const SnackBar(content: Text("Verification Success")),
        );
-       var applicationRecordDocRef =
-           ApplicationRecord.createDoc(currentUserReference!);
+      var applicationRecordDocRef = ApplicationRecord.createDoc();
 
        final applicationRecordData = {
          ...createApplicationRecordData(
@@ -216,6 +215,11 @@ class _ApplicationDNIValidationWidgetState
    }
    debugPrint('[DNI Validation] ShuftiPro verification process completed.');
  }
+  */
+
+  Future<void> startDniVerificationProcess() async {
+    return;
+  }
 
   void continueFun() async {
     // createdPayload["reference"] = widget.applicationRecieve?.path ?? '';
@@ -394,6 +398,8 @@ class _ApplicationDNIValidationWidgetState
                             0.0, 100.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            return;
+/**
                             await EquifaxRecord.collection
                                 .doc()
                                 .set(createEquifaxRecordData(
@@ -445,6 +451,7 @@ class _ApplicationDNIValidationWidgetState
                                 _model.buttonDisplay = false;
                               });
                             }
+                             */
                           },
                           text: 'Continuar',
                           options: FFButtonOptions(

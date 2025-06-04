@@ -39,7 +39,7 @@ Future<int> queryUsersRecordCount({
 Future<bool> checkUserHasIncomeVerification() async {
   try {
     final doc = await DocumentsRecord.collection
-        .where('UserDocReference', isEqualTo: currentUserReference)
+        .where('UserDocReference', isEqualTo: "123")
         .get();
     if (doc.docs.isNotEmpty && doc.docs.first['income_verification'] != null) {
       return true;
@@ -82,7 +82,7 @@ Future<bool> checkUserAlreadyCompletedPersonalEvaluation() async {
 Future<List<Map<String, dynamic>>> userPaymentsShedule() async {
   try {
     final doc = await LoansRecord.collection
-        .where('UserDocReference', isEqualTo: currentUserReference)
+        .where('UserDocReference', isEqualTo: "123")
         .get();
     if (doc.docs.isNotEmpty) {
       final payment = await doc.docs.first.data();
@@ -461,8 +461,7 @@ Future maybeCreateUser(User user) async {
   final userRecord = UsersRecord.collection.doc(user.uid);
   final userExists = await userRecord.get().then((u) => u.exists);
   if (userExists) {
-    currentUserDocument = await UsersRecord.getDocumentOnce(userRecord);
-    return;
+    return await UsersRecord.getDocumentOnce(userRecord);
   }
 
   final userData = createUsersRecordData(
@@ -475,10 +474,13 @@ Future maybeCreateUser(User user) async {
   );
 
   await userRecord.set(userData);
-  currentUserDocument = UsersRecord.getDocumentFromData(userData, userRecord);
+  return UsersRecord.getDocumentFromData(userData, userRecord);
 }
-
 Future updateUserDocument({String? email}) async {
+  return;
+  /*
   await currentUserDocument?.reference
       .update(createUsersRecordData(email: email));
+  */
+
 }

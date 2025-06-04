@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '/backend/backend.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+
+import '/shared/services/models/user_info.dart';
 
 class FFAppState extends ChangeNotifier {
   static final FFAppState _instance = FFAppState._internal();
@@ -18,6 +19,13 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  UserInfo? _currentUser;
+  UserInfo? get currentUser => _currentUser;
+  set currentUser(UserInfo? user) {
+    _currentUser = user;
+    notifyListeners();
+  }
+
   DocumentReference<Object?>? _currentApplication = null;
   DocumentReference<Object?>? get currentApplication => _currentApplication;
   set currentApplication(DocumentReference<Object?>? _value) {
@@ -28,24 +36,6 @@ class FFAppState extends ChangeNotifier {
   String? get currentEquifaxStatus => _currentEquifaxStatus;
   set currentEquifaxStatus(String? _value) {
     _currentEquifaxStatus = _value;
-  }
-
-  bool _nombresApplicationState = false;
-  bool get nombresApplicationState => _nombresApplicationState;
-  set nombresApplicationState(bool _value) {
-    _nombresApplicationState = _value;
-  }
-
-  bool _apellidosApplicationState = false;
-  bool get apellidosApplicationState => _apellidosApplicationState;
-  set apellidosApplicationState(bool _value) {
-    _apellidosApplicationState = _value;
-  }
-
-  bool _DNIapplicationState = false;
-  bool get DNIapplicationState => _DNIapplicationState;
-  set DNIapplicationState(bool _value) {
-    _DNIapplicationState = _value;
   }
 
   bool _CasayCalleApplicationState = false;

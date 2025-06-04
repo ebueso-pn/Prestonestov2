@@ -44,7 +44,7 @@ class _LoanDocumentWidgetState extends State<LoanDocumentWidget> {
     return StreamBuilder<List<DocumentsRecord>>(
       stream: queryDocumentsRecord(
         queryBuilder: (documentsRecord) => documentsRecord
-            .where('UserDocReference', isEqualTo: currentUserReference),
+            .where('UserDocReference', isEqualTo: "132"),
         singleRecord: true,
       ),
       builder: (context, snapshot) {

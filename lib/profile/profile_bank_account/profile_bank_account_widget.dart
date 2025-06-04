@@ -672,19 +672,19 @@ class _ProfileBankAccountWidgetState extends State<ProfileBankAccountWidget>
                           );
                           return;
                         }
-                        await queryDocumentsRecordOnce(
-                          queryBuilder: (documentsRecord) =>
-                              documentsRecord.where('UserDocReference',
-                                  isEqualTo: currentUserReference),
-                          singleRecord: true,
-                        ).then((s) => s.firstOrNull);
+                        // await queryDocumentsRecordOnce(
+                        //   queryBuilder: (documentsRecord) =>
+                        //       documentsRecord.where('UserDocReference',
+                        //           isEqualTo: currentUserReference),
+                        //   singleRecord: true,
+                        // ).then((s) => s.firstOrNull);
 
-                        await currentUserReference!
-                            .update(createUsersRecordData(
-                          bankAccountBank: _model.dropDownValue,
-                          bankAccountNumber: _model.cuentaController.text,
-                          bankAccountType: _model.choiceChipsValue,
-                        ));
+                        // await currentUserReference!
+                        //     .update(createUsersRecordData(
+                        //   bankAccountBank: _model.dropDownValue,
+                        //   bankAccountNumber: _model.cuentaController.text,
+                        //   bankAccountType: _model.choiceChipsValue,
+                        // ));
 
                         FirebaseAnalytics.instance.logEvent(
                           name: 'app_2_ingresar_cuenta_bancaria',

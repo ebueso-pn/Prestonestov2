@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:prestonesto/app/nav_bar.dart';
-import 'package:prestonesto/application/application_carrousel/application_carrousel_screen.dart';
-import 'package:prestonesto/application/application_denied/application_denied_screen.dart';
-import 'package:prestonesto/application/application_documents/application_documents_screen.dart';
+
 import 'package:prestonesto/privacy_policy/privacy_policy_widget.dart';
 import '../../auth/base_auth_user_provider.dart';
 import '/index.dart';
@@ -81,36 +79,32 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               appStateNotifier.loggedIn ? NavBarPage() : OnboardingWidget(),
         ),
         FFRoute(
+          name: 'Register',
+          path: '/register',
+          builder: (context, params) => EmailCreateAccountWidget(),
+        ),
+        FFRoute(
+          name: 'Email_Login',
+          path: '/email_login',
+          builder: (context, params) => EmailLoginWidget(),
+        ),
+        FFRoute(
           name: 'Onboarding',
           path: '/onboarding',
           builder: (context, params) => OnboardingWidget(),
         ),
         FFRoute(
-          name: 'SMS_signup',
-          path: '/sMSSignup',
-          builder: (context, params) => SMSSignupWidget(),
-        ),
+            name: 'Home',
+            path: '/home',
+            requireAuth: true,
+            builder: (context, params) => NavBarPage()),
         FFRoute(
-          name: 'SMS_verify_code',
-          path: '/sMSVerifyCode',
-          builder: (context, params) => SMSVerifyCodeWidget(),
-        ),
-        FFRoute(
-          name: 'Home',
-          path: '/home',
+          name: 'BasicInformation',
+          path: '/basic_information',
           requireAuth: true,
-          builder: (context, params) =>
-              params.isEmpty ? NavBarPage(initialPage: 'Home') : HomeWidget(),
+          builder: (context, params) => BasicInformationWidget()
         ),
-        FFRoute(
-          name: 'Application_Name',
-          path: '/applicationName',
-          requireAuth: true,
-          builder: (context, params) => ApplicationNameWidget(
-              //applicationRecieve: params.getParam('applicationRecieve',
-              //ParamType.DocumentReference, false, ['users', 'application']),
-              ),
-        ),
+        /*
         FFRoute(
           name: 'Help',
           path: '/help',
@@ -123,7 +117,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           requireAuth: true,
           builder: (context, params) {
             return params.isEmpty
-                ? NavBarPage(initialPage: 'Applicaiton_Summary')
+                ? NavBarPage(initialPage: 'Home')
                 : ApplicationLoanCalculatorWidget(
                     applicationRecieve: params.getParam(
                         'applicationRecieve',
@@ -159,6 +153,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   equifaxStatus:
                       params.getParam('equifaxStatus', ParamType.String),
                 )),
+
         FFRoute(
           name: 'Application_Address',
           path: '/applicationAddress',
@@ -169,21 +164,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             equifaxStatus: params.getParam('equifaxStatus', ParamType.String),
           ),
         ),
-        FFRoute(
-          name: 'phone_SignIn',
-          path: '/SMS_SignIn',
-          builder: (context, params) => PhoneSignInWidget(),
-        ),
-        FFRoute(
-          name: 'Email_CreateAccount',
-          path: '/emailCreateAccount',
-          builder: (context, params) => EmailCreateAccountWidget(),
-        ),
-        FFRoute(
-          name: 'Email_Login',
-          path: '/emailLogin',
-          builder: (context, params) => EmailLoginWidget(),
-        ),
+
         FFRoute(
           name: 'Email_ForgotPassword',
           path: '/emailForgotPassword',
@@ -205,11 +186,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ApplicaitonSuccessWidget(
             nameAppRecieve: params.getParam('nameAppRecieve', ParamType.String),
           ),
-        ),
-        FFRoute(
-          name: 'Applicaiton_Summary',
-          path: '/applicaitonSummary',
-          builder: (context, params) => ApplicaitonSummaryWidget(),
         ),
         FFRoute(
           name: 'Application_Map',
@@ -238,11 +214,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/profileEdit',
           requireAuth: true,
           builder: (context, params) => ProfileEditWidget(),
-        ),
-        FFRoute(
-          name: 'Application_List',
-          path: '/applicationList',
-          builder: (context, params) => ApplicationListWidget(),
         ),
         FFRoute(
           name: 'Loan_Signature',
@@ -277,6 +248,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ? NavBarPage(initialPage: 'Profile')
               : ProfileWidget(),
         ),
+
         FFRoute(
           name: 'Profile_IncomeValidation',
           path: '/profileIncomeValidation',
@@ -292,6 +264,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/paymentDetails',
           builder: (context, params) => PaymentDetailsWidget(),
         ),
+         */
         FFRoute(
           name: 'Privacy_Policy',
           path: '/privacyPolicy',

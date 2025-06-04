@@ -1,9 +1,4 @@
-import 'package:facebook_app_events/facebook_app_events.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_pdf_viewer.dart';
@@ -211,12 +206,11 @@ class _ProfileIncomeValidationWidgetState
     return StreamBuilder<List<DocumentsRecord>>(
       stream: queryDocumentsRecord(
         queryBuilder: (documentsRecord) => documentsRecord
-            .where('UserDocReference', isEqualTo: currentUserReference),
+        .where('UserDocReference', isEqualTo: "123"),
         singleRecord: true,
       ),
       builder: (context, snapshot) {
         print('snapshot: ${snapshot.data}');
-        print('currentUserReference: $currentUserReference');
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
@@ -335,15 +329,15 @@ class _ProfileIncomeValidationWidgetState
                                         ))
                                     .toList();
 
-                                downloadUrls = (await Future.wait(
-                                  selectedMedia.map(
-                                    (m) async => await uploadData(
-                                        m.storagePath, m.bytes),
-                                  ),
-                                ))
-                                    .where((u) => u != null)
-                                    .map((u) => u!)
-                                    .toList();
+                                    // downloadUrls = (await Future.wait(
+                                    //   selectedMedia.map(
+                                    //     (m) async => await uploadData(
+                                    //         m.storagePath, m.bytes),
+                                    //   ),
+                                    // ))
+                                    //     .where((u) => u != null)
+                                    //     .map((u) => u!)
+                                    //     .toList();
                               } finally {
                                 ScaffoldMessenger.of(context)
                                     .hideCurrentSnackBar();
@@ -446,15 +440,15 @@ class _ProfileIncomeValidationWidgetState
                                         ))
                                     .toList();
 
-                                downloadUrls = (await Future.wait(
-                                  selectedFiles.map(
-                                    (f) async => await uploadData(
-                                        f.storagePath, f.bytes),
-                                  ),
-                                ))
-                                    .where((u) => u != null)
-                                    .map((u) => u!)
-                                    .toList();
+                                    // downloadUrls = (await Future.wait(
+                                    //   selectedFiles.map(
+                                    //     (f) async => await uploadData(
+                                    //         f.storagePath, f.bytes),
+                                    //   ),
+                                    // ))
+                                    //     .where((u) => u != null)
+                                    //     .map((u) => u!)
+                                    //     .toList();
                               } finally {
                                 ScaffoldMessenger.of(context)
                                     .hideCurrentSnackBar();
@@ -611,11 +605,6 @@ class _ProfileIncomeValidationWidgetState
                                 return;
                               }
 
-                              FirebaseAnalytics.instance.logEvent(
-                                  name: 'app_2_ingresar_verificacion_ingresos');
-                              FacebookAppEvents().logEvent(
-                                name: 'app_2_ingresar_verificacion_ingresos',
-                              );
 
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

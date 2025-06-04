@@ -9,6 +9,9 @@ import 'package:prestonesto/backend/backend.dart';
 import 'package:prestonesto/flutter_flow/internationalization.dart';
 import 'package:prestonesto/flutter_flow/nav/nav.dart';
 
+import '/shared/services/auth_api.dart';
+import '/shared/services/api_client.dart';
+
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
   @override
@@ -27,14 +30,9 @@ class _MyAppState extends State<MyApp> {
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
 
-  final authUserSub = authenticatedUserStream.listen((_) {});
-
   @override
   void initState() {
     super.initState();
-    /*
-      Note : Make sure to remove FlutterBranchSdk.validateSDKIntegration() in your production build.
-    */
     FlutterBranchSdk.validateSDKIntegration();
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
@@ -44,9 +42,7 @@ class _MyAppState extends State<MyApp> {
         FFAppState().userHasIncomeVerification =
             await checkUserHasIncomeVerification();
         FFAppState().userHasBankAccount = await checkUserHasBankAccount();
-       
       });
-    jwtTokenStream.listen((_) {});
     Future.delayed(
       Duration(milliseconds: 1000),
       () => _appStateNotifier.stopShowingSplashImage(),
@@ -65,15 +61,24 @@ class _MyAppState extends State<MyApp> {
       FFAppState().userHasIncomeVerification =
           await checkUserHasIncomeVerification();
       FFAppState().userHasBankAccount = await checkUserHasBankAccount();
-      
-      setState(() {});
+
+      final apiClient = await ApiClient.create();
+      final authApi = AuthApi(apiClient);
+      try {
+        final user = await authApi.fetchMe();
+        setState(() {
+          FFAppState().currentUser = user;
+        });
+      } catch (e) {
+        print('Error fetching user info: $e');
+        FFAppState().currentUser = null;
+        _router.go('/onboarding');
+      }
     });
   }
 
   @override
   void dispose() {
-    authUserSub.cancel();
-
     super.dispose();
   }
 
