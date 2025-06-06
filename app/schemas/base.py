@@ -1,8 +1,13 @@
-from pydantic import BaseModel
-from typing import Optional, Dict, Any
+from pydantic import BaseModel, Field
 
-class AuthResponse(BaseModel):
-    """Schema for general auth operation responses"""
-    success: bool
-    message: str
-    data: Optional[Dict[str, Any]] = None
+class BaseResponse(BaseModel):
+    success: bool = Field(
+        ...,
+        description="Indicates if the authentication was successful",
+        examples=[True, False]
+    )
+    message: str = Field(
+        ...,
+        description="A message describing the result",
+        examples=["Authentication successful", "Invalid credentials", "User not found"]
+    )

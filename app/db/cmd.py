@@ -1,11 +1,7 @@
-from typing import Annotated
 import logging
-import sys
 import importlib
 
-from fastapi import Depends, FastAPI, HTTPException, Query
-from sqlalchemy import create_engine, inspect, text
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import inspect, text
 from app.db.base import Base, engine
 
 logger = logging.getLogger(__name__)

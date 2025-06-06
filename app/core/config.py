@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     # Supabase Settings
     SUPABASE_URL: str = ""
     SUPABASE_KEY: str = ""
-    SUPABASE_JWT_SECRET: Optional[str] = None
+    SUPABASE_JWT_SECRET: str = ""
 
     @validator("BACKEND_CORS_ORIGINS", pre=True)
     def assemble_cors_origins(cls, v: str) -> Union[List[str], str]:

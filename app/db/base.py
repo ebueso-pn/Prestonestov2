@@ -1,19 +1,13 @@
-from typing import List, Optional, Dict, Any, Sequence, Union, Type, AsyncGenerator
-from pydantic import BaseModel, EmailStr
+from typing import Generic, Optional, Dict, Any, Sequence, Union, Type, AsyncGenerator, TypeVar
+from pydantic import BaseModel
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.asyncio import async_sessionmaker
-from sqlalchemy.ext.declarative import as_declarative, declared_attr
+from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.future import select
-from sqlalchemy import delete, update
 
 from app.core.config import settings
-
-# Create SQLAlchemy async engine
-
-
-import logging
 
 engine = create_async_engine(
     url=settings.SQLALCHEMY_DATABASE_URI,  # Make sure this is an async URI with postgresql+asyncpg://
@@ -21,20 +15,12 @@ engine = create_async_engine(
 )
 AsyncSessionLocal = async_sessionmaker(autocommit=False, autoflush=False, bind=engine, class_=AsyncSession)
 
-# Base class for all models
-@as_declarative()
-class Base:
-    id: Any
-    __name__: str
+T = TypeVar("T", bound="BaseModel")
 
-    # Generate tablename automatically based on class name
-    @declared_attr
-    def __tablename__(cls) -> str:
-        return cls.__name__.lower()
+class Base(DeclarativeBase):
 
-    # Helper methods that could be useful for all models
     @classmethod
-    async def get_by_id(cls, db: AsyncSession, id: Any) -> Optional["Base"]:
+    async def get_by_id(cls, db: AsyncSession, id: Any) -> Optional[T]:
         result = await db.execute(select(cls).where(cls.id == id))
         return result.scalars().first()
 
@@ -71,12 +57,13 @@ class Base:
             return True
         return False
 
-class BaseService:
-    """Base service class for CRUD operations"""
-    def __init__(self, model: Type[Base]):
+ModelType = TypeVar("ModelType", bound=Base)
+
+class BaseService(Generic[ModelType]):
+    def __init__(self, model: Type[ModelType]):
         self.model = model
 
-    async def get_by_id(self, db: AsyncSession, id: UUID) -> Optional[Base]:
+    async def get_by_id(self, db: AsyncSession, id: UUID) -> Optional[T]:
         """Get a record by ID"""
         return await self.model.get_by_id(db, id)
 
@@ -84,7 +71,7 @@ class BaseService:
         """Get all records with pagination"""
         return await self.model.get_all(db, skip=skip, limit=limit)
 
-    async def create(self, db: AsyncSession, *, obj_in: BaseModel) -> Base:
+    async def create(self, db: AsyncSession, *, obj_in: BaseModel) -> ModelType:
         """Create a new record"""
         data = obj_in.dict(exclude_unset=True)
         return await self.model.create(db, **data)

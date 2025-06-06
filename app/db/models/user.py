@@ -2,8 +2,9 @@ import uuid
 from enum import Enum, auto
 from datetime import datetime
 
-from sqlalchemy import Column, String, Boolean, DateTime, Text, JSON, ForeignKey, Index, UniqueConstraint, func
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import String, Boolean, DateTime, Index, UniqueConstraint
+from sqlalchemy.dialects.postgresql import UUID as PG_UUID
+from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.types import Enum as SQLAlchemyEnum
 
 from app.db.base import Base
@@ -19,21 +20,23 @@ class User(Base):
     This table stores additional user information not stored in Supabase auth.
     The supabase_uid field is a foreign key to the Supabase auth.users table.
     """
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    supabase_uid = Column(String, unique=True, nullable=False, index=True,
+    __tablename__ = "users"
+
+    id: Mapped[uuid.UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    supabase_uid: Mapped[str] = mapped_column(String, unique=True, nullable=False, index=True,
                           comment="Supabase user ID reference")
 
-    email = Column(String, unique=True, index=True, nullable=False)
-    phone_number = Column(String, unique=False, index=False, nullable=True)
-    id_number = Column(String, unique=True, index=True, nullable=True)
-    id_type = Column(SQLAlchemyEnum(UserIDType), nullable=True, comment="Type of identification document (DNI or Passport)")
-    first_name = Column(String, nullable=True)
-    last_name = Column(String, nullable=True)
-    is_active = Column(Boolean, default=True)
+    email: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+    phone_number: Mapped[str | None] = mapped_column(String, unique=False, index=False, nullable=True)
+    id_number: Mapped[str | None] = mapped_column(String, unique=True, index=True, nullable=True)
+    id_type: Mapped[UserIDType | None] = mapped_column(SQLAlchemyEnum(UserIDType), nullable=True, comment="Type of identification document (DNI or Passport)")
+    first_name: Mapped[str | None] = mapped_column(String, nullable=True)
+    last_name: Mapped[str | None] = mapped_column(String, nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
 
     # Timestamps
-    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = Column(DateTime, nullable=True, onupdate=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True, onupdate=datetime.utcnow)
 
     # Indexes and constraints
     __table_args__ = (
