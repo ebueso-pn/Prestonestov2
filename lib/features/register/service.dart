@@ -43,7 +43,7 @@ Future<void> handleCreateAccount(
     );
 
     if (context.mounted) {
-      context.goNamedAuth('Application_LoanCalculator', context.mounted);
+      context.goNamedAuth('Home', context.mounted);
     }
   } else {
     final error = result['error'] ?? '';

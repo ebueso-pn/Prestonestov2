@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiClient {
   final String baseUrl;
@@ -14,7 +15,7 @@ class ApiClient {
   });
 
   static Future<ApiClient> create() async {
-    final baseUrl = 'http://192.168.10.112:8000/api/v1';
+    final baseUrl = dotenv.env['API_BASE_URL'] ?? '';
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('access_token');
     final refreshToken = prefs.getString('refresh_token');
@@ -24,20 +25,25 @@ class ApiClient {
       refreshToken: refreshToken,
     );
   }
-
   Future<http.Response> get(String path) async {
+    final fullUrl = '$baseUrl$path';
+    print('GET request to: $fullUrl');
     var response = await http.get(
-      Uri.parse('$baseUrl$path'),
+      Uri.parse(fullUrl),
       headers: _headers(),
     );
+    print('Response for $path: ${response.statusCode} ${response.body}');
     if (_isAuthError(response)) {
       final refreshed = await _refreshToken();
       if (refreshed) {
+        print('Token refreshed. Retrying GET request to: $path');
         response = await http.get(
           Uri.parse('$baseUrl$path'),
           headers: _headers(),
         );
+        print('Response after refresh for $path: ${response.statusCode} ${response.body}');
       } else {
+        print('Token refresh failed. Logging out.');
         await logout();
       }
     }
@@ -45,20 +51,37 @@ class ApiClient {
   }
 
   Future<http.Response> post(String path, {Map<String, dynamic>? body}) async {
+    print('POST request to: $path');
+    if (body != null && body.isNotEmpty) {
+      print('Request body for $path: ${const JsonEncoder.withIndent('  ').convert(body)}');
+    } else {
+      print('No request body for $path');
+    }
+    final fullUrl = '$baseUrl$path';
+    print('POST request to: $fullUrl');
     var response = await http.post(
-      Uri.parse('$baseUrl$path'),
+      Uri.parse(fullUrl),
       headers: _headers(),
       body: json.encode(body ?? {}),
     );
+    print('Response for $path: ${response.statusCode} ${response.body}');
     if (_isAuthError(response)) {
       final refreshed = await _refreshToken();
       if (refreshed) {
+        print('Token refreshed. Retrying POST request to: $path');
+        if (body != null && body.isNotEmpty) {
+          print('Request body for $path (retry): ${const JsonEncoder.withIndent('  ').convert(body)}');
+        } else {
+          print('No request body for $path (retry)');
+        }
         response = await http.post(
           Uri.parse('$baseUrl$path'),
           headers: _headers(),
           body: json.encode(body ?? {}),
         );
+        print('Response after refresh for $path: ${response.statusCode} ${response.body}');
       } else {
+        print('Token refresh failed. Logging out.');
         await logout();
       }
     }

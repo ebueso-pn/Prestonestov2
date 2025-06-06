@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:prestonesto/flutter_flow/flutter_flow_theme.dart';
 import 'package:prestonesto/flutter_flow/flutter_flow_widgets.dart';
 import 'package:prestonesto/shared/services/models/user_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '/services/auth_service.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -15,15 +17,46 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _trySignInIfNeeded();
+  }
+
+  Future<void> _trySignInIfNeeded() async {
+    if (FFAppState().currentUser == null) {
+      final result = await AuthService.signInWithTokens();
+      if (result['success'] == true && result['user'] != null) {
+        setState(() {
+          FFAppState().currentUser = result['user'];
+        });
+      }
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final userInfo = FFAppState().currentUser;
-    if (userInfo == null) {
+    if (_isLoading) {
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
-    // final userInfo = snapshot.data!;
+
+    if (userInfo == null) {
+      Future.microtask(() {
+        context.goNamed('Onboarding');
+      });
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     final hasApplied = hasUserApplied(userInfo);
     final currentStep = getUserCurrentStep(userInfo);
 
@@ -63,7 +96,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           bottomNavigationBar: Padding(
-            padding: const EdgeInsets.only(bottom: 24.0, left: 24.0, right: 24.0),
+            padding:
+                const EdgeInsets.only(bottom: 24.0, left: 24.0, right: 24.0),
             child: _buildComenzarButton(context, currentStep, hasApplied),
           ),
         ));

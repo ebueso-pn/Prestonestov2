@@ -1,18 +1,20 @@
 import 'package:prestonesto_shuftipro_sdk/prestonesto_shuftipro_sdk.dart';
-
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+
 import 'model.dart';
 export 'model.dart';
 
-String clientId =
-    "o7PFvKcJMZKCJIWlGBb7DRGqoAfM2kxEIfPZPKXHCsmZ1ChPq51689211125"; // enter client id here
-String secretKey = "gIKH3kN6Gx53Fsr7bt0Lx9vb9fviWfft"; // enter secret key here
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+String clientId = dotenv.env['SHUFTIPRO_CLIENT_ID'] ?? ''; // load client id from env
+String secretKey = dotenv.env['SHUFTIPRO_SECRET_KEY'] ?? ''; // load secret key from env
 
 class KYCPage extends StatefulWidget {
   const KYCPage({

@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import '/shared/services/api_client.dart';
+import '/shared/services/auth_api.dart';
 
 class AuthService {
-  static const String _baseUrl = 'http://192.168.10.112:8000/api/v1/auth';
+  static const String _authBasePath = '/auth';
 
   /// Registers a user and returns a map with success, tokens, or error message.
   static Future<Map<String, dynamic>> registerUser({
@@ -12,7 +13,7 @@ class AuthService {
     required String idType,
     required String idNumber,
   }) async {
-    final url = Uri.parse('$_baseUrl/register');
+    final apiClient = await ApiClient.create();
     final body = {
       "email": email,
       "phone_number": phoneNumber,
@@ -22,11 +23,7 @@ class AuthService {
     };
 
     try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(body),
-      );
+      final response = await apiClient.post('$_authBasePath/register', body: body);
 
       if (response.statusCode == 201) {
         final data = jsonDecode(response.body);
@@ -55,18 +52,14 @@ class AuthService {
     required String email,
     required String password,
   }) async {
-    final url = Uri.parse('$_baseUrl/login');
+    final apiClient = await ApiClient.create();
     final body = {
       "email": email,
       "password": password,
     };
 
     try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(body),
-      );
+      final response = await apiClient.post('$_authBasePath/login', body: body);
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -87,6 +80,23 @@ class AuthService {
       return {
         'success': false,
         'error': 'network',
+      };
+    }
+  }
+
+  static Future<Map<String, dynamic>> signInWithTokens() async {
+    try {
+      final apiClient = await ApiClient.create();
+      final authApi = AuthApi(apiClient);
+      final userInfo = await authApi.fetchMe();
+      return {
+        'success': true,
+        'user': userInfo,
+      };
+    } catch (e) {
+      return {
+        'success': false,
+        'error': e.toString(),
       };
     }
   }
