@@ -3,18 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 
+import '/services/user_service.dart';
+
 import 'model.dart';
 export 'model.dart';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-String clientId = dotenv.env['SHUFTIPRO_CLIENT_ID'] ?? ''; // load client id from env
-String secretKey = dotenv.env['SHUFTIPRO_SECRET_KEY'] ?? ''; // load secret key from env
+String clientId = dotenv.env['SHUFTI_PRO_CLIENT_ID'] ?? ''; // load client id from env
+String secretKey = dotenv.env['SHUFTI_PRO_SECRET_ID'] ?? ''; // load secret key from env
 
 class KYCPage extends StatefulWidget {
   const KYCPage({
@@ -208,10 +210,18 @@ class _KYCPageState extends State<KYCPage> {
         createdPayload: createdPayload,
         configObject: configObj,
       );
+      // shuftiProRawResponse
+
       debugPrint('[DNI Validation] Response received: $shuftiProRawResponse');
       // Placeholder for parsed response
       // VerificationResponse parsedVerificationResponse = verificationResponseFromJson(shuftiProRawResponse);
-
+      final kycSubmissionResponse = await UserService.submitKyc(
+        {
+          "shufti_pro_response": shuftiProRawResponse,
+          "application_reference": _model.createdAppVar?.reference,
+        },
+      );
+      debugPrint('[DNI Validation] KYC submission response: $kycSubmissionResponse');
       // Use a placeholder map for now
       final verificationJson = {
         "status": "Iniciada",
