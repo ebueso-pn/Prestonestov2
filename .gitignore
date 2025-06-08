@@ -60,7 +60,7 @@ log/
 .env.development.local
 .env.test.local
 .env.production.local
-
+.env.prod
 # Keep the .env example but ignore real .env files
 .env
 !.env.example

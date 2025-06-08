@@ -67,6 +67,34 @@ class BaseService(Generic[ModelType]):
         """Get a record by ID"""
         return await self.model.get_by_id(db, id)
 
+    async def get_by(
+        self,
+        db: AsyncSession,
+        order_by: Any = None,
+        desc: bool = False,
+        limit: Optional[int] = None,
+        **params
+    ) -> Optional[ModelType] | Sequence[ModelType]:
+        """
+        Get a record by arbitrary filter parameters, with optional ordering.
+        Example: await service.get_by_(db, email="foo@bar.com", status="active", order_by=Model.created_at, desc=True)
+        If limit is None, returns the first matching record or None.
+        If limit is set, returns a sequence of up to 'limit' records (may be empty).
+        """
+        stmt = select(self.model).filter_by(**params)
+        if order_by is not None:
+            if desc:
+                stmt = stmt.order_by(order_by.desc())
+            else:
+                stmt = stmt.order_by(order_by)
+        if limit is not None:
+            stmt = stmt.limit(limit)
+            result = await db.execute(stmt)
+            return result.scalars().all()
+        else:
+            result = await db.execute(stmt)
+            return result.scalars().first()
+
     async def get_all(self, db: AsyncSession, *, skip: int = 0, limit: int = 100) -> Sequence[Base]:
         """Get all records with pagination"""
         return await self.model.get_all(db, skip=skip, limit=limit)
@@ -75,6 +103,10 @@ class BaseService(Generic[ModelType]):
         """Create a new record"""
         data = obj_in.dict(exclude_unset=True)
         return await self.model.create(db, **data)
+
+    async def create_raw(self, db: AsyncSession, *, obj_in: Dict[str, Any]) -> ModelType:
+        """Create a new record with raw data"""
+        return await self.model.create(db, **obj_in)
 
     async def update(self, db: AsyncSession, *, id: UUID, obj_in: Union[BaseModel, Dict[str, Any]]) -> Optional[Base]:
         """Update a record"""
@@ -91,6 +123,21 @@ class BaseService(Generic[ModelType]):
 # Dependency to get DB session
 async def get_db() -> AsyncGenerator:
     async with AsyncSessionLocal() as db:
+        try:
+            yield db
+        finally:
+            await db.close()
+
+AsyncSessionLocalNonExpiring = async_sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    expire_on_commit=False,
+    bind=engine,
+    class_=AsyncSession
+)
+
+async def get_db_no_exp() -> AsyncGenerator:
+    async with AsyncSessionLocalNonExpiring() as db:
         try:
             yield db
         finally:

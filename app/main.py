@@ -61,7 +61,6 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         content={
             "detail": errors,
             "body": exc.body,
-            "wtf": "Validation failed, bro! Check your input and try again."
         },
     )
 

@@ -1,0 +1,72 @@
+{
+  "reference": "package_sample_Flutter_2025-06-07 21:51:48.527290",
+  "country": "CO",
+  "verification_data": {
+    "document": {
+      "name": {
+        "first_name": "GABRIEL JESUS",
+        "middle_name": null,
+        "last_name": "GARCIA YEPES"
+      },
+      "dob": "2000-10-17",
+      "document_number": "1041695822",
+      "selected_type": ["id_card"],
+      "supported_types": [
+        "id_card",
+        "driving_license",
+        "passport",
+        "credit_or_debit_card"
+      ],
+      "face_match_confidence": 70
+    }
+  },
+  "verification_result": {
+    "face": 1,
+    "document": {
+      "document": 1,
+      "document_visibility": 1,
+      "document_must_not_be_expired": 1,
+      "document_proof": 1,
+      "selected_type": 1,
+      "document_country": 1,
+      "face_on_document_matched": 1,
+      "document_number": 1,
+      "dob": 1,
+      "name": 1
+    }
+  },
+  "event": "verification.accepted",
+  "email": null,
+  "info": {
+    "agent": {
+      "is_desktop": false,
+      "is_phone": true,
+      "useragent": "Dalvik/2.1.0 (Linux; U; Android 15; CPH2581 Build/AP3A.240617.008)",
+      "device_name": "0",
+      "browser_name": "",
+      "platform_name": "AndroidOS - 15"
+    },
+    "geolocation": {
+      "host": "186.170.106.61",
+      "ip": "186.170.106.61",
+      "rdns": "186.170.106.61",
+      "asn": "3816",
+      "isp": "Colombia Telecomunicaciones s.a. Esp Bic",
+      "country_name": "Colombia",
+      "country_code": "CO",
+      "region_name": "Atlantico",
+      "region_code": "ATL",
+      "city": "Barranquilla",
+      "postal_code": "080001",
+      "continent_name": "South America",
+      "continent_code": "SA",
+      "latitude": "10.968500137329",
+      "longitude": "-74.781303405762",
+      "metro_code": "",
+      "timezone": "America/Bogota",
+      "ip_type": "ipv4",
+      "capital": "Bogotá",
+      "currency": "COP"
+    }
+  }
+}

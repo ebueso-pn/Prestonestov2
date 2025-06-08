@@ -33,6 +33,12 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = "app"
     SQLALCHEMY_DATABASE_URI: str = ""
 
+    EQUIFAX_URL: str
+    EQUIFAX_USER: str
+    EQUIFAX_PASSWORD: str
+    EQUIFAX_KEY: str
+    EQUIFAX_APPLICATION: str
+
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         return PostgresDsn.build(

@@ -22,10 +22,10 @@ class Application(Base):
 
     id: Mapped[uuid.UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id: Mapped[uuid.UUID] = mapped_column(PG_UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
-    amount: Mapped[float] = mapped_column(Float, nullable=False)
-    months: Mapped[int] = mapped_column(Integer, nullable=False, comment="Time in months")
-    installment: Mapped[float] = mapped_column(Float, nullable=False, comment="Installment amount")
-    date_applied: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.utcnow)
+    amount: Mapped[float | None] = mapped_column(Float, nullable=True)
+    months: Mapped[int | None] = mapped_column(Integer, nullable=True, comment="Time in months")
+    installment: Mapped[float | None] = mapped_column(Float, nullable=True, comment="Installment amount")
+    date_applied: Mapped[datetime | None] = mapped_column(DateTime, nullable=True, default=datetime.utcnow)
     status: Mapped[ApplicationStatus] = mapped_column(
         SQLAlchemyEnum(ApplicationStatus), nullable=False, default=ApplicationStatus.PENDING
     )

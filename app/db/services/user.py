@@ -83,9 +83,7 @@ class UserDBService(BaseService):
             .where(User.id == user_id)
         )
         result = await db.execute(query)
-        print(result)
         row = result.first()
-        print(row)
         if row is None:
             return None
         user, user_financials = row
