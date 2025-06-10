@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:prestonesto/app/nav_bar.dart';
-import 'package:prestonesto/features/application/views/kyc/view.dart';
 
 import 'package:prestonesto/privacy_policy/privacy_policy_widget.dart';
 import '../../auth/base_auth_user_provider.dart';
@@ -100,15 +99,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             requireAuth: true,
             builder: (context, params) => NavBarPage()),
         FFRoute(
-          name: 'BasicInformation',
-          path: '/basic_information',
-          requireAuth: true,
-          builder: (context, params) => BasicInformationWidget()
-        ),
+            name: 'BasicInformation',
+            path: '/basic_information',
+            requireAuth: true,
+            builder: (context, params) => BasicInformationWidget()),
         FFRoute(
           name: 'KYCValidation',
           path: '/kyc',
-          builder: (context, params) => KYCPage( ),
+          builder: (context, params) => KYCPage(),
+        ),
+        FFRoute(
+          name: 'Calculator',
+          path: '/calculator',
+          builder: (context, params) => ApplicationLoanCalculatorWidget(),
+        ),
+        FFRoute(
+          name: 'Address',
+          path: '/address',
+          requireAuth: true,
+          builder: (context, params) => AddressPage(),
+        ),
+        FFRoute(
+          name: 'Map',
+          path: '/map',
+          requireAuth: true,
+          builder: (context, params) => MapPage(),
         ),
         /*
         FFRoute(

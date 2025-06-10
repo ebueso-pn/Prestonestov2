@@ -24,7 +24,7 @@ class _NavBarPageState extends State<NavBarPage> {
     }
 
     // If user has no active loans and no application, show HomePage only (no nav bar)
-    if (!user.hasActiveLoans && !user.hasApplication) {
+    if (!user.hasActiveLoans) {
       return HomePage();
     }
 

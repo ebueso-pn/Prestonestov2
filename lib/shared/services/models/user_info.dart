@@ -1,5 +1,5 @@
 class UserInfo {
-  final String id_number;
+  final String idNumber;
   final String email;
   final String? firstName;
   final String? lastName;
@@ -8,9 +8,13 @@ class UserInfo {
   final bool hasApplication;
   final bool hasActiveLoans;
   final bool hasKYC;
+  final bool isKYCValid;
+  final bool isAppParamsMissing;
+  final bool hasLocation;
+  final bool hasLocationPoint;
 
-  UserInfo({
-    required this.id_number,
+  const UserInfo({
+    required this.idNumber,
     required this.email,
     required this.hasFinancials,
     required this.hasApplication,
@@ -19,15 +23,37 @@ class UserInfo {
     this.phoneNumber,
     this.hasActiveLoans = false,
     this.hasKYC = false,
+    this.isKYCValid = false,
+    this.isAppParamsMissing = true,
+    this.hasLocation = false,
+    this.hasLocationPoint = false,
   });
 
   factory UserInfo.fromJson(Map<String, dynamic> json) {
+    final user = json['user'] as Map<String, dynamic>? ?? {};
+    final application = json['application'] as Map<String, dynamic>?;
+    final kyc = json['kyc'] as Map<String, dynamic>?;
+    final location = json['location'] as Map<String, dynamic>?;
+
     return UserInfo(
-      id_number: json['user']['id_number'] as String,
-      email: json['user']['email'] as String,
+      idNumber: user['id_number'] as String? ?? '',
+      email: user['email'] as String? ?? '',
+      firstName: user['first_name'] as String?,
+      lastName: user['last_name'] as String?,
+      phoneNumber: user['phone_number'] as String?,
       hasFinancials: json['financials'] != null,
-      hasApplication: json['application'] != null,
-      hasKYC: false, // Assuming KYC is not part of the JSON response
+      hasApplication: application != null,
+      hasActiveLoans: (json['active_loans'] as bool?) ?? false,
+      hasKYC: kyc != null,
+      isKYCValid: (kyc?['is_shufti_valid'] == true) &&
+          (kyc?['is_equifax_valid'] == true),
+      isAppParamsMissing: application == null ||
+          application['amount'] == null ||
+          application['months'] == null ||
+          application['installment'] == null,
+      hasLocation: location != null,
+      hasLocationPoint: location?['latitude'] != null &&
+          location?['longitude'] != null,
     );
   }
 }

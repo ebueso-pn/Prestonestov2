@@ -1,5 +1,5 @@
-import 'package:facebook_app_events/facebook_app_events.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -7,19 +7,13 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
-import 'application_loan_calculator_model.dart';
-export 'application_loan_calculator_model.dart';
+
+import '/services/application_service.dart';
+import 'model.dart';
+import 'utils.dart';
 
 class ApplicationLoanCalculatorWidget extends StatefulWidget {
-  const ApplicationLoanCalculatorWidget(
-      {Key? key, required this.applicationRecieve, required this.equifaxStatus})
-      : super(key: key);
-
-  final DocumentReference? applicationRecieve;
-  final String equifaxStatus;
+  const ApplicationLoanCalculatorWidget({Key? key}) : super(key: key);
 
   @override
   _ApplicationLoanCalculatorWidgetState createState() =>
@@ -35,103 +29,7 @@ class _ApplicationLoanCalculatorWidgetState
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'containerOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(0.0, -60.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'containerOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(0.0, 60.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'containerOnPageLoadAnimation3': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(0.0, 80.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'containerOnPageLoadAnimation4': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(0.0, 100.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'buttonOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(0.0, 100.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-  };
+  // Animations map is now imported from utils.dart
 
   @override
   void initState() {
@@ -148,60 +46,88 @@ class _ApplicationLoanCalculatorWidgetState
     super.dispose();
   }
 
+  Future<void> _onApplyPressed() async {
+    if (_loading) return;
+    setState(() => _loading = true);
+    var _shouldSetState = false;
+    if (_model.loanAmtValue! <= 0.0) {
+      await showDialog(
+        context: context,
+        builder: (alertDialogContext) {
+          return AlertDialog(
+            title: Text('Fijese que...'),
+            content: Text('Monto debe ser mayor a L. 0'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(alertDialogContext),
+                child: Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
+      if (_shouldSetState) setState(() {});
+      setState(() {
+        _loading = false;
+      });
+      return;
+    }
+
+    final applicationData = {
+      'amount': _model.loanAmtValue,
+      'months': _model.loanTermValue,
+      'installment': functions.loanCalculator(
+        _model.loanAmtValue!,
+        .055,
+        _model.loanTermValue!,
+      ),
+    };
+
+    try {
+      await ApplicationService.submitInitialParams(applicationData);
+    } catch (e) {
+      // Handle error (show dialog, set error state, etc.)
+      setState(() {
+        _loading = false;
+      });
+      await showDialog(
+        context: context,
+        builder: (alertDialogContext) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('No se pudo enviar la solicitud. Intenta de nuevo.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(alertDialogContext),
+                child: Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    context.pushNamed(
+      'Address',
+    );
+    setState(() {
+      _loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    final bool isEquifaxCero = widget.equifaxStatus == 'CONTINUE_NO_SCORE';
+    final bool isEquifaxCero = true;
 
-    return GestureDetector(
+    return SafeArea(
+        child: GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        appBar: responsiveVisibility(
-          context: context,
-          desktop: false,
-        )
-            ? PreferredSize(
-                preferredSize: Size.fromHeight(100.0),
-                child: AppBar(
-                  backgroundColor: FlutterFlowTheme.of(context).primary,
-                  automaticallyImplyLeading: false,
-                  actions: [],
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 0.0, 0.0, 24.0),
-                            child: Text(
-                              'Calculadora Prestonesto',
-                              style: FlutterFlowTheme.of(context)
-                                  .titleLarge
-                                  .override(
-                                    fontFamily: 'Urbanist',
-                                    color: FlutterFlowTheme.of(context).info,
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    centerTitle: true,
-                    expandedTitleScale: 1.0,
-                  ),
-                  elevation: 2.0,
-                ),
-              )
-            : null,
         body: SafeArea(
           top: true,
           child: SingleChildScrollView(
@@ -210,8 +136,15 @@ class _ApplicationLoanCalculatorWidgetState
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
+                  padding: const EdgeInsets.only(top: 32.0, bottom: 0),
+                  child: Text(
+                    'Calculadora de Prestamos',
+                    style: FlutterFlowTheme.of(context).headlineMedium,
+                  ),
+                ),
+                Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 12.0),
+                      EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 24.0),
                   child: Container(
                     width: double.infinity,
                     height: 75.0,
@@ -228,7 +161,7 @@ class _ApplicationLoanCalculatorWidgetState
                     ),
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
-                          12.0, 24.0, 12.0, 24.0),
+                          24.0, 24.0, 24.0, 24.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -278,7 +211,7 @@ class _ApplicationLoanCalculatorWidgetState
                 ),
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 12.0),
+                      EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
                   child: Container(
                     width: double.infinity,
                     height: 75.0,
@@ -346,7 +279,7 @@ class _ApplicationLoanCalculatorWidgetState
                 ),
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
+                      EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
                   child: Container(
                     width: double.infinity,
                     height: 100.0,
@@ -438,7 +371,7 @@ class _ApplicationLoanCalculatorWidgetState
                 ),
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
+                      EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
                   child: Container(
                     width: double.infinity,
                     height: 100.0,
@@ -522,7 +455,7 @@ class _ApplicationLoanCalculatorWidgetState
                 ),
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
+                      EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
                   child: Container(
                     width: double.infinity,
                     height: 100.0,
@@ -583,109 +516,36 @@ class _ApplicationLoanCalculatorWidgetState
                   ).animateOnPageLoad(
                       animationsMap['containerOnPageLoadAnimation4']!),
                 ),
-                Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
-                    child: FFButtonWidget(
-                      isEnable: !_loading,
-                      onPressed: () async {
-                        if (_loading) return;
-                        setState(() => _loading = true);
-                        var _shouldSetState = false;
-                        if (_model.loanAmtValue! <= 0.0) {
-                          await showDialog(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: Text('Fijese que...'),
-                                content: Text('Monto debe ser mayor a L. 0'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: Text('Ok'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                          if (_shouldSetState) setState(() {});
-                          return;
-                        }
-
-                        await widget.applicationRecieve!.update({
-                          'monto': _model.loanAmtValue,
-                          'plazo_meses': _model.loanTermValue,
-                          'cuota': functions.loanCalculator(
-                              _model.loanAmtValue!,
-                              .055,
-                              _model.loanTermValue!),
-                          'index': FieldValue.increment((1)),
-                        });
-                        _shouldSetState = true;
-
-                        await FirebaseAnalytics.instance.logEvent(
-                            name: 'app_calcular_monto_y_plazo',
-                            parameters: {
-                              'clicks_en_monto': counter,
-                            });
-                        FacebookAppEvents().logEvent(
-                          name: 'app_calcular_monto_y_plazo',
-                          parameters: {
-                            'clicks_en_monto': counter,
-                          },
-                        );
-                        counter = 0;
-
-                        context.pushNamed(
-                          'Application_Address',
-                          queryParameters: {
-                            'applicationRecieve': serializeParam(
-                              widget.applicationRecieve,
-                              ParamType.DocumentReference,
-                            ),
-                            'equifaxStatus': widget.equifaxStatus,
-                          }.withoutNulls,
-                        );
-
-                        if (_shouldSetState) setState(() {});
-
-                        setState(() {
-                          _loading = false;
-                        });
-                      },
-                      text: 'Aplicar',
-                      options: FFButtonOptions(
-                        width: 230.0,
-                        height: 50.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primary,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Urbanist',
-                                  color: Colors.white,
-                                ),
-                        elevation: 3.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(42.0),
-                      ),
-                    ).animateOnPageLoad(
-                        animationsMap['buttonOnPageLoadAnimation']!),
-                  ),
-                ),
               ],
             ),
           ),
         ),
+        bottomNavigationBar: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(32.0, 16.0, 32.0, 32.0),
+          child: FFButtonWidget(
+            isEnable: !_loading,
+            onPressed: _onApplyPressed,
+            text: 'Aplicar',
+            options: FFButtonOptions(
+              width: double.infinity,
+              height: 50.0,
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+              color: FlutterFlowTheme.of(context).primary,
+              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                    fontFamily: 'Urbanist',
+                    color: Colors.white,
+                  ),
+              elevation: 3.0,
+              borderSide: BorderSide(
+                color: Colors.transparent,
+                width: 1.0,
+              ),
+              borderRadius: BorderRadius.circular(42.0),
+            ),
+          ).animateOnPageLoad(animationsMap['buttonOnPageLoadAnimation']!),
+        ),
       ),
-    );
+    ));
   }
 }

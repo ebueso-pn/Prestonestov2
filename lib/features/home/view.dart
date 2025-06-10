@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:prestonesto/flutter_flow/flutter_flow_theme.dart';
 import 'package:prestonesto/flutter_flow/flutter_flow_widgets.dart';
 import 'package:prestonesto/shared/services/models/user_info.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '/services/auth_service.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
@@ -59,7 +58,7 @@ class _HomePageState extends State<HomePage> {
 
     final hasApplied = hasUserApplied(userInfo);
     final currentStep = getUserCurrentStep(userInfo);
-
+    print(currentStep);
     return SafeArea(
         top: true,
         child: Scaffold(
@@ -109,6 +108,7 @@ class _HomePageState extends State<HomePage> {
       'Tomarle foto a tu DNI y una selfie',
       'Elegir un monto y plazo',
       'Fijar tu dirección',
+      'Poner tu ubicación en el mapa',
       'Revisar y enviar solicitud',
       'Comprobar tus ingresos',
     ];
@@ -228,16 +228,18 @@ class _HomePageState extends State<HomePage> {
 
   String getRouteForStep(int step) {
     switch (step) {
+      case -1:
+        return 'UnableToApply';
       case 0:
         return 'BasicInformation';
       case 1:
         return 'KYCValidation';
       case 2:
-        return 'AmountTermPage';
+        return 'Calculator';
       case 3:
-        return 'AddressPage';
+        return 'Address';
       case 4:
-        return 'ReviewSubmitPage';
+        return 'Map';
       case 5:
         return 'IncomeVerificationPage';
       default:
@@ -258,11 +260,32 @@ class _HomePageState extends State<HomePage> {
   }
 
   int getUserCurrentStep(UserInfo user) {
+    print(user.hasLocation);
+    print(user.isAppParamsMissing);
     if (!user.hasFinancials) return 0;
 
     if (user.hasFinancials && !user.hasKYC) return 1;
 
-    if (user.hasKYC) return 2;
+    if (user.hasKYC & !user.isKYCValid) {
+      return -1;
+    }
+
+    if (user.isKYCValid && user.isAppParamsMissing) {
+      return 1;
+    }
+
+    if (user.isAppParamsMissing) {
+      return 2;
+    }
+
+    if (!user.hasLocation) {
+      return 3;
+    }
+
+    if (!user.hasLocationPoint) {
+      return 4;
+    }
+
     return 6;
   }
 }

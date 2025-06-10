@@ -109,14 +109,7 @@ class _BasicInformationWidgetState extends State<BasicInformationWidget>
 
     if (result) {
       context.pushNamed(
-        'KYCValidation',
-        /*queryParameters: {
-          'applicationRecieve': serializeParam(
-            widget.applicationRecieve,
-            ParamType.DocumentReference,
-          ),
-        }.withoutNulls,
-        */
+        'KYCValidation'
       );
     }
   }
