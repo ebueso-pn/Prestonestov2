@@ -27,4 +27,25 @@ class KYCDBService(BaseService):
             desc=True
         )
 
+    async def get_shufti_and_equifax_status_by_user_id(self, db: AsyncSession, *, user_id: uuid.UUID):
+            shufti_record = await self.get_by(
+                db,
+                user_id=user_id,
+                type=KYCType.SHUFTI,
+                order_by=KnowYourCustomer.created_at,
+                desc=True
+            )
+            equifax_record = await self.get_by(
+                db,
+                user_id=user_id,
+                type=KYCType.EQUIFAX,
+                order_by=KnowYourCustomer.created_at,
+                desc=True
+            )
+
+            return {
+                "shufti_status": shufti_record.status if shufti_record else None,
+                "equifax_status": equifax_record.status if equifax_record else None
+            }
+
 KYCService = KYCDBService()

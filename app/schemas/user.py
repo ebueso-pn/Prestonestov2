@@ -4,6 +4,8 @@ from typing import Optional
 from app.db.models.user import UserIDType
 from app.schemas.base import BaseResponse
 from app.schemas.user_financials import UserFinancialsSchema
+from app.schemas.application import ApplicationBase
+from app.schemas.user_location import UserLocationInDBBase
 
 class UserBase(BaseModel):
     email: EmailStr
@@ -23,7 +25,13 @@ class UserCreate(UserBase):
 class UserUpdate(UserBase):
     pass
 
+class KYCGetMe(BaseModel):
+    is_shufti_valid: Optional[bool] = None
+    is_equifax_valid: Optional[bool] = None
+
 class UserFullInformationResponse(BaseResponse):
     user: UserBase
     financials: Optional[UserFinancialsSchema] = None
-    application: Optional[dict] = None
+    application: Optional[ApplicationBase] = None
+    kyc: Optional[KYCGetMe] = None
+    location: Optional[UserLocationInDBBase] = None
