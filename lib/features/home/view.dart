@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
 
     final hasApplied = hasUserApplied(userInfo);
     final currentStep = getUserCurrentStep(userInfo);
-    print(currentStep);
+
     return SafeArea(
         top: true,
         child: Scaffold(
@@ -109,8 +109,8 @@ class _HomePageState extends State<HomePage> {
       'Elegir un monto y plazo',
       'Fijar tu dirección',
       'Poner tu ubicación en el mapa',
-      'Revisar y enviar solicitud',
       'Comprobar tus ingresos',
+      'Revisar y enviar solicitud',
     ];
 
     return Column(
@@ -227,6 +227,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   String getRouteForStep(int step) {
+    print("El baile del beeper");
+    print(step);
     switch (step) {
       case -1:
         return 'UnableToApply';
@@ -241,7 +243,9 @@ class _HomePageState extends State<HomePage> {
       case 4:
         return 'Map';
       case 5:
-        return 'IncomeVerificationPage';
+        return 'Documents';
+      case 6:
+        return 'ReviewApplication';
       default:
         return 'Application_Name';
     }
@@ -260,13 +264,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   int getUserCurrentStep(UserInfo user) {
-    print(user.hasLocation);
-    print(user.isAppParamsMissing);
+    print(user);
     if (!user.hasFinancials) return 0;
 
     if (user.hasFinancials && !user.hasKYC) return 1;
 
-    if (user.hasKYC & !user.isKYCValid) {
+    if (user.hasKYC && user.hasKYC && !user.isKYCValid) {
       return -1;
     }
 
@@ -284,6 +287,10 @@ class _HomePageState extends State<HomePage> {
 
     if (!user.hasLocationPoint) {
       return 4;
+    }
+
+    if (!user.hasIncomeFileUploaded) {
+      return 5;
     }
 
     return 6;

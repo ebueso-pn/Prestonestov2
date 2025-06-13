@@ -7,14 +7,22 @@ class FlutterFlowPdfViewer extends StatefulWidget {
     Key? key,
     this.networkPath,
     this.assetPath,
+    this.filePath,
     this.width,
     this.height,
     this.horizontalScroll = false,
-  })  : assert((networkPath != null) ^ (assetPath != null)),
+  })  : assert(
+          (networkPath != null ? 1 : 0) +
+                  (assetPath != null ? 1 : 0) +
+                  (filePath != null ? 1 : 0) ==
+              1,
+          'Exactly one of networkPath, assetPath, or filePath must be provided.',
+        ),
         super(key: key);
 
   final String? networkPath;
   final String? assetPath;
+  final String? filePath;
   final double? width;
   final double? height;
   final bool horizontalScroll;
@@ -27,15 +35,25 @@ class _FlutterFlowPdfViewerState extends State<FlutterFlowPdfViewer> {
   PdfController? controller;
   String get networkPath => widget.networkPath ?? '';
   String get assetPath => widget.assetPath ?? '';
+  String get filePath => widget.filePath ?? '';
 
-  void initializeController() =>
-      controller = networkPath.isNotEmpty || assetPath.isNotEmpty
-          ? PdfController(
-              document: assetPath.isNotEmpty
-                  ? PdfDocument.openAsset(assetPath)
-                  : PdfDocument.openData(InternetFile.get(networkPath)),
-            )
-          : null;
+  void initializeController() {
+    if (assetPath.isNotEmpty) {
+      controller = PdfController(
+        document: PdfDocument.openAsset(assetPath),
+      );
+    } else if (filePath.isNotEmpty) {
+      controller = PdfController(
+        document: PdfDocument.openFile(filePath),
+      );
+    } else if (networkPath.isNotEmpty) {
+      controller = PdfController(
+        document: PdfDocument.openData(InternetFile.get(networkPath)),
+      );
+    } else {
+      controller = null;
+    }
+  }
 
   @override
   void initState() {

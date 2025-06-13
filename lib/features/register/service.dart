@@ -3,9 +3,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
 
+import '/utils/show_error.dart';
 import '/auth/api_auth/models/api_auth_user.dart';
 import '/services/auth_service.dart';
-import '/utils/show_error.dart';
+import '/shared/services/api_client.dart';
+import '/shared/services/auth_api.dart';
 
 Future<void> handleCreateAccount(
   BuildContext context,
@@ -41,6 +43,17 @@ Future<void> handleCreateAccount(
       email: model.emailAddressController.text,
       phoneNumber: phoneNumber,
     );
+
+    // Fetch and set FFAppState().currentUser here:
+    try {
+      final apiClient = await ApiClient.create();
+      final authApi = AuthApi(apiClient);
+      final user = await authApi.fetchMe();
+      FFAppState().currentUser = user;
+    } catch (e) {
+      print('Error fetching user info after registration: $e');
+      // Optionally handle logout or error state here
+    }
 
     if (context.mounted) {
       context.goNamedAuth('Home', context.mounted);

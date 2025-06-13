@@ -12,6 +12,10 @@ class UserInfo {
   final bool isAppParamsMissing;
   final bool hasLocation;
   final bool hasLocationPoint;
+  final bool hasIncomeFileUploaded;
+  final bool hasBankFileUploaded;
+  final Map<String, dynamic>? location;
+  final Map<String, dynamic>? application;
 
   const UserInfo({
     required this.idNumber,
@@ -27,6 +31,10 @@ class UserInfo {
     this.isAppParamsMissing = true,
     this.hasLocation = false,
     this.hasLocationPoint = false,
+    this.hasIncomeFileUploaded = false,
+    this.hasBankFileUploaded = false,
+    this.location,
+    this.application,
   });
 
   factory UserInfo.fromJson(Map<String, dynamic> json) {
@@ -34,6 +42,7 @@ class UserInfo {
     final application = json['application'] as Map<String, dynamic>?;
     final kyc = json['kyc'] as Map<String, dynamic>?;
     final location = json['location'] as Map<String, dynamic>?;
+    final files = json['files'] as Map<String, dynamic>?;
 
     return UserInfo(
       idNumber: user['id_number'] as String? ?? '',
@@ -44,7 +53,7 @@ class UserInfo {
       hasFinancials: json['financials'] != null,
       hasApplication: application != null,
       hasActiveLoans: (json['active_loans'] as bool?) ?? false,
-      hasKYC: kyc != null,
+      hasKYC: kyc?['is_shufti_valid'] != null,
       isKYCValid: (kyc?['is_shufti_valid'] == true) &&
           (kyc?['is_equifax_valid'] == true),
       isAppParamsMissing: application == null ||
@@ -52,8 +61,14 @@ class UserInfo {
           application['months'] == null ||
           application['installment'] == null,
       hasLocation: location != null,
-      hasLocationPoint: location?['latitude'] != null &&
-          location?['longitude'] != null,
+      hasLocationPoint:
+          location?['latitude'] != null && location?['longitude'] != null,
+      hasIncomeFileUploaded: (files != null &&
+          files['income_file_uploaded'] == true),
+      hasBankFileUploaded: (files != null &&
+          files['bank_file_uploaded'] == true),
+      location: location,
+      application: application,
     );
   }
 }

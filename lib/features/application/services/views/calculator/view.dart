@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -12,8 +11,8 @@ import '/services/application_service.dart';
 import 'model.dart';
 import 'utils.dart';
 
-class ApplicationLoanCalculatorWidget extends StatefulWidget {
-  const ApplicationLoanCalculatorWidget({Key? key}) : super(key: key);
+class LoanCalculatorPage extends StatefulWidget {
+  const LoanCalculatorPage({Key? key}) : super(key: key);
 
   @override
   _ApplicationLoanCalculatorWidgetState createState() =>
@@ -21,7 +20,7 @@ class ApplicationLoanCalculatorWidget extends StatefulWidget {
 }
 
 class _ApplicationLoanCalculatorWidgetState
-    extends State<ApplicationLoanCalculatorWidget>
+    extends State<LoanCalculatorPage>
     with TickerProviderStateMixin {
   late ApplicationLoanCalculatorModel _model;
   int counter = 0;

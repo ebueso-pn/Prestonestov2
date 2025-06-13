@@ -109,9 +109,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => KYCPage(),
         ),
         FFRoute(
+            name: 'Carrousel',
+            path: '/carrousel',
+            builder: (context, params) => CarrouselPage()),
+        FFRoute(
           name: 'Calculator',
           path: '/calculator',
-          builder: (context, params) => ApplicationLoanCalculatorWidget(),
+          builder: (context, params) => LoanCalculatorPage(),
         ),
         FFRoute(
           name: 'Address',
@@ -125,6 +129,27 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           requireAuth: true,
           builder: (context, params) => MapPage(),
         ),
+        FFRoute(
+            name: 'Documents',
+            path: '/documents',
+            builder: (context, params) => DocumentsPage()),
+
+        FFRoute(
+          name: 'ProfileIncomePage',
+          path: '/profile_income_page',
+          builder: (context, params) => ProfileIncomePage(),
+        ),
+        FFRoute(
+          name: 'ProfileBankAccount',
+          path: '/profile_bank_account',
+          builder: (context, params) => ProfileBankPage(),
+        ),
+        FFRoute(
+          name: 'ReviewApplication',
+          path: '/application_review',
+          requireAuth: true,
+          builder: (context, params) => ApplicationReviewPage(),
+        ),
         /*
         FFRoute(
           name: 'Help',
@@ -132,75 +157,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           requireAuth: true,
           builder: (context, params) => HelpWidget(),
         ),
-        FFRoute(
-          name: 'Application_LoanCalculator',
-          path: '/applicationLoanCalculator',
-          requireAuth: true,
-          builder: (context, params) {
-            return params.isEmpty
-                ? NavBarPage(initialPage: 'Home')
-                : ApplicationLoanCalculatorWidget(
-                    applicationRecieve: params.getParam(
-                        'applicationRecieve',
-                        ParamType.DocumentReference,
-                        false,
-                        ['users', 'application']),
-                    equifaxStatus:
-                        params.getParam('equifaxStatus', ParamType.String),
-                  );
-          },
-        ),
-        FFRoute(
-            name: 'Application_Carrousel',
-            path: '/ApplicationCarrousel',
-            builder: (context, params) => ApplicationCarrouselWidget(
-                  applicationRecieve: params.getParam(
-                      'applicationRecieve',
-                      ParamType.DocumentReference,
-                      false,
-                      ['users', 'application']),
-                  equifaxStatus:
-                      params.getParam('equifaxStatus', ParamType.String),
-                )),
-        FFRoute(
-            name: 'Application_UploadDocs',
-            path: '/ApplicationUploadDocs',
-            builder: (context, params) => ApplicationDocuments(
-                  applicationRecieve: params.getParam(
-                      'applicationRecieve',
-                      ParamType.DocumentReference,
-                      false,
-                      ['users', 'application']),
-                  equifaxStatus:
-                      params.getParam('equifaxStatus', ParamType.String),
-                )),
-
-        FFRoute(
-          name: 'Application_Address',
-          path: '/applicationAddress',
-          requireAuth: true,
-          builder: (context, params) => ApplicationAddressWidget(
-            applicationRecieve: params.getParam('applicationRecieve',
-                ParamType.DocumentReference, false, ['users', 'application']),
-            equifaxStatus: params.getParam('equifaxStatus', ParamType.String),
-          ),
-        ),
 
         FFRoute(
           name: 'Email_ForgotPassword',
           path: '/emailForgotPassword',
           builder: (context, params) => EmailForgotPasswordWidget(),
         ),
-        FFRoute(
-          name: 'Application_Review',
-          path: '/applicationReview',
-          requireAuth: true,
-          builder: (context, params) => ApplicationReviewWidget(
-            applicationRecieve: params.getParam('applicationRecieve',
-                ParamType.DocumentReference, false, ['users', 'application']),
-            equifaxStatus: params.getParam('equifaxStatus', ParamType.String),
-          ),
-        ),
+
         FFRoute(
           name: 'Applicaiton_Success',
           path: '/applicaitonSuccess',
@@ -208,16 +171,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             nameAppRecieve: params.getParam('nameAppRecieve', ParamType.String),
           ),
         ),
-        FFRoute(
-          name: 'Application_Map',
-          path: '/applicationMap',
-          builder: (context, params) => ApplicationMapWidget(
-            applicationRecieve: params.getParam('applicationRecieve',
-                ParamType.DocumentReference, false, ['users', 'application']),
-            equifaxStatus: params.getParam('equifaxStatus', ParamType.String),
-          ),
-        ),
-
         FFRoute(
           name: 'Application_Denied',
           path: '/Application_Denied',
@@ -263,16 +216,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : ProfileWidget(),
         ),
 
-        FFRoute(
-          name: 'Profile_IncomeValidation',
-          path: '/profileIncomeValidation',
-          builder: (context, params) => ProfileIncomeValidationWidget(),
-        ),
-        FFRoute(
-          name: 'Profile_BankAccount',
-          path: '/profileBankAccount',
-          builder: (context, params) => ProfileBankAccountWidget(),
-        ),
+
         FFRoute(
           name: 'Payment_Details',
           path: '/paymentDetails',

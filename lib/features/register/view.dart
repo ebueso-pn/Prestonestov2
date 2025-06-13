@@ -443,39 +443,36 @@ class _EmailCreateAccountWidgetState extends State<EmailCreateAccountWidget> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                  child: FFButtonWidget(
-                    onPressed: () => handleCreateAccount(
-                      context,
-                      _model,
-                    ),
-                    text: 'Crear Cuenta',
-                    options: FFButtonOptions(
-                      width: 270.0,
-                      height: 50.0,
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme.of(context).primary,
-                      textStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Urbanist',
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                fontSize: 16.0,
-                              ),
-                      elevation: 3.0,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(48.0),
-                    ),
-                  ),
-                ),
+
               ],
+            ),
+          ),
+          bottomNavigationBar: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
+            child: FFButtonWidget(
+              onPressed: () => handleCreateAccount(
+                context,
+                _model,
+              ),
+              text: 'Crear Cuenta',
+              options: FFButtonOptions(
+                width: 270.0,
+                height: 50.0,
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                color: FlutterFlowTheme.of(context).primary,
+                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                      fontFamily: 'Urbanist',
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      fontSize: 16.0,
+                    ),
+                elevation: 3.0,
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(48.0),
+              ),
             ),
           ),
         ),

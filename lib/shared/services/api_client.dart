@@ -25,6 +25,36 @@ class ApiClient {
       refreshToken: refreshToken,
     );
   }
+
+  Future<http.StreamedResponse> sendMultipartRequest(http.MultipartRequest request) async {
+    // Attach Authorization header if available
+    if (accessToken != null) {
+      request.headers['Authorization'] = 'Bearer $accessToken';
+    }
+    // Remove Content-Type if set, http.MultipartRequest sets it automatically
+    request.headers.remove('Content-Type');
+
+    print('Sending multipart request to: ${request.url}');
+    var streamedResponse = await request.send();
+
+    // If auth error, try to refresh token and resend
+    if (streamedResponse.statusCode == 401 || streamedResponse.statusCode == 403) {
+      final refreshed = await _refreshToken();
+      if (refreshed) {
+        print('Token refreshed. Retrying multipart request to: ${request.url}');
+        if (accessToken != null) {
+          request.headers['Authorization'] = 'Bearer $accessToken';
+        }
+        streamedResponse = await request.send();
+      } else {
+        print('Token refresh failed. Logging out.');
+        await logout();
+      }
+    }
+    return streamedResponse;
+  }
+
+
   Future<http.Response> get(String path) async {
     final fullUrl = '$baseUrl$path';
     print('GET request to: $fullUrl');

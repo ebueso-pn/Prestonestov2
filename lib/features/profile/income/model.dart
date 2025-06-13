@@ -1,14 +1,13 @@
-import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'begini_widget.dart' show BeginiWidget;
 import 'package:flutter/material.dart';
 
-class BeginiModel extends FlutterFlowModel<BeginiWidget> {
+class ProfileIncomeValidationModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Stores action output result for [Backend Call - API (Begini Token)] action in Button widget.
-  ApiCallResponse? apiResultwum;
+  bool isDataUploading = false;
+  List<FFUploadedFile> uploadedLocalFiles = [];
+  List<String> uploadedFileUrls = [];
 
   /// Initialization and disposal methods.
 
