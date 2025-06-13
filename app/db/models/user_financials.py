@@ -20,6 +20,11 @@ class UserFinancials(Base):
         default=list,
     )
     own_bank_account: Mapped[bool] = mapped_column(Boolean, nullable=False)
+
+    bank_name: Mapped[str | None] = mapped_column(nullable=True)
+    bank_account_type: Mapped[str | None] = mapped_column(nullable=True)
+    bank_account_number: Mapped[str | None] = mapped_column(nullable=True)
+
     authorized_check_in_credit_bureau: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

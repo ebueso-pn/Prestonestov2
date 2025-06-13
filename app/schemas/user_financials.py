@@ -23,6 +23,11 @@ class IncomeInfoSchemaRequest(BaseModel):
     )
     own_bank_account: bool = Field(..., examples=[True, False])
 
+class BankInformationSchemaRequest(BaseModel):
+    bank_name: str = Field(..., examples=["Bank of America"])
+    bank_account_type: str = Field(..., examples=["checking", "savings"])
+    bank_account_number: str = Field(..., examples=["1234567890"])
+
 class UserFinancialsSchema(BaseModel):
     id: UUID | None = Field(default=None, examples=["123e4567-e89b-12d3-a456-426614174000"])
     user_id: UUID = Field(..., examples=["123e4567-e89b-12d3-a456-426614174001"])
@@ -32,6 +37,11 @@ class UserFinancialsSchema(BaseModel):
         examples=[["salary"], ["own_business", "remittances"]]
     )
     own_bank_account: bool = Field(..., examples=[True, False])
+
+    bank_name : str | None = Field(default=None, examples=["Bank of America"])
+    bank_account_type : str | None = Field(default=None, examples=["checking", "savings"])
+    bank_account_number : str | None = Field(default=None, examples=["1234567890"])
+
     created_at: datetime.datetime | None = Field(default=None, examples=["2024-06-01T12:00:00Z"])
     updated_at: datetime.datetime | None = Field(default=None, examples=["2024-06-02T12:00:00Z"])
 

@@ -29,9 +29,14 @@ class KYCGetMe(BaseModel):
     is_shufti_valid: Optional[bool] = None
     is_equifax_valid: Optional[bool] = None
 
+class FilesStatus(BaseModel):
+    income_file_uploaded: bool = False
+    bank_file_uploaded: bool = False
+
 class UserFullInformationResponse(BaseResponse):
     user: UserBase
     financials: Optional[UserFinancialsSchema] = None
     application: Optional[ApplicationBase] = None
     kyc: Optional[KYCGetMe] = None
     location: Optional[UserLocationInDBBase] = None
+    files: Optional[FilesStatus] = None

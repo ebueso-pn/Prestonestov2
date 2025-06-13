@@ -29,6 +29,10 @@ class UserLocationUpdate(BaseModel):
     city: Optional[str] = Field(None, description="City")
     department: Optional[str] = Field(None, description="Department")
 
+class UserLocationCreation(BaseModel):
+    latitude: float = Field(..., description="Latitude of the location")
+    longitude: float = Field(..., description="Longitude of the location")
+
 class UserLocationInDBBase(UserLocationBase):
     id: uuid.UUID
     latitude: Optional[float] = Field(None, description="Latitude of the location")

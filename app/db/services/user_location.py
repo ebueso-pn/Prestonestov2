@@ -11,14 +11,15 @@ class UserLocationDBService(BaseService):
 
     async def get_by_user_id(self, db: AsyncSession, *, user_id: uuid.UUID):
         """
-        Get all user locations for a given user_id.
+        Get the latest user location for a given user_id.
         """
         results = await self.get_by(
             db=db,
             user_id=user_id,
             order_by=UserLocation.created_at,
             desc=True,
+            limit=1,
         )
-        return results
+        return results[0] if results else None
 
 UserLocationService = UserLocationDBService()

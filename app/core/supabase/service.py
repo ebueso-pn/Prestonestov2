@@ -1,4 +1,6 @@
 import logging
+import requests
+
 from typing import Optional
 from functools import lru_cache
 from fastapi import  HTTPException, status
@@ -57,6 +59,84 @@ def _get_supabase() -> Client:
 def _auth():
     """Get Supabase auth client."""
     return _get_supabase().auth
+
+def upload_file_supabase_with_jwt(
+    bucket: str,
+    file_path: str,
+    file_data: bytes,
+    user_jwt: str,
+    content_type: str = "application/octet-stream"
+) -> dict:
+    """
+    Upload a file to a Supabase storage bucket using a user's JWT (for RLS).
+
+    Args:
+        bucket (str): The name of the Supabase storage bucket.
+        file_path (str): The path (including filename) where the file will be stored in the bucket.
+        file_data (bytes): The file data to upload.
+        user_jwt (str): The user's JWT token.
+        content_type (str): The MIME type of the file.
+
+    Returns:
+        dict: The response from Supabase storage REST API.
+    """
+    supabase_url = settings.SUPABASE_URL
+    url = f"{supabase_url}/storage/v1/object/{bucket}/{file_path}"
+    headers = {
+        "Authorization": f"Bearer {user_jwt}",
+        "Content-Type": content_type,
+        "x-upsert": "true"
+    }
+    try:
+        response = requests.post(url, headers=headers, data=file_data)
+        if not response.ok:
+            logger.error(f"Error uploading file with JWT: {response.text}")
+            raise HTTPException(
+                status_code=response.status_code,
+                detail=f"Error uploading file: {response.text}"
+            )
+        return response.json() if response.content else {"status": "success"}
+    except Exception as e:
+        logger.error(f"Exception during file upload with JWT: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to upload file to Supabase with user JWT."
+        )
+
+def get_file_supabase_with_jwt(
+    user_jwt: str,
+    user_supabase_uid: str,
+    bucket: str = "files"
+) -> dict:
+    """
+    List files for a user in 'income_statement' and 'bank_accounts' subfolders of a Supabase storage bucket using the Supabase Python SDK.
+
+    Args:
+        user_jwt (str): The user's JWT token.
+        user_supabase_uid (str): The user's Supabase UID.
+        bucket (str): The name of the Supabase storage bucket.
+
+    Returns:
+        dict: Dictionary with subfolder names as keys and list of files as values.
+    """
+    supabase_url = settings.SUPABASE_URL
+    result = {}
+    try:
+        # Create a Supabase client using the user's JWT for RLS
+        user_client = create_client(supabase_url, user_jwt)
+        for subfolder in ["income_statement", "bank_accounts"]:
+            prefix = f"{subfolder}/{user_supabase_uid}/"
+            response = user_client.storage.from_(bucket).list(prefix)
+            # The SDK returns a dict with a 'data' key containing the list of files, or a list directly
+            files = response.get("data") if isinstance(response, dict) and "data" in response else response
+            result[subfolder] = files if files is not None else []
+    except Exception as e:
+        logger.error(f"Exception during file listing with SDK: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to list files using Supabase SDK: {e}"
+        )
+    return result
 
 def login_supabase(email: str, password: str) -> AuthResponse:
     """Log in a user with email and password using Supabase auth."""

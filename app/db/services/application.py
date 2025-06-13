@@ -21,8 +21,6 @@ class ApplicationDBService(BaseService):
             status=ApplicationStatus.PENDING,
             user_id=user_id
         )
-        print(result)
-        print("monda")
         if isinstance(result, list) or isinstance(result, tuple):
             return result[0] if result else None
         return result
